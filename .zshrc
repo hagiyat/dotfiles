@@ -42,6 +42,8 @@ autoload -U colors
 colors
 autoload -Uz vcs_info
 
+# リモートブランチの補完もかかってしまうので、その時は相当重い。
+# なんとかしたい。
 zstyle ':vcs_info:*' enable git svn
 zstyle ':vcs_info:*' formats '%{'${fg[red]}'%}[%s %b] %{'$reset_color'%}'
 zstyle ':vcs_info:git:*' check-for-changes true
