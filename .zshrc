@@ -1,6 +1,8 @@
 alias ll='ls -alt'
 
-export PATH=/usr/local/bin:$PATH
+# gem installで追加したモジュールのパスを足した
+export PATH=/usr/local/bin:/usr/local/Cellar/ruby/1.9.3-p327/bin:$PATH
+#export PATH=/usr/local/bin:$PATH
 export LANG=ja_JP.UTF-8
 
 # ヒストリー設定
@@ -31,6 +33,11 @@ setopt correct
 autoload -U compinit
 compinit -u
 
+# _vim_filesがないというエラーが出るかも。
+# cd /usr/local/share/zsh/functions
+# cp _vim _vim_files
+# chmod a+x _vim_files
+# で、参照先を作ってあげる必要がある
 fpath=(/usr/local/share/zsh-completions $fpath)
 source ~/.zsh/plugin/git-completion.bash
 source ~/.zsh/plugin/git-flow-completion.bash
