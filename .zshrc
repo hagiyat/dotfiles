@@ -1,4 +1,5 @@
 alias ll='ls -alt'
+alias subl='/Applications/Sublime\ Text\ 2.app/Contents/SharedSupport/bin/subl'
 
 # gem installで追加したモジュールのパスを足した
 export PATH=/usr/local/bin:/usr/local/Cellar/ruby/1.9.3-p327/bin:$PATH
