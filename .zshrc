@@ -1,9 +1,5 @@
-alias ll='ls -alt'
-alias subl='/Applications/Sublime\ Text\ 2.app/Contents/SharedSupport/bin/subl'
-
-# gem installで追加したモジュールのパスを足した
-export PATH=/usr/local/bin:/usr/local/Cellar/ruby/1.9.3-p327/bin:$PATH
-#export PATH=/usr/local/bin:$PATH
+alias ll='ls -l'
+alias la='ls -al'
 export LANG=ja_JP.UTF-8
 
 # ヒストリー設定
@@ -34,14 +30,9 @@ setopt correct
 autoload -U compinit
 compinit -u
 
-# _vim_filesがないというエラーが出るかも。
-# cd /usr/local/share/zsh/functions
-# cp _vim _vim_files
-# chmod a+x _vim_files
-# で、参照先を作ってあげる必要がある
-fpath=(/usr/local/share/zsh-completions $fpath)
-source ~/.zsh/plugin/git-completion.bash
-source ~/.zsh/plugin/git-flow-completion.bash
+# antigen!!
+source ~/.zsh/antigen.conf
+
 zstyle ':completion:*' verbose yes
 zstyle ':completion:*:descriptions' format '%B%d%b'
 zstyle ':completion:*:messages' format '%d'
@@ -79,3 +70,25 @@ precmd () {
 % > '
 }
 
+export TERM=xterm-256color
+#alias ssh='TERM=xterm-256color ssh'
+
+/usr/bin/keychain $HOME/.ssh/id_rsa
+source $HOME/.keychain/$HOST-sh
+
+alias j="autojump"
+[[ -s /etc/profile.d/autojump.zsh ]] && . /etc/profile.d/autojump.zsh
+
+alias tmux="LD_LIBRARY_PATH=/usr/local/lib /usr/local/bin/tmux"
+
+# git alias
+alias gits="git status"
+#alias gitd="git difftool --tool=vimdiff --no-prompt"
+alias gitd="git diff"
+alias gitl="git log"
+alias gitls="git log --stat"
+alias gitlg="git log --stat --graph"
+alias gitlm="git log --stat --author=hagiya"
+alias gitf="git flow"
+
+alias phpl="php -l"
