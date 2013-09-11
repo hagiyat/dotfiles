@@ -61,7 +61,7 @@ set nobackup
 set noswapfile
 
 " 不可視文字の可視化
-"set list
+set list
 " 長いテキストの折り返し
 set wrap
 " 自動的に改行が入るのを無効化
@@ -75,7 +75,7 @@ set novisualbell
 autocmd BufWritePre * :%s/\s\+$//ge
 
 " 不可視文字の表示
-"set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:↲
+set listchars=tab:▸-,trail:=,extends:»,precedes:«,nbsp:%,eol:↲
 
 
 " 入力モード中に素早くjjと入力した場合はESCとみなす
@@ -105,6 +105,11 @@ vnoremap v $h
 " TABにて対応ペアにジャンプ
 nnoremap <Tab> %
 vnoremap <Tab> %
+
+nnoremap <silent>bp :bprevious<CR>
+nnoremap <silent>bn :bnext<CR>
+nnoremap <silent>bb :b#<CR>
+
 
 " Neobundle
 scriptencoding utf-8
@@ -149,6 +154,9 @@ set statusline=%=\ [%{(&fenc!=''?&fenc:&enc)}/%{&ff}]\[%Y]\[%04l,%04v][%p%%]
 " ステータスラインを常に表示
 set laststatus=2
 
+" ctrlp
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc
+
 " color scheme
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'vim-scripts/Zenburn'
@@ -164,6 +172,6 @@ set mouse=n
 "colorscheme solarized
 "set background=dark
 
-colorscheme zenburn
-"colorscheme hybrid
+"colorscheme zenburn
+colorscheme hybrid
 "colorscheme twilight
