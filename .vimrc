@@ -1,6 +1,18 @@
-"set background=dark
+" 文字コード
+set encoding=utf-8
+set fileencodings=utf-8,cp932,euc-jp,iso-20220-jp,default,latin
+
+" escapeキーをマッピング
+imap <c-j> <esc>
+" 入力モード中に素早くjjと入力した場合はESCとみなす
+inoremap jj <Esc>
+
+" leaderを , に割り当て
+let mapleader = ","
+noremap \  ,
 
 "新しい行のインデントを現在行と同じにする
+
 set autoindent
 "Vi互換をオフ
 set nocompatible
@@ -71,16 +83,19 @@ set textwidth=0
 set t_vb=
 set novisualbell
 
+" タブキーで半角スペース入力
+set expandtab
+
 " 保存時に行末の空白を除去する
 autocmd BufWritePre * :%s/\s\+$//ge
 
+" 256色表示
+autocmd Colorscheme * :set t_Co=256
+
 " 不可視文字の表示
 set listchars=tab:▸-,trail:=,extends:»,precedes:«,nbsp:%,eol:↲
+autocmd Colorscheme * :highlight SpecialKey ctermfg=238
 
-
-" 入力モード中に素早くjjと入力した場合はESCとみなす
-inoremap jj <Esc>
-"
 " ESCを二回押すことでハイライトを消す
 nmap <silent> <Esc><Esc> :nohlsearch<CR>
 
@@ -106,9 +121,14 @@ vnoremap v $h
 nnoremap <Tab> %
 vnoremap <Tab> %
 
+" バッファ操作
 nnoremap <silent>bp :bprevious<CR>
 nnoremap <silent>bn :bnext<CR>
 nnoremap <silent>bb :b#<CR>
+
+" 文字コード変換
+nnoremap <leader>u :e ++enc=utf8<CR>
+nnoremap <leader>s :e ++enc=cp932<CR>
 
 
 " Neobundle
@@ -126,52 +146,53 @@ NeoBundle 'https://github.com/Shougo/neobundle.vim.git'
 NeoBundle 'https://github.com/scrooloose/nerdtree.git'
 NeoBundle 'https://github.com/scrooloose/syntastic.git'
 
-NeoBundle 'Shougo/vimproc'
-"NeoBundle 'https://github.com/Shougo/neocomplcache.vim.git'
+NeoBundle 'Shougo/neocomplcache.vim'
 
-NeoBundle 'alpaca-tc/alpaca_powertabline'
-NeoBundle 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
+NeoBundle 'https://github.com/rking/ag.vim'
+NeoBundle 'https://github.com/bling/vim-airline'
+NeoBundle 'https://github.com/bling/vim-bufferline'
+NeoBundle 'tpope/vim-fugitive'
 
-NeoBundleLazy 'alpaca-tc/alpaca_tags', {
-\	'depends': 'Shougo/vimproc',
-\	'autoload' : {
-\		'commands': ['AlpacaTagsUpdate', 'AlpacaTagsSet', 'AlpacaTagsBundle']
-\	}
-\}
+NeoBundle 'osyo-manga/vim-over'
 
-NeoBundle 'https://github.com/mileszs/ack.vim.git'
-NeoBundle 'https://github.com/vim-scripts/buftabs'
-
-"buftabs
-" バッファタブにパスを省略してファイル名のみ表示する
-let g:buftabs_only_basename=1
-" バッファタブをステータスライン内に表示する
-let g:buftabs_in_statusline=1
-" 現在のバッファをハイライト
-let g:buftabs_active_highlight_group="Visual"
-" ステータスライン
-set statusline=%=\ [%{(&fenc!=''?&fenc:&enc)}/%{&ff}]\[%Y]\[%04l,%04v][%p%%]
-" ステータスラインを常に表示
+" airline
 set laststatus=2
+let g:airline_theme='zenburn'
+let g:airline_detect_modified=1
+let g:airline#extensions#bufferline#enabled = 1
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '◀'
+
+NeoBundle 'PDV--phpDocumentor-for-Vim'
+nnoremap <silent><space>c :call PhpDocSingle()<CR>
 
 " ctrlp
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,tags
+
+" syntastic
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_javascript_checker = 'jshint'
+
+NeoBundle 'stephpy/vim-php-cs-fixer'
+let g:php_cs_fixer_path = "/usr/local/bin/php-cs-fixer"
+nnoremap <silent><leader>pcd :call PhpCsFixerFixDirectory()<CR>
+nnoremap <silent><leader>pcf :call PhpCsFixerFixFile()<CR>
+
+" vim-over
+nnoremap <silent><space>m :OverCommandLine<CR>%s/
 
 " color scheme
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'vim-scripts/Zenburn'
 NeoBundle 'w0ng/vim-hybrid'
 NeoBundle 'vim-scripts/twilight'
-
+NeoBundle 'vim-scripts/darkburn'
+NeoBundle 'vim-scripts/wombat256.vim'
+NeoBundle 'nanotech/jellybeans.vim'
 
 syntax on
 filetype plugin on
 filetype indent on
 set mouse=n
 
-"colorscheme solarized
-"set background=dark
-
-"colorscheme zenburn
-colorscheme hybrid
-"colorscheme twilight
+colorscheme darkburn
