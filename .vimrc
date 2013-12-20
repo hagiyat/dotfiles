@@ -155,6 +155,8 @@ NeoBundle 'tpope/vim-fugitive'
 
 NeoBundle 'osyo-manga/vim-over'
 
+NeoBundle 'Yggdroot/indentLine'
+
 " airline
 set laststatus=2
 let g:airline_theme='zenburn'
@@ -189,6 +191,7 @@ NeoBundle 'vim-scripts/twilight'
 NeoBundle 'vim-scripts/darkburn'
 NeoBundle 'vim-scripts/wombat256.vim'
 NeoBundle 'nanotech/jellybeans.vim'
+NeoBundle 'jpo/vim-railscasts-theme'
 
 syntax on
 filetype plugin on
