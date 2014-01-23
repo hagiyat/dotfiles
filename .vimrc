@@ -169,7 +169,7 @@ NeoBundle 'PDV--phpDocumentor-for-Vim'
 nnoremap <silent><space>c :call PhpDocSingle()<CR>
 
 " ctrlp
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,tags
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,tags,*/vendor/*
 
 " syntastic
 let g:syntastic_auto_loc_list = 1
