@@ -86,6 +86,9 @@ set novisualbell
 " タブキーで半角スペース入力
 set expandtab
 
+" カーソル行強調
+set cursorline
+
 " 保存時に行末の空白を除去する
 autocmd BufWritePre * :%s/\s\+$//ge
 
@@ -152,6 +155,7 @@ NeoBundle 'https://github.com/rking/ag.vim'
 NeoBundle 'https://github.com/bling/vim-airline'
 NeoBundle 'https://github.com/bling/vim-bufferline'
 NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'gregsexton/gitv'
 
 NeoBundle 'osyo-manga/vim-over'
 
@@ -175,19 +179,16 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,tags,*/vendor/*
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_javascript_checker = 'jshint'
 
-NeoBundle 'stephpy/vim-php-cs-fixer'
-let g:php_cs_fixer_path = "/usr/local/bin/php-cs-fixer"
-nnoremap <silent><leader>pcd :call PhpCsFixerFixDirectory()<CR>
-nnoremap <silent><leader>pcf :call PhpCsFixerFixFile()<CR>
-
 " vim-over
 nnoremap <silent><space>m :OverCommandLine<CR>%s/
+
+" gitv
+autocmd FileType git :setlocal foldlevel=99
 
 " color scheme
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'vim-scripts/Zenburn'
 NeoBundle 'w0ng/vim-hybrid'
-NeoBundle 'vim-scripts/twilight'
 NeoBundle 'vim-scripts/darkburn'
 NeoBundle 'vim-scripts/wombat256.vim'
 NeoBundle 'nanotech/jellybeans.vim'
@@ -198,4 +199,5 @@ filetype plugin on
 filetype indent on
 set mouse=n
 
-colorscheme darkburn
+colorscheme wombat256mod
+set background=dark
