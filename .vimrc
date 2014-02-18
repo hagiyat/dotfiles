@@ -129,6 +129,9 @@ nnoremap <silent>bp :bprevious<CR>
 nnoremap <silent>bn :bnext<CR>
 nnoremap <silent>bb :b#<CR>
 
+" w!! でスーパーユーザーとして保存（sudoが使える環境限定）
+cmap w!! w !sudo tee > /dev/null %
+
 " 文字コード変換
 nnoremap <leader>u :e ++enc=utf8<CR>
 nnoremap <leader>s :e ++enc=cp932<CR>
@@ -144,46 +147,87 @@ if has('vim_starting')
 endif
 call neobundle#rc(expand('~/.vim/bundle'))
 
-NeoBundle 'https://github.com/kien/ctrlp.vim.git'
 NeoBundle 'https://github.com/Shougo/neobundle.vim.git'
-NeoBundle 'https://github.com/scrooloose/nerdtree.git'
-NeoBundle 'https://github.com/scrooloose/syntastic.git'
 
-NeoBundle 'Shougo/neocomplcache.vim'
+NeoBundle 'https://github.com/kien/ctrlp.vim.git'
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,tags,*/vendor/*
+
+NeoBundle 'https://github.com/scrooloose/nerdtree.git'
+
+NeoBundle 'https://github.com/scrooloose/syntastic.git'
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_javascript_checker = 'jshint'
+
+" if_luaが有効ならneocompleteを使う
+NeoBundle has('lua') ? 'Shougo/neocomplete' : 'Shougo/neocomplcache'
+if neobundle#is_installed('neocomplete')
+    " neocomplete用設定
+    let g:neocomplete#enable_at_startup = 1
+    let g:neocomplete#enable_ignore_case = 1
+    let g:neocomplete#enable_smart_case = 1
+    if !exists('g:neocomplete#keyword_patterns')
+        let g:neocomplete#keyword_patterns = {}
+    endif
+    let g:neocomplete#keyword_patterns._ = '\h\w*'
+
+elseif neobundle#is_installed('neocomplcache')
+    " neocomplcache用設定
+    let g:neocomplcache_enable_at_startup = 1
+    let g:neocomplcache_enable_ignore_case = 1
+    let g:neocomplcache_enable_smart_case = 1
+    if !exists('g:neocomplcache_keyword_patterns')
+        let g:neocomplcache_keyword_patterns = {}
+    endif
+    let g:neocomplcache_keyword_patterns._ = '\h\w*'
+    let g:neocomplcache_enable_camel_case_completion = 1
+    let g:neocomplcache_enable_underbar_completion = 1
+
+endif
+
+NeoBundle 'Shougo/neosnippet'
+NeoBundle 'Shougo/neosnippet-snippets'
+" Plugin key-mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" SuperTab like snippets behavior.
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: "\<TAB>"
+
+" For snippet_complete marker.
+if has('conceal')
+  set conceallevel=2 concealcursor=i
+endif
 
 NeoBundle 'https://github.com/rking/ag.vim'
+
 NeoBundle 'https://github.com/bling/vim-airline'
-NeoBundle 'https://github.com/bling/vim-bufferline'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'gregsexton/gitv'
-
-NeoBundle 'osyo-manga/vim-over'
-
-NeoBundle 'Yggdroot/indentLine'
-
-" airline
 set laststatus=2
-let g:airline_theme='zenburn'
+let g:airline_theme='wombat'
 let g:airline_detect_modified=1
 let g:airline#extensions#bufferline#enabled = 1
 let g:airline_left_sep = '▶'
 let g:airline_right_sep = '◀'
 
-NeoBundle 'PDV--phpDocumentor-for-Vim'
-nnoremap <silent><space>c :call PhpDocSingle()<CR>
+NeoBundle 'https://github.com/bling/vim-bufferline'
 
-" ctrlp
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,tags,*/vendor/*
+NeoBundle 'tpope/vim-fugitive'
 
-" syntastic
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_javascript_checker = 'jshint'
+NeoBundle 'gregsexton/gitv'
+autocmd FileType git :setlocal foldlevel=99
 
-" vim-over
+NeoBundle 'osyo-manga/vim-over'
 nnoremap <silent><space>m :OverCommandLine<CR>%s/
 
-" gitv
-autocmd FileType git :setlocal foldlevel=99
+NeoBundle 'Yggdroot/indentLine'
+
+NeoBundle 'tpope/vim-surround'
+
 
 " color scheme
 NeoBundle 'altercation/vim-colors-solarized'
@@ -199,5 +243,5 @@ filetype plugin on
 filetype indent on
 set mouse=n
 
-colorscheme wombat256mod
+colorscheme hybrid
 set background=dark
