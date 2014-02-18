@@ -1,27 +1,17 @@
-# 導入まで
-* brewをインストール
+メモ
+====
 
-* zshのインストール
+zsh
+---
 
-> brew install zsh
-> brew install zsh-completions
+- antigenが便利すぎ
+- anyenvに切り替えたい
 
-* gitのインストール
 
-> brew install git
-> brew install git-flow
 
-* カラースキーマはsolarizedを入れた
+vim
+---
 
-> (wgetでもgitからでも)
-> cp /(somedir)/solarized/vim-colors-solarized/colors/solarized.vim ~/.vim/colors/.
+- 7.4make時の設定
 
-* zsh補完シェルの準備
-gitをインストールすると、補完シェルがついてくるので、それらを使えるようにする
-
-> cd ~/.zsh/plugin
-> ln -s /usr/local/Cellar/git-flow/0.4.1/etc/bash_completion.d/git-flow-completion.bash .
-> ln -s /usr/local/Cellar/git/1.8.0.2/etc/bash_completion.d/git-completion.bash .
-
-* cloneしたファイルを~/にコピーして完了
-
+    ./configure --enable-multibyte --with-features=huge --disable-selinux --disable-darwin --enable-fontset --enable-python3interp=yes --enable-pythoninterp=yes --enable-perlinterp=yes --enable-luainterp=yes --with-luajit --enable-rubyinterp=yes --enable-fail-if-missing
