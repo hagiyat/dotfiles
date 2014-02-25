@@ -35,6 +35,9 @@ set tabstop=4
 "カーソルを行頭、行末で止まらないようにする
 "set whichwrap=b,s,h,l,<,>,[,]
 
+" このへんは2文字インデント
+autocmd! FileType ruby,javascript,html setlocal shiftwidth=2 tabstop=2
+
 " 大文字小文字を区別しない
 set ignorecase
 " 検索文字に大文字がある場合は大文字小文字を区別
@@ -159,6 +162,7 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_javascript_checker = 'jshint'
 
 " if_luaが有効ならneocompleteを使う
+" 動作が遅くなってきたらLazyにする
 NeoBundle has('lua') ? 'Shougo/neocomplete' : 'Shougo/neocomplcache'
 if neobundle#is_installed('neocomplete')
     " neocomplete用設定
@@ -184,8 +188,8 @@ elseif neobundle#is_installed('neocomplcache')
 
 endif
 
-NeoBundle 'Shougo/neosnippet'
-NeoBundle 'Shougo/neosnippet-snippets'
+NeoBundleLazy "Shougo/neosnippet", {"autoload": {"insert": 1,}}
+NeoBundleLazy "Shougo/neosnippet-snippets", {"autoload": {"insert": 1,}}
 " Plugin key-mappings.
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
@@ -203,6 +207,7 @@ smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
+
 
 NeoBundle 'https://github.com/rking/ag.vim'
 
