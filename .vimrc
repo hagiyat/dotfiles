@@ -36,7 +36,7 @@ set tabstop=4
 "set whichwrap=b,s,h,l,<,>,[,]
 
 " このへんは2文字インデント
-autocmd! FileType ruby,javascript,html setlocal shiftwidth=2 tabstop=2
+autocmd! FileType ruby,javascript,html,smarty setlocal shiftwidth=2 tabstop=2
 
 " 大文字小文字を区別しない
 set ignorecase
@@ -85,6 +85,9 @@ set textwidth=0
 " スクリーンベルを無効化
 set t_vb=
 set novisualbell
+
+" 全角文字対策
+set ambiwidth=double
 
 " タブキーで半角スペース入力
 set expandtab
@@ -232,6 +235,7 @@ nnoremap <silent><space>m :OverCommandLine<CR>%s/
 NeoBundle 'Yggdroot/indentLine'
 
 NeoBundle 'tpope/vim-surround'
+NeoBundle 'tpope/vim-repeat'
 
 
 " color scheme
