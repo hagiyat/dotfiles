@@ -147,9 +147,9 @@ nnoremap <leader>s :e ++enc=cp932<CR>
 scriptencoding utf-8
 
 if has('vim_starting')
-	filetype plugin off
-	filetype indent off
-	execute 'set runtimepath+=' . expand('~/.vim/bundle/neobundle.vim')
+    filetype plugin off
+    filetype indent off
+    execute 'set runtimepath+=' . expand('~/.vim/bundle/neobundle.vim')
 endif
 call neobundle#rc(expand('~/.vim/bundle'))
 
