@@ -1,8 +1,5 @@
 alias ll='ls -l'
 alias la='ls -al'
-
-# gem installで追加したモジュールのパスを足した
-export PATH=/usr/local/Celler/:$PATH
 export LANG=ja_JP.UTF-8
 
 # ヒストリー設定
@@ -34,7 +31,10 @@ autoload -U compinit
 compinit -u
 
 # antigen!!
-source ~/.zsh/zshrc.antigen
+source ~/.zsh/antigen.conf
+
+# auto cd
+setopt auto_cd
 
 zstyle ':completion:*' verbose yes
 zstyle ':completion:*:descriptions' format '%B%d%b'
@@ -70,6 +70,15 @@ alias gitlg="git log --stat --graph"
 alias gitlm="git log --stat --author=hagiya"
 alias gitf="git flow"
 
-export RBENV_ROOT="/usr/local/rbenv"
-export PATH="${RBENV_ROOT}/bin:${PATH}"
-eval "$(rbenv init -)"
+alias phpl="php -l"
+
+
+if [ -d ${HOME}/.anyenv ] ; then
+  export PATH="$HOME/.anyenv/bin:$PATH"
+  eval "$(anyenv init -)"
+  for D in `ls $HOME/.anyenv/envs`
+  do
+    export PATH="$HOME/.anyenv/envs/$D/shims:$PATH"
+  done
+fi
+

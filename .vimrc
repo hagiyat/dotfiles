@@ -95,6 +95,9 @@ set expandtab
 " カーソル行強調
 set cursorline
 
+" yankしつつpbcopy
+"set clipboard=unnamed
+
 " 保存時に行末の空白を除去する
 autocmd BufWritePre * :%s/\s\+$//ge
 
@@ -142,14 +145,13 @@ cmap w!! w !sudo tee > /dev/null %
 nnoremap <leader>u :e ++enc=utf8<CR>
 nnoremap <leader>s :e ++enc=cp932<CR>
 
-
 " Neobundle
 scriptencoding utf-8
 
 if has('vim_starting')
-    filetype plugin off
-    filetype indent off
-    execute 'set runtimepath+=' . expand('~/.vim/bundle/neobundle.vim')
+	filetype plugin off
+	filetype indent off
+	execute 'set runtimepath+=' . expand('~/.vim/bundle/neobundle.vim')
 endif
 call neobundle#rc(expand('~/.vim/bundle'))
 
@@ -232,11 +234,17 @@ autocmd FileType git :setlocal foldlevel=99
 NeoBundle 'osyo-manga/vim-over'
 nnoremap <silent><space>m :OverCommandLine<CR>%s/
 
-NeoBundle 'Yggdroot/indentLine'
+"NeoBundle 'Yggdroot/indentLine'
 
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-repeat'
+NeoBundle 'taglist.vim'
 
+NeoBundle 'git://github.com/kana/vim-fakeclip.git'
+map y <Plug>(fakeclip-y)
+map yy <Plug>(fakeclip-Y)
+map p <Plug>(fakeclip-p)
+"map dd <Plug>(fakeclip-D)
 
 " color scheme
 NeoBundle 'altercation/vim-colors-solarized'
