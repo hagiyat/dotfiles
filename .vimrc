@@ -36,7 +36,7 @@ set tabstop=4
 "set whichwrap=b,s,h,l,<,>,[,]
 
 " このへんは2文字インデント
-autocmd! FileType ruby,javascript,html,smarty setlocal shiftwidth=2 tabstop=2
+autocmd! FileType ruby,php,javascript,html,smarty setlocal shiftwidth=2 tabstop=2
 
 " 大文字小文字を区別しない
 set ignorecase
@@ -161,6 +161,8 @@ NeoBundle 'https://github.com/kien/ctrlp.vim.git'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,tags,*/vendor/*
 
 NeoBundle 'https://github.com/scrooloose/nerdtree.git'
+nnoremap <Space>n :NERDTreeToggle<CR>
+
 
 NeoBundle 'https://github.com/scrooloose/syntastic.git'
 let g:syntastic_auto_loc_list = 1
@@ -238,7 +240,15 @@ nnoremap <silent><space>m :OverCommandLine<CR>%s/
 
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-repeat'
-NeoBundle 'taglist.vim'
+
+NeoBundle 'majutsushi/tagbar'
+nnoremap <silent><space>t :TagbarToggle<CR>
+
+NeoBundle 'vim-scripts/tagbar-phpctags', {
+  \   'build' : {
+  \     'others' : 'chmod +x bin/phpctags',
+  \   },
+  \ }
 
 NeoBundle 'git://github.com/kana/vim-fakeclip.git'
 map y <Plug>(fakeclip-y)
