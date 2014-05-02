@@ -53,12 +53,13 @@ export TERM=xterm-256color
 #/usr/bin/keychain $HOME/.ssh/id_rsa
 #source $HOME/.keychain/$HOST-sh
 
-alias j="autojump"
-if [ -f `brew --prefix`/etc/autojump ]; then
-    . `brew --prefix`/etc/autojump
-fi
-
 alias tmux="LD_LIBRARY_PATH=/usr/local/lib /usr/local/bin/tmux"
+
+# z
+. `brew --prefix`/etc/profile.d/z.sh
+function precmd () {
+   z --add "$(pwd -P)"
+}
 
 # git alias
 alias gits="git status"
