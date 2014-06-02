@@ -1,4 +1,4 @@
-" 文字コード
+:" 文字コード
 set encoding=utf-8
 set fileencodings=utf-8,cp932,euc-jp,iso-20220-jp,default,latin
 
@@ -30,7 +30,7 @@ set smartcase
 set smartindent
 "行頭の余白内で Tab を打ち込むと、'shiftwidth' の数だけインデントする。
 set smarttab
-"ファイル内の <Tab> が対応する空白の数
+:"ファイル内の <Tab> が対応する空白の数
 set tabstop=4
 "カーソルを行頭、行末で止まらないようにする
 "set whichwrap=b,s,h,l,<,>,[,]
@@ -145,6 +145,28 @@ cmap w!! w !sudo tee > /dev/null %
 nnoremap <leader>u :e ++enc=utf8<CR>
 nnoremap <leader>s :e ++enc=cp932<CR>
 
+" paste切り替え
+nnoremap <silent><space>pa :set paste<CR>:startinsert<CR>
+" pdvとあたる・・・！
+"autocmd InsertLeave * set nopaste
+
+" Dash.app連携
+function! s:dash(...)
+  if len(a:000) == 1 && len(a:1) == 0
+    echomsg 'No keyword'
+else
+    let ft = &filetype
+    if &filetype == 'python'
+      let ft = ft.'2'
+    endif
+    let ft = ft.':'
+    let word = len(a:000) == 0 ? input('Keyword: ', ft.expand('<cword>')) : ft.join(a:000, ' ')
+    call system(printf("open dash://'%s'", word))
+  endif
+endfunction
+command! -nargs=* Dash call <SID>dash(<f-args>)
+nnoremap <Space>d :call <SID>dash(expand('<cword>'))<CR>
+
 " Neobundle
 scriptencoding utf-8
 
@@ -163,6 +185,7 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,tags,*/vendor/*
 NeoBundle 'https://github.com/scrooloose/nerdtree.git'
 nnoremap <Space>n :NERDTreeToggle<CR>
 
+NeoBundle 'Shougo/unite.vim'
 
 NeoBundle 'https://github.com/scrooloose/syntastic.git'
 let g:syntastic_auto_loc_list = 1
@@ -256,6 +279,9 @@ map yy <Plug>(fakeclip-Y)
 map p <Plug>(fakeclip-p)
 "map dd <Plug>(fakeclip-D)
 
+NeoBundle 'PDV--phpDocumentor-for-Vim'
+nnoremap <silent><space>pc :call PhpDocSingle()<CR>
+
 " color scheme
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'vim-scripts/Zenburn'
@@ -264,6 +290,10 @@ NeoBundle 'vim-scripts/darkburn'
 NeoBundle 'vim-scripts/wombat256.vim'
 NeoBundle 'nanotech/jellybeans.vim'
 NeoBundle 'jpo/vim-railscasts-theme'
+
+" nanapi only
+NeoBundle 'kana/vim-gf-user'
+NeoBundle 'git@github.com:nanapi/nanapi.vim.git'
 
 syntax on
 filetype plugin on

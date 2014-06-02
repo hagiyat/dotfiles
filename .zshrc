@@ -56,15 +56,19 @@ export TERM=xterm-256color
 alias tmux="LD_LIBRARY_PATH=/usr/local/lib /usr/local/bin/tmux"
 
 # z
-. `brew --prefix`/etc/profile.d/z.sh
-function precmd () {
-   z --add "$(pwd -P)"
-}
+#. `brew --prefix`/etc/profile.d/z.sh
+#function precmd () {
+#   z --add "$(pwd -P)"
+#}
+#alias j="z"
+
 
 # git alias
 alias gits="git status"
 #alias gitd="git difftool --tool=vimdiff --no-prompt"
 alias gitd="git diff"
+alias gitco="git checkout"
+alias gita="git add"
 alias gitl="git log"
 alias gitls="git log --stat"
 alias gitlg="git log --stat --graph"
@@ -82,4 +86,94 @@ if [ -d ${HOME}/.anyenv ] ; then
     export PATH="$HOME/.anyenv/envs/$D/shims:$PATH"
   done
 fi
+
+# (zaw準備)cdrを有効化
+autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+add-zsh-hook chpwd chpwd_recent_dirs
+zstyle ':chpwd:*' recent-dirs-max 5000
+zstyle ':chpwd:*' recent-dirs-default yes
+zstyle ':completion:*' recent-dirs-insert both
+
+# Ctrl-Rが過去実行コマンドの履歴検索、Ctrl-Sが過去にいたディレクトリの履歴検索
+bindkey '^r' zaw-history
+
+# zaw!!
+source ~/.zsh/zaw/zaw.zsh
+
+bindkey '^[d' zaw-cdr
+bindkey '^[g' zaw-git-branches
+bindkey '^[z' zaw-gitdir
+
+function zaw-src-gitdir () {
+  _dir=$(git rev-parse --show-cdup 2>/dev/null)
+  if [ $? -eq 0 ]
+  then
+    candidates=( $(git ls-files ${_dir} | perl -MFile::Basename -nle \
+                                               '$a{dirname $_}++; END{delete $a{"."}; print for sort keys %a}') )
+  fi
+  actions=("zaw-src-gitdir-cd")
+  act_descriptions=("change directory in git repos")
+}
+
+function zaw-src-gitdir-cd () {
+  BUFFER="cd $1"
+  zle accept-line
+}
+zaw-register-src -n gitdir zaw-src-gitdir
+
+# Ctrl-Rが過去実行コマンドの履歴検索、Ctrl-Sが過去にいたディレクトリの履歴検索
+bindkey '^R' zaw-history
+
+# percol!!
+alias p='percol'
+
+# history置き換え
+#function percol-select-history() {
+#    local tac
+#    if which tac > /dev/null; then
+#        tac="tac"
+#    else
+#        tac="tail -r"
+#    fi
+#    BUFFER=$(history -n 1 | \
+#        eval $tac | \
+#        percol --query "$LBUFFER")
+#    CURSOR=$#BUFFER
+#    zle clear-screen
+#}
+#zle -N percol-select-history
+#bindkey '^r' percol-select-history
+
+# ドキュメントインクリメンタルサーチ
+function percol-search-document() {
+    if [ $# -ge 1 ]; then
+        DOCUMENT_DIR=$*
+    else
+        DOCUMENT_DIR=($HOME/Dropbox)
+        if [ -d $HOME/Documents ]; then
+            DOCUMENT_DIR=($HOME/Documents $DOCUMENT_DIR)
+        fi
+    fi
+    SELECTED_FILE=$(echo $DOCUMENT_DIR | \
+        xargs find | \
+        grep -E "\.(txt|md|pdf|key|numbers|pages|doc|xls|ppt)$" | \
+        percol --match-method migemo)
+    if [ $? -eq 0 ]; then
+        echo $SELECTED_FILE | sed 's/ /\\ /g'
+    fi
+}
+alias pd='percol-search-document'
+
+# localteコマンドから結果を更に検索
+function percol-search-locate() {
+    if [ $# -ge 1 ]; then
+        SELECTED_FILE=$(locate $* | percol --match-method migemo)
+        if [ $? -eq 0 ]; then
+            echo $SELECTED_FILE | sed 's/ /\\ /g'
+        fi
+    else
+        bultin locate
+    fi
+}
+alias psl='percol-search-locate'
 

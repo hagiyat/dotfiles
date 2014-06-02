@@ -1,11 +1,12 @@
 メモ
 ====
 
+for mac
+
 zsh
 ---
 
-- antigenが便利すぎ
-- anyenvに切り替えたい
+- required antigen, zaw, percol, anyenv
 
 
 
