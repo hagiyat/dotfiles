@@ -87,93 +87,104 @@ if [ -d ${HOME}/.anyenv ] ; then
   done
 fi
 
-# (zaw準備)cdrを有効化
-autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
-add-zsh-hook chpwd chpwd_recent_dirs
-zstyle ':chpwd:*' recent-dirs-max 5000
-zstyle ':chpwd:*' recent-dirs-default yes
-zstyle ':completion:*' recent-dirs-insert both
-
-# Ctrl-Rが過去実行コマンドの履歴検索、Ctrl-Sが過去にいたディレクトリの履歴検索
-bindkey '^r' zaw-history
 
 # zaw!!
-source ~/.zsh/zaw/zaw.zsh
+if [ -d ~/.zsh/zaw ]; then
+  # (zaw準備)cdrを有効化
+  autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+  add-zsh-hook chpwd chpwd_recent_dirs
+  zstyle ':chpwd:*' recent-dirs-max 5000
+  zstyle ':chpwd:*' recent-dirs-default yes
+  zstyle ':completion:*' recent-dirs-insert both
 
-bindkey '^[d' zaw-cdr
-bindkey '^[g' zaw-git-branches
-bindkey '^[z' zaw-gitdir
+  source ~/.zsh/zaw/zaw.zsh
+  # 表示領域を画面半分にする
+  zstyle ':filter-select' max-lines $(($LINES / 2))
 
-function zaw-src-gitdir () {
-  _dir=$(git rev-parse --show-cdup 2>/dev/null)
-  if [ $? -eq 0 ]
-  then
-    candidates=( $(git ls-files ${_dir} | perl -MFile::Basename -nle \
-                                               '$a{dirname $_}++; END{delete $a{"."}; print for sort keys %a}') )
-  fi
-  actions=("zaw-src-gitdir-cd")
-  act_descriptions=("change directory in git repos")
-}
+  bindkey '^[d' zaw-cdr
+  bindkey '^[g' zaw-git-branches
+  bindkey '^[z' zaw-gitdir
 
-function zaw-src-gitdir-cd () {
-  BUFFER="cd $1"
-  zle accept-line
-}
-zaw-register-src -n gitdir zaw-src-gitdir
+  function zaw-src-gitdir () {
+    _dir=$(git rev-parse --show-cdup 2>/dev/null)
+    if [ $? -eq 0 ]
+    then
+      candidates=( $(git ls-files ${_dir} | perl -MFile::Basename -nle \
+        '$a{dirname $_}++; END{delete $a{"."}; print for sort keys %a}') )
+    fi
+    actions=("zaw-src-gitdir-cd")
+    act_descriptions=("change directory in git repos")
+  }
 
-# Ctrl-Rが過去実行コマンドの履歴検索、Ctrl-Sが過去にいたディレクトリの履歴検索
-bindkey '^R' zaw-history
+  function zaw-src-gitdir-cd () {
+    BUFFER="cd $1"
+    zle accept-line
+  }
+  zaw-register-src -n gitdir zaw-src-gitdir
+
+  # 履歴検索 / デフォルトのは潰してしまう
+  bindkey '^r' zaw-history
+fi
 
 # percol!!
-alias p='percol'
+if [ -x `which percol` > /dev/null 2>&1 ]; then
+  alias P='percol'
 
-# history置き換え
-#function percol-select-history() {
-#    local tac
-#    if which tac > /dev/null; then
-#        tac="tac"
-#    else
-#        tac="tail -r"
-#    fi
-#    BUFFER=$(history -n 1 | \
-#        eval $tac | \
-#        percol --query "$LBUFFER")
-#    CURSOR=$#BUFFER
-#    zle clear-screen
-#}
-#zle -N percol-select-history
-#bindkey '^r' percol-select-history
-
-# ドキュメントインクリメンタルサーチ
-function percol-search-document() {
+  # ドキュメントインクリメンタルサーチ
+  function percol-search-document() {
     if [ $# -ge 1 ]; then
-        DOCUMENT_DIR=$*
+      DOCUMENT_DIR=$*
     else
-        DOCUMENT_DIR=($HOME/Dropbox)
-        if [ -d $HOME/Documents ]; then
-            DOCUMENT_DIR=($HOME/Documents $DOCUMENT_DIR)
-        fi
+      DOCUMENT_DIR=($HOME/Dropbox)
+      if [ -d $HOME/Documents ]; then
+        DOCUMENT_DIR=($HOME/Documents $DOCUMENT_DIR)
+      fi
     fi
     SELECTED_FILE=$(echo $DOCUMENT_DIR | \
-        xargs find | \
-        grep -E "\.(txt|md|pdf|key|numbers|pages|doc|xls|ppt)$" | \
-        percol --match-method migemo)
+      xargs find | \
+      grep -E "\.(txt|md|pdf|key|numbers|pages|doc|xls|ppt)$" | \
+      percol --match-method migemo)
     if [ $? -eq 0 ]; then
-        echo $SELECTED_FILE | sed 's/ /\\ /g'
+      echo $SELECTED_FILE | sed 's/ /\\ /g'
     fi
-}
-alias pd='percol-search-document'
+  }
+  alias pd='percol-search-document'
 
-# localteコマンドから結果を更に検索
-function percol-search-locate() {
+  # localteコマンドから結果を更に検索
+  function percol-search-locate() {
     if [ $# -ge 1 ]; then
-        SELECTED_FILE=$(locate $* | percol --match-method migemo)
-        if [ $? -eq 0 ]; then
-            echo $SELECTED_FILE | sed 's/ /\\ /g'
-        fi
+      SELECTED_FILE=$(locate $* | percol --match-method migemo)
+      if [ $? -eq 0 ]; then
+        echo $SELECTED_FILE | sed 's/ /\\ /g'
+      fi
     else
-        bultin locate
+      bultin locate
     fi
-}
-alias psl='percol-search-locate'
+  }
+  alias psl='percol-search-locate'
+fi
+
+# auto-fu!!
+#if [ -f ~/.zsh/auto-fu.zsh ]; then
+#  source ~/.zsh/auto-fu.zsh/auto-fu.zsh
+#  function zle-line-init () {
+#      auto-fu-init
+#  }
+#  zle -N zle-line-init
+#  # -azfu-を表示させない
+#  zstyle ':auto-fu:var' postdisplay $''
+#  zstyle ':completion:*' completer _oldlist _complete
+#fi
+
+# zawと相性悪い 非常に残念
+#if [ -d ~/.zsh/zsh-autosuggestions ]; then
+#  source ~/.zsh/zsh-autosuggestions/autosuggestions.zsh
+#  # Enable autosuggestions automatically
+#  zle-line-init() {
+#    zle autosuggest-start
+#  }
+#  zle -N zle-line-init
+#  bindkey '^[T' autosuggest-toggle
+#  bindkey '^[F' autosuggest-accept-suggested-word
+#fi
 
