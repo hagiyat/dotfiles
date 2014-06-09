@@ -8,8 +8,8 @@ imap <c-j> <esc>
 inoremap jj <Esc>
 
 " leaderを , に割り当て
-let mapleader = ","
-noremap \  ,
+"let mapleader = ","
+"noremap \  ,
 
 "新しい行のインデントを現在行と同じにする
 
@@ -36,7 +36,7 @@ set tabstop=4
 "set whichwrap=b,s,h,l,<,>,[,]
 
 " このへんは2文字インデント
-autocmd! FileType ruby,php,javascript,html,smarty setlocal shiftwidth=2 tabstop=2
+autocmd! FileType ruby,php,javascript,html,zsh setlocal shiftwidth=2 tabstop=2
 
 " 大文字小文字を区別しない
 set ignorecase
@@ -146,7 +146,7 @@ nnoremap <leader>u :e ++enc=utf8<CR>
 nnoremap <leader>s :e ++enc=cp932<CR>
 
 " paste切り替え
-nnoremap <silent><space>pa :set paste<CR>:startinsert<CR>
+nnoremap <silent><space>cv :set paste<CR>:startinsert<CR>
 " pdvとあたる・・・！
 "autocmd InsertLeave * set nopaste
 
@@ -181,11 +181,19 @@ NeoBundle 'https://github.com/Shougo/neobundle.vim.git'
 
 NeoBundle 'https://github.com/kien/ctrlp.vim.git'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,tags,*/vendor/*
-
-NeoBundle 'https://github.com/scrooloose/nerdtree.git'
-nnoremap <Space>n :NERDTreeToggle<CR>
+let g:ctrlp_use_caching = 1
+let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_mruf_max = 500
+nnoremap <Space>pb :<C-u>CtrlPBuffer<CR>
+nnoremap <Space>pp :<C-u>CtrlP<CR>
+nnoremap <Space>pl :<C-u>CtrlPLine<CR>
+nnoremap <Space>pm :<C-u>CtrlPMRUFiles<CR>
+nnoremap <Space>pq :<C-u>CtrlPQuickfix<CR>
+nnoremap <Space>ps :<C-u>CtrlPMixed<CR>
 
 NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/vimfiler.vim'
+nnoremap <Space>n :VimFilerExplorer<CR>
 
 NeoBundle 'https://github.com/scrooloose/syntastic.git'
 let g:syntastic_auto_loc_list = 1
@@ -280,7 +288,7 @@ map p <Plug>(fakeclip-p)
 "map dd <Plug>(fakeclip-D)
 
 NeoBundle 'PDV--phpDocumentor-for-Vim'
-nnoremap <silent><space>pc :call PhpDocSingle()<CR>
+nnoremap <silent><space>cc :call PhpDocSingle()<CR>
 
 " color scheme
 NeoBundle 'altercation/vim-colors-solarized'
