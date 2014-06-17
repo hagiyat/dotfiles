@@ -1,7 +1,6 @@
 alias ll='ls -l'
 alias la='ls -al'
 export LANG=ja_JP.UTF-8
-
 export EDITOR=vim
 
 # ヒストリー設定
@@ -50,7 +49,6 @@ colors
 autoload -Uz vcs_info
 
 export TERM=xterm-256color
-#alias ssh='TERM=xterm-256color ssh'
 
 #/usr/bin/keychain $HOME/.ssh/id_rsa
 #source $HOME/.keychain/$HOST-sh
@@ -82,50 +80,33 @@ if [ -d ${HOME}/.anyenv ] ; then
   done
 fi
 
+# cdrを有効化
+autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+add-zsh-hook chpwd chpwd_recent_dirs
+zstyle ':chpwd:*' recent-dirs-max 5000
+zstyle ':chpwd:*' recent-dirs-default yes
+zstyle ':completion:*' recent-dirs-insert both
+
+# 表示領域を画面半分にする
+zstyle ':filter-select' max-lines $(($LINES / 2))
 
 # zaw!!
 if [ -d ~/.zsh/zaw ]; then
   # (zaw準備)cdrを有効化
-  autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
-  add-zsh-hook chpwd chpwd_recent_dirs
-  zstyle ':chpwd:*' recent-dirs-max 5000
-  zstyle ':chpwd:*' recent-dirs-default yes
-  zstyle ':completion:*' recent-dirs-insert both
-
   source ~/.zsh/zaw/zaw.zsh
-  # 表示領域を画面半分にする
-  zstyle ':filter-select' max-lines $(($LINES / 2))
 
-  bindkey '^[d' zaw-cdr
-  bindkey '^[g' zaw-git-branches
-  bindkey '^[z' zaw-gitdir
-
-  function zaw-src-gitdir () {
-    _dir=$(git rev-parse --show-cdup 2>/dev/null)
-    if [ $? -eq 0 ]
-    then
-      candidates=( $(git ls-files ${_dir} | perl -MFile::Basename -nle \
-        '$a{dirname $_}++; END{delete $a{"."}; print for sort keys %a}') )
-    fi
-    actions=("zaw-src-gitdir-cd")
-    act_descriptions=("change directory in git repos")
-  }
-
-  function zaw-src-gitdir-cd () {
-    BUFFER="cd $1"
-    zle accept-line
-  }
-  zaw-register-src -n gitdir zaw-src-gitdir
+  #bindkey '^[d' zaw-cdr
+  #bindkey '^[g' zaw-git-branches
 
   # 履歴検索 / デフォルトのは潰してしまう
-  bindkey '^r' zaw-history
+  #bindkey '^r' zaw-history
 fi
 
 # peco!!
 if [ -x `which peco` > /dev/null 2>&1 ]; then
   alias P='peco'
 
-  # Ag + peco
+  # Ag + peco + vim
   function age() {
     if [ $# -eq 1 ]; then
       ag --noheading $1 | peco | sed 's/^\(.*\):\(.*\):.*/\1 +\2/' | xargs -o $EDITOR
@@ -134,15 +115,24 @@ if [ -x `which peco` > /dev/null 2>&1 ]; then
     fi
   }
 
-  ## peco版cdr
-  ## search a destination from cdr list
+  # Ag + paco + pbcopy
+  function agp() {
+    if [ $# -eq 1 ]; then
+      ag $1 | peco | awk {'$1="";print'} | pbcopy
+    else
+      echo "Usage: agp QUERY"
+    fi
+  }
+
+  # peco版cdr
+  # search a destination from cdr list
   function peco-get-destination-from-cdr() {
     cdr -l | \
       sed -e 's/^[[:digit:]]*[[:blank:]]*//' | \
       peco --query "$LBUFFER"
   }
 
-  ## search a destination from cdr list and cd the destination
+  # search a destination from cdr list and cd the destination
   function peco-cdr() {
     local destination="$(peco-get-destination-from-cdr)"
     if [ -n "$destination" ]; then
@@ -153,7 +143,49 @@ if [ -x `which peco` > /dev/null 2>&1 ]; then
     fi
   }
   zle -N peco-cdr
-  bindkey '^xb' peco-cdr
+  bindkey '^[d' peco-cdr
+
+  # peco版履歴検索
+  function exists_command { which $1 &> /dev/null }
+  function peco_select_history() {
+    BUFFER=$(fc -l -n 1 | tail -r | LC_ALL=C sed -e '/^cd/d' | peco --query "$LBUFFER")
+    CURSOR=$#BUFFER         # move cursor
+    #zle -R -c               # refresh
+    zle accept-line
+  }
+  zle -N peco_select_history
+  bindkey '^r' peco_select_history
+
+  #peco版git-branches
+  function peco-git-branches () {
+    git rev-parse --git-dir >/dev/null 2>&1
+    if [[ $? == 0 ]]; then
+      local branches_list="$(git show-ref | awk ' $2 != "refs/stash" { print $2 }' | sed -e '/^stash/d' | sed -e 's/refs\///g' | peco)"
+      local b_type=${branches_list%%/*}
+      local b_name=${branches_list#(heads|remotes|tags)/}
+      case "$b_type" in
+        "heads"|"tags")
+          BUFFER="git checkout $b_name"
+          zle accept-line
+          ;;
+        "remotes")
+          BUFFER="git checkout -t $b_name"
+          zle accept-line
+          ;;
+      esac
+    fi
+  }
+  zle -N peco-git-branches
+  bindkey '^[g' peco-git-branches
+
+  # オリジナル:git addで試してみる
+  function peco-gitadd() {
+    local selected=$(git status -s | awk {'print $2'} | peco)
+    if [ -n "$selected" ]; then
+      git add $selected
+      git status
+    fi
+  }
 fi
 
 # auto-fu!!
