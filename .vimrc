@@ -290,6 +290,25 @@ map p <Plug>(fakeclip-p)
 NeoBundle 'PDV--phpDocumentor-for-Vim'
 nnoremap <silent><space>cc :call PhpDocSingle()<CR>
 
+" quickrun
+NeoBundle 'thinca/vim-quickrun'
+nnoremap <silent><Leader>r :call QuickRun -outputter/buffer/split \":botright 12sp\" -hook/time/enable 1<CR>
+" 一番下にウィンドウを分割させて出力
+" :QuickRun -outputter/buffer/split ":botright"
+"
+" " ウィンドウの高さを指定する場合
+" :QuickRun -outputter/buffer/split ":botright 8sp"
+"
+" " 出力がなかった場合に出力バッファを自動的に閉じる
+" :QuickRun -outputter/buffer/close_on_empty 1
+"
+" " quickfix へと出力する
+" :QuickRun -outputter quickfix
+"
+" " 実行時間を計測し、その結果も最後に出力する
+" :QuickRun ruby -hook/time/enable 1
+
+
 " color scheme
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'vim-scripts/Zenburn'
@@ -310,3 +329,9 @@ set mouse=n
 
 colorscheme hybrid
 set background=dark
+
+function! s:diffColor() "{{{
+  colorscheme solarized
+  set background=dark
+endfunction "}}}
+command! VimdiffBootstrap :call s:diffColor()

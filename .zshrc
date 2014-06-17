@@ -2,11 +2,13 @@ alias ll='ls -l'
 alias la='ls -al'
 export LANG=ja_JP.UTF-8
 
+export EDITOR=vim
+
 # ヒストリー設定
 HISTFILE=~/.zsh_history
 HISTSIZE=100000
 SAVEHIST=100000
-setopt appendhistory             # HISTFILEを上書きせずに追記
+setopt appendhistory             # .zsh_historyへの書き込みは上書きではなく追記
 setopt hist_ignore_all_dups      # 重複したとき、古い履歴を削除
 setopt hist_ignore_space         # 先頭にスペースを入れると履歴を保存しない
 setopt share_history             # 履歴を共有する
@@ -19,7 +21,7 @@ bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end
 
 # ディレクトリ
-setopt autopushd            # 自動でpushdする。cd -[tab]で候補表示
+setopt autopushd            # 自動でpushdする
 setopt chase_links          # リンクへ移動するとき実際のディレクトリへ移動
 setopt pushd_ignore_dups    # 重複するディレクトリは記憶しない
 
@@ -55,13 +57,6 @@ export TERM=xterm-256color
 
 alias tmux="LD_LIBRARY_PATH=/usr/local/lib /usr/local/bin/tmux"
 
-# z
-#. `brew --prefix`/etc/profile.d/z.sh
-#function precmd () {
-#   z --add "$(pwd -P)"
-#}
-#alias j="z"
-
 
 # git alias
 alias gits="git status"
@@ -73,10 +68,10 @@ alias gitl="git log"
 alias gitls="git log --stat"
 alias gitlg="git log --stat --graph"
 alias gitlm="git log --stat --author=hagiya"
-alias gitf="git flow"
+alias git-delete-merged-branches="git branch --merged | grep -v '*' | xargs -I % git branch -d %"
 
 alias phpl="php -l"
-
+alias vdiff="vimdiff +VimdiffBootstrap"
 
 if [ -d ${HOME}/.anyenv ] ; then
   export PATH="$HOME/.anyenv/bin:$PATH"
@@ -126,42 +121,18 @@ if [ -d ~/.zsh/zaw ]; then
   bindkey '^r' zaw-history
 fi
 
-# percol!!
-if [ -x `which percol` > /dev/null 2>&1 ]; then
-  alias P='percol'
+# peco!!
+if [ -x `which peco` > /dev/null 2>&1 ]; then
+  alias P='peco'
 
-  # ドキュメントインクリメンタルサーチ
-  function percol-search-document() {
-    if [ $# -ge 1 ]; then
-      DOCUMENT_DIR=$*
+  # Ag + peco
+  function age() {
+    if [ $# -eq 1 ]; then
+      ag --noheading $1 | peco | sed 's/^\(.*\):\(.*\):.*/\1 +\2/' | xargs -o $EDITOR
     else
-      DOCUMENT_DIR=($HOME/Dropbox)
-      if [ -d $HOME/Documents ]; then
-        DOCUMENT_DIR=($HOME/Documents $DOCUMENT_DIR)
-      fi
-    fi
-    SELECTED_FILE=$(echo $DOCUMENT_DIR | \
-      xargs find | \
-      grep -E "\.(txt|md|pdf|key|numbers|pages|doc|xls|ppt)$" | \
-      percol --match-method migemo)
-    if [ $? -eq 0 ]; then
-      echo $SELECTED_FILE | sed 's/ /\\ /g'
+      echo "Usage: age QUERY"
     fi
   }
-  alias pd='percol-search-document'
-
-  # localteコマンドから結果を更に検索
-  function percol-search-locate() {
-    if [ $# -ge 1 ]; then
-      SELECTED_FILE=$(locate $* | percol --match-method migemo)
-      if [ $? -eq 0 ]; then
-        echo $SELECTED_FILE | sed 's/ /\\ /g'
-      fi
-    else
-      bultin locate
-    fi
-  }
-  alias psl='percol-search-locate'
 fi
 
 # auto-fu!!
@@ -187,4 +158,28 @@ fi
 #  bindkey '^[T' autosuggest-toggle
 #  bindkey '^[F' autosuggest-accept-suggested-word
 #fi
+
+# ネットワーク系コマンド強制ギブス
+#source ~/.zsh/gypsum.zsh
+
+### percol版cdr
+### search a destination from cdr list
+#function percol-get-destination-from-cdr() {
+#  cdr -l | \
+#    sed -e 's/^[[:digit:]]*[[:blank:]]*//' | \
+#    percol --match-method migemo --query "$LBUFFER"
+#}
+
+### search a destination from cdr list and cd the destination
+#function percol-cdr() {
+#  local destination="$(percol-get-destination-from-cdr)"
+#  if [ -n "$destination" ]; then
+#    BUFFER="cd $destination"
+#    zle accept-line
+#  else
+#    zle reset-prompt
+#  fi
+#}
+#zle -N percol-cdr
+#bindkey '^xb' percol-cdr
 

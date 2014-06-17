@@ -1,0 +1,18 @@
+{
+  "Keymap": {
+    "C-p": "peco.SelectPrevious",
+    "C-n": "peco.SelectNext",
+    "C-c": "peco.Cancel"
+  },
+  "CustomMatcher": {
+    "C/Migemo": [
+      "/usr/local/bin/cmigemo",
+      "$QUERY"
+    ]
+  },
+  "Style": {
+    "Basic": ["on_default", "default"],
+    "Selected": ["underline", "on_blue", "black"],
+    "Query": ["yellow", "bold"]
+  }
+}
