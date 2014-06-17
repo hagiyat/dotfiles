@@ -93,7 +93,7 @@ zstyle ':filter-select' max-lines $(($LINES / 2))
 # zaw!!
 if [ -d ~/.zsh/zaw ]; then
   # (zaw準備)cdrを有効化
-  source ~/.zsh/zaw/zaw.zsh
+  #source ~/.zsh/zaw/zaw.zsh
 
   #bindkey '^[d' zaw-cdr
   #bindkey '^[g' zaw-git-branches
@@ -147,14 +147,13 @@ if [ -x `which peco` > /dev/null 2>&1 ]; then
 
   # peco版履歴検索
   function exists_command { which $1 &> /dev/null }
-  function peco_select_history() {
+  function peco-select-history() {
     BUFFER=$(fc -l -n 1 | tail -r | LC_ALL=C sed -e '/^cd/d' | peco --query "$LBUFFER")
-    CURSOR=$#BUFFER         # move cursor
-    #zle -R -c               # refresh
+    #CURSOR=$#BUFFER         # move cursor
     zle accept-line
   }
-  zle -N peco_select_history
-  bindkey '^r' peco_select_history
+  zle -N peco-select-history
+  bindkey '^r' peco-select-history
 
   #peco版git-branches
   function peco-git-branches () {
