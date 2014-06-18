@@ -1,5 +1,3 @@
-alias ll='ls -l'
-alias la='ls -al'
 export LANG=ja_JP.UTF-8
 export EDITOR=vim
 
@@ -55,6 +53,8 @@ export TERM=xterm-256color
 
 alias tmux="LD_LIBRARY_PATH=/usr/local/lib /usr/local/bin/tmux"
 
+alias ll='ls -l'
+alias la='ls -al'
 
 # git alias
 alias gits="git status"
@@ -87,21 +87,6 @@ zstyle ':chpwd:*' recent-dirs-max 5000
 zstyle ':chpwd:*' recent-dirs-default yes
 zstyle ':completion:*' recent-dirs-insert both
 
-# 表示領域を画面半分にする
-zstyle ':filter-select' max-lines $(($LINES / 2))
-
-# zaw!!
-if [ -d ~/.zsh/zaw ]; then
-  # (zaw準備)cdrを有効化
-  #source ~/.zsh/zaw/zaw.zsh
-
-  #bindkey '^[d' zaw-cdr
-  #bindkey '^[g' zaw-git-branches
-
-  # 履歴検索 / デフォルトのは潰してしまう
-  #bindkey '^r' zaw-history
-fi
-
 # peco!!
 if [ -x `which peco` > /dev/null 2>&1 ]; then
   alias P='peco'
@@ -109,13 +94,13 @@ if [ -x `which peco` > /dev/null 2>&1 ]; then
   # Ag + peco + vim
   function age() {
     if [ $# -eq 1 ]; then
-      ag --noheading $1 | peco | sed 's/^\(.*\):\(.*\):.*/\1 +\2/' | xargs -o $EDITOR
+      ag --noheading $1 | sed '/^$/d' | peco | sed 's/^\(.*\):\(.*\):.*/\1 +\2/' | xargs -o $EDITOR
     else
       echo "Usage: age QUERY"
     fi
   }
 
-  # Ag + paco + pbcopy
+  # Ag + peco + pbcopy
   function agp() {
     if [ $# -eq 1 ]; then
       ag $1 | peco | awk {'$1="";print'} | pbcopy
@@ -177,40 +162,13 @@ if [ -x `which peco` > /dev/null 2>&1 ]; then
   zle -N peco-git-branches
   bindkey '^[g' peco-git-branches
 
-  # オリジナル:git addで試してみる
+  # git add / 複数行選んでドン
   function peco-gitadd() {
-    local selected=$(git status -s | awk {'print $2'} | peco)
-    if [ -n "$selected" ]; then
-      git add $selected
+    git rev-parse --git-dir >/dev/null 2>&1
+    if [[ $? == 0 ]]; then
+      git status -s | peco | awk {'print $2'} | tr '\n' ' ' | xargs git add
       git status
     fi
   }
 fi
-
-# auto-fu!!
-#if [ -f ~/.zsh/auto-fu.zsh ]; then
-#  source ~/.zsh/auto-fu.zsh/auto-fu.zsh
-#  function zle-line-init () {
-#      auto-fu-init
-#  }
-#  zle -N zle-line-init
-#  # -azfu-を表示させない
-#  zstyle ':auto-fu:var' postdisplay $''
-#  zstyle ':completion:*' completer _oldlist _complete
-#fi
-
-# zawと相性悪い 非常に残念
-#if [ -d ~/.zsh/zsh-autosuggestions ]; then
-#  source ~/.zsh/zsh-autosuggestions/autosuggestions.zsh
-#  # Enable autosuggestions automatically
-#  zle-line-init() {
-#    zle autosuggest-start
-#  }
-#  zle -N zle-line-init
-#  bindkey '^[T' autosuggest-toggle
-#  bindkey '^[F' autosuggest-accept-suggested-word
-#fi
-
-# ネットワーク系コマンド強制ギブス
-#source ~/.zsh/gypsum.zsh
 

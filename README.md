@@ -6,7 +6,7 @@ for mac
 zsh
 ---
 
-- required antigen, zaw, percol, anyenv
+- require antigen, peco, anyenv
 
 
 
