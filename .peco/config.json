@@ -3,18 +3,18 @@
     "C-p": "peco.SelectPrevious",
     "C-n": "peco.SelectNext",
     "C-s": "peco.ToggleSelectionAndSelectNext",
-    "C-/": "peco.RotateMatcher",
     "C-c": "peco.Cancel"
   },
   "CustomMatcher": {
-    "C/Migemo": [
-      "/usr/local/bin/cmigemo",
+    "Migemo": [
+      "migemogrep",
       "$QUERY"
     ]
   },
   "Style": {
     "Basic": ["on_default", "default"],
     "Selected": ["underline", "on_blue", "black"],
+    "Matched": ["cyan", "bold"],
     "Query": ["yellow", "bold"]
   }
 }

@@ -180,16 +180,21 @@ call neobundle#rc(expand('~/.vim/bundle'))
 NeoBundle 'https://github.com/Shougo/neobundle.vim.git'
 
 NeoBundle 'https://github.com/kien/ctrlp.vim.git'
+NeoBundle 'https://github.com/tacahiroy/ctrlp-funky.git'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,tags,*/vendor/*
 let g:ctrlp_use_caching = 1
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_mruf_max = 500
+"let g:ctrlp_use_migemo = 1
+let g:ctrlp_extensions = ['funky']
+"let g:ctrlp_user_command = 'ag %s -l'
 nnoremap <Space>pb :<C-u>CtrlPBuffer<CR>
 nnoremap <Space>pp :<C-u>CtrlP<CR>
 nnoremap <Space>pl :<C-u>CtrlPLine<CR>
 nnoremap <Space>pm :<C-u>CtrlPMRUFiles<CR>
 nnoremap <Space>pq :<C-u>CtrlPQuickfix<CR>
 nnoremap <Space>ps :<C-u>CtrlPMixed<CR>
+nnoremap <Space>pf :<C-u>CtrlPFunky<CR>
 
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimfiler.vim'
@@ -197,7 +202,7 @@ nnoremap <Space>n :VimFilerExplorer<CR>
 
 NeoBundle 'https://github.com/scrooloose/syntastic.git'
 let g:syntastic_auto_loc_list = 1
-let g:syntastic_javascript_checker = 'jshint'
+"let g:syntastic_javascript_checker = 'jshint'
 
 " if_luaが有効ならneocompleteを使う
 " 動作が遅くなってきたらLazyにする
@@ -290,6 +295,8 @@ map p <Plug>(fakeclip-p)
 NeoBundle 'PDV--phpDocumentor-for-Vim'
 nnoremap <silent><space>cc :call PhpDocSingle()<CR>
 
+NeoBundle 'koron/codic-vim'
+
 " quickrun
 NeoBundle 'thinca/vim-quickrun'
 nnoremap <silent><Leader>r :call QuickRun -outputter/buffer/split \":botright 12sp\" -hook/time/enable 1<CR>
@@ -327,7 +334,7 @@ filetype plugin on
 filetype indent on
 set mouse=n
 
-colorscheme hybrid
+colorscheme jellybeans
 set background=dark
 
 function! s:diffColor() "{{{
@@ -335,3 +342,16 @@ function! s:diffColor() "{{{
   set background=dark
 endfunction "}}}
 command! VimdiffBootstrap :call s:diffColor()
+
+" golang
+" :Fmt などで gofmt の代わりに goimports を使う
+let g:gofmt_command = 'goimports'
+
+" Go に付属の plugin と gocode を有効にする
+set rtp+=${GOROOT}/misc/vim
+set rtp+=${GOPATH}/src/github.com/nsf/gocode/vim
+
+" 保存時に :Fmt する
+"au BufWritePre *.go Fmt
+au BufNewFile,BufRead *.go set sw=4 noexpandtab ts=4
+au FileType go compiler go
