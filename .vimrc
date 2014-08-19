@@ -181,7 +181,8 @@ NeoBundle 'https://github.com/Shougo/neobundle.vim.git'
 
 NeoBundle 'https://github.com/kien/ctrlp.vim.git'
 NeoBundle 'https://github.com/tacahiroy/ctrlp-funky.git'
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,tags,*/vendor/*
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,tags,*/vendor/*,*/.git/*,/dev/fd/,*/stdin*
+let g:ctrlp_mruf_exclude = '/dev/fd/\|.git\|fugitive'
 let g:ctrlp_use_caching = 1
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_mruf_max = 500
@@ -315,6 +316,14 @@ nnoremap <silent><Leader>r :call QuickRun -outputter/buffer/split \":botright 12
 " " 実行時間を計測し、その結果も最後に出力する
 " :QuickRun ruby -hook/time/enable 1
 
+" fugitive
+noremap <Leader>ga :!git add .<CR>
+noremap <Leader>gc :!git commit -m '<C-R>="'"<CR>
+noremap <Leader>gsh :!git push<CR>
+noremap <Leader>gs :Gstatus<CR>
+noremap <Leader>gb :Gblame<CR>
+noremap <Leader>gd :Gvdiff<CR>
+noremap <Leader>gr :Gremove<CR>
 
 " color scheme
 NeoBundle 'altercation/vim-colors-solarized'

@@ -17,7 +17,7 @@ export EDITOR=vim
 #export PAGER=vimpager
 export GOROOT=/usr/local/opt/go/libexec
 export GOPATH=$HOME/.go
-export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+#export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
 # ヒストリー設定
 HISTFILE=~/.zsh_history
@@ -33,11 +33,12 @@ setopt autopushd            # 自動でpushdする
 setopt chase_links          # リンクへ移動するとき実際のディレクトリへ移動
 setopt pushd_ignore_dups    # 重複するディレクトリは記憶しない
 
-# antigen!!
-#source ~/.zsh/antigen.conf
-
 # auto cd
 setopt auto_cd
+
+# zmv enable
+autoload -Uz zmv
+#alias zmv='noglob zmv -W'
 
 #export TERM=xterm-256color
 
@@ -80,6 +81,19 @@ zstyle ':chpwd:*' recent-dirs-max 5000
 zstyle ':chpwd:*' recent-dirs-default yes
 zstyle ':completion:*' recent-dirs-insert both
 
+# tmuxのバッファをvimで開く
+alias tmuxvim="tmux capture-pane -S -2000\; show-buffer | vim +2000 -Rc 'set ft=zsh' -"
+alias pipevim="vim -Rc 'set ft=zsh' -"
+
+# agで検索した結果をvimで開く
+function agvim() {
+  if [ $# -eq 1 ]; then
+    ag $1 --noheading | vim -Rc 'set ft=zsh' -
+  else
+    echo "Usage: age QUERY"
+  fi
+}
+
 # peco!!
 if [ -x `which peco` > /dev/null 2>&1 ]; then
   alias peco='peco --rcfile ~/.peco/config.json'
@@ -88,25 +102,6 @@ if [ -x `which peco` > /dev/null 2>&1 ]; then
   }
   function _peco_single() {
     peco --rcfile ~/.peco/config_single.json $1
-  }
-  # Ag + peco + vim
-  function age() {
-    if [ $# -eq 1 ]; then
-      #local files="$(ag --noheading $1 | sed '/^$/d' | _peco | awk -F":" '{print "+" $2 " " $1}' | tr '\n' ' ')"
-      #vim "$(ag --noheading $1 | sed '/^$/d' | _peco | awk -F":" '{print "+" $2 " " $1}' | tr '\n' ' ')"
-      ag --noheading $1 | sed '/^$/d' | _peco | awk -F":" '{print $1}' | xargs -o $EDITOR
-    else
-      echo "Usage: age QUERY"
-    fi
-  }
-
-  # Ag + peco + pbcopy
-  function agp() {
-    if [ $# -eq 1 ]; then
-      ag $1 | _peco --prompt="[pbcopy]" | awk {'$1="";print'} | pbcopy
-    else
-      echo "Usage: agp QUERY"
-    fi
   }
 
   # peco版cdr
@@ -198,7 +193,7 @@ if [ -x `which peco` > /dev/null 2>&1 ]; then
   alias nanapi-vpn="if [[ ! -z `networksetup -showpppoestatus nanapi | grep disconnected` ]]; then networksetup -connectpppoeservice nanapi; fi;"
 
   function codic() {
-    TARG=$(cat ~/.vim/bundle/codic-vim/dict/naming-entry.csv | peco --prompt="[codic]" | awk -F , '{print $1}')
+    TARG=$(cat ~/.vim/bundle/codic-vim/dict/naming-entry.csv | peco --prompt="[codic]" --initial-matcher="Migemo" | awk -F , '{print $1}')
     if [ $? = 1 -o "$TARG" = "" ]; then
       echo "no pattern was matched"
       return 1
@@ -206,5 +201,13 @@ if [ -x `which peco` > /dev/null 2>&1 ]; then
     cat ~/.vim/bundle/codic-vim/dict/naming-translation.csv | grep "$TARG" | awk -F , '{print "parts: " $3; print "mean: " $4; print "note: " $5 "\n";}'
   }
 
+  function peco-ssh-aws() {
+    local host=$(gsed -ne '/### EC2SSH BEGIN ###/,$p' ~/.ssh/config | gsed -ne '/^Host /p' | gsed 's/^Host //g' | _peco_single --prompt="[AWS]")
+    if [[ -n $host ]]; then
+      BUFFER="ssh hagiya@$host"
+      CURSOR=$#BUFFER
+    fi
+  }
+  zle -N peco-ssh-aws
+  bindkey '^[c' peco-ssh-aws
 fi
-
