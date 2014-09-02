@@ -6,7 +6,7 @@ for mac
 zsh
 ---
 
-- require antigen, peco, anyenv
+- require zprezto, peco, anyenv
 
 
 
