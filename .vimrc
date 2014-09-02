@@ -321,7 +321,9 @@ if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
 set laststatus=2
-let g:airline_theme='wombat'
+let g:airline_theme='badwolf'
+"let g:airline_theme='serene'
+"let g:airline_theme='simple'
 let g:airline_detect_modified=1
 let g:airline#extensions#bufferline#enabled = 1
 let g:airline_left_sep = ''
