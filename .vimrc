@@ -4,8 +4,6 @@ set fileencodings=utf-8,cp932,euc-jp,iso-20220-jp,default,latin
 
 " escapeキーをマッピング
 imap <c-j> <esc>
-" 入力モード中に素早くjjと入力した場合はESCとみなす
-inoremap jj <Esc>
 
 " leaderを , に割り当て
 "let mapleader = ","
@@ -54,7 +52,7 @@ cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
 " 補完時に大文字小文字を区別しない
 set infercase
 " カーソルを文字が存在しない部分でも動けるようにする
-set virtualedit=all
+"set virtualedit=all
 " バッファを閉じる代わりに隠す（Undo履歴を残すため）
 set hidden
 " 新しく開く代わりにすでに開いてあるバッファを開く
@@ -104,6 +102,9 @@ autocmd BufWritePre * :%s/\s\+$//ge
 " 256色表示
 autocmd Colorscheme * :set t_Co=256
 
+" 背景色でクリアする
+autocmd Colorscheme * :set t_ut=
+
 " 不可視文字の表示
 set listchars=tab:▸-,trail:=,extends:»,precedes:«,nbsp:%,eol:↲
 autocmd Colorscheme * :highlight SpecialKey ctermfg=238
@@ -134,9 +135,12 @@ nnoremap <Tab> %
 vnoremap <Tab> %
 
 " バッファ操作
-nnoremap <silent>bp :bprevious<CR>
-nnoremap <silent>bn :bnext<CR>
-nnoremap <silent>bb :b#<CR>
+nnoremap <Space>bp :bprevious<CR>
+nnoremap <Space>bn :bnext<CR>
+nnoremap <Space>bd :bdelete<CR>
+nnoremap <F3> :bprevious<CR>
+nnoremap <F4> :bnext<CR>
+nnoremap <F10> :bdelete<CR>
 
 " w!! でスーパーユーザーとして保存（sudoが使える環境限定）
 cmap w!! w !sudo tee > /dev/null %
@@ -316,14 +320,9 @@ nnoremap <silent><Leader>r :call QuickRun -outputter/buffer/split \":botright 12
 " " 実行時間を計測し、その結果も最後に出力する
 " :QuickRun ruby -hook/time/enable 1
 
-" fugitive
-noremap <Leader>ga :!git add .<CR>
-noremap <Leader>gc :!git commit -m '<C-R>="'"<CR>
-noremap <Leader>gsh :!git push<CR>
-noremap <Leader>gs :Gstatus<CR>
-noremap <Leader>gb :Gblame<CR>
-noremap <Leader>gd :Gvdiff<CR>
-noremap <Leader>gr :Gremove<CR>
+NeoBundle 'tyru/caw.vim'
+nmap <Leader>c <Plug>(caw:i:toggle)
+vmap <Leader>c <Plug>(caw:i:toggle)
 
 " color scheme
 NeoBundle 'altercation/vim-colors-solarized'
@@ -352,15 +351,3 @@ function! s:diffColor() "{{{
 endfunction "}}}
 command! VimdiffBootstrap :call s:diffColor()
 
-" golang
-" :Fmt などで gofmt の代わりに goimports を使う
-let g:gofmt_command = 'goimports'
-
-" Go に付属の plugin と gocode を有効にする
-set rtp+=${GOROOT}/misc/vim
-set rtp+=${GOPATH}/src/github.com/nsf/gocode/vim
-
-" 保存時に :Fmt する
-"au BufWritePre *.go Fmt
-au BufNewFile,BufRead *.go set sw=4 noexpandtab ts=4
-au FileType go compiler go

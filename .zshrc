@@ -40,7 +40,7 @@ setopt auto_cd
 autoload -Uz zmv
 #alias zmv='noglob zmv -W'
 
-#export TERM=xterm-256color
+export TERM=xterm-256color
 
 alias tmux="LD_LIBRARY_PATH=/usr/local/lib /usr/local/bin/tmux"
 
@@ -83,7 +83,7 @@ zstyle ':completion:*' recent-dirs-insert both
 
 # tmuxのバッファをvimで開く
 alias tmuxvim="tmux capture-pane -S -2000\; show-buffer | vim +2000 -Rc 'set ft=zsh' -"
-alias pipevim="vim -Rc 'set ft=zsh' -"
+alias pvim="vim -Rc 'set ft=zsh' -"
 
 # agで検索した結果をvimで開く
 function agvim() {
@@ -117,6 +117,7 @@ if [ -x `which peco` > /dev/null 2>&1 ]; then
   }
   zle -N peco-cdr
   bindkey '^[d' peco-cdr
+  bindkey '^[[25~d' peco-cdr
 
   # peco版履歴検索
   function exists_command { which $1 &> /dev/null }
@@ -150,6 +151,7 @@ if [ -x `which peco` > /dev/null 2>&1 ]; then
   }
   zle -N peco-git-branches
   bindkey '^[g' peco-git-branches
+  bindkey '^[[25~g' peco-git-branches
 
   # git addをGUIツールっぽくする
   alias pgitadd="git status -s | sed -e '/^[^ |\?]/d' | _peco --prompt='[git add]' | awk '{print \$2}' | xargs git add"
@@ -210,4 +212,5 @@ if [ -x `which peco` > /dev/null 2>&1 ]; then
   }
   zle -N peco-ssh-aws
   bindkey '^[c' peco-ssh-aws
+  bindkey '^[[25~c' peco-ssh-aws
 fi
