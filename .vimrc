@@ -259,14 +259,6 @@ endif
 
 NeoBundle 'https://github.com/rking/ag.vim'
 
-NeoBundle 'https://github.com/bling/vim-airline'
-set laststatus=2
-let g:airline_theme='wombat'
-let g:airline_detect_modified=1
-let g:airline#extensions#bufferline#enabled = 1
-let g:airline_left_sep = '▶'
-let g:airline_right_sep = '◀'
-
 NeoBundle 'https://github.com/bling/vim-bufferline'
 
 NeoBundle 'tpope/vim-fugitive'
@@ -323,6 +315,22 @@ nnoremap <silent><Leader>r :call QuickRun -outputter/buffer/split \":botright 12
 NeoBundle 'tyru/caw.vim'
 nmap <Leader>c <Plug>(caw:i:toggle)
 vmap <Leader>c <Plug>(caw:i:toggle)
+
+NeoBundle 'https://github.com/bling/vim-airline'
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+set laststatus=2
+let g:airline_theme='wombat'
+let g:airline_detect_modified=1
+let g:airline#extensions#bufferline#enabled = 1
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
 
 " color scheme
 NeoBundle 'altercation/vim-colors-solarized'
