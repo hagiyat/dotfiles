@@ -83,7 +83,13 @@ zstyle ':completion:*' recent-dirs-insert both
 
 # tmuxのバッファをvimで開く
 alias tmuxvim="tmux capture-pane -S -2000\; show-buffer | vim +2000 -Rc 'set ft=zsh' -"
+function open_tmux_buffer_on_vim() {
+  ls -t /tmp/tmuxcap_*.txt | head -n 1 | xargs cat | vim +2000 -Rc 'set ft=zsh' -
+}
 alias pvim="vim -Rc 'set ft=zsh' -"
+zle -N open_tmux_buffer_on_vim
+bindkey '^[x' open_tmux_buffer_on_vim
+bindkey '^[[25~x' open_tmux_buffer_on_vim
 
 # agで検索した結果をvimで開く
 function agvim() {
