@@ -83,7 +83,6 @@ zstyle ':completion:*' recent-dirs-insert both
 
 # tmuxのバッファをvimで開く
 alias tmuxvim="tmux capture-pane -S -2000\; show-buffer | vim +2000 -Rc 'set ft=zsh' -"
-alias pvim="vim -Rc 'set ft=zsh' -"
 
 # agで検索した結果をvimで開く
 function agvim() {
@@ -192,7 +191,9 @@ if [ -x `which peco` > /dev/null 2>&1 ]; then
     fi
   }
 
-  alias nanapi-vpn="if [[ ! -z `networksetup -showpppoestatus nanapi | grep disconnected` ]]; then networksetup -connectpppoeservice nanapi; fi;"
+  function nanapi-vpn() {
+    tmux split-window -v -l 1 "if [[ ! -z `networksetup -showpppoestatus nanapi | grep disconnected` ]]; then networksetup -connectpppoeservice nanapi; fi;"
+  }
 
   function codic() {
     TARG=$(cat ~/.vim/bundle/codic-vim/dict/naming-entry.csv | peco --prompt="[codic]" --initial-matcher="Migemo" | awk -F , '{print $1}')
@@ -225,3 +226,31 @@ if [ -x `which peco` > /dev/null 2>&1 ]; then
   bindkey '^[x' open_tmux_buffer_on_vim
   bindkey '^[[25~x' open_tmux_buffer_on_vim
 fi
+
+setopt extended_glob
+
+typeset -A abberviations
+abberviations=(
+  "PS"  "| peco --rcfile ~/.peco/config_single.json"
+  "P"   "| peco"
+  "TV"  "tmux split-window -v "
+  "TH"  "tmux split-window -h "
+  "TW"  "tmux new-window "
+  "VI"  "| vim -Rc 'set ft=zsh' -"
+)
+
+magic-abbrev-expand() {
+  local MATCH
+  LBUFFER=${LBUFFER%%(#m)[-_a-zA-Z0-9]#}
+  LBUFFER+=${abberviations[$MATCH]:-$MATCH}
+  zle self-insert
+}
+
+no-magic-abbrev-expand() {
+  LBUFFER+=' '
+}
+
+zle -N magic-abbrev-expand
+zle -N no-magic-abbrev-expand
+bindkey " " magic-abbrev-expand
+bindkey "^x " no-magic-abbrev-expand
