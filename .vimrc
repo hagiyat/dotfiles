@@ -97,7 +97,7 @@ set expandtab
 set cursorline
 
 " yankしつつpbcopy
-set clipboard+=unnamed
+set clipboard+=autoselect,unnamed
 
 " 保存時に行末の空白を除去する
 autocmd BufWritePre * :%s/\s\+$//ge
