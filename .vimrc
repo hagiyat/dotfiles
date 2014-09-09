@@ -1,4 +1,7 @@
-:" 文字コード
+" -----------------
+"  vimrc
+" -----------------
+" 文字コード
 set encoding=utf-8
 set fileencodings=utf-8,cp932,euc-jp,iso-20220-jp,default,latin
 
@@ -94,7 +97,7 @@ set expandtab
 set cursorline
 
 " yankしつつpbcopy
-"set clipboard=unnamed
+set clipboard+=unnamed
 
 " 保存時に行末の空白を除去する
 autocmd BufWritePre * :%s/\s\+$//ge
@@ -283,11 +286,11 @@ NeoBundle 'vim-scripts/tagbar-phpctags', {
   \   },
   \ }
 
-NeoBundle 'git://github.com/kana/vim-fakeclip.git'
-map y <Plug>(fakeclip-y)
-map yy <Plug>(fakeclip-Y)
-map p <Plug>(fakeclip-p)
-"map dd <Plug>(fakeclip-D)
+" NeoBundle 'git://github.com/kana/vim-fakeclip.git'
+" map y <Plug>(fakeclip-y)
+" map yy <Plug>(fakeclip-Y)
+" map p <Plug>(fakeclip-p)
+" map dd <Plug>(fakeclip-D)
 
 NeoBundle 'PDV--phpDocumentor-for-Vim'
 nnoremap <silent><space>cc :call PhpDocSingle()<CR>
@@ -342,6 +345,9 @@ NeoBundle 'vim-scripts/darkburn'
 NeoBundle 'vim-scripts/wombat256.vim'
 NeoBundle 'nanotech/jellybeans.vim'
 NeoBundle 'jpo/vim-railscasts-theme'
+NeoBundle 'chriskempson/vim-tomorrow-theme'
+NeoBundle 'vim-scripts/twilight'
+NeoBundle 'jonathanfilip/vim-lucius'
 
 " nanapi only
 NeoBundle 'kana/vim-gf-user'
@@ -354,6 +360,7 @@ set mouse=n
 
 colorscheme jellybeans
 set background=dark
+hi LineNr ctermbg=234
 
 function! s:diffColor() "{{{
   colorscheme solarized
