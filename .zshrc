@@ -47,20 +47,53 @@ alias tmux="LD_LIBRARY_PATH=/usr/local/lib /usr/local/bin/tmux"
 alias ll='ls -l'
 alias la='ls -al'
 
-# git alias
-alias gits="git status"
-#alias gitd="git difftool --tool=vimdiff --no-prompt"
-alias gitd="git diff"
-alias gitco="git checkout"
-alias gita="git add"
-alias gitl="git log"
-alias gitls="git log --stat"
-alias gitlg="git log --stat --graph"
-alias gitlm="git log --stat --author=hagiya"
 alias git-delete-merged-branches="git branch --merged | grep -v '*' | xargs -I % git branch -d %"
-
 alias phpl="php -l"
 alias vdiff="vimdiff +VimdiffBootstrap"
+
+# 略語展開
+setopt extended_glob
+typeset -A abberviations
+abberviations=(
+  # pipe
+  "lps"  "| peco --rcfile ~/.peco/config_single.json"
+  "lp"   "| peco"
+  "lvi"  "| vim -Rc 'set ft=zsh' -"
+  # git
+  "gss"  "git status"
+  "gsh"  "git stash"
+  "gb"  "git branch"
+  "gd"  "git diff"
+  "gch"  "git checkout"
+  "gco"  "git commit"
+  "ga"  "git add"
+  "gl"  "git log"
+  "gls"  "git log --stat"
+  "glg"  "git log --stat --graph"
+  "glm"  "git log --stat --author=hagiya"
+  "gps"  "git push"
+  "gpu"  "git pull"
+  # tmux
+  "tmv"  "tmux split-window -v -c '#{pane_current_path}'"
+  "tmh"  "tmux split-window -h -c '#{pane_current_path}'"
+  "tmw"  "tmux new-window -c '#{pane_current_path}'"
+)
+
+magic-abbrev-expand() {
+  local MATCH
+  LBUFFER=${LBUFFER%%(#m)[-_a-zA-Z0-9]#}
+  LBUFFER+=${abberviations[$MATCH]:-$MATCH}
+  zle self-insert
+}
+
+no-magic-abbrev-expand() {
+  LBUFFER+=' '
+}
+
+zle -N magic-abbrev-expand
+zle -N no-magic-abbrev-expand
+bindkey " " magic-abbrev-expand
+bindkey "^x " no-magic-abbrev-expand
 
 # 便利系
 function agcount() { ag $1 | wc -l | tr -d " "; }
@@ -214,43 +247,5 @@ if [ -x `which peco` > /dev/null 2>&1 ]; then
   zle -N peco-ssh-aws
   bindkey '^[c' peco-ssh-aws
   bindkey '^[[25~c' peco-ssh-aws
-
-  # tmuxのバッファをvimで開く
-  function open_tmux_buffer_on_vim() {
-    local selected=$(ls -t /tmp/tmuxcap_*.txt | _peco_single --prompt="[tmux buffers]")
-    if [[ -n $selected ]]; then
-      cat $selected | vim +2000 -Rc 'set ft=zsh' -
-    fi
-  }
-  zle -N open_tmux_buffer_on_vim
-  bindkey '^[x' open_tmux_buffer_on_vim
-  bindkey '^[[25~x' open_tmux_buffer_on_vim
 fi
 
-setopt extended_glob
-
-typeset -A abberviations
-abberviations=(
-  "PS"  "| peco --rcfile ~/.peco/config_single.json"
-  "P"   "| peco"
-  "TV"  "tmux split-window -v "
-  "TH"  "tmux split-window -h "
-  "TW"  "tmux new-window "
-  "VI"  "| vim -Rc 'set ft=zsh' -"
-)
-
-magic-abbrev-expand() {
-  local MATCH
-  LBUFFER=${LBUFFER%%(#m)[-_a-zA-Z0-9]#}
-  LBUFFER+=${abberviations[$MATCH]:-$MATCH}
-  zle self-insert
-}
-
-no-magic-abbrev-expand() {
-  LBUFFER+=' '
-}
-
-zle -N magic-abbrev-expand
-zle -N no-magic-abbrev-expand
-bindkey " " magic-abbrev-expand
-bindkey "^x " no-magic-abbrev-expand
