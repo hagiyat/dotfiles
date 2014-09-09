@@ -60,8 +60,8 @@ abberviations=(
   "lp"   "| peco"
   "lvi"  "| vim -Rc 'set ft=zsh' -"
   # git
-  "gss"  "git status"
-  "gsh"  "git stash"
+  "g"  "git status"
+  "gs"  "git stash"
   "gb"  "git branch"
   "gd"  "git diff"
   "gch"  "git checkout"
@@ -72,7 +72,7 @@ abberviations=(
   "glg"  "git log --stat --graph"
   "glm"  "git log --stat --author=hagiya"
   "gps"  "git push"
-  "gpu"  "git pull"
+  "gpl"  "git pull"
   # tmux
   "tmv"  "tmux split-window -v -c '#{pane_current_path}'"
   "tmh"  "tmux split-window -h -c '#{pane_current_path}'"
