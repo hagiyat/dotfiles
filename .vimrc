@@ -149,7 +149,7 @@ nnoremap <F10> :bdelete<CR>
 map <C-n> :cn<CR>
 map <C-p> :cp<CR>
 map <C-c> :cclose<CR>
-map <C-o> :copen<CR>
+" map <C-o> :copen<CR>
 
 " w!! でスーパーユーザーとして保存（sudoが使える環境限定）
 cmap w!! w !sudo tee > /dev/null %
@@ -372,8 +372,7 @@ set mouse=n
 colorscheme jellybeans
 set background=dark
 hi LineNr ctermbg=234
-
-if &diff
-  colorscheme solarized
-  set background=dark
-endif
+hi DiffAdd    ctermfg=226 ctermbg=235
+hi DiffChange ctermfg=7 ctermbg=235
+hi DiffDelete ctermfg=52 ctermbg=233
+hi DiffText   cterm=none ctermfg=208 ctermbg=235
