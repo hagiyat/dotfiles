@@ -145,6 +145,12 @@ nnoremap <F3> :bprevious<CR>
 nnoremap <F4> :bnext<CR>
 nnoremap <F10> :bdelete<CR>
 
+" QuickFix
+map <C-n> :cn<CR>
+map <C-p> :cp<CR>
+map <C-c> :cclose<CR>
+map <C-o> :copen<CR>
+
 " w!! でスーパーユーザーとして保存（sudoが使える環境限定）
 cmap w!! w !sudo tee > /dev/null %
 
@@ -297,6 +303,11 @@ nnoremap <silent><space>cc :call PhpDocSingle()<CR>
 
 NeoBundle 'koron/codic-vim'
 
+NeoBundle 'vim-scripts/gtags.vim'
+nnoremap <Space>gg :Gtags<CR>
+nnoremap <Space>gr :Gtags -r<CR>
+nnoremap <Space>gs :Gtags -s<CR>
+
 " quickrun
 NeoBundle 'thinca/vim-quickrun'
 nnoremap <silent><Leader>r :call QuickRun -outputter/buffer/split \":botright 12sp\" -hook/time/enable 1<CR>
@@ -362,9 +373,7 @@ colorscheme jellybeans
 set background=dark
 hi LineNr ctermbg=234
 
-function! s:diffColor() "{{{
+if &diff
   colorscheme solarized
   set background=dark
-endfunction "}}}
-command! VimdiffBootstrap :call s:diffColor()
-
+endif

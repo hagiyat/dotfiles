@@ -17,7 +17,7 @@ export EDITOR=vim
 #export PAGER=vimpager
 export GOROOT=/usr/local/opt/go/libexec
 export GOPATH=$HOME/.go
-#export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
 # ヒストリー設定
 HISTFILE=~/.zsh_history
@@ -51,6 +51,8 @@ alias git-delete-merged-branches="git branch --merged | grep -v '*' | xargs -I %
 alias phpl="php -l"
 alias vdiff="vimdiff +VimdiffBootstrap"
 
+alias tag_update="tmux split-window -v -l 1 -c '#{pane_current_path}' \"echo 'tag updating...';ctags -R\""
+
 # 略語展開
 setopt extended_glob
 typeset -A abberviations
@@ -59,6 +61,7 @@ abberviations=(
   "lps"  "| peco --rcfile ~/.peco/config_single.json"
   "lp"   "| peco"
   "lvi"  "| vim -Rc 'set ft=zsh' -"
+  "lsin"  "| xargs cat | vim -Rc 'set ft=zsh' -"
   # git
   "g"  "git status"
   "gs"  "git stash"
@@ -73,6 +76,8 @@ abberviations=(
   "glm"  "git log --stat --author=hagiya"
   "gps"  "git push"
   "gpl"  "git pull"
+  "gfe"  "git checkout -b feature/"
+  "ghf"  "git checkout -b hotfix/"
   # tmux
   "tmv"  "tmux split-window -v -c '#{pane_current_path}'"
   "tmh"  "tmux split-window -h -c '#{pane_current_path}'"
@@ -124,6 +129,12 @@ function agvim() {
   else
     echo "Usage: age QUERY"
   fi
+}
+
+# 現在のブランチの分岐点からのdiff
+function diff-branch() {
+  git show-branch --sha1-name  master `git symbolic-ref --short HEAD` | tail -1 | grep -Eo '[a-z0-9]+' | head -1 | pbcopy
+  git diff --stat=200,150 HEAD `pbpaste`
 }
 
 # peco!!
