@@ -51,7 +51,7 @@ alias git-delete-merged-branches="git branch --merged | grep -v '*' | xargs -I %
 alias phpl="php -l"
 alias vdiff="vimdiff +VimdiffBootstrap"
 
-alias tag_update="tmux split-window -v -l 1 -c '#{pane_current_path}' \"echo 'tag updating...';ctags -R\""
+alias tag_update="tmux split-window -v -l 1 -c '#{pane_current_path}' \"echo 'tag updating...';gtags -v\""
 
 # 略語展開
 setopt extended_glob
