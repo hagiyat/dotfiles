@@ -194,7 +194,7 @@ NeoBundle 'https://github.com/Shougo/neobundle.vim.git'
 
 NeoBundle 'https://github.com/kien/ctrlp.vim.git'
 NeoBundle 'https://github.com/tacahiroy/ctrlp-funky.git'
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,tags,*/vendor/*,*/.git/*,/dev/fd/,*/stdin*
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,tags,*/vendor/*,*/.git/*,/dev/fd/,*/stdin*,GPATH,GTAGS,GRTAGS
 let g:ctrlp_mruf_exclude = '/dev/fd/\|.git\|fugitive'
 let g:ctrlp_use_caching = 1
 let g:ctrlp_clear_cache_on_exit = 0
