@@ -9,8 +9,8 @@ set fileencodings=utf-8,cp932,euc-jp,iso-20220-jp,default,latin
 imap <c-j> <esc>
 
 " leaderを , に割り当て
-"let mapleader = ","
-"noremap \  ,
+let mapleader = ","
+noremap \  ,
 
 "新しい行のインデントを現在行と同じにする
 
@@ -37,7 +37,7 @@ set tabstop=4
 "set whichwrap=b,s,h,l,<,>,[,]
 
 " このへんは2文字インデント
-autocmd! FileType ruby,php,javascript,html,zsh setlocal shiftwidth=2 tabstop=2
+autocmd! FileType vim,ruby,eruby,php,javascript,html,zsh setlocal shiftwidth=2 tabstop=2
 
 " 大文字小文字を区別しない
 set ignorecase
@@ -118,17 +118,15 @@ nmap <silent> <Esc><Esc> :nohlsearch<CR>
 " カーソル下の単語を * で検索
 vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v, '\/'), "\n", '\\n','g')<CR><CR>
 
-" 検索後にジャンプした際に検索単語を画面中央に持ってくる
-"nnoremap n nzz
-"nnoremap N Nzz
-"nnoremap * *zz
-"nnoremap # #zz
-"nnoremap g* g*zz
-"nnoremap g# g#zz
-
 " j, k による移動を折り返されたテキストでも自然に振る舞うように変更
 nnoremap j gj
 nnoremap k gk
+nnoremap gj j
+nnoremap gk k
+
+" 移動系
+noremap <Space>h  ^
+noremap <Space>l  $
 
 " vを二回で行末まで選択
 vnoremap v $h
@@ -158,16 +156,11 @@ cmap w!! w !sudo tee > /dev/null %
 nnoremap <leader>u :e ++enc=utf8<CR>
 nnoremap <leader>s :e ++enc=cp932<CR>
 
-" paste切り替え
-nnoremap <silent><space>cv :set paste<CR>:startinsert<CR>
-" pdvとあたる・・・！
-"autocmd InsertLeave * set nopaste
-
 " Dash.app連携
 function! s:dash(...)
   if len(a:000) == 1 && len(a:1) == 0
     echomsg 'No keyword'
-else
+  else
     let ft = &filetype
     if &filetype == 'python'
       let ft = ft.'2'
@@ -184,18 +177,18 @@ nnoremap <Space>d :call <SID>dash(expand('<cword>'))<CR>
 scriptencoding utf-8
 
 if has('vim_starting')
-	filetype plugin off
-	filetype indent off
-	execute 'set runtimepath+=' . expand('~/.vim/bundle/neobundle.vim')
+  filetype plugin off
+  filetype indent off
+  execute 'set runtimepath+=' . expand('~/.vim/bundle/neobundle.vim')
 endif
 call neobundle#rc(expand('~/.vim/bundle'))
 
 NeoBundle 'https://github.com/Shougo/neobundle.vim.git'
 
-NeoBundle 'https://github.com/kien/ctrlp.vim.git'
+NeoBundle 'https://github.com/ctrlpvim/ctrlp.vim'
 NeoBundle 'https://github.com/tacahiroy/ctrlp-funky.git'
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,tags,*/vendor/*,*/.git/*,/dev/fd/,*/stdin*,GPATH,GTAGS,GRTAGS
-let g:ctrlp_mruf_exclude = '/dev/fd/\|.git\|fugitive'
+set wildignore+=*/tmp/*,/tmp/*,*.so,*.swp,*.zip,*.pyc,tags,*/vendor/*,*/.git/*,/private/var/folders/*,/var/folders/*,/dev/fd/,*/stdin,GPATH,GTAGS,GRTAGS
+"let g:ctrlp_mruf_exclude = '/dev/fd/\|.git\|fugitive'
 let g:ctrlp_use_caching = 1
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_mruf_max = 500
@@ -264,7 +257,7 @@ smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
-
+let g:neosnippet#snippets_directory='~/.vim/snippets'
 
 NeoBundle 'https://github.com/rking/ag.vim'
 
@@ -364,12 +357,60 @@ NeoBundle 'jonathanfilip/vim-lucius'
 NeoBundle 'kana/vim-gf-user'
 NeoBundle 'git@github.com:nanapi/nanapi.vim.git'
 
+" ruby
+" rails用
+"{{{
+NeoBundle 'tpope/vim-rails'
+let g:rails_default_file='config/database.yml'
+let g:rails_level = 4
+let g:rails_mappings=1
+let g:rails_modelines=0
+let g:rails_some_option = 1
+" let g:rails_statusline = 1
+" let g:rails_subversion=0
+" let g:rails_syntax = 1
+" let g:rails_url='http://localhost:3000'
+" let g:rails_ctags_arguments='--languages=-javascript'
+" let g:rails_ctags_arguments = ''
+function! SetUpRailsSetting()
+  nnoremap <buffer><Leader>r :R<CR>
+  nnoremap <buffer><Leader>a :A<CR>
+  nnoremap <buffer><Leader>m :Rmodel<Space>
+  nnoremap <buffer><Leader>c :Rcontroller<Space>
+  nnoremap <buffer><Leader>v :Rview<Space>
+  nnoremap <buffer><Leader>p :Rpreview<CR>
+endfunction
+
+aug MyAutoCmd
+  au User Rails call SetUpRailsSetting()
+aug END
+
+aug RailsDictSetting
+  au!
+aug END
+
+NeoBundle 'tpope/vim-endwise'
+let g:endwise_no_mappings=1
+
+" matchitを有効化
+if !exists('loaded_matchit')
+  runtime macros/matchit.vim
+endif
+
+" neosnipptsとの共用設定
+autocmd User Rails.view*                 NeoSnippetSource ~/.vim/snippet/ruby.rails.view.snip
+autocmd User Rails.controller*           NeoSnippetSource ~/.vim/snippet/ruby.rails.controller.snip
+autocmd User Rails/db/migrate/*          NeoSnippetSource ~/.vim/snippet/ruby.rails.migrate.snip
+autocmd User Rails/config/routes.rb      NeoSnippetSource ~/.vim/snippet/ruby.rails.route.snip
+"}}}
+
+
 syntax on
 filetype plugin on
 filetype indent on
 set mouse=n
 
-colorscheme jellybeans
+colorscheme railscasts
 set background=dark
 hi LineNr ctermbg=234
 hi DiffAdd    ctermfg=226 ctermbg=235
