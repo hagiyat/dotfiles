@@ -378,7 +378,7 @@ function! SetUpRailsSetting()
   nnoremap <buffer><Leader>m :Rmodel<Space>
   nnoremap <buffer><Leader>c :Rcontroller<Space>
   nnoremap <buffer><Leader>v :Rview<Space>
-  nnoremap <buffer><Leader>p :Rpreview<CR>
+  " nnoremap <buffer><Leader>p :Rpreview<CR>
 endfunction
 
 aug MyAutoCmd
