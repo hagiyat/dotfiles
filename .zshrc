@@ -51,7 +51,12 @@ alias git-delete-merged-branches="git branch --merged | grep -v '*' | xargs -I %
 alias phpl="php -l"
 alias vdiff="vimdiff +VimdiffBootstrap"
 
-alias tag_update="tmux split-window -v -l 1 -c '#{pane_current_path}' \"echo 'tag updating...';gtags -v\""
+#alias tag_update="tmux split-window -v -l 1 -c '#{pane_current_path}' \"echo 'tag updating...';gtags --gtagslabel=pygments;ctags -f tags -R;ctags -R -f Gemfile.lock.tags `bundle show --paths`\""
+function tag_update {
+  gtags --gtagslabel=pygments
+  ctags -f tags -R
+  ctags -R -f Gemfile.lock.tags `bundle show --paths`
+}
 
 # 略語展開
 setopt extended_glob
@@ -134,7 +139,7 @@ function agvim() {
 # 現在のブランチの分岐点からのdiff
 function diff-branch() {
   git show-branch --sha1-name  master `git symbolic-ref --short HEAD` | tail -1 | grep -Eo '[a-z0-9]+' | head -1 | pbcopy
-  git diff --stat=200,150 HEAD `pbpaste`
+  git diff --stat=200,150 `pbpaste` HEAD
 }
 
 # peco!!

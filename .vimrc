@@ -215,26 +215,26 @@ let g:syntastic_auto_loc_list = 1
 " 動作が遅くなってきたらLazyにする
 NeoBundle has('lua') ? 'Shougo/neocomplete' : 'Shougo/neocomplcache'
 if neobundle#is_installed('neocomplete')
-    " neocomplete用設定
-    let g:neocomplete#enable_at_startup = 1
-    let g:neocomplete#enable_ignore_case = 1
-    let g:neocomplete#enable_smart_case = 1
-    if !exists('g:neocomplete#keyword_patterns')
-        let g:neocomplete#keyword_patterns = {}
-    endif
-    let g:neocomplete#keyword_patterns._ = '\h\w*'
+  " neocomplete用設定
+  let g:neocomplete#enable_at_startup = 1
+  let g:neocomplete#enable_ignore_case = 1
+  let g:neocomplete#enable_smart_case = 1
+  if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+  endif
+  let g:neocomplete#keyword_patterns._ = '\h\w*'
 
 elseif neobundle#is_installed('neocomplcache')
-    " neocomplcache用設定
-    let g:neocomplcache_enable_at_startup = 1
-    let g:neocomplcache_enable_ignore_case = 1
-    let g:neocomplcache_enable_smart_case = 1
-    if !exists('g:neocomplcache_keyword_patterns')
-        let g:neocomplcache_keyword_patterns = {}
-    endif
-    let g:neocomplcache_keyword_patterns._ = '\h\w*'
-    let g:neocomplcache_enable_camel_case_completion = 1
-    let g:neocomplcache_enable_underbar_completion = 1
+  " neocomplcache用設定
+  let g:neocomplcache_enable_at_startup = 1
+  let g:neocomplcache_enable_ignore_case = 1
+  let g:neocomplcache_enable_smart_case = 1
+  if !exists('g:neocomplcache_keyword_patterns')
+    let g:neocomplcache_keyword_patterns = {}
+  endif
+  let g:neocomplcache_keyword_patterns._ = '\h\w*'
+  let g:neocomplcache_enable_camel_case_completion = 1
+  let g:neocomplcache_enable_underbar_completion = 1
 
 endif
 
@@ -278,21 +278,21 @@ NeoBundle 'tpope/vim-repeat'
 
 NeoBundle 'majutsushi/tagbar'
 nnoremap <silent><space>t :TagbarToggle<CR>
-
-NeoBundle 'vim-scripts/tagbar-phpctags', {
-  \   'build' : {
-  \     'others' : 'chmod +x bin/phpctags',
-  \   },
-  \ }
-
-" NeoBundle 'git://github.com/kana/vim-fakeclip.git'
-" map y <Plug>(fakeclip-y)
-" map yy <Plug>(fakeclip-Y)
-" map p <Plug>(fakeclip-p)
-" map dd <Plug>(fakeclip-D)
-
-NeoBundle 'PDV--phpDocumentor-for-Vim'
-nnoremap <silent><space>cc :call PhpDocSingle()<CR>
+let g:tagbar_type_ruby = {
+      \ 'kinds' : [
+      \ 'm:modules',
+      \ 'c:classes',
+      \ 'd:describes',
+      \ 'C:contexts',
+      \ 'f:methods',
+      \ 'F:singleton methods'
+      \ ]
+      \ }
+" NeoBundle 'vim-scripts/tagbar-phpctags', {
+"   \   'build' : {
+"   \     'others' : 'chmod +x bin/phpctags',
+"   \   },
+"   \ }
 
 NeoBundle 'koron/codic-vim'
 
@@ -402,6 +402,23 @@ autocmd User Rails.view*                 NeoSnippetSource ~/.vim/snippet/ruby.ra
 autocmd User Rails.controller*           NeoSnippetSource ~/.vim/snippet/ruby.rails.controller.snip
 autocmd User Rails/db/migrate/*          NeoSnippetSource ~/.vim/snippet/ruby.rails.migrate.snip
 autocmd User Rails/config/routes.rb      NeoSnippetSource ~/.vim/snippet/ruby.rails.route.snip
+
+NeoBundle 'szw/vim-tags'
+NeoBundle 'tpope/vim-dispatch'
+let g:vim_tags_project_tags_command='ctags -f tags -R . 2>/dev/null'
+let g:vim_tags_gems_tags_command='ctags -R -f Gemfile.lock.tags `bundle show --paths` 2>/dev/null'
+set tags+=tags,Gemfile.lock.tags
+let g:vim_tags_use_vim_dispatch = 0
+
+NeoBundle 'git://github.com/Yggdroot/indentLine.git'
+let g:indentLine_showFirstIndentLevel=1
+"let g:indentLine_first_char = '┆'
+" other candidates : '❯', '║', '⧫',
+"let g:indentLine_char = '⦙'
+" other candidates : '❭', '║', '⦙', '⟩'
+" these settings affect ALL conceal highlighting.
+let g:indentLine_color_term=235
+let g:indentLine_fileType=['ruby','eruby']
 "}}}
 
 
