@@ -22,7 +22,7 @@ set incsearch
 "行番号を表示する
 set number
 "シフト移動幅
-set shiftwidth=4
+set shiftwidth=2
 "閉じ括弧が入力されたとき、対応する括弧を表示する
 set showmatch
 "検索時に大文字を含んでいたら大/小を区別
@@ -32,12 +32,12 @@ set smartindent
 "行頭の余白内で Tab を打ち込むと、'shiftwidth' の数だけインデントする。
 set smarttab
 :"ファイル内の <Tab> が対応する空白の数
-set tabstop=4
+set tabstop=2
 "カーソルを行頭、行末で止まらないようにする
 "set whichwrap=b,s,h,l,<,>,[,]
 
-" このへんは2文字インデント
-autocmd! FileType vim,ruby,eruby,php,javascript,html,zsh setlocal shiftwidth=2 tabstop=2
+" 基本2にしたので一旦コメントアウト
+" autocmd! FileType vim,ruby,eruby,php,javascript,html,zsh setlocal shiftwidth=2 tabstop=2
 
 " 大文字小文字を区別しない
 set ignorecase
@@ -260,10 +260,10 @@ endif
 let g:neosnippet#snippets_directory='~/.vim/snippets'
 
 NeoBundle 'https://github.com/rking/ag.vim'
-
 NeoBundle 'https://github.com/bling/vim-bufferline'
-
+NeoBundle 'thinca/vim-localrc'
 NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'https://github.com/jaxbot/github-issues.vim'
 
 NeoBundle 'gregsexton/gitv'
 autocmd FileType git :setlocal foldlevel=99
@@ -419,6 +419,8 @@ let g:indentLine_showFirstIndentLevel=1
 " these settings affect ALL conceal highlighting.
 let g:indentLine_color_term=235
 let g:indentLine_fileType=['ruby','eruby']
+
+NeoBundle "slim-template/vim-slim"
 "}}}
 
 
