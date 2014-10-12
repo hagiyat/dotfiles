@@ -181,9 +181,9 @@ if has('vim_starting')
   filetype indent off
   execute 'set runtimepath+=' . expand('~/.vim/bundle/neobundle.vim')
 endif
-call neobundle#rc(expand('~/.vim/bundle'))
-
-NeoBundle 'https://github.com/Shougo/neobundle.vim.git'
+call neobundle#begin(expand('~/.vim/bundle/'))
+NeoBundleFetch 'Shougo/neobundle.vim'
+call neobundle#end()
 
 NeoBundle 'https://github.com/ctrlpvim/ctrlp.vim'
 NeoBundle 'https://github.com/tacahiroy/ctrlp-funky.git'
@@ -206,6 +206,15 @@ nnoremap <Space>pf :<C-u>CtrlPFunky<CR>
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimfiler.vim'
 nnoremap <Space>n :VimFilerExplorer<CR>
+let g:vimfiler_safe_mode_by_default = 0
+
+NeoBundle 'Shougo/vimproc.vim', {
+\ 'build' : {
+\     'mac' : 'make -f make_mac.mak',
+\     'linux' : 'make',
+\     'unix' : 'gmake',
+\    },
+\ }
 
 NeoBundle 'https://github.com/scrooloose/syntastic.git'
 let g:syntastic_auto_loc_list = 1
@@ -271,8 +280,6 @@ autocmd FileType git :setlocal foldlevel=99
 NeoBundle 'osyo-manga/vim-over'
 nnoremap <silent><space>m :OverCommandLine<CR>%s/
 
-"NeoBundle 'Yggdroot/indentLine'
-
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-repeat'
 
@@ -333,13 +340,13 @@ let g:airline_theme='badwolf'
 "let g:airline_theme='simple'
 let g:airline_detect_modified=1
 let g:airline#extensions#bufferline#enabled = 1
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_symbols.branch = ''
-let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = ''
+let g:airline_left_sep = '⮀'
+let g:airline_left_alt_sep = '⮁'
+let g:airline_right_sep = '⮂'
+let g:airline_right_alt_sep = '⮃'
+let g:airline_symbols.branch = '⭠'
+let g:airline_symbols.readonly = '⭤'
+let g:airline_symbols.linenr = '⭡'
 
 " color scheme
 NeoBundle 'altercation/vim-colors-solarized'
@@ -421,6 +428,27 @@ let g:indentLine_color_term=235
 let g:indentLine_fileType=['ruby','eruby']
 
 NeoBundle "slim-template/vim-slim"
+
+NeoBundleLazy 'marcus/rsense', {
+  \ 'autoload': {
+  \   'filetypes': ['ruby', 'eruby'],
+  \ },
+  \ }
+if has('lua')
+  NeoBundle 'supermomonga/neocomplete-rsense.vim', {
+    \ 'depends': ['Shougo/neocomplete.vim', 'marcus/rsense'],
+    \ }
+else
+  NeoBundle 'Shougo/neocomplcache-rsense.vim', {
+    \ 'depends': ['Shougo/neocomplcache.vim', 'marcus/rsense'],
+    \ }
+endif
+let g:rsenseUseOmniFunc = 1
+if !exists('g:neocomplete#force_omni_input_patterns')
+  let g:neocomplete#force_omni_input_patterns = {}
+endif
+let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+let g:neocomplete#sources#rsense#home_directory = '/usr/local/bin/rsense'
 "}}}
 
 

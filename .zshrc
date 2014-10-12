@@ -15,9 +15,6 @@ fi
 export LANG=ja_JP.UTF-8
 export EDITOR=vim
 #export PAGER=vimpager
-export GOROOT=/usr/local/opt/go/libexec
-export GOPATH=$HOME/.go
-export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
 # ヒストリー設定
 HISTFILE=~/.zsh_history
@@ -108,14 +105,6 @@ bindkey "^x " no-magic-abbrev-expand
 # 便利系
 function agcount() { ag $1 | wc -l | tr -d " "; }
 
-if [ -d ${HOME}/.anyenv ] ; then
-  export PATH="$HOME/.anyenv/bin:$PATH"
-  eval "$(anyenv init -)"
-  for D in `ls $HOME/.anyenv/envs`
-  do
-    export PATH="$HOME/.anyenv/envs/$D/shims:$PATH"
-  done
-fi
 
 # cdrを有効化
 autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
