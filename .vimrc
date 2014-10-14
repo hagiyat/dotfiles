@@ -176,17 +176,56 @@ nnoremap <Space>d :call <SID>dash(expand('<cword>'))<CR>
 " Neobundle
 scriptencoding utf-8
 
-if has('vim_starting')
-  filetype plugin off
-  filetype indent off
-  execute 'set runtimepath+=' . expand('~/.vim/bundle/neobundle.vim')
-endif
-call neobundle#rc(expand('~/.vim/bundle'))
+set runtimepath+=~/.vim/bundle/neobundle.vim/
+call neobundle#begin(expand('~/.vim/bundle/'))
+NeoBundleFetch 'Shougo/neobundle.vim'
+" {{{ plugins
+NeoBundle 'ctrlpvim/ctrlp.vim'
+NeoBundle 'tacahiroy/ctrlp-funky.git'
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/vimfiler.vim'
+NeoBundle 'scrooloose/syntastic.git'
+NeoBundleLazy 'Shougo/neocomplete.vim', { 'autoload' : {
+      \ 'functions' : ['neocomplete#init#disable', 'neocomplete#is_enabled', 'neocomplete#start_manual_complete'],
+      \ 'commands' : ['NeoCompleteClean', 'NeoCompleteEnable', 'NeoCompleteDisable'],
+      \ 'insert' : 1,
+      \ }}
+NeoBundle 'Shougo/neosnippet'
+NeoBundle 'Shougo/neosnippet-snippets'
+NeoBundle 'rking/ag.vim'
+NeoBundle 'bling/vim-bufferline'
+NeoBundle 'thinca/vim-localrc'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'jaxbot/github-issues.vim'
+NeoBundle 'gregsexton/gitv'
+NeoBundle 'osyo-manga/vim-over'
+NeoBundle 'tpope/vim-surround'
+NeoBundle 'tpope/vim-repeat'
+NeoBundle 'majutsushi/tagbar'
+NeoBundle 'koron/codic-vim'
+NeoBundle 'vim-scripts/gtags.vim'
+NeoBundle 'thinca/vim-quickrun'
+NeoBundle 'tyru/caw.vim'
+NeoBundle 'bling/vim-airline'
+NeoBundle 'tpope/vim-rails'
+NeoBundle 'tpope/vim-endwise'
+NeoBundle "slim-template/vim-slim"
 
-NeoBundle 'https://github.com/Shougo/neobundle.vim.git'
+" color schemes
+NeoBundle 'altercation/vim-colors-solarized'
+NeoBundle 'vim-scripts/Zenburn'
+NeoBundle 'w0ng/vim-hybrid'
+NeoBundle 'vim-scripts/darkburn'
+NeoBundle 'vim-scripts/wombat256.vim'
+NeoBundle 'nanotech/jellybeans.vim'
+NeoBundle 'jpo/vim-railscasts-theme'
+NeoBundle 'chriskempson/vim-tomorrow-theme'
+NeoBundle 'vim-scripts/twilight'
+NeoBundle 'jonathanfilip/vim-lucius'
+" }}} plugins
+call neobundle#end()
 
-NeoBundle 'https://github.com/ctrlpvim/ctrlp.vim'
-NeoBundle 'https://github.com/tacahiroy/ctrlp-funky.git'
+" ctrlp
 set wildignore+=*/tmp/*,/tmp/*,*.so,*.swp,*.zip,*.pyc,tags,*/vendor/*,*/.git/*,/private/var/folders/*,/var/folders/*,/dev/fd/,*/stdin,GPATH,GTAGS,GRTAGS
 "let g:ctrlp_mruf_exclude = '/dev/fd/\|.git\|fugitive'
 let g:ctrlp_use_caching = 1
@@ -203,20 +242,15 @@ nnoremap <Space>pq :<C-u>CtrlPQuickfix<CR>
 nnoremap <Space>ps :<C-u>CtrlPMixed<CR>
 nnoremap <Space>pf :<C-u>CtrlPFunky<CR>
 
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/vimfiler.vim'
+" vimfiler
 nnoremap <Space>n :VimFilerExplorer<CR>
 let g:vimfiler_safe_mode_by_default = 0
 
-NeoBundle 'https://github.com/scrooloose/syntastic.git'
+" syntastic
 let g:syntastic_auto_loc_list = 1
 "let g:syntastic_javascript_checker = 'jshint'
 
-NeoBundleLazy 'Shougo/neocomplete.vim', { 'autoload' : {
-      \ 'functions' : ['neocomplete#init#disable', 'neocomplete#is_enabled', 'neocomplete#start_manual_complete'],
-      \ 'commands' : ['NeoCompleteClean', 'NeoCompleteEnable', 'NeoCompleteDisable'],
-      \ 'insert' : 1,
-      \ }}
+" neocomplete
 let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_ignore_case = 1
 let g:neocomplete#enable_smart_case = 1
@@ -224,11 +258,8 @@ if !exists('g:neocomplete#keyword_patterns')
   let g:neocomplete#keyword_patterns = {}
 endif
 let g:neocomplete#keyword_patterns._ = '\h\w*'
-NeoBundle 'Shougo/neosnippet'
-NeoBundle 'Shougo/neosnippet-snippets'
-" NeoBundleLazy "Shougo/neosnippet", {"autoload": {"insert": 1,}}
-" NeoBundleLazy "Shougo/neosnippet-snippets", {"autoload": {"insert": 1,}}
-" Plugin key-mappings.
+
+" neosnippet
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
@@ -247,25 +278,16 @@ if has('conceal')
 endif
 let g:neosnippet#snippets_directory='~/.vim/snippets'
 
-NeoBundle 'https://github.com/rking/ag.vim'
-NeoBundle 'https://github.com/bling/vim-bufferline'
-NeoBundle 'thinca/vim-localrc'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'https://github.com/jaxbot/github-issues.vim'
+" github-issues
 let g:github_same_window = 1
 
-NeoBundle 'gregsexton/gitv'
+" gitv
 autocmd FileType git :setlocal foldlevel=99
 
-NeoBundle 'osyo-manga/vim-over'
+" vim-over
 nnoremap <silent><space>m :OverCommandLine<CR>%s/
 
-"NeoBundle 'Yggdroot/indentLine'
-
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'tpope/vim-repeat'
-
-NeoBundle 'majutsushi/tagbar'
+" tagbar
 nnoremap <silent><space>t :TagbarToggle<CR>
 let g:tagbar_type_ruby = {
       \ 'kinds' : [
@@ -283,15 +305,12 @@ let g:tagbar_type_ruby = {
 "   \   },
 "   \ }
 
-NeoBundle 'koron/codic-vim'
-
-NeoBundle 'vim-scripts/gtags.vim'
+" gtags
 nnoremap <Space>gg :Gtags<CR>
 nnoremap <Space>gr :Gtags -r<CR>
 nnoremap <Space>gs :Gtags -s<CR>
 
 " quickrun
-NeoBundle 'thinca/vim-quickrun'
 nnoremap <silent><Leader>r :call QuickRun -outputter/buffer/split \":botright 12sp\" -hook/time/enable 1<CR>
 " 一番下にウィンドウを分割させて出力
 " :QuickRun -outputter/buffer/split ":botright"
@@ -308,11 +327,11 @@ nnoremap <silent><Leader>r :call QuickRun -outputter/buffer/split \":botright 12
 " " 実行時間を計測し、その結果も最後に出力する
 " :QuickRun ruby -hook/time/enable 1
 
-NeoBundle 'tyru/caw.vim'
+" caw.vim
 nmap <Leader>c <Plug>(caw:i:toggle)
 vmap <Leader>c <Plug>(caw:i:toggle)
 
-NeoBundle 'https://github.com/bling/vim-airline'
+" airline
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
@@ -322,34 +341,18 @@ let g:airline_theme='badwolf'
 "let g:airline_theme='simple'
 let g:airline_detect_modified=1
 let g:airline#extensions#bufferline#enabled = 1
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_symbols.branch = ''
-let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = ''
-
-" color scheme
-NeoBundle 'altercation/vim-colors-solarized'
-NeoBundle 'vim-scripts/Zenburn'
-NeoBundle 'w0ng/vim-hybrid'
-NeoBundle 'vim-scripts/darkburn'
-NeoBundle 'vim-scripts/wombat256.vim'
-NeoBundle 'nanotech/jellybeans.vim'
-NeoBundle 'jpo/vim-railscasts-theme'
-NeoBundle 'chriskempson/vim-tomorrow-theme'
-NeoBundle 'vim-scripts/twilight'
-NeoBundle 'jonathanfilip/vim-lucius'
-
-" nanapi only
-NeoBundle 'kana/vim-gf-user'
-NeoBundle 'git@github.com:nanapi/nanapi.vim.git'
+let g:airline_left_sep = '⮀'
+let g:airline_left_alt_sep = '⮁'
+let g:airline_right_sep = '⮂'
+let g:airline_right_alt_sep = '⮃'
+let g:airline_symbols.branch = '⭠'
+let g:airline_symbols.readonly = '⭤'
+let g:airline_symbols.linenr = '⭡'
 
 " ruby
 " rails用
 "{{{
-NeoBundle 'tpope/vim-rails'
+" vim-rails
 let g:rails_default_file='config/database.yml'
 let g:rails_level = 4
 let g:rails_mappings=1
@@ -378,7 +381,7 @@ aug RailsDictSetting
   au!
 aug END
 
-NeoBundle 'tpope/vim-endwise'
+" endwise
 let g:endwise_no_mappings=1
 
 " matchitを有効化
@@ -398,14 +401,13 @@ function! s:set_snippet(type_name)
   "   call neosnippet#commands#_source($HOME. "/.vim/snippets/ruby.snip")
   endif
 endfunction
+
 augroup rails_snippet_switch
   autocmd!
     autocmd BufEnter *.rb call s:set_snippet(rails#buffer().type_name())
 augroup END
 
 set tags=tags,Gemfile.lock.tags
-
-NeoBundle "slim-template/vim-slim"
 "}}}
 
 
