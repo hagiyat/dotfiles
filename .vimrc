@@ -181,9 +181,9 @@ if has('vim_starting')
   filetype indent off
   execute 'set runtimepath+=' . expand('~/.vim/bundle/neobundle.vim')
 endif
-call neobundle#begin(expand('~/.vim/bundle/'))
-NeoBundleFetch 'Shougo/neobundle.vim'
-call neobundle#end()
+call neobundle#rc(expand('~/.vim/bundle'))
+
+NeoBundle 'https://github.com/Shougo/neobundle.vim.git'
 
 NeoBundle 'https://github.com/ctrlpvim/ctrlp.vim'
 NeoBundle 'https://github.com/tacahiroy/ctrlp-funky.git'
@@ -208,47 +208,26 @@ NeoBundle 'Shougo/vimfiler.vim'
 nnoremap <Space>n :VimFilerExplorer<CR>
 let g:vimfiler_safe_mode_by_default = 0
 
-NeoBundle 'Shougo/vimproc.vim', {
-\ 'build' : {
-\     'mac' : 'make -f make_mac.mak',
-\     'linux' : 'make',
-\     'unix' : 'gmake',
-\    },
-\ }
-
 NeoBundle 'https://github.com/scrooloose/syntastic.git'
 let g:syntastic_auto_loc_list = 1
 "let g:syntastic_javascript_checker = 'jshint'
 
-" if_luaが有効ならneocompleteを使う
-" 動作が遅くなってきたらLazyにする
-NeoBundle has('lua') ? 'Shougo/neocomplete' : 'Shougo/neocomplcache'
-if neobundle#is_installed('neocomplete')
-  " neocomplete用設定
-  let g:neocomplete#enable_at_startup = 1
-  let g:neocomplete#enable_ignore_case = 1
-  let g:neocomplete#enable_smart_case = 1
-  if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns = {}
-  endif
-  let g:neocomplete#keyword_patterns._ = '\h\w*'
-
-elseif neobundle#is_installed('neocomplcache')
-  " neocomplcache用設定
-  let g:neocomplcache_enable_at_startup = 1
-  let g:neocomplcache_enable_ignore_case = 1
-  let g:neocomplcache_enable_smart_case = 1
-  if !exists('g:neocomplcache_keyword_patterns')
-    let g:neocomplcache_keyword_patterns = {}
-  endif
-  let g:neocomplcache_keyword_patterns._ = '\h\w*'
-  let g:neocomplcache_enable_camel_case_completion = 1
-  let g:neocomplcache_enable_underbar_completion = 1
-
+NeoBundleLazy 'Shougo/neocomplete.vim', { 'autoload' : {
+      \ 'functions' : ['neocomplete#init#disable', 'neocomplete#is_enabled', 'neocomplete#start_manual_complete'],
+      \ 'commands' : ['NeoCompleteClean', 'NeoCompleteEnable', 'NeoCompleteDisable'],
+      \ 'insert' : 1,
+      \ }}
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_ignore_case = 1
+let g:neocomplete#enable_smart_case = 1
+if !exists('g:neocomplete#keyword_patterns')
+  let g:neocomplete#keyword_patterns = {}
 endif
-
-NeoBundleLazy "Shougo/neosnippet", {"autoload": {"insert": 1,}}
-NeoBundleLazy "Shougo/neosnippet-snippets", {"autoload": {"insert": 1,}}
+let g:neocomplete#keyword_patterns._ = '\h\w*'
+NeoBundle 'Shougo/neosnippet'
+NeoBundle 'Shougo/neosnippet-snippets'
+" NeoBundleLazy "Shougo/neosnippet", {"autoload": {"insert": 1,}}
+" NeoBundleLazy "Shougo/neosnippet-snippets", {"autoload": {"insert": 1,}}
 " Plugin key-mappings.
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
@@ -273,12 +252,15 @@ NeoBundle 'https://github.com/bling/vim-bufferline'
 NeoBundle 'thinca/vim-localrc'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'https://github.com/jaxbot/github-issues.vim'
+let g:github_same_window = 1
 
 NeoBundle 'gregsexton/gitv'
 autocmd FileType git :setlocal foldlevel=99
 
 NeoBundle 'osyo-manga/vim-over'
 nnoremap <silent><space>m :OverCommandLine<CR>%s/
+
+"NeoBundle 'Yggdroot/indentLine'
 
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-repeat'
@@ -340,13 +322,13 @@ let g:airline_theme='badwolf'
 "let g:airline_theme='simple'
 let g:airline_detect_modified=1
 let g:airline#extensions#bufferline#enabled = 1
-let g:airline_left_sep = '⮀'
-let g:airline_left_alt_sep = '⮁'
-let g:airline_right_sep = '⮂'
-let g:airline_right_alt_sep = '⮃'
-let g:airline_symbols.branch = '⭠'
-let g:airline_symbols.readonly = '⭤'
-let g:airline_symbols.linenr = '⭡'
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
 
 " color scheme
 NeoBundle 'altercation/vim-colors-solarized'
@@ -405,50 +387,25 @@ if !exists('loaded_matchit')
 endif
 
 " neosnipptsとの共用設定
-autocmd User Rails.view*                 NeoSnippetSource ~/.vim/snippet/ruby.rails.view.snip
-autocmd User Rails.controller*           NeoSnippetSource ~/.vim/snippet/ruby.rails.controller.snip
-autocmd User Rails/db/migrate/*          NeoSnippetSource ~/.vim/snippet/ruby.rails.migrate.snip
-autocmd User Rails/config/routes.rb      NeoSnippetSource ~/.vim/snippet/ruby.rails.route.snip
+function! s:set_snippet(type_name)
+  if strlen(a:type_name)
+    " echo rails#buffer().type_name()
+    let snippet_path = printf($HOME. "/.vim/snippets/rails.%s.snip", a:type_name)
+    if filereadable(snippet_path)
+      call neosnippet#commands#_source(snippet_path)
+    endif
+  " else
+  "   call neosnippet#commands#_source($HOME. "/.vim/snippets/ruby.snip")
+  endif
+endfunction
+augroup rails_snippet_switch
+  autocmd!
+    autocmd BufEnter *.rb call s:set_snippet(rails#buffer().type_name())
+augroup END
 
-NeoBundle 'szw/vim-tags'
-NeoBundle 'tpope/vim-dispatch'
-let g:vim_tags_project_tags_command='ctags -f tags -R . 2>/dev/null'
-let g:vim_tags_gems_tags_command='ctags -R -f Gemfile.lock.tags `bundle show --paths` 2>/dev/null'
-set tags+=tags,Gemfile.lock.tags
-let g:vim_tags_use_vim_dispatch = 0
-
-NeoBundle 'git://github.com/Yggdroot/indentLine.git'
-let g:indentLine_showFirstIndentLevel=1
-"let g:indentLine_first_char = '┆'
-" other candidates : '❯', '║', '⧫',
-"let g:indentLine_char = '⦙'
-" other candidates : '❭', '║', '⦙', '⟩'
-" these settings affect ALL conceal highlighting.
-let g:indentLine_color_term=235
-let g:indentLine_fileType=['ruby','eruby']
+set tags=tags,Gemfile.lock.tags
 
 NeoBundle "slim-template/vim-slim"
-
-NeoBundleLazy 'marcus/rsense', {
-  \ 'autoload': {
-  \   'filetypes': ['ruby', 'eruby'],
-  \ },
-  \ }
-if has('lua')
-  NeoBundle 'supermomonga/neocomplete-rsense.vim', {
-    \ 'depends': ['Shougo/neocomplete.vim', 'marcus/rsense'],
-    \ }
-else
-  NeoBundle 'Shougo/neocomplcache-rsense.vim', {
-    \ 'depends': ['Shougo/neocomplcache.vim', 'marcus/rsense'],
-    \ }
-endif
-let g:rsenseUseOmniFunc = 1
-if !exists('g:neocomplete#force_omni_input_patterns')
-  let g:neocomplete#force_omni_input_patterns = {}
-endif
-let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
-let g:neocomplete#sources#rsense#home_directory = '/usr/local/bin/rsense'
 "}}}
 
 
