@@ -183,14 +183,14 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'ctrlpvim/ctrlp.vim'
 NeoBundle 'tacahiroy/ctrlp-funky.git'
 NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/vimfiler.vim'
+NeoBundleLazy 'Shougo/vimfiler.vim', { 'depends' : [ 'Shougo/unite.vim' ] }
 " NeoBundle 'scrooloose/syntastic.git'
 NeoBundleLazy 'Shougo/neocomplete.vim', { 'autoload' : {
       \ 'functions' : ['neocomplete#init#disable', 'neocomplete#is_enabled', 'neocomplete#start_manual_complete'],
       \ 'commands' : ['NeoCompleteClean', 'NeoCompleteEnable', 'NeoCompleteDisable'],
       \ 'insert' : 1,
       \ }}
-NeoBundle 'Shougo/neomru.vim'
+NeoBundle 'Shougo/neomru.vim', { 'depends' : [ 'Shougo/unite.vim' ] }
 NeoBundle 'Shougo/vimproc.vim', {
 \ 'build' : {
 \     'windows' : 'tools\\update-dll-mingw',
@@ -221,10 +221,13 @@ NeoBundle 'tyru/caw.vim'
 NeoBundle 'bling/vim-airline'
 NeoBundle 'tpope/vim-rails'
 NeoBundle 'tpope/vim-endwise'
-NeoBundle 'osyo-manga/shabadou.vim'
-NeoBundle 'cohama/vim-hier'
-NeoBundle 'dannyob/quickfixstatus'
-NeoBundle 'osyo-manga/vim-watchdogs'
+NeoBundleLazy 'osyo-manga/vim-watchdogs', { 'depends' : [
+    \   'thinca/vim-quickrun',
+    \   'Shougo/vimproc.vim',
+    \   'osyo-manga/shabadou.vim',
+    \   'cohama/vim-hier',
+    \   'dannyob/quickfixstatus'
+    \ ] }
 NeoBundle "slim-template/vim-slim"
 
 " color schemes
