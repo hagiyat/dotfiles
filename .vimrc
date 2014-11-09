@@ -184,19 +184,31 @@ NeoBundle 'ctrlpvim/ctrlp.vim'
 NeoBundle 'tacahiroy/ctrlp-funky.git'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimfiler.vim'
-NeoBundle 'scrooloose/syntastic.git'
+" NeoBundle 'scrooloose/syntastic.git'
 NeoBundleLazy 'Shougo/neocomplete.vim', { 'autoload' : {
       \ 'functions' : ['neocomplete#init#disable', 'neocomplete#is_enabled', 'neocomplete#start_manual_complete'],
       \ 'commands' : ['NeoCompleteClean', 'NeoCompleteEnable', 'NeoCompleteDisable'],
       \ 'insert' : 1,
       \ }}
+NeoBundle 'Shougo/neomru.vim'
+NeoBundle 'Shougo/vimproc.vim', {
+\ 'build' : {
+\     'windows' : 'tools\\update-dll-mingw',
+\     'cygwin' : 'make -f make_cygwin.mak',
+\     'mac' : 'make -f make_mac.mak',
+\     'linux' : 'make',
+\     'unix' : 'gmake',
+\    },
+\ }
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
-NeoBundle 'rking/ag.vim'
+NeoBundle 'Shougo/unite-outline'
+NeoBundle 'tsukkee/unite-tag'
+" NeoBundle 'rking/ag.vim'
 NeoBundle 'bling/vim-bufferline'
 NeoBundle 'thinca/vim-localrc'
 NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'jaxbot/github-issues.vim'
+" NeoBundle 'jaxbot/github-issues.vim'
 NeoBundle 'gregsexton/gitv'
 NeoBundle 'osyo-manga/vim-over'
 NeoBundle 'tpope/vim-surround'
@@ -209,6 +221,10 @@ NeoBundle 'tyru/caw.vim'
 NeoBundle 'bling/vim-airline'
 NeoBundle 'tpope/vim-rails'
 NeoBundle 'tpope/vim-endwise'
+NeoBundle 'osyo-manga/shabadou.vim'
+NeoBundle 'cohama/vim-hier'
+NeoBundle 'dannyob/quickfixstatus'
+NeoBundle 'osyo-manga/vim-watchdogs'
 NeoBundle "slim-template/vim-slim"
 
 " color schemes
@@ -242,12 +258,44 @@ nnoremap <Space>pq :<C-u>CtrlPQuickfix<CR>
 nnoremap <Space>ps :<C-u>CtrlPMixed<CR>
 nnoremap <Space>pf :<C-u>CtrlPFunky<CR>
 
+" Unite
+nnoremap [unite] <Nop>
+nmap <Space>u [unite]
+let g:unite_enable_start_insert=1
+nnoremap [unite]f :<C-u>Unite file_rec<CR>
+nnoremap [unite]u :<C-u>Unite buffer file_mru<CR>
+nnoremap [unite]b :<C-u>Unite buffer<CR>
+nnoremap [unite]m :<C-u>Unite file_mru<CR>
+nnoremap [unite]g :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
+nnoremap [unite]c :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
+nnoremap [unite]r :<C-u>UniteResume search-buffer<CR>
+nnoremap [unite]l :<C-u>Unite line -buffer-name=lines<CR>
+nnoremap [unite]o :<C-u>Unite outline -buffer-name=outline<CR>
+if executable('ag')
+  let g:unite_source_grep_command = 'ag'
+  let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
+  let g:unite_source_grep_recursive_opt = ''
+endif
+call unite#custom#profile('default', 'context', {'direction': 'botright',})
+
 " vimfiler
 nnoremap <Space>n :VimFilerExplorer<CR>
 let g:vimfiler_safe_mode_by_default = 0
+" autocmd FileType vimfiler
+"   \ nmap <buffer> <SID>(vimfiler_redraw_screen) <Plug>(vimfiler_redraw_screen)|
+"   \ nnoremap <buffer><script> <C-W>> 35<C-W>><SID>(vimfiler_redraw_screen)|
+"   \ nnoremap <buffer><script> <C-W>< 35<C-W><<SID>(vimfiler_redraw_screen)
+function! s:vimfiler_width_expr()
+  let w = vimfiler#get_context().winwidth
+  return w == winwidth(0) ? w * 2 : w
+endfunction
+autocmd FileType vimfiler
+  \ nmap <buffer> <SID>(vimfiler_redraw_screen) <Plug>(vimfiler_redraw_screen)|
+  \ nnoremap <buffer><script><expr> <C-H>
+  \   <SID>vimfiler_width_expr() . "\<C-W>\|\<SID>(vimfiler_redraw_screen)"
 
 " syntastic
-let g:syntastic_auto_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
 "let g:syntastic_javascript_checker = 'jshint'
 
 " neocomplete
@@ -279,7 +327,7 @@ endif
 let g:neosnippet#snippets_directory='~/.vim/snippets'
 
 " github-issues
-let g:github_same_window = 1
+" let g:github_same_window = 1
 
 " gitv
 autocmd FileType git :setlocal foldlevel=99
@@ -312,20 +360,14 @@ nnoremap <Space>gs :Gtags -s<CR>
 
 " quickrun
 nnoremap <silent><Leader>r :call QuickRun -outputter/buffer/split \":botright 12sp\" -hook/time/enable 1<CR>
-" 一番下にウィンドウを分割させて出力
-" :QuickRun -outputter/buffer/split ":botright"
-"
-" " ウィンドウの高さを指定する場合
-" :QuickRun -outputter/buffer/split ":botright 8sp"
-"
-" " 出力がなかった場合に出力バッファを自動的に閉じる
-" :QuickRun -outputter/buffer/close_on_empty 1
-"
-" " quickfix へと出力する
-" :QuickRun -outputter quickfix
-"
-" " 実行時間を計測し、その結果も最後に出力する
-" :QuickRun ruby -hook/time/enable 1
+
+" watchdogs
+let g:watchdogs_check_BufWritePost_enable = 1
+let g:quickrun_config = {
+\   "ruby/watchdogs_checker" : {
+\       "type" : "watchdogs_checker/rubocop"
+\   }
+\}
 
 " caw.vim
 nmap <Leader>c <Plug>(caw:i:toggle)
@@ -423,3 +465,6 @@ hi DiffAdd    ctermfg=226 ctermbg=235
 hi DiffChange ctermfg=7 ctermbg=235
 hi DiffDelete ctermfg=52 ctermbg=233
 hi DiffText   cterm=none ctermfg=208 ctermbg=235
+hi SpellBad   cterm=underline ctermfg=208 ctermbg=235
+hi SpellLocal cterm=italic ctermfg=209 ctermbg=235
+hi SpellRare  cterm=bold ctermfg=210 ctermbg=235
