@@ -202,8 +202,9 @@ NeoBundle 'Shougo/vimproc.vim', {
 \ }
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
-NeoBundle 'Shougo/unite-outline'
-NeoBundle 'tsukkee/unite-tag'
+NeoBundleLazy 'Shougo/unite-outline', { 'depends' : [ 'Shougo/unite.vim' ] }
+NeoBundleLazy 'tsukkee/unite-tag', { 'depends' : [ 'Shougo/unite.vim' ] }
+NeoBundleLazy 'thinca/vim-unite-history', { 'depends' : [ 'Shougo/unite.vim' ] }
 " NeoBundle 'rking/ag.vim'
 NeoBundle 'bling/vim-bufferline'
 NeoBundle 'thinca/vim-localrc'
@@ -274,6 +275,7 @@ nnoremap [unite]c :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
 nnoremap [unite]r :<C-u>UniteResume search-buffer<CR>
 nnoremap [unite]l :<C-u>Unite line -buffer-name=lines<CR>
 nnoremap [unite]o :<C-u>Unite outline -buffer-name=outline<CR>
+nnoremap [unite]h :<C-u>Unite history/command -buffer-name=histories<CR>
 if executable('ag')
   let g:unite_source_grep_command = 'ag'
   let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
