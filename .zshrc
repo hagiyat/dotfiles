@@ -15,6 +15,9 @@ fi
 export LANG=ja_JP.UTF-8
 export EDITOR=vim
 #export PAGER=vimpager
+export GOROOT=/usr/local/opt/go/libexec
+export GOPATH=$HOME/.go
+export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
 # ヒストリー設定
 HISTFILE=~/.zsh_history
@@ -49,16 +52,19 @@ alias phpl="php -l"
 alias vdiff="vimdiff +VimdiffBootstrap"
 
 #alias tag_update="tmux split-window -v -l 1 -c '#{pane_current_path}' \"echo 'tag updating...';gtags --gtagslabel=pygments;ctags -f tags -R;ctags -R -f Gemfile.lock.tags `bundle show --paths`\""
-function tag_update {
-  gtags --gtagslabel=pygments
-  ctags -f tags -R
-  ctags -R -f Gemfile.lock.tags `bundle show --paths`
+function update_tags {
+  #gtags --gtagslabel=pygments & \
+  ctags -f tags -R & \
+  ctags -R -f Gemfile.lock.tags `bundle show --paths` & \
+  echo 'tag updating...'
 }
 
 # 略語展開
 setopt extended_glob
 typeset -A abberviations
 abberviations=(
+  # vim
+  "v" "vim"
   # pipe
   "lps"  "| peco --rcfile ~/.peco/config_single.json"
   "lp"   "| peco"
@@ -84,6 +90,16 @@ abberviations=(
   "tmv"  "tmux split-window -v -c '#{pane_current_path}'"
   "tmh"  "tmux split-window -h -c '#{pane_current_path}'"
   "tmw"  "tmux new-window -c '#{pane_current_path}'"
+  # rails
+  "rs" "rails server"
+  "rc" "rails console"
+  "rg" "rails generate"
+  "rr" "rails runner"
+  # bundle exec
+  "be" "bundle exec"
+  "bi" "bundle install"
+  "br" "bundle exec rake"
+  "bm" "bundle exec rake db:migrate"
 )
 
 magic-abbrev-expand() {
@@ -105,6 +121,14 @@ bindkey "^x " no-magic-abbrev-expand
 # 便利系
 function agcount() { ag $1 | wc -l | tr -d " "; }
 
+if [ -d ${HOME}/.anyenv ] ; then
+  export PATH="$HOME/.anyenv/bin:$PATH"
+  eval "$(anyenv init -)"
+  for D in `ls $HOME/.anyenv/envs`
+  do
+    export PATH="$HOME/.anyenv/envs/$D/shims:$PATH"
+  done
+fi
 
 # cdrを有効化
 autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
