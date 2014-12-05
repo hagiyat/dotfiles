@@ -180,8 +180,6 @@ set runtimepath+=~/.vim/bundle/neobundle.vim/
 call neobundle#begin(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 " {{{ plugins
-NeoBundle 'ctrlpvim/ctrlp.vim'
-NeoBundle 'tacahiroy/ctrlp-funky.git'
 NeoBundle 'Shougo/unite.vim'
 NeoBundleLazy 'Shougo/vimfiler.vim', { 'depends' : [ 'Shougo/unite.vim' ] }
 " NeoBundle 'scrooloose/syntastic.git'
@@ -204,32 +202,34 @@ NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundleLazy 'Shougo/unite-outline', { 'depends' : [ 'Shougo/unite.vim' ] }
 NeoBundleLazy 'tsukkee/unite-tag', { 'depends' : [ 'Shougo/unite.vim' ] }
-NeoBundleLazy 'thinca/vim-unite-history', { 'depends' : [ 'Shougo/unite.vim' ] }
-" NeoBundle 'rking/ag.vim'
+NeoBundle 'szw/vim-tags'
 NeoBundle 'bling/vim-bufferline'
 NeoBundle 'thinca/vim-localrc'
 NeoBundle 'tpope/vim-fugitive'
 " NeoBundle 'jaxbot/github-issues.vim'
+NeoBundle 'moznion/github-commit-comment.vim'
 NeoBundle 'gregsexton/gitv'
 NeoBundle 'osyo-manga/vim-over'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-repeat'
+NeoBundle 'rhysd/clever-f.vim'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'koron/codic-vim'
-NeoBundle 'vim-scripts/gtags.vim'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'tyru/caw.vim'
 NeoBundle 'bling/vim-airline'
 NeoBundle 'tpope/vim-rails'
 NeoBundle 'tpope/vim-endwise'
-NeoBundleLazy 'osyo-manga/vim-watchdogs', { 'depends' : [
-    \   'thinca/vim-quickrun',
-    \   'Shougo/vimproc.vim',
-    \   'osyo-manga/shabadou.vim',
-    \   'cohama/vim-hier',
-    \   'dannyob/quickfixstatus'
-    \ ] }
+NeoBundle 'osyo-manga/vim-watchdogs', { 'depends' : [
+  \   'thinca/vim-quickrun',
+  \   'Shougo/vimproc.vim',
+  \   'osyo-manga/shabadou.vim',
+  \   'cohama/vim-hier',
+  \   'dannyob/quickfixstatus'
+  \ ] }
 NeoBundle "slim-template/vim-slim"
+NeoBundle 'leafgarland/typescript-vim'
+NeoBundle 'clausreinke/typescript-tools'
 
 " color schemes
 NeoBundle 'altercation/vim-colors-solarized'
@@ -245,51 +245,33 @@ NeoBundle 'jonathanfilip/vim-lucius'
 " }}} plugins
 call neobundle#end()
 
-" ctrlp
-set wildignore+=*/tmp/*,/tmp/*,*.so,*.swp,*.zip,*.pyc,tags,*/vendor/*,*/.git/*,/private/var/folders/*,/var/folders/*,/dev/fd/,*/stdin,GPATH,GTAGS,GRTAGS
-"let g:ctrlp_mruf_exclude = '/dev/fd/\|.git\|fugitive'
-let g:ctrlp_use_caching = 1
-let g:ctrlp_clear_cache_on_exit = 0
-let g:ctrlp_mruf_max = 500
-"let g:ctrlp_use_migemo = 1
-let g:ctrlp_extensions = ['funky']
-"let g:ctrlp_user_command = 'ag %s -l'
-nnoremap <Space>pb :<C-u>CtrlPBuffer<CR>
-nnoremap <Space>pp :<C-u>CtrlP<CR>
-nnoremap <Space>pl :<C-u>CtrlPLine<CR>
-nnoremap <Space>pm :<C-u>CtrlPMRUFiles<CR>
-nnoremap <Space>pq :<C-u>CtrlPQuickfix<CR>
-nnoremap <Space>ps :<C-u>CtrlPMixed<CR>
-nnoremap <Space>pf :<C-u>CtrlPFunky<CR>
-
 " Unite
 nnoremap [unite] <Nop>
-nmap <Space>u [unite]
+nmap s [unite]
 let g:unite_enable_start_insert=1
-nnoremap [unite]f :<C-u>Unite file_rec<CR>
-nnoremap [unite]u :<C-u>Unite buffer file_mru<CR>
+nnoremap [unite]f :<C-u>Unite file_rec/async<CR>
+nnoremap [unite]s :<C-u>Unite buffer file_mru<CR>
 nnoremap [unite]b :<C-u>Unite buffer<CR>
 nnoremap [unite]m :<C-u>Unite file_mru<CR>
 nnoremap [unite]g :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
-nnoremap [unite]c :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
+nnoremap [unite]w :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
 nnoremap [unite]r :<C-u>UniteResume search-buffer<CR>
 nnoremap [unite]l :<C-u>Unite line -buffer-name=lines<CR>
 nnoremap [unite]o :<C-u>Unite outline -buffer-name=outline<CR>
-nnoremap [unite]h :<C-u>Unite history/command -buffer-name=histories<CR>
-if executable('ag')
-  let g:unite_source_grep_command = 'ag'
-  let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
-  let g:unite_source_grep_recursive_opt = ''
-endif
-call unite#custom#profile('default', 'context', {'direction': 'botright',})
+nnoremap [unite]c :<C-u>Unite command<CR>
+let g:unite_source_rec_async_command='ag --follow --nocolor --nogroup --hidden -g ""'
+let g:unite_source_grep_command = 'ag'
+let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
+let g:unite_source_grep_recursive_opt = ''
 
 " vimfiler
 nnoremap <Space>n :VimFilerExplorer<CR>
+let g:vimfiler_tree_leaf_icon = '⁝'
+let g:vimfiler_tree_opened_icon = '▾'
+let g:vimfiler_tree_closed_icon = '▹'
+let g:vimfiler_readonly_file_icon = '⭤'
 let g:vimfiler_safe_mode_by_default = 0
-" autocmd FileType vimfiler
-"   \ nmap <buffer> <SID>(vimfiler_redraw_screen) <Plug>(vimfiler_redraw_screen)|
-"   \ nnoremap <buffer><script> <C-W>> 35<C-W>><SID>(vimfiler_redraw_screen)|
-"   \ nnoremap <buffer><script> <C-W>< 35<C-W><<SID>(vimfiler_redraw_screen)
+" c-hで倍サイズに広げる
 function! s:vimfiler_width_expr()
   let w = vimfiler#get_context().winwidth
   return w == winwidth(0) ? w * 2 : w
@@ -298,10 +280,6 @@ autocmd FileType vimfiler
   \ nmap <buffer> <SID>(vimfiler_redraw_screen) <Plug>(vimfiler_redraw_screen)|
   \ nnoremap <buffer><script><expr> <C-H>
   \   <SID>vimfiler_width_expr() . "\<C-W>\|\<SID>(vimfiler_redraw_screen)"
-
-" syntastic
-" let g:syntastic_auto_loc_list = 1
-"let g:syntastic_javascript_checker = 'jshint'
 
 " neocomplete
 let g:neocomplete#enable_at_startup = 1
@@ -312,7 +290,7 @@ if !exists('g:neocomplete#keyword_patterns')
 endif
 let g:neocomplete#keyword_patterns._ = '\h\w*'
 
-" neosnippet
+" neosnippet {{{
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
@@ -330,6 +308,7 @@ if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
 let g:neosnippet#snippets_directory='~/.vim/snippets'
+" }}}
 
 " github-issues
 " let g:github_same_window = 1
@@ -338,7 +317,14 @@ let g:neosnippet#snippets_directory='~/.vim/snippets'
 autocmd FileType git :setlocal foldlevel=99
 
 " vim-over
-nnoremap <silent><space>m :OverCommandLine<CR>%s/
+nnoremap <silent><Space>mm :OverCommandLine<CR>%s/
+nnoremap <silent><Space>mr :OverCommandLine<CR>%s/<C-R><C-W>
+
+" vim-tags
+let g:vim_tags_project_tags_command = "{CTAGS} -R {OPTIONS} {DIRECTORY} 2>/dev/null"
+let g:vim_tags_gems_tags_command = "{CTAGS} -R {OPTIONS} `bundle show --paths` 2>/dev/null"
+nnoremap <Space>tt g<C-]>
+nnoremap <Space>tg TagsGenerate<CR>
 
 " tagbar
 nnoremap <silent><space>t :TagbarToggle<CR>
@@ -358,21 +344,17 @@ let g:tagbar_type_ruby = {
 "   \   },
 "   \ }
 
-" gtags
-nnoremap <Space>gg :Gtags<CR>
-nnoremap <Space>gr :Gtags -r<CR>
-nnoremap <Space>gs :Gtags -s<CR>
-
 " quickrun
 nnoremap <silent><Leader>r :call QuickRun -outputter/buffer/split \":botright 12sp\" -hook/time/enable 1<CR>
 
 " watchdogs
+let g:vimrubocop_config = printf("%s/.rubocop.yml", $HOME)
 let g:watchdogs_check_BufWritePost_enable = 1
 let g:quickrun_config = {
-\   "ruby/watchdogs_checker" : {
-\       "type" : "watchdogs_checker/rubocop"
-\   }
-\}
+  \ "ruby/watchdogs_checker" : {
+  \   "type" : "watchdogs_checker/rubocop"
+  \ }
+  \}
 
 " caw.vim
 nmap <Leader>c <Plug>(caw:i:toggle)
@@ -439,13 +421,17 @@ endif
 " neosnipptsとの共用設定
 function! s:set_snippet(type_name)
   if strlen(a:type_name)
-    " echo rails#buffer().type_name()
-    let snippet_path = printf($HOME. "/.vim/snippets/rails.%s.snip", a:type_name)
-    if filereadable(snippet_path)
-      call neosnippet#commands#_source(snippet_path)
-    endif
-  " else
-  "   call neosnippet#commands#_source($HOME. "/.vim/snippets/ruby.snip")
+    for type in ['controller', 'model', 'helper', 'routes', 'spec', 'slim']
+      "  echomsg a:type_name. " - ". type
+      if match(a:type_name, type) != -1
+        let snippet_path = printf($HOME. "/.vim/snippets/rails.%s.snip", type)
+        if filereadable(snippet_path)
+          call neosnippet#commands#_source(snippet_path)
+        else
+          echomsg "unreadable ". snippet_path
+        endif
+      endif
+    endfor
   endif
 endfunction
 
@@ -453,6 +439,19 @@ augroup rails_snippet_switch
   autocmd!
     autocmd BufEnter *.rb call s:set_snippet(rails#buffer().type_name())
 augroup END
+
+" Html2Slim({slim})
+" => {html}
+function! Html2Slim(html)
+  if !executable("html2slim")
+    return ""
+  endif
+  let input  = tempname()
+  call writefile(split(a:html, "\n"), input)
+  let output = tempname()
+  call system(printf("html2slim %s %s", input, output))
+  return join(readfile(output), "\n")
+endfunction
 
 set tags=tags,Gemfile.lock.tags
 "}}}

@@ -70,6 +70,7 @@ abberviations=(
   "lp"   "| peco"
   "lvi"  "| vim -Rc 'set ft=zsh' -"
   "lsin"  "| xargs cat | vim -Rc 'set ft=zsh' -"
+  "lag" "| ag"
   # git
   "g"  "git status"
   "gs"  "git stash"
@@ -94,10 +95,12 @@ abberviations=(
   "rs" "rails server"
   "rc" "rails console"
   "rg" "rails generate"
+  "rgm" "rails generate migration"
   "rr" "rails runner"
   # bundle exec
   "be" "bundle exec"
   "bi" "bundle install"
+  "bu" "bundle update"
   "br" "bundle exec rake"
   "bm" "bundle exec rake db:migrate"
 )
