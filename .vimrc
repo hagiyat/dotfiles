@@ -1,28 +1,29 @@
+set encoding=utf-8
+scriptencoding utf-8
+
 " -----------------
 "  vimrc
 " -----------------
 " 文字コード
-set encoding=utf-8
 set fileencodings=utf-8,cp932,euc-jp,iso-20220-jp,default,latin
 
 " escapeキーをマッピング
 imap <c-j> <esc>
 
 " leaderを , に割り当て
-let mapleader = ","
+let mapleader = ','
 noremap \  ,
 
 "新しい行のインデントを現在行と同じにする
 
 set autoindent
-"Vi互換をオフ
-set nocompatible
 "インクリメンタルサーチを行う
 set incsearch
 "行番号を表示する
 set number
-"シフト移動幅
-set shiftwidth=2
+" インデント
+set shiftwidth=4
+set tabstop=4
 "閉じ括弧が入力されたとき、対応する括弧を表示する
 set showmatch
 "検索時に大文字を含んでいたら大/小を区別
@@ -32,12 +33,8 @@ set smartindent
 "行頭の余白内で Tab を打ち込むと、'shiftwidth' の数だけインデントする。
 set smarttab
 :"ファイル内の <Tab> が対応する空白の数
-set tabstop=2
 "カーソルを行頭、行末で止まらないようにする
 "set whichwrap=b,s,h,l,<,>,[,]
-
-" 基本2にしたので一旦コメントアウト
-" autocmd! FileType vim,ruby,eruby,php,javascript,html,zsh setlocal shiftwidth=2 tabstop=2
 
 " 大文字小文字を区別しない
 set ignorecase
@@ -66,7 +63,7 @@ set showmatch
 set matchtime=3
 
 " 対応括弧に'<'と'>'のペアを追加
-set matchpairs& matchpairs+=<:>
+" set matchpairs& matchpairs+=<:>
 
 " バックスペースでなんでも消せるようにする
 set backspace=indent,eol,start
@@ -99,18 +96,22 @@ set cursorline
 " yankしつつpbcopy
 set clipboard+=autoselect,unnamed
 
-" 保存時に行末の空白を除去する
-autocmd BufWritePre * :%s/\s\+$//ge
-
-" 256色表示
-autocmd Colorscheme * :set t_Co=256
-
-" 背景色でクリアする
-autocmd Colorscheme * :set t_ut=
-
 " 不可視文字の表示
 set listchars=tab:▸-,trail:=,extends:»,precedes:«,nbsp:%,eol:↲
-autocmd Colorscheme * :highlight SpecialKey ctermfg=238
+
+augroup au_initvim
+  autocmd!
+  " tabstop / shiftwidth
+  autocmd! FileType vim,ruby,eruby,slim,php,javascript,html,zsh setlocal shiftwidth=2 tabstop=2
+  " 保存時に行末の空白を除去する
+  autocmd BufWritePre * :%s/\s\+$//ge
+  " 256色表示
+  autocmd Colorscheme * :set t_Co=256
+  " 背景色でクリアする
+  autocmd Colorscheme * :set t_ut=
+  " specialkeyの色設定
+  autocmd Colorscheme * :highlight SpecialKey ctermfg=238
+augroup END
 
 " ESCを二回押すことでハイライトを消す
 nmap <silent> <Esc><Esc> :nohlsearch<CR>
@@ -156,28 +157,12 @@ cmap w!! w !sudo tee > /dev/null %
 nnoremap <leader>u :e ++enc=utf8<CR>
 nnoremap <leader>s :e ++enc=cp932<CR>
 
-" Dash.app連携
-function! s:dash(...)
-  if len(a:000) == 1 && len(a:1) == 0
-    echomsg 'No keyword'
-  else
-    let ft = &filetype
-    if &filetype == 'python'
-      let ft = ft.'2'
-    endif
-    let ft = ft.':'
-    let word = len(a:000) == 0 ? input('Keyword: ', ft.expand('<cword>')) : ft.join(a:000, ' ')
-    call system(printf("open dash://'%s'", word))
-  endif
-endfunction
-command! -nargs=* Dash call <SID>dash(<f-args>)
-nnoremap <Space>d :call <SID>dash(expand('<cword>'))<CR>
-
 " Neobundle
-scriptencoding utf-8
-
-set runtimepath+=~/.vim/bundle/neobundle.vim/
+if has('vim_starting')
+  set runtimepath+=~/.vim/bundle/neobundle.vim/
+endif
 call neobundle#begin(expand('~/.vim/bundle/'))
+
 NeoBundleFetch 'Shougo/neobundle.vim'
 " {{{ plugins
 NeoBundle 'Shougo/unite.vim'
@@ -210,8 +195,6 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'moznion/github-commit-comment.vim'
 NeoBundle 'gregsexton/gitv'
 NeoBundle 'osyo-manga/vim-over'
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'tpope/vim-repeat'
 NeoBundle 'rhysd/clever-f.vim'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'koron/codic-vim'
@@ -227,21 +210,23 @@ NeoBundle 'osyo-manga/vim-watchdogs', { 'depends' : [
   \   'cohama/vim-hier',
   \   'dannyob/quickfixstatus'
   \ ] }
+NeoBundle 'haya14busa/incsearch.vim'
+
 NeoBundle "slim-template/vim-slim"
 NeoBundle 'leafgarland/typescript-vim'
 NeoBundle 'clausreinke/typescript-tools'
 
 " color schemes
 NeoBundle 'altercation/vim-colors-solarized'
-NeoBundle 'vim-scripts/Zenburn'
 NeoBundle 'w0ng/vim-hybrid'
 NeoBundle 'vim-scripts/darkburn'
-NeoBundle 'vim-scripts/wombat256.vim'
 NeoBundle 'nanotech/jellybeans.vim'
 NeoBundle 'jpo/vim-railscasts-theme'
 NeoBundle 'chriskempson/vim-tomorrow-theme'
 NeoBundle 'vim-scripts/twilight'
 NeoBundle 'jonathanfilip/vim-lucius'
+NeoBundle 'adlawson/vim-sorcerer'
+NeoBundle 'cocopon/iceberg.vim'
 " }}} plugins
 call neobundle#end()
 
@@ -276,10 +261,13 @@ function! s:vimfiler_width_expr()
   let w = vimfiler#get_context().winwidth
   return w == winwidth(0) ? w * 2 : w
 endfunction
-autocmd FileType vimfiler
-  \ nmap <buffer> <SID>(vimfiler_redraw_screen) <Plug>(vimfiler_redraw_screen)|
-  \ nnoremap <buffer><script><expr> <C-H>
-  \   <SID>vimfiler_width_expr() . "\<C-W>\|\<SID>(vimfiler_redraw_screen)"
+augroup au_vimfiler
+  autocmd!
+  autocmd FileType vimfiler
+    \ nmap <buffer> <SID>(vimfiler_redraw_screen) <Plug>(vimfiler_redraw_screen)|
+    \ nnoremap <buffer><script><expr> <C-H>
+    \   <SID>vimfiler_width_expr() . "\<C-W>\|\<SID>(vimfiler_redraw_screen)"
+augroup END
 
 " neocomplete
 let g:neocomplete#enable_at_startup = 1
@@ -314,15 +302,18 @@ let g:neosnippet#snippets_directory='~/.vim/snippets'
 " let g:github_same_window = 1
 
 " gitv
-autocmd FileType git :setlocal foldlevel=99
+augroup au_gitv
+  autocmd!
+  autocmd FileType git :setlocal foldlevel=99
+augroup END
 
 " vim-over
 nnoremap <silent><Space>mm :OverCommandLine<CR>%s/
 nnoremap <silent><Space>mr :OverCommandLine<CR>%s/<C-R><C-W>
 
 " vim-tags
-let g:vim_tags_project_tags_command = "{CTAGS} -R {OPTIONS} {DIRECTORY} 2>/dev/null"
-let g:vim_tags_gems_tags_command = "{CTAGS} -R {OPTIONS} `bundle show --paths` 2>/dev/null"
+let g:vim_tags_project_tags_command = '{CTAGS} -R {OPTIONS} {DIRECTORY} 2>/dev/null'
+let g:vim_tags_gems_tags_command = '{CTAGS} -R {OPTIONS} `bundle show --paths` 2>/dev/null'
 nnoremap <Space>tt g<C-]>
 nnoremap <Space>tg TagsGenerate<CR>
 
@@ -348,7 +339,7 @@ let g:tagbar_type_ruby = {
 nnoremap <silent><Leader>r :call QuickRun -outputter/buffer/split \":botright 12sp\" -hook/time/enable 1<CR>
 
 " watchdogs
-let g:vimrubocop_config = printf("%s/.rubocop.yml", $HOME)
+let g:vimrubocop_config = printf('%s/.rubocop.yml', $HOME)
 let g:watchdogs_check_BufWritePost_enable = 1
 let g:quickrun_config = {
   \ "ruby/watchdogs_checker" : {
@@ -414,9 +405,9 @@ aug END
 let g:endwise_no_mappings=1
 
 " matchitを有効化
-if !exists('loaded_matchit')
-  runtime macros/matchit.vim
-endif
+" if !exists('loaded_matchit')
+"   runtime macros/matchit.vim
+" endif
 
 " neosnipptsとの共用設定
 function! s:set_snippet(type_name)
@@ -424,11 +415,11 @@ function! s:set_snippet(type_name)
     for type in ['controller', 'model', 'helper', 'routes', 'spec', 'slim']
       "  echomsg a:type_name. " - ". type
       if match(a:type_name, type) != -1
-        let snippet_path = printf($HOME. "/.vim/snippets/rails.%s.snip", type)
+        let snippet_path = printf($HOME. '/.vim/snippets/rails.%s.snip', type)
         if filereadable(snippet_path)
           call neosnippet#commands#_source(snippet_path)
         else
-          echomsg "unreadable ". snippet_path
+          echomsg 'unreadable '. snippet_path
         endif
       endif
     endfor
@@ -440,16 +431,19 @@ augroup rails_snippet_switch
     autocmd BufEnter *.rb call s:set_snippet(rails#buffer().type_name())
 augroup END
 
+" incsearch
+map / <Plug>(incsearch-forward)
+
 " Html2Slim({slim})
 " => {html}
 function! Html2Slim(html)
-  if !executable("html2slim")
-    return ""
+  if !executable('html2slim')
+    return ''
   endif
   let input  = tempname()
   call writefile(split(a:html, "\n"), input)
   let output = tempname()
-  call system(printf("html2slim %s %s", input, output))
+  call system(printf('html2slim %s %s', input, output))
   return join(readfile(output), "\n")
 endfunction
 
@@ -462,7 +456,8 @@ filetype plugin on
 filetype indent on
 set mouse=n
 
-colorscheme railscasts
+" colorscheme railscasts
+colorscheme Tomorrow-Night-Eighties
 set background=dark
 hi LineNr ctermbg=234
 hi DiffAdd    ctermfg=226 ctermbg=235
