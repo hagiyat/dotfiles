@@ -65,19 +65,21 @@ typeset -A abberviations
 abberviations=(
   # vim
   "v" "vim"
+  "vrc" "vim -c \"VimShellInteractive rails console --split=''\""
+  "vrs" "vim -c \"VimShellInteractive rails server --split=''\""
   # pipe
   "lps"  "| peco --rcfile ~/.peco/config_single.json"
   "lp"   "| peco"
   "lvi"  "| vim -Rc 'set ft=zsh' -"
   "lsin"  "| xargs cat | vim -Rc 'set ft=zsh' -"
-  "lag" "| ag"
+  "lg" "| ag"
   # git
   "g"  "git status"
   "gs"  "git stash"
   "gb"  "git branch"
   "gd"  "git diff"
   "gch"  "git checkout"
-  "gco"  "git commit"
+  "gco"  "git commit -v"
   "ga"  "git add"
   "gl"  "git log"
   "gls"  "git log --stat"
@@ -85,8 +87,8 @@ abberviations=(
   "glm"  "git log --stat --author=hagiya"
   "gps"  "git push"
   "gpl"  "git pull"
-  "gfe"  "git checkout -b feature/"
-  "ghf"  "git checkout -b hotfix/"
+  "gbf"  "git checkout -b feature/"
+  "gbh"  "git checkout -b hotfix/"
   # tmux
   "tmv"  "tmux split-window -v -c '#{pane_current_path}'"
   "tmh"  "tmux split-window -h -c '#{pane_current_path}'"
@@ -103,6 +105,8 @@ abberviations=(
   "bu" "bundle update"
   "br" "bundle exec rake"
   "bm" "bundle exec rake db:migrate"
+  # rbenv
+  "rer" "rbenv rehash"
 )
 
 magic-abbrev-expand() {
@@ -157,6 +161,17 @@ function diff-branch() {
   git show-branch --sha1-name  master `git symbolic-ref --short HEAD` | tail -1 | grep -Eo '[a-z0-9]+' | head -1 | pbcopy
   git diff --stat=200,150 `pbpaste` HEAD
 }
+
+# コマンドラインのシンタックスハイライト
+# http://blog.glidenote.com/blog/2012/12/15/zsh-syntax-highlighting/
+if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+  source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
+
+# 範囲選択
+if [ -f ~/.zsh/selection.zsh ]; then
+  source ~/.zsh/selection.zsh
+fi
 
 # peco!!
 if [ -x `which peco` > /dev/null 2>&1 ]; then
@@ -238,9 +253,9 @@ if [ -x `which peco` > /dev/null 2>&1 ]; then
   # hosts変更/複数選んだらくっつける
   function change_hosts() {
     sudo -v && ls /etc/hosts.* | sed -e '/equiv$/d' | _peco --prompt='[hosts]' | xargs cat | sort | uniq | sudo tee /etc/hosts
-    if [[ ! -z `cat /etc/hosts | grep nanapi` ]]; then
-      networksetup -connectpppoeservice "nanapi"
-    fi
+    # if [[ ! -z `cat /etc/hosts | grep nanapi` ]]; then
+    #   networksetup -connectpppoeservice "nanapi"
+    # fi
   }
 
   # カレントディレクトリのファイルリスト

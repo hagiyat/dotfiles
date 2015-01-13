@@ -40,8 +40,6 @@ set smarttab
 set ignorecase
 " 検索文字に大文字がある場合は大文字小文字を区別
 set smartcase
-" インクリメンタルサーチ
-set incsearch
 " 検索マッチテキストをハイライト
 set hlsearch
 
@@ -111,6 +109,8 @@ augroup au_initvim
   autocmd Colorscheme * :set t_ut=
   " specialkeyの色設定
   autocmd Colorscheme * :highlight SpecialKey ctermfg=238
+
+  set lazyredraw
 augroup END
 
 " ESCを二回押すことでハイライトを消す
@@ -136,6 +136,9 @@ vnoremap v $h
 nnoremap <Tab> %
 vnoremap <Tab> %
 
+" 行末までをyank
+nnoremap Y y$
+
 " バッファ操作
 nnoremap <Space>bp :bprevious<CR>
 nnoremap <Space>bn :bnext<CR>
@@ -154,8 +157,11 @@ map <C-c> :cclose<CR>
 cmap w!! w !sudo tee > /dev/null %
 
 " 文字コード変換
-nnoremap <leader>u :e ++enc=utf8<CR>
-nnoremap <leader>s :e ++enc=cp932<CR>
+nnoremap <Leader>u :e ++enc=utf8<CR>
+nnoremap <Leader>s :e ++enc=cp932<CR>
+
+" exモード無効
+nnoremap Q <Nop>
 
 " Neobundle
 if has('vim_starting')
@@ -183,6 +189,7 @@ NeoBundle 'Shougo/vimproc.vim', {
 \     'unix' : 'gmake',
 \    },
 \ }
+NeoBundle 'Shougo/vimshell.vim', { 'depends' : [ 'Shougo/vimproc.vim' ] }
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundleLazy 'Shougo/unite-outline', { 'depends' : [ 'Shougo/unite.vim' ] }
@@ -230,10 +237,27 @@ NeoBundle 'cocopon/iceberg.vim'
 " }}} plugins
 call neobundle#end()
 
-" Unite
+" Unite {{{
 nnoremap [unite] <Nop>
 nmap s [unite]
 let g:unite_enable_start_insert=1
+
+" pry historyのUnite Source追加
+augroup au_pry_history
+  autocmd!
+  let s:source = {
+    \ "name" : "pry_histories",
+    \ "description" : "pry history unite-source",
+    \ "default_action" : "insert",
+  \}
+  function! s:source.gather_candidates(args, context)
+    let histories = split(system('cat ~/.pry_history | uniq | tail -r -n 1000'), '\n')
+    return map(histories, '{"word"  : v:val}')
+  endfunction
+  call unite#define_source(s:source)
+  unlet s:source
+augroup END
+
 nnoremap [unite]f :<C-u>Unite file_rec/async<CR>
 nnoremap [unite]s :<C-u>Unite buffer file_mru<CR>
 nnoremap [unite]b :<C-u>Unite buffer<CR>
@@ -244,10 +268,12 @@ nnoremap [unite]r :<C-u>UniteResume search-buffer<CR>
 nnoremap [unite]l :<C-u>Unite line -buffer-name=lines<CR>
 nnoremap [unite]o :<C-u>Unite outline -buffer-name=outline<CR>
 nnoremap [unite]c :<C-u>Unite command<CR>
+nnoremap [unite]h :<C-u>Unite pry_histories -buffer-name=pry-histories<CR>
 let g:unite_source_rec_async_command='ag --follow --nocolor --nogroup --hidden -g ""'
 let g:unite_source_grep_command = 'ag'
 let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
 let g:unite_source_grep_recursive_opt = ''
+"}}}
 
 " vimfiler
 nnoremap <Space>n :VimFilerExplorer<CR>
@@ -338,6 +364,10 @@ let g:tagbar_type_ruby = {
 " quickrun
 nnoremap <silent><Leader>r :call QuickRun -outputter/buffer/split \":botright 12sp\" -hook/time/enable 1<CR>
 
+" vimshell
+let g:vimshell_prompt_expr = 'getcwd()." ⮁ "'
+nnoremap <silent><Leader>sz :VimShellInteractive --split='split \| resize 20' zsh<CR>
+
 " watchdogs
 let g:vimrubocop_config = printf('%s/.rubocop.yml', $HOME)
 let g:watchdogs_check_BufWritePost_enable = 1
@@ -369,6 +399,9 @@ let g:airline_symbols.branch = '⭠'
 let g:airline_symbols.readonly = '⭤'
 let g:airline_symbols.linenr = '⭡'
 
+" incsearch
+map / <Plug>(incsearch-forward)
+
 " ruby
 " rails用
 "{{{
@@ -378,36 +411,28 @@ let g:rails_level = 4
 let g:rails_mappings=1
 let g:rails_modelines=0
 let g:rails_some_option = 1
-" let g:rails_statusline = 1
-" let g:rails_subversion=0
-" let g:rails_syntax = 1
-" let g:rails_url='http://localhost:3000'
-" let g:rails_ctags_arguments='--languages=-javascript'
-" let g:rails_ctags_arguments = ''
-function! SetUpRailsSetting()
+
+function! s:SetUpRailsSetting()
   nnoremap <buffer><Leader>r :R<CR>
   nnoremap <buffer><Leader>a :A<CR>
   nnoremap <buffer><Leader>m :Rmodel<Space>
   nnoremap <buffer><Leader>c :Rcontroller<Space>
   nnoremap <buffer><Leader>v :Rview<Space>
-  " nnoremap <buffer><Leader>p :Rpreview<CR>
+
+  " endwise
+  let g:endwise_no_mappings=1
+
+  " vimshell
+  nnoremap <buffer><Leader>sc :VimShellInteractive rails console --split=""<CR>
+  nnoremap <buffer><Leader>ss :VimShellInteractive rails server --split=""<CR>
+  iab -r show-routes
+  iab -m find-method
+  iab -g --grep
+  iab !r reload!
+  autocmd FileType int-rails inoremap <C-r> <ESC>:<C-u>Unite pry_histories -buffer-name=pry-histories<CR>
+  autocmd FileType int-rails nnoremap <C-r> :<C-u>Unite pry_histories -buffer-name=pry-histories<CR>
+
 endfunction
-
-aug MyAutoCmd
-  au User Rails call SetUpRailsSetting()
-aug END
-
-aug RailsDictSetting
-  au!
-aug END
-
-" endwise
-let g:endwise_no_mappings=1
-
-" matchitを有効化
-" if !exists('loaded_matchit')
-"   runtime macros/matchit.vim
-" endif
 
 " neosnipptsとの共用設定
 function! s:set_snippet(type_name)
@@ -426,28 +451,12 @@ function! s:set_snippet(type_name)
   endif
 endfunction
 
-augroup rails_snippet_switch
+aug setup_rails
   autocmd!
-    autocmd BufEnter *.rb call s:set_snippet(rails#buffer().type_name())
-augroup END
-
-" incsearch
-map / <Plug>(incsearch-forward)
-
-" Html2Slim({slim})
-" => {html}
-function! Html2Slim(html)
-  if !executable('html2slim')
-    return ''
-  endif
-  let input  = tempname()
-  call writefile(split(a:html, "\n"), input)
-  let output = tempname()
-  call system(printf('html2slim %s %s', input, output))
-  return join(readfile(output), "\n")
-endfunction
-
-set tags=tags,Gemfile.lock.tags
+  autocmd User Rails call s:SetUpRailsSetting()
+  autocmd User Rails call s:set_snippet(rails#buffer().type_name())
+  " autocmd BufEnter *.rb call s:set_snippet(rails#buffer().type_name())
+aug END
 "}}}
 
 
