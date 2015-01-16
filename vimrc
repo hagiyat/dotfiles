@@ -251,7 +251,7 @@ augroup au_pry_history
     \ "default_action" : "insert",
   \}
   function! s:source.gather_candidates(args, context)
-    let histories = split(system('cat ~/.pry_history | uniq | tail -r -n 1000'), '\n')
+    let histories = split(system('cat ~/.pry_history | uniq | tail -r'), '\n')
     return map(histories, '{"word"  : v:val}')
   endfunction
   call unite#define_source(s:source)
