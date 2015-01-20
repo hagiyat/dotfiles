@@ -295,7 +295,7 @@ augroup au_vimfiler
     \   <SID>vimfiler_width_expr() . "\<C-W>\|\<SID>(vimfiler_redraw_screen)"
 augroup END
 
-" neocomplete
+" neocomplete {{{
 let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_ignore_case = 1
 let g:neocomplete#enable_smart_case = 1
@@ -303,6 +303,15 @@ if !exists('g:neocomplete#keyword_patterns')
   let g:neocomplete#keyword_patterns = {}
 endif
 let g:neocomplete#keyword_patterns._ = '\h\w*'
+augroup au_rubycomplete
+  autocmd!
+  autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+  if !exists('g:neocomplete#force_omni_input_patterns')
+    let g:neocomplete#force_omni_input_patterns = {}
+  endif
+  let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+augroup END
+" }}}
 
 " neosnippet {{{
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
