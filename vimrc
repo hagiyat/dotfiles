@@ -8,7 +8,8 @@ scriptencoding utf-8
 set fileencodings=utf-8,cp932,euc-jp,iso-20220-jp,default,latin
 
 " escapeキーをマッピング
-imap <c-j> <esc>
+noremap! <C-j> <ESC>
+noremap  <C-j> <ESC>
 
 " leaderを , に割り当て
 let mapleader = ','
@@ -251,7 +252,7 @@ augroup au_pry_history
     \ "default_action" : "insert",
   \}
   function! s:source.gather_candidates(args, context)
-    let histories = split(system('cat ~/.pry_history | uniq | tail -r'), '\n')
+    let histories = split(system("awk '!a[$0]++' ~/.pry_history | tail -r"), '\n')
     return map(histories, '{"word"  : v:val}')
   endfunction
   call unite#define_source(s:source)
@@ -347,8 +348,9 @@ nnoremap <silent><Space>mm :OverCommandLine<CR>%s/
 nnoremap <silent><Space>mr :OverCommandLine<CR>%s/<C-R><C-W>
 
 " vim-tags
-let g:vim_tags_project_tags_command = '{CTAGS} -R {OPTIONS} {DIRECTORY} 2>/dev/null'
-let g:vim_tags_gems_tags_command = '{CTAGS} -R {OPTIONS} `bundle show --paths` 2>/dev/null'
+let g:vim_tags_project_tags_command = "/usr/local/bin/ctags -f tags -R . 2>/dev/null"
+let g:vim_tags_gems_tags_command = "/usr/local/bin/ctags -R -f Gemfile.lock.tags `bundle show --paths` 2>/dev/null"
+set tags+=tags,Gemfile.lock.tags
 nnoremap <Space>tt g<C-]>
 nnoremap <Space>tg TagsGenerate<CR>
 
