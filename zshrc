@@ -163,6 +163,22 @@ if [ -f ~/.zsh/selection.zsh ]; then
   source ~/.zsh/selection.zsh
 fi
 
+# git-remoteのURLをhttpsに変換してopenする
+function open-git-remote() {
+  git rev-parse --git-dir >/dev/null 2>&1
+  if [[ $? == 0 ]]; then
+    # git config --get remote.origin.url | sed -e 's|\:|/|' -e 's|^git@|https://|' -e 's|.git$||' | xargs open
+    local uri="$(git config --get remote.origin.url | sed -e 's|\:|/|' -e 's|^git@|https://|' -e 's|.git$||')"
+    local branch="$(peco-select-branche | awk '{if ($0 ~ "master"); else print "tree/" $0}')"
+    open "$uri/$branch"
+  else
+    echo ".git not found.\n"
+  fi
+}
+zle -N open-git-remote
+bindkey '^[o' open-git-remote
+bindkey '^[[25~o' open-git-remote
+
 # peco!!
 if [ -x `which peco` > /dev/null 2>&1 ]; then
   alias peco='peco --rcfile ~/.peco/config.json'
@@ -197,6 +213,14 @@ if [ -x `which peco` > /dev/null 2>&1 ]; then
   }
   zle -N peco-select-history
   bindkey '^r' peco-select-history
+
+  # originのブランチをひとつ選択する
+  function peco-select-branche() {
+    git rev-parse --git-dir >/dev/null 2>&1
+    if [[ $? == 0 ]]; then
+      git for-each-ref --format='%(refname)' --sort=-committerdate refs/remotes refs/tags | sed -e 's|^refs/||' -e 's|^remotes/origin/||' | _peco_single --prompt='[branches]'
+    fi
+  }
 
   #peco版git-branches
   function peco-git-branches () {
