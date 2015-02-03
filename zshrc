@@ -79,6 +79,8 @@ abberviations=(
   "gpl"  "git pull"
   "gbf"  "git checkout -b feature/"
   "gbh"  "git checkout -b hotfix/"
+  "gbr"  "git-browse"
+  "gbrp" "git-browse-with-peco"
   # tmux
   "tmv"  "tmux split-window -v -c '#{pane_current_path}'"
   "tmh"  "tmux split-window -h -c '#{pane_current_path}'"
@@ -164,10 +166,17 @@ if [ -f ~/.zsh/selection.zsh ]; then
 fi
 
 # git-remoteのURLをhttpsに変換してopenする
-function open-git-remote() {
+function git-browse() {
   git rev-parse --git-dir >/dev/null 2>&1
   if [[ $? == 0 ]]; then
-    # git config --get remote.origin.url | sed -e 's|\:|/|' -e 's|^git@|https://|' -e 's|.git$||' | xargs open
+    open `git config --get remote.origin.url | sed -e 's|\:|/|' -e 's|^git@|https://|' -e 's|.git$||'`
+  else
+    echo ".git not found.\n"
+  fi
+}
+function git-browse-with-peco() {
+  git rev-parse --git-dir >/dev/null 2>&1
+  if [[ $? == 0 ]]; then
     local uri="$(git config --get remote.origin.url | sed -e 's|\:|/|' -e 's|^git@|https://|' -e 's|.git$||')"
     local branch="$(peco-select-branche | awk '{if ($0 ~ "master"); else print "tree/" $0}')"
     open "$uri/$branch"
@@ -175,9 +184,6 @@ function open-git-remote() {
     echo ".git not found.\n"
   fi
 }
-zle -N open-git-remote
-bindkey '^[o' open-git-remote
-bindkey '^[[25~o' open-git-remote
 
 # peco!!
 if [ -x `which peco` > /dev/null 2>&1 ]; then
