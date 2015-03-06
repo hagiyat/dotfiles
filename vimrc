@@ -195,6 +195,7 @@ NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundleLazy 'Shougo/unite-outline', { 'depends' : [ 'Shougo/unite.vim' ] }
 NeoBundleLazy 'tsukkee/unite-tag', { 'depends' : [ 'Shougo/unite.vim' ] }
+NeoBundle 'sgur/unite-qf', { 'depends' : [ 'Shougo/unite.vim' ] }
 NeoBundle 'szw/vim-tags'
 NeoBundle 'bling/vim-bufferline'
 NeoBundle 'thinca/vim-localrc'
@@ -235,6 +236,7 @@ NeoBundle 'vim-scripts/twilight'
 NeoBundle 'jonathanfilip/vim-lucius'
 NeoBundle 'adlawson/vim-sorcerer'
 NeoBundle 'cocopon/iceberg.vim'
+NeoBundle 'vim-scripts/wombat256.vim'
 " }}} plugins
 call neobundle#end()
 
@@ -259,6 +261,24 @@ augroup au_pry_history
   unlet s:source
 augroup END
 
+" gmilk コマンドの結果をUnite qf で表示する
+augroup au_milkode
+  autocmd!
+  command! -nargs=1 Gmilk call s:Gmilk("gmilk -a -n 200", <f-args>)
+
+  function! s:Gmilk(cmd, arg)
+    silent execute "cgetexpr system(\"" . a:cmd . " ". a:arg . "\")"
+    if len(getqflist()) == 0
+      echohl WarningMsg
+      echomsg "No match found."
+      echohl None
+    else
+      execute "Unite -auto-preview qf"
+      redraw!
+    endif
+  endfunction
+augroup END
+
 nnoremap [unite]f :<C-u>Unite file_rec/async<CR>
 nnoremap [unite]s :<C-u>Unite buffer file_mru<CR>
 nnoremap [unite]b :<C-u>Unite buffer<CR>
@@ -270,6 +290,7 @@ nnoremap [unite]l :<C-u>Unite line -buffer-name=lines<CR>
 nnoremap [unite]o :<C-u>Unite outline -buffer-name=outline<CR>
 nnoremap [unite]c :<C-u>Unite command<CR>
 nnoremap [unite]h :<C-u>Unite pry_histories -buffer-name=pry-histories<CR>
+nnoremap [unite]k :<C-u>Gmilk:. -buffer-name=milkode<CR>
 let g:unite_source_rec_async_command='ag --follow --nocolor --nogroup --hidden -g ""'
 let g:unite_source_grep_command = 'ag'
 let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
@@ -478,12 +499,13 @@ aug setup_rails
 aug END
 "}}}
 
-
 syntax on
 filetype plugin on
 filetype indent on
 set mouse=n
 
+" colorscheme wombat256mod
+" colorscheme jellybeans
 " colorscheme railscasts
 colorscheme Tomorrow-Night-Eighties
 set background=dark

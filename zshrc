@@ -93,7 +93,7 @@ abberviations=(
   "rr" "rails runner"
   # bundle exec
   "be" "bundle exec"
-  "bi" "bundle install"
+  "bi" "bundle install --jobs=4"
   "bu" "bundle update"
   "br" "bundle exec rake"
   "bm" "bundle exec rake db:migrate"
