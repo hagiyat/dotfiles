@@ -1,0 +1,6 @@
+tags
+Gemfile.lock
+*.pyc
+*.log
+.ruby-version
+.bundle

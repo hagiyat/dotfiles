@@ -99,6 +99,12 @@ abberviations=(
   "bm" "bundle exec rake db:migrate"
   # rbenv
   "rer" "rbenv rehash"
+  # dash
+  "dru" "open dash://ruby:"
+  "dra" "open dash://rails:"
+  "drs" "open dash://rspec:"
+  "dmy" "open dash://mysql:"
+  "da"  "open dash://"
 )
 
 magic-abbrev-expand() {
