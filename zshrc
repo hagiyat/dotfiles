@@ -73,7 +73,7 @@ abberviations=(
   "ga"  "git add"
   "gl"  "git log"
   "gls"  "git log --stat"
-  "glg"  "git log --stat --graph"
+  "glg"  "git log --stat --graph --oneline --decorate"
   "glm"  "git log --stat --author=hagiya"
   "gps"  "git push"
   "gpl"  "git pull"
