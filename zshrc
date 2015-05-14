@@ -9,6 +9,8 @@ export GOROOT=/usr/local/opt/go/libexec
 export GOPATH=$HOME/.go
 export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
+export DOCKER_HOST=tcp://localhost:2375
+
 # ヒストリー設定
 HISTFILE=~/.zsh_history
 HISTSIZE=100000
@@ -320,5 +322,23 @@ if [ -x `which peco` > /dev/null 2>&1 ]; then
   zle -N peco-ssh-aws
   bindkey '^[c' peco-ssh-aws
   bindkey '^[[25~c' peco-ssh-aws
-fi
 
+function peco-rails-command() {
+  local cmd=$(rails $1 -h | sed -ne '/^Please/,$p' | sed '/^ *$/d' | sed -ne '/^ /p' | sed 's/^[ ]*//g' | _peco_single --prompt="[rails $1]")
+  if [[ -n $cmd ]]; then
+    BUFFER="rails $1 $cmd"
+    CURSOR=$#BUFFER
+  fi
+}
+function peco-rails-generate() {
+  peco-rails-command generate
+}
+zle -N peco-rails-generate
+bindkey "^xrg" peco-rails-generate
+
+function peco-rails-destroy() {
+  peco-rails-command destroy
+}
+zle -N peco-rails-destroy
+bindkey "^xrd" peco-rails-destroy
+fi
