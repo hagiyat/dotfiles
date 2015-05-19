@@ -1,0 +1,15 @@
+{
+    "CustomFilter": {
+        "Migemo": {
+            "Cmd": "migemogrep",
+            "Args": [ "$QUERY" ],
+            "BufferThreshold": 20
+        }
+    },
+    "Style": {
+        "Basic": ["on_default", "default"],
+        "Selected": ["underline", "on_green", "black"],
+        "Query": ["yellow", "bold"],
+        "Matched": ["cyan", "bold"]
+    }
+}
