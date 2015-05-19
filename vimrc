@@ -174,7 +174,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " {{{ plugins
 NeoBundle 'Shougo/unite.vim'
 NeoBundleLazy 'Shougo/vimfiler.vim', { 'depends' : [ 'Shougo/unite.vim' ] }
-" NeoBundle 'scrooloose/syntastic.git'
+NeoBundle 'scrooloose/syntastic.git'
 NeoBundleLazy 'Shougo/neocomplete.vim', { 'autoload' : {
       \ 'functions' : ['neocomplete#init#disable', 'neocomplete#is_enabled', 'neocomplete#start_manual_complete'],
       \ 'commands' : ['NeoCompleteClean', 'NeoCompleteEnable', 'NeoCompleteDisable'],
@@ -195,7 +195,7 @@ NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundleLazy 'Shougo/unite-outline', { 'depends' : [ 'Shougo/unite.vim' ] }
 NeoBundleLazy 'tsukkee/unite-tag', { 'depends' : [ 'Shougo/unite.vim' ] }
-NeoBundle 'sgur/unite-qf', { 'depends' : [ 'Shougo/unite.vim' ] }
+NeoBundle 'osyo-manga/unite-quickfix', { 'depends' : [ 'Shougo/unite.vim' ] }
 NeoBundle 'szw/vim-tags'
 NeoBundle 'bling/vim-bufferline'
 NeoBundle 'thinca/vim-localrc'
@@ -212,18 +212,14 @@ NeoBundle 'tyru/caw.vim'
 NeoBundle 'bling/vim-airline'
 NeoBundle 'tpope/vim-rails'
 NeoBundle 'tpope/vim-endwise'
-NeoBundle 'osyo-manga/vim-watchdogs', { 'depends' : [
-  \   'thinca/vim-quickrun',
-  \   'Shougo/vimproc.vim',
-  \   'osyo-manga/shabadou.vim',
-  \   'cohama/vim-hier',
-  \   'dannyob/quickfixstatus'
-  \ ] }
 NeoBundle 'haya14busa/incsearch.vim'
 
 NeoBundle "slim-template/vim-slim"
 NeoBundle 'leafgarland/typescript-vim'
 NeoBundle 'clausreinke/typescript-tools'
+
+" elixir
+NeoBundle 'elixir-lang/vim-elixir'
 
 " color schemes
 NeoBundle 'altercation/vim-colors-solarized'
@@ -273,7 +269,7 @@ augroup au_milkode
       echomsg "No match found."
       echohl None
     else
-      execute "Unite -auto-preview qf"
+      execute "Unite -auto-preview quickfix"
       redraw!
     endif
   endfunction
@@ -291,6 +287,7 @@ nnoremap [unite]o :<C-u>Unite outline -buffer-name=outline<CR>
 nnoremap [unite]c :<C-u>Unite command<CR>
 nnoremap [unite]h :<C-u>Unite pry_histories -buffer-name=pry-histories<CR>
 nnoremap [unite]k :<C-u>Gmilk:. -buffer-name=milkode<CR>
+nnoremap [unite]q :Unite location_list<CR>
 let g:unite_source_rec_async_command='ag --follow --nocolor --nogroup --hidden -g ""'
 let g:unite_source_grep_command = 'ag'
 let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
@@ -407,14 +404,12 @@ nnoremap <silent><Leader>r :call QuickRun -outputter/buffer/split \":botright 12
 let g:vimshell_prompt_expr = 'getcwd()." ⮁ "'
 nnoremap <silent><Leader>sz :VimShellInteractive --split='split \| resize 20' zsh<CR>
 
-" watchdogs
-let g:vimrubocop_config = printf('%s/.rubocop.yml', $HOME)
-let g:watchdogs_check_BufWritePost_enable = 1
-let g:quickrun_config = {
-  \ "ruby/watchdogs_checker" : {
-  \   "type" : "watchdogs_checker/rubocop"
-  \ }
-  \}
+" syntastic
+let g:syntastic_always_populate_loc_list=1
+let g:syntastic_mode_map = { 'mode': 'passive',
+            \ 'active_filetypes': ['ruby'] }
+let g:syntastic_ruby_checkers = ['rubocop']
+nnoremap <Space>cc :SyntasticCheck<CR>
 
 " caw.vim
 nmap <Leader>c <Plug>(caw:i:toggle)

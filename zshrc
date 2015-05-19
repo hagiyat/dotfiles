@@ -9,7 +9,9 @@ export GOROOT=/usr/local/opt/go/libexec
 export GOPATH=$HOME/.go
 export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
-export DOCKER_HOST=tcp://localhost:2375
+export DOCKER_HOST=tcp://192.168.59.103:2376
+export DOCKER_CERT_PATH=/Users/tomohirohagiya/.boot2docker/certs/boot2docker-vm
+export DOCKER_TLS_VERIFY=1
 
 # ヒストリー設定
 HISTFILE=~/.zsh_history
@@ -95,7 +97,7 @@ abberviations=(
   "rr" "rails runner"
   # bundle exec
   "be" "bundle exec"
-  "bi" "bundle install --jobs=4"
+  "bi" "bundle install --jobs=4 --path=vendor/bundle"
   "bu" "bundle update"
   "br" "bundle exec rake"
   "bm" "bundle exec rake db:migrate"
