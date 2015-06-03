@@ -500,9 +500,10 @@ filetype indent on
 set mouse=n
 
 " colorscheme wombat256mod
-" colorscheme jellybeans
+let g:jellybeans_background_color_256=235
+colorscheme jellybeans
 " colorscheme railscasts
-colorscheme Tomorrow-Night-Eighties
+" colorscheme Tomorrow-Night-Eighties
 set background=dark
 hi LineNr ctermbg=234
 hi DiffAdd    ctermfg=226 ctermbg=235
