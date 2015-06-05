@@ -210,16 +210,22 @@ NeoBundle 'koron/codic-vim'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'tyru/caw.vim'
 NeoBundle 'bling/vim-airline'
-NeoBundle 'tpope/vim-rails'
-NeoBundle 'tpope/vim-endwise'
 NeoBundle 'haya14busa/incsearch.vim'
+NeoBundle 'tpope/vim-endwise'
 
+" markdown
+NeoBundle 'tyru/open-browser.vim'
+NeoBundle 'kannokanno/previm'
+
+" rails
+NeoBundle 'tpope/vim-rails'
 NeoBundle "slim-template/vim-slim"
-NeoBundle 'leafgarland/typescript-vim'
-NeoBundle 'clausreinke/typescript-tools'
 
 " elixir
 NeoBundle 'elixir-lang/vim-elixir'
+
+" coffee script
+NeoBundle 'kchmck/vim-coffee-script'
 
 " color schemes
 NeoBundle 'altercation/vim-colors-solarized'
@@ -391,11 +397,6 @@ let g:tagbar_type_ruby = {
       \ 'F:singleton methods'
       \ ]
       \ }
-" NeoBundle 'vim-scripts/tagbar-phpctags', {
-"   \   'build' : {
-"   \     'others' : 'chmod +x bin/phpctags',
-"   \   },
-"   \ }
 
 " quickrun
 nnoremap <silent><Leader>r :call QuickRun -outputter/buffer/split \":botright 12sp\" -hook/time/enable 1<CR>
@@ -435,6 +436,18 @@ let g:airline_symbols.linenr = '⭡'
 
 " incsearch
 map / <Plug>(incsearch-forward)
+
+" previm
+augroup PrevimSettings
+  autocmd!
+  autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
+
+  let g:previm_open_cmd = ''
+  nnoremap [previm] <Nop>
+  nmap <Space>m [previm]
+  nnoremap <silent> [previm]o :<C-u>PrevimOpen<CR>
+  nnoremap <silent> [previm]r :call previm#refresh()<CR>
+augroup END
 
 " ruby
 " rails用
@@ -493,6 +506,16 @@ aug setup_rails
   let &tags = './tags,./Gemfile.lock.tags'
 aug END
 "}}}
+
+aug coffee_script
+  au BufRead,BufNewFile,BufReadPre *.coffee   set filetype=coffee
+  " インデント設定
+  autocmd FileType coffee    setlocal sw=2 sts=2 ts=2 et
+  "保存と同時にコンパイルする
+  autocmd BufWritePost *.coffee silent make!
+  "エラーがあったら別ウィンドウで表示
+  autocmd QuickFixCmdPost * nested cwindow | redraw!
+aug END
 
 syntax on
 filetype plugin on
