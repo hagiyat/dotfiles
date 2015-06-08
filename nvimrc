@@ -93,7 +93,7 @@ set expandtab
 set cursorline
 
 " yankしつつpbcopy
-set clipboard+=autoselect,unnamed
+set clipboard+=unnamedplus
 
 " 不可視文字の表示
 set listchars=tab:▸-,trail:=,extends:»,precedes:«,nbsp:%,eol:↲
@@ -150,20 +150,16 @@ nnoremap Q <Nop>
 
 " Neobundle
 if has('vim_starting')
-  set runtimepath+=~/.vim/bundle/neobundle.vim/
+  set runtimepath+=~/.nvim/bundle/neobundle.vim/
 endif
-call neobundle#begin(expand('~/.vim/bundle/'))
+call neobundle#begin(expand('~/.nvim/bundle/'))
 
 NeoBundleFetch 'Shougo/neobundle.vim'
 " {{{ plugins
 NeoBundle 'Shougo/unite.vim'
 NeoBundleLazy 'Shougo/vimfiler.vim', { 'depends' : [ 'Shougo/unite.vim' ] }
 NeoBundle 'scrooloose/syntastic.git'
-NeoBundleLazy 'Shougo/neocomplete.vim', { 'autoload' : {
-      \ 'functions' : ['neocomplete#init#disable', 'neocomplete#is_enabled', 'neocomplete#start_manual_complete'],
-      \ 'commands' : ['NeoCompleteClean', 'NeoCompleteEnable', 'NeoCompleteDisable'],
-      \ 'insert' : 1,
-      \ }}
+NeoBundle 'Shougo/deoplete.nvim'
 NeoBundle 'Shougo/neomru.vim', { 'depends' : [ 'Shougo/unite.vim' ] }
 NeoBundle 'Shougo/vimproc.vim', {
 \ 'build' : {
@@ -184,7 +180,6 @@ NeoBundle 'szw/vim-tags'
 NeoBundle 'bling/vim-bufferline'
 NeoBundle 'thinca/vim-localrc'
 NeoBundle 'tpope/vim-fugitive'
-" NeoBundle 'jaxbot/github-issues.vim'
 NeoBundle 'moznion/github-commit-comment.vim'
 NeoBundle 'gregsexton/gitv'
 NeoBundle 'osyo-manga/vim-over'
@@ -304,29 +299,29 @@ augroup au_vimfiler
     \   <SID>vimfiler_width_expr() . "\<C-W>\|\<SID>(vimfiler_redraw_screen)"
 augroup END
 
-" neocomplete {{{
-let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#enable_smart_case = 1
-let g:neocomplete_enable_underbar_completion = 1
-let g:neocomplete_min_syntax_length = 3
-let g:neocomplete#max_list = 1000
-let g:neocomplete_auto_completion_start_length = 3
-let g:neocomplete_force_overwrite_completefunc = 1
-let g:neocomplete#skip_auto_completion_time = '0.2'
-let g:neocomplete#enable_auto_delimiter = 1
+" deoplete {{{
+  let g:deoplete#enable_at_startup = 1
+  let g:deoplete#enable_smart_case = 1
+  let g:deoplete_enable_underbar_completion = 1
+  let g:deoplete_min_syntax_length = 3
+  let g:deoplete#max_list = 1000
+  let g:deoplete_auto_completion_start_length = 3
+  let g:deoplete_force_overwrite_completefunc = 1
+  let g:deoplete#skip_auto_completion_time = '0.2'
+  let g:deoplete#enable_auto_delimiter = 1
 
-" let g:neocomplete#enable_ignore_case = 1
-if !exists('g:neocomplete#keyword_patterns')
-  let g:neocomplete#keyword_patterns = {}
-endif
-let g:neocomplete#keyword_patterns._ = '\h\w*'
-augroup au_complete
-  autocmd!
-  let g:neocomplete#force_omni_input_patterns = get(g:, 'neocomplete#force_omni_input_patterns', {})
-  let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\|\h\w*::'
-  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-augroup END
+  " let g:deoplete#enable_ignore_case = 1
+  if !exists('g:deoplete#keyword_patterns')
+    let g:deoplete#keyword_patterns = {}
+  endif
+  let g:deoplete#keyword_patterns._ = '\h\w*'
+  augroup au_complete
+    autocmd!
+    let g:deoplete#force_omni_input_patterns = get(g:, 'deoplete#force_omni_input_patterns', {})
+    let g:deoplete#force_omni_input_patterns.ruby = '[^. *\t]\.\|\h\w*::'
+    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+  augroup END
 " }}}
 
 " neosnippet {{{
@@ -346,7 +341,7 @@ smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
-let g:neosnippet#snippets_directory='~/.vim/snippets'
+let g:neosnippet#snippets_directory='~/.nvim/snippets'
 " }}}
 
 " github-issues
@@ -471,7 +466,7 @@ function! s:set_snippet(type_name)
     for type in ['controller', 'model', 'helper', 'routes', 'spec', 'slim']
       "  echomsg a:type_name. " - ". type
       if match(a:type_name, type) != -1
-        let snippet_path = printf($HOME. '/.vim/snippets/rails.%s.snip', type)
+        let snippet_path = printf($HOME. '/.nvim/snippets/rails.%s.snip', type)
         if filereadable(snippet_path)
           call neosnippet#commands#_source(snippet_path)
         else
