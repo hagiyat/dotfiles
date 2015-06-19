@@ -192,7 +192,8 @@ NeoBundle 'rhysd/clever-f.vim'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'koron/codic-vim'
 NeoBundle 'thinca/vim-quickrun'
-NeoBundle 'tyru/caw.vim'
+NeoBundle 'thinca/vim-visualstar'
+NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'bling/vim-airline'
 NeoBundle 'haya14busa/incsearch.vim'
 NeoBundle 'tpope/vim-endwise'
@@ -212,16 +213,12 @@ NeoBundle 'elixir-lang/vim-elixir'
 NeoBundle 'kchmck/vim-coffee-script'
 
 " color schemes
-NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'w0ng/vim-hybrid'
 NeoBundle 'vim-scripts/darkburn'
 NeoBundle 'nanotech/jellybeans.vim'
 NeoBundle 'jpo/vim-railscasts-theme'
 NeoBundle 'chriskempson/vim-tomorrow-theme'
 NeoBundle 'vim-scripts/twilight'
-NeoBundle 'jonathanfilip/vim-lucius'
-NeoBundle 'adlawson/vim-sorcerer'
-NeoBundle 'cocopon/iceberg.vim'
 NeoBundle 'vim-scripts/wombat256.vim'
 " }}} plugins
 call neobundle#end()
@@ -396,9 +393,11 @@ let g:syntastic_mode_map = { 'mode': 'passive',
 let g:syntastic_ruby_checkers = ['rubocop']
 nnoremap <Space>cc :SyntasticCheck<CR>
 
-" caw.vim
-nmap <Leader>c <Plug>(caw:i:toggle)
-vmap <Leader>c <Plug>(caw:i:toggle)
+" NerdCommenter
+let g:NERDCreateDefaultMappings = 0
+let NERDSpaceDelims = 1
+nmap <Leader>c <Plug>NERDCommenterToggle
+vmap <Leader>c <Plug>NERDCommenterToggle
 
 " airline
 if !exists('g:airline_symbols')
@@ -509,7 +508,7 @@ set mouse=n
 aug initvim
   autocmd!
   " tabstop / shiftwidth
-  autocmd! FileType vim,ruby,eruby,slim,php,javascript,html,zsh setlocal shiftwidth=2 tabstop=2
+  autocmd! FileType vim,ruby,eruby,slim,php,javascript,html,zsh,markdown setlocal shiftwidth=2 tabstop=2
   " 保存時に行末の空白を除去する
   autocmd BufWritePre * :%s/\s\+$//ge
   autocmd Colorscheme * :call s:init_visual()
@@ -530,6 +529,10 @@ function! s:init_visual()
   hi SpecialKey ctermfg=238 ctermbg=235
   hi NonText ctermbg=235
   hi Normal ctermbg=235
+  " for jellybeans
+  " hi rubyRegexpDelimiter guifg=#8d4e9a ctermfg=
+  " hi rubyRegexp guifg=#db6db4
+  " hi rubyRegexpSpecial guifg=#a3518a
 
   " 背景色でクリアする
   set t_ut=

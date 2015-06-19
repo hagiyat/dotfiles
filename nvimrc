@@ -156,10 +156,10 @@ call neobundle#begin(expand('~/.nvim/bundle/'))
 
 NeoBundleFetch 'Shougo/neobundle.vim'
 " {{{ plugins
-NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/unite.vim', { 'depends' : [ 'Shougo/vimproc.vim' ] }
 NeoBundleLazy 'Shougo/vimfiler.vim', { 'depends' : [ 'Shougo/unite.vim' ] }
 NeoBundle 'scrooloose/syntastic.git'
-NeoBundle 'Shougo/deoplete.nvim'
+" NeoBundle 'Shougo/deoplete.nvim'
 NeoBundle 'Shougo/neomru.vim', { 'depends' : [ 'Shougo/unite.vim' ] }
 NeoBundle 'Shougo/vimproc.vim', {
 \ 'build' : {
@@ -226,40 +226,6 @@ nnoremap [unite] <Nop>
 nmap s [unite]
 let g:unite_enable_start_insert=1
 
-" pry historyのUnite Source追加
-augroup au_pry_history
-  autocmd!
-  let s:source = {
-    \ "name" : "pry_histories",
-    \ "description" : "pry history unite-source",
-    \ "default_action" : "insert",
-  \}
-  function! s:source.gather_candidates(args, context)
-    let histories = split(system("awk '!a[$0]++' ~/.pry_history | tail -r"), '\n')
-    return map(histories, '{"word"  : v:val}')
-  endfunction
-  call unite#define_source(s:source)
-  unlet s:source
-augroup END
-
-" gmilk コマンドの結果をUnite qf で表示する
-augroup au_milkode
-  autocmd!
-  command! -nargs=1 Gmilk call s:Gmilk("gmilk -a -n 200", <f-args>)
-
-  function! s:Gmilk(cmd, arg)
-    silent execute "cgetexpr system(\"" . a:cmd . " ". a:arg . "\")"
-    if len(getqflist()) == 0
-      echohl WarningMsg
-      echomsg "No match found."
-      echohl None
-    else
-      execute "Unite -auto-preview quickfix"
-      redraw!
-    endif
-  endfunction
-augroup END
-
 nnoremap [unite]f :<C-u>Unite file_rec/async<CR>
 nnoremap [unite]s :<C-u>Unite buffer file_mru<CR>
 nnoremap [unite]b :<C-u>Unite buffer<CR>
@@ -270,8 +236,6 @@ nnoremap [unite]r :<C-u>UniteResume search-buffer<CR>
 nnoremap [unite]l :<C-u>Unite line -buffer-name=lines<CR>
 nnoremap [unite]o :<C-u>Unite outline -buffer-name=outline<CR>
 nnoremap [unite]c :<C-u>Unite command<CR>
-nnoremap [unite]h :<C-u>Unite pry_histories -buffer-name=pry-histories<CR>
-nnoremap [unite]k :<C-u>Gmilk:. -buffer-name=milkode<CR>
 nnoremap [unite]q :Unite location_list<CR>
 let g:unite_source_rec_async_command='ag --follow --nocolor --nogroup --hidden -g ""'
 let g:unite_source_grep_command = 'ag'
@@ -300,28 +264,28 @@ augroup au_vimfiler
 augroup END
 
 " deoplete {{{
-  let g:deoplete#enable_at_startup = 1
-  let g:deoplete#enable_smart_case = 1
-  let g:deoplete_enable_underbar_completion = 1
-  let g:deoplete_min_syntax_length = 3
-  let g:deoplete#max_list = 1000
-  let g:deoplete_auto_completion_start_length = 3
-  let g:deoplete_force_overwrite_completefunc = 1
-  let g:deoplete#skip_auto_completion_time = '0.2'
-  let g:deoplete#enable_auto_delimiter = 1
-
-  " let g:deoplete#enable_ignore_case = 1
-  if !exists('g:deoplete#keyword_patterns')
-    let g:deoplete#keyword_patterns = {}
-  endif
-  let g:deoplete#keyword_patterns._ = '\h\w*'
-  augroup au_complete
-    autocmd!
-    let g:deoplete#force_omni_input_patterns = get(g:, 'deoplete#force_omni_input_patterns', {})
-    let g:deoplete#force_omni_input_patterns.ruby = '[^. *\t]\.\|\h\w*::'
-    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-  augroup END
+  " let g:deoplete#enable_at_startup = 1
+  " let g:deoplete#enable_smart_case = 1
+  " let g:deoplete_enable_underbar_completion = 1
+  " let g:deoplete_min_syntax_length = 3
+  " let g:deoplete#max_list = 1000
+  " let g:deoplete_auto_completion_start_length = 3
+  " let g:deoplete_force_overwrite_completefunc = 1
+  " let g:deoplete#skip_auto_completion_time = '0.2'
+  " let g:deoplete#enable_auto_delimiter = 1
+  "
+  " " let g:deoplete#enable_ignore_case = 1
+  " if !exists('g:deoplete#keyword_patterns')
+  "   let g:deoplete#keyword_patterns = {}
+  " endif
+  " let g:deoplete#keyword_patterns._ = '\h\w*'
+  " augroup au_complete
+  "   autocmd!
+  "   let g:deoplete#force_omni_input_patterns = get(g:, 'deoplete#force_omni_input_patterns', {})
+  "   let g:deoplete#force_omni_input_patterns.ruby = '[^. *\t]\.\|\h\w*::'
+  "   autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  "   autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+  " augroup END
 " }}}
 
 " neosnippet {{{
@@ -531,6 +495,7 @@ function! s:init_visual()
 
   set lazyredraw
 endfunction
+
 " colorscheme wombat256mod
 colorscheme jellybeans
 " colorscheme railscasts

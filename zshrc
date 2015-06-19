@@ -59,6 +59,7 @@ typeset -A abberviations
 abberviations=(
   # vim
   "v" "vim"
+  "nv" "nvim"
   "vrc" "vim -c \"VimShellInteractive rails console --split=''\""
   "vrs" "vim -c \"VimShellInteractive rails server --split=''\""
   # pipe
