@@ -28,7 +28,7 @@ set tabstop=4
 "閉じ括弧が入力されたとき、対応する括弧を表示する
 set showmatch
 "検索時に大文字を含んでいたら大/小を区別
-set smartcase
+"set smartcase
 "新しい行を作ったときに高度な自動インデントを行う
 set smartindent
 "行頭の余白内で Tab を打ち込むと、'shiftwidth' の数だけインデントする。
@@ -196,7 +196,10 @@ NeoBundle 'thinca/vim-visualstar'
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'bling/vim-airline'
 NeoBundle 'haya14busa/incsearch.vim'
+NeoBundle 'haya14busa/incsearch-fuzzy.vim'
+NeoBundle 'haya14busa/incsearch-easymotion.vim'
 NeoBundle 'tpope/vim-endwise'
+NeoBundle 'tpope/vim-abolish'
 
 " markdown
 NeoBundle 'tyru/open-browser.vim'
@@ -204,7 +207,7 @@ NeoBundle 'kannokanno/previm'
 
 " rails
 NeoBundle 'tpope/vim-rails'
-NeoBundle "slim-template/vim-slim"
+NeoBundle 'slim-template/vim-slim'
 
 " elixir
 NeoBundle 'elixir-lang/vim-elixir'
@@ -326,6 +329,7 @@ augroup au_complete
 augroup END
 " }}}
 
+augroup END
 " neosnippet {{{
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
@@ -419,6 +423,19 @@ let g:airline_symbols.linenr = '⭡'
 
 " incsearch
 map / <Plug>(incsearch-forward)
+map z/ <Plug>(incsearch-fuzzy-/)
+
+function! s:config_easyfuzzymotion(...) abort
+  return extend(copy({
+  \   'converters': [incsearch#config#fuzzy#converter()],
+  \   'modules': [incsearch#config#easymotion#module()],
+  \   'keymap': {"\<CR>": '<Over>(easymotion)'},
+  \   'is_expr': 0,
+  \   'is_stay': 1
+  \ }), get(a:, 1, {}))
+endfunction
+noremap <silent><expr> <Space>/ incsearch#go(<SID>config_easyfuzzymotion())
+
 
 " previm
 augroup PrevimSettings
