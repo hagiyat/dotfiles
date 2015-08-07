@@ -204,6 +204,7 @@ NeoBundle 'tpope/vim-abolish'
 " markdown
 NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'kannokanno/previm'
+NeoBundle 'mattn/vim-maketable'
 
 " rails
 NeoBundle 'tpope/vim-rails'
