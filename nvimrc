@@ -201,7 +201,7 @@ NeoBundle 'tpope/vim-rails'
 NeoBundle "slim-template/vim-slim"
 
 " elixir
-NeoBundle 'elixir-lang/vim-elixir'
+NeoBundle 'awetzel/vim-elixir'
 
 " coffee script
 NeoBundle 'kchmck/vim-coffee-script'
