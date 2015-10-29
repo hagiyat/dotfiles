@@ -45,6 +45,11 @@ alias git-delete-merged-branches="git branch --merged | grep -v '*' | xargs -I %
 alias phpl="php -l"
 alias vdiff="vimdiff +VimdiffBootstrap"
 
+# brew api token
+if [ -f ~/.brew_api_token ];then
+  source ~/.brew_api_token
+fi
+
 #alias tag_update="tmux split-window -v -l 1 -c '#{pane_current_path}' \"echo 'tag updating...';gtags --gtagslabel=pygments;ctags -f tags -R;ctags -R -f Gemfile.lock.tags `bundle show --paths`\""
 function update_tags {
   #gtags --gtagslabel=pygments & \
