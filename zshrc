@@ -331,22 +331,37 @@ if [ -x `which peco` > /dev/null 2>&1 ]; then
   bindkey '^[c' peco-ssh-aws
   bindkey '^[[25~c' peco-ssh-aws
 
-function peco-rails-command() {
-  local cmd=$(rails $1 -h | sed -ne '/^Please/,$p' | sed '/^ *$/d' | sed -ne '/^ /p' | sed 's/^[ ]*//g' | _peco_single --prompt="[rails $1]")
-  if [[ -n $cmd ]]; then
-    BUFFER="rails $1 $cmd"
-    CURSOR=$#BUFFER
-  fi
-}
-function peco-rails-generate() {
-  peco-rails-command generate
-}
-zle -N peco-rails-generate
-bindkey "^xrg" peco-rails-generate
+  function peco-rails-command() {
+    local cmd=$(rails $1 -h | sed -ne '/^Please/,$p' | sed '/^ *$/d' | sed -ne '/^ /p' | sed 's/^[ ]*//g' | _peco_single --prompt="[rails $1]")
+    if [[ -n $cmd ]]; then
+      BUFFER="rails $1 $cmd"
+      CURSOR=$#BUFFER
+    fi
+  }
+  function peco-rails-generate() {
+    peco-rails-command generate
+  }
+  zle -N peco-rails-generate
+  bindkey "^xrg" peco-rails-generate
 
-function peco-rails-destroy() {
-  peco-rails-command destroy
-}
-zle -N peco-rails-destroy
-bindkey "^xrd" peco-rails-destroy
+  function peco-rails-destroy() {
+    peco-rails-command destroy
+  }
+  zle -N peco-rails-destroy
+  bindkey "^xrd" peco-rails-destroy
+
+  # gommit-mでメッセージ検索
+  # http://yuroyoro.hatenablog.com/entry/2015/11/10/132620
+  function commitms() {
+    if [ -n "$1" ]; then
+      MSGS=$(gommit-m $1 | sed -ne '6,$p' | gawk -F\| '{ print $4 }')
+      if [ -n "$MSGS" ]; then
+        echo $MSGS | _peco_single --prompt="[commit messages]"| pbcopy
+      else
+        echo "見つからず"
+      fi
+    else
+      echo "検索キーワードください！"
+    fi
+  }
 fi
