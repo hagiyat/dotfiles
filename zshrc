@@ -354,7 +354,7 @@ if [ -x `which peco` > /dev/null 2>&1 ]; then
   # http://yuroyoro.hatenablog.com/entry/2015/11/10/132620
   function commitms() {
     if [ -n "$1" ]; then
-      MSGS=$(gommit-m $1 | sed -ne '6,$p' | gawk -F\| '{ print $4 }')
+      MSGS=$(gommit-m $1 | sed -ne '6,$p' | awk -F\| '{ print $4 }')
       if [ -n "$MSGS" ]; then
         echo $MSGS | _peco_single --prompt="[commit messages]"| pbcopy
       else
