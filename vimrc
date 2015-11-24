@@ -175,6 +175,7 @@ NeoBundle 'Shougo/vimproc.vim', {
 \    },
 \ }
 NeoBundle 'Shougo/vimshell.vim', { 'depends' : [ 'Shougo/vimproc.vim' ] }
+NeoBundle 'Shougo/context_filetype'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundleLazy 'Shougo/unite-outline', { 'depends' : [ 'Shougo/unite.vim' ] }
