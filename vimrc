@@ -175,7 +175,7 @@ NeoBundle 'Shougo/vimproc.vim', {
 \    },
 \ }
 NeoBundle 'Shougo/vimshell.vim', { 'depends' : [ 'Shougo/vimproc.vim' ] }
-NeoBundle 'Shougo/context_filetype'
+NeoBundle 'Shougo/context_filetype.vim'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundleLazy 'Shougo/unite-outline', { 'depends' : [ 'Shougo/unite.vim' ] }
@@ -185,6 +185,15 @@ NeoBundle 'szw/vim-tags'
 NeoBundle 'bling/vim-bufferline'
 NeoBundle 'thinca/vim-localrc'
 NeoBundle 'tpope/vim-fugitive'
+NeoBundleLazy 'kmnk/vim-unite-giti', {
+\ 'depends' : [ 'Shougo/unite.vim' ],
+\ 'autoload': {
+\   'unite_sources': [
+\     'giti', 'giti/branch', 'giti/branch/new', 'giti/branch_all',
+\     'giti/pull_request/base', 'giti/pull_request/head',
+\     'giti/config', 'giti/log', 'giti/remote', 'giti/status'
+\   ]
+\ }}
 " NeoBundle 'jaxbot/github-issues.vim'
 NeoBundle 'moznion/github-commit-comment.vim'
 NeoBundle 'gregsexton/gitv'
@@ -194,6 +203,7 @@ NeoBundle 'majutsushi/tagbar'
 NeoBundle 'koron/codic-vim'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'thinca/vim-visualstar'
+NeoBundle 'thinca/vim-ref'
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'bling/vim-airline'
 NeoBundle 'haya14busa/incsearch.vim'
@@ -201,6 +211,8 @@ NeoBundle 'haya14busa/incsearch-fuzzy.vim'
 NeoBundle 'haya14busa/incsearch-easymotion.vim'
 NeoBundle 'tpope/vim-endwise'
 NeoBundle 'tpope/vim-abolish'
+NeoBundle 'osyo-manga/shabadou.vim'
+NeoBundle 'osyo-manga/vim-watchdogs'
 
 " markdown
 NeoBundle 'tyru/open-browser.vim'
@@ -213,6 +225,16 @@ NeoBundle 'slim-template/vim-slim'
 
 " elixir
 NeoBundle 'elixir-lang/vim-elixir'
+NeoBundle 'liquidz/vivi.vim', {
+    \ 'depends': [
+    \   'elixir-lang/vim-elixir',
+    \   'Shougo/vimproc.vim',
+    \   'Shougo/neocomplete.vim',
+    \   'thinca/vim-quickrun',
+    \   'thinca/vim-ref',
+    \   'osyo-manga/shabadou.vim',
+    \   'osyo-manga/vim-watchdogs'
+    \ ]}
 
 " coffee script
 NeoBundle 'kchmck/vim-coffee-script'
@@ -271,7 +293,7 @@ nnoremap [unite]f :<C-u>Unite file_rec/async<CR>
 nnoremap [unite]s :<C-u>Unite buffer file_mru<CR>
 nnoremap [unite]b :<C-u>Unite buffer<CR>
 nnoremap [unite]m :<C-u>Unite file_mru<CR>
-nnoremap [unite]g :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
+" nnoremap [unite]g :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
 nnoremap [unite]w :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
 nnoremap [unite]r :<C-u>UniteResume search-buffer<CR>
 nnoremap [unite]l :<C-u>Unite line -buffer-name=lines<CR>
@@ -280,6 +302,10 @@ nnoremap [unite]c :<C-u>Unite command<CR>
 nnoremap [unite]h :<C-u>Unite pry_histories -buffer-name=pry-histories<CR>
 nnoremap [unite]k :<C-u>Gmilk:. -buffer-name=milkode<CR>
 nnoremap [unite]q :Unite location_list<CR>
+nnoremap [unite]gg :Unite giti/grep<CR>
+nnoremap [unite]gl :Unite giti/log<CR>
+nnoremap [unite]gs :Unite giti/status<CR>
+nnoremap [unite]gb :Unite giti/branch_all<CR>
 let g:unite_source_rec_async_command='ag --follow --nocolor --nogroup --hidden -g ""'
 let g:unite_source_grep_command = 'ag'
 let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
@@ -519,6 +545,26 @@ aug coffee_script
   autocmd QuickFixCmdPost * nested cwindow | redraw!
 aug END
 
+" vivi.vim {{{
+let g:vivi_enable_default_key_mappings = 1
+let g:vivi_enable_auto_syntax_checking = 1
+let g:vivi_enable_auto_warm_up_iex     = 1
+let g:vivi_enable_omni_completion      = 1
+
+" setlocal omnifunc=vivi#complete#omni
+
+" if !exists('g:neocomplete#sources#omni#input_patterns')
+  " let g:neocomplete#sources#omni#input_patterns = {}
+" endif
+" let g:neocomplete#sources#omni#input_patterns.elixir = '[^.[:digit:] *\t]\.'
+
+aug MyViviVim
+  au!
+  au BufWritePost *.ex call vivi#module#reload(vivi#module#name())
+aug END
+" }}}
+
+
 syntax on
 filetype plugin on
 filetype indent on
@@ -559,6 +605,6 @@ function! s:init_visual()
   set lazyredraw
 endfunction
 " colorscheme wombat256mod
-colorscheme jellybeans
-" colorscheme railscasts
+" colorscheme jellybeans
+colorscheme railscasts
 " colorscheme Tomorrow-Night-Eighties
