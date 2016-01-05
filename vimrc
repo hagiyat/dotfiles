@@ -148,6 +148,9 @@ nnoremap <Leader>s :e ++enc=cp932<CR>
 " exモード無効
 nnoremap Q <Nop>
 
+" 画面リサイズにvimのサイズも追従する
+autocmd VimResized * wincmd =
+
 " Neobundle
 if has('vim_starting')
   set runtimepath+=~/.vim/bundle/neobundle.vim/
