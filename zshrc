@@ -190,6 +190,12 @@ function git-browse() {
     echo ".git not found.\n"
   fi
 }
+# open pullrequest
+# http://qiita.com/laiso/items/8a30e3656c980863ccfa
+propen() {
+  local current_branch_name=$(git symbolic-ref --short HEAD | xargs perl -MURI::Escape -e 'print uri_escape($ARGV[0]);')
+  git config --get remote.origin.url | sed -e "s/^.*[:\/]\(.*\/.*\).git$/https:\/\/github.com\/\1\//" | sed -e "s/$/pull\/${current_branch_name}/" | xargs open
+}
 function git-browse-with-peco() {
   git rev-parse --git-dir >/dev/null 2>&1
   if [[ $? == 0 ]]; then
