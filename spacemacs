@@ -53,7 +53,6 @@ values."
      version-control
      themes-megapack
      )
-   dotspacemacs-line-numbers t
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
@@ -114,16 +113,15 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
+                         colorsarenice-dark
+                         wilson
+                         ample-zen
+                         stekene-dark
+                         niflheim
                          flatland
                          ample-flat
-                         ample-zen
-                         afternoon
-                         stekene-dark
                          sanityinc-tomorrow-eighties
-                         niflheim
-                         wilson
-                         colorsarenice-dark
-                         jazz
+                         afternoon
                          spacemacs-dark
                          )
    ;; If non nil the cursor color matches the state color in GUI Emacs.
@@ -230,7 +228,7 @@ values."
    ;; If non nil line numbers are turned on in all `prog-mode' and `text-mode'
    ;; derivatives. If set to `relative', also turns on relative line numbers.
    ;; (default nil)
-   dotspacemacs-line-numbers nil
+   dotspacemacs-line-numbers t
    ;; If non-nil smartparens-strict-mode will be enabled in programming modes.
    ;; (default nil)
    dotspacemacs-smartparens-strict-mode nil
