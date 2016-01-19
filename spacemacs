@@ -23,20 +23,35 @@ values."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     auto-completion
+     (auto-completion :variables
+                      auto-completion-enable-sort-by-usage t
+                      auto-completion-enable-snippets-in-popup t)
      better-defaults
      emacs-lisp
      git
+     github
      markdown
-     ruby
+     (ruby :variables
+           ruby-enable-ruby-on-rails-support t
+           ruby-enable-enh-ruby-mode t
+           ruby-version-manager 'rbenv
+           ruby-test-runner 'rspec)
+     ruby-on-rails
      elixir
-     ;; org
+     python
+     yaml
+     html
+     osx
+     emoji
+     (org :variables
+          org-enable-github-support t)
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
      spell-checking
      syntax-checking
-     ;; version-control
+     version-control
+     themes-megapack
      )
    dotspacemacs-line-numbers t
    ;; List of additional packages that will be installed without being
@@ -98,16 +113,19 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(sanityinc-tomorrow-eighties
-                         darktooth
-                         twilight-anti-bright
-                         twilight-bright
-                         twilight
-                         zen-and-art
+   dotspacemacs-themes '(
+                         flatland
+                         ample-flat
+                         ample-zen
+                         afternoon
+                         stekene-dark
+                         sanityinc-tomorrow-eighties
+                         niflheim
+                         wilson
+                         colorsarenice-dark
+                         jazz
                          spacemacs-dark
-                         solarized-dark
-                         monokai
-                         zenburn)
+                         )
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
