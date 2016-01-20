@@ -271,6 +271,14 @@ in `dotspacemacs/user-config'."
    )
   ;; see via https://github.com/syl20bnr/spacemacs/issues/2032
   (fset 'evil-visual-update-x-selection 'ignore)
+
+  ;; 入力ソースの設定が必要
+  (defun mac-selected-keyboard-input-source-change-hook-func ()
+    ;; 入力モードが英語の時はカーソルの色をorangeに、日本語の時はredにする
+    (set-cursor-color (if (string-match "\\.Roman$" (mac-input-source))
+                          "orange" "red")))
+  (add-hook 'mac-selected-keyboard-input-source-change-hook
+            'mac-selected-keyboard-input-source-change-hook-func)
   )
 
 (defun dotspacemacs/user-config ()
