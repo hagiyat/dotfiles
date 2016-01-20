@@ -114,15 +114,17 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
-                         colorsarenice-dark
-                         wilson
-                         ample-zen
-                         stekene-dark
-                         niflheim
+                         ;; gui
+                         sanityinc-tomorrow-night
                          flatland
+                         wilson
+                         stekene-dark
                          ample-flat
                          sanityinc-tomorrow-eighties
                          afternoon
+                         ;; cui
+                         niflheim
+                         colorsarenice-dark
                          spacemacs-dark
                          )
    ;; If non nil the cursor color matches the state color in GUI Emacs.
@@ -243,7 +245,7 @@ values."
    ;; List of search tool executable names. Spacemacs uses the first installed
    ;; tool of the list. Supported tools are `ag', `pt', `ack' and `grep'.
    ;; (default '("ag" "pt" "ack" "grep"))
-   dotspacemacs-search-tools '("ag" "pt" "ack" "grep")
+   dotspacemacs-search-tools '("ag" "grep")
    ;; The default package repository used if no explicit repository has been
    ;; specified with an installed package.
    ;; Not used for now. (default nil)
@@ -253,7 +255,7 @@ values."
    ;; `trailing' to delete only the whitespace at end of lines, `changed'to
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
-   dotspacemacs-whitespace-cleanup nil
+   dotspacemacs-whitespace-cleanup 'changed
    ))
 
 (defun dotspacemacs/user-init ()
@@ -271,6 +273,11 @@ in `dotspacemacs/user-config'."
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
   (setq neo-theme 'nerd)
+  (setq powerline-default-separator 'slant)
+  (setq-default
+   evil-escape-key-sequence "jj"
+   evil-escape-delay 0.2
+   )
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
