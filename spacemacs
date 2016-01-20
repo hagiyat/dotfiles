@@ -52,6 +52,7 @@ values."
      syntax-checking
      version-control
      themes-megapack
+     eyebrowse
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -128,9 +129,9 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   dotspacemacs-default-font '("Source Code Pro"
-                               :size 13
-                               :weight normal
+   dotspacemacs-default-font '("Source Han Code JP"
+                               :size 13.5
+                               :weight light
                                :width normal
                                :powerline-scale 1.1)
    ;; The leader key
@@ -260,12 +261,16 @@ values."
 It is called immediately after `dotspacemacs/init'.  You are free to put almost
 any user code here.  The exception is org related code, which should be placed
 in `dotspacemacs/user-config'."
+  ;; (global-company-mode)
+  ;; see via https://github.com/syl20bnr/spacemacs/issues/2032
+  (fset 'evil-visual-update-x-selection 'ignore)
   )
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
+  (setq neo-theme 'nerd)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
