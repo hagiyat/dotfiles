@@ -264,6 +264,11 @@ It is called immediately after `dotspacemacs/init'.  You are free to put almost
 any user code here.  The exception is org related code, which should be placed
 in `dotspacemacs/user-config'."
   ;; (global-company-mode)
+  (setq-default
+   indent-tabs-mode nil
+   evil-shift-width 2
+   tab-width 2
+   )
   ;; see via https://github.com/syl20bnr/spacemacs/issues/2032
   (fset 'evil-visual-update-x-selection 'ignore)
   )
@@ -272,12 +277,12 @@ in `dotspacemacs/user-config'."
   "Configuration function for user code.
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
-  (setq neo-theme 'nerd)
-  (setq powerline-default-separator 'slant)
   (setq-default
    evil-escape-key-sequence "jj"
    evil-escape-delay 0.2
    )
+  (setq neo-theme 'nerd)
+  (setq powerline-default-separator 'slant)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
