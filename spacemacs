@@ -294,6 +294,8 @@ layers configuration. You are free to put any user code."
                           "orange" "red")))
   (add-hook 'mac-selected-keyboard-input-source-change-hook
             'mac-selected-keyboard-input-source-change-hook-func)
+  (add-hook 'evil-normal-state-entry-hook
+            '(lambda () (mac-select-input-source "com.google.inputmethod.Japanese.Roman")))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
