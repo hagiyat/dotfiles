@@ -53,6 +53,8 @@ values."
      version-control
      themes-megapack
      eyebrowse
+     dash
+     deft
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -288,6 +290,9 @@ layers configuration. You are free to put any user code."
 
    ;; magit
    magit-repository-directories '("~/repos/")
+
+   ;; deft
+   deft-directory "~/Dropbox/notes"
    )
 
   ;; 入力ソースの設定が必要
