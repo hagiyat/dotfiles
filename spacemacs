@@ -180,7 +180,7 @@ values."
    ;; If non nil then `ido' replaces `helm' for some commands. For now only
    ;; `find-files' (SPC f f), `find-spacemacs-file' (SPC f e s), and
    ;; `find-contrib-file' (SPC f e c) are replaced. (default nil)
-   dotspacemacs-use-ido nil
+   dotspacemacs-use-ido t
    ;; If non nil, `helm' will try to minimize the space it uses. (default nil)
    dotspacemacs-helm-resize nil
    ;; if non nil, the helm header is hidden when there is only one source.
@@ -285,6 +285,9 @@ layers configuration. You are free to put any user code."
    neo-theme 'nerd
    powerline-default-separator 'slant
    linum-format "%4d"
+
+   ;; magit
+   magit-repository-directories '("~/repos/")
    )
 
   ;; 入力ソースの設定が必要
