@@ -25,7 +25,10 @@ values."
      ;; ----------------------------------------------------------------
      (auto-completion :variables
                       auto-completion-enable-sort-by-usage t
-                      auto-completion-enable-snippets-in-popup t)
+                      auto-completion-enable-snippets-in-popup t
+                      ;; もうちょい控えめなtipにならないかな〜
+                      ;; auto-completion-enable-help-tooltip t
+                      )
      better-defaults
      emacs-lisp
      git
@@ -134,7 +137,7 @@ values."
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Han Code JP"
-                               :size 13.5
+                               :size 13
                                :weight light
                                :width normal
                                :powerline-scale 1.1)
