@@ -55,7 +55,6 @@ values."
             shell-enable-smart-eshell t)
      spell-checking
      syntax-checking
-     version-control
      themes-megapack
      eyebrowse
      dash
