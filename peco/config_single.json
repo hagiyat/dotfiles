@@ -11,5 +11,9 @@
         "Selected": ["underline", "on_green", "black"],
         "Query": ["yellow", "bold"],
         "Matched": ["cyan", "bold"]
+    },
+    "Keymap": {
+        "C-j": "peco.SelectDown",
+        "C-k": "peco.SelectUp"
     }
 }
