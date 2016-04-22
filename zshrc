@@ -115,6 +115,8 @@ abberviations=(
   "drs" "open dash://rspec:"
   "dmy" "open dash://mysql:"
   "da"  "open dash://"
+  # other
+  "qq" "exit"
 )
 
 magic-abbrev-expand() {
