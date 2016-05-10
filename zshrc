@@ -30,6 +30,8 @@ setopt pushd_ignore_dups    # 重複するディレクトリは記憶しない
 # auto cd
 setopt auto_cd
 
+setopt extended_glob
+
 # zmv enable
 autoload -Uz zmv
 #alias zmv='noglob zmv -W'
@@ -59,9 +61,8 @@ function update_tags {
 }
 
 # 略語展開
-setopt extended_glob
-typeset -A abberviations
-abberviations=(
+typeset -A abbreviations
+abbreviations=(
   # vim
   "v" "vim"
   "nv" "nvim"
@@ -77,6 +78,7 @@ abberviations=(
   "g"  "git status"
   "gs"  "git stash"
   "gb"  "git branch"
+  "gbb"  "git checkout -b"
   "gd"  "git diff"
   "gch"  "git checkout"
   "gco"  "git commit -v"
@@ -122,7 +124,7 @@ abberviations=(
 magic-abbrev-expand() {
   local MATCH
   LBUFFER=${LBUFFER%%(#m)[-_a-zA-Z0-9]#}
-  LBUFFER+=${abberviations[$MATCH]:-$MATCH}
+  LBUFFER+=${abbreviations[$MATCH]:-$MATCH}
   zle self-insert
 }
 
