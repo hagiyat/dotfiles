@@ -152,146 +152,38 @@ nnoremap Q <Nop>
 " 画面リサイズにvimのサイズも追従する
 autocmd VimResized * wincmd =
 
-" Neobundle
-if has('vim_starting')
-  set runtimepath+=~/.vim/bundle/neobundle.vim/
+" dein
+let s:dein_dir = expand('~/.cache/dein')
+let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
+
+if &runtimepath !~# '/dein.vim'
+  if !isdirectory(s:dein_repo_dir)
+    execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
+  endif
+  execute 'set runtimepath^=' . fnamemodify(s:dein_repo_dir, ':p')
 endif
-call neobundle#begin(expand('~/.vim/bundle/'))
 
-NeoBundleFetch 'Shougo/neobundle.vim'
-" {{{ plugins
-NeoBundle 'Shougo/unite.vim'
-NeoBundleLazy 'Shougo/vimfiler.vim', { 'depends' : [ 'Shougo/unite.vim' ] }
-NeoBundle 'scrooloose/syntastic.git'
-NeoBundleLazy 'Shougo/neocomplete.vim', { 'autoload' : {
-      \ 'functions' : ['neocomplete#init#disable', 'neocomplete#is_enabled', 'neocomplete#start_manual_complete'],
-      \ 'commands' : ['NeoCompleteClean', 'NeoCompleteEnable', 'NeoCompleteDisable'],
-      \ 'insert' : 1,
-      \ }}
-NeoBundle 'Shougo/neomru.vim', { 'depends' : [ 'Shougo/unite.vim' ] }
-NeoBundle 'Shougo/vimproc.vim', {
-\ 'build' : {
-\     'windows' : 'tools\\update-dll-mingw',
-\     'cygwin' : 'make -f make_cygwin.mak',
-\     'mac' : 'make -f make_mac.mak',
-\     'linux' : 'make',
-\     'unix' : 'gmake',
-\    },
-\ }
-NeoBundle 'Shougo/vimshell.vim', { 'depends' : [ 'Shougo/vimproc.vim' ] }
-NeoBundle 'Shougo/context_filetype.vim'
-NeoBundle 'Shougo/neosnippet'
-NeoBundle 'Shougo/neosnippet-snippets'
-NeoBundleLazy 'Shougo/unite-outline', { 'depends' : [ 'Shougo/unite.vim' ] }
-NeoBundleLazy 'tsukkee/unite-tag', { 'depends' : [ 'Shougo/unite.vim' ] }
-NeoBundle 'osyo-manga/unite-quickfix', { 'depends' : [ 'Shougo/unite.vim' ] }
-NeoBundle 'szw/vim-tags'
-NeoBundle 'bling/vim-bufferline'
-NeoBundle 'thinca/vim-localrc'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundleLazy 'kmnk/vim-unite-giti', {
-\ 'depends' : [ 'Shougo/unite.vim' ],
-\ 'autoload': {
-\   'unite_sources': [
-\     'giti', 'giti/branch', 'giti/branch/new', 'giti/branch_all',
-\     'giti/pull_request/base', 'giti/pull_request/head',
-\     'giti/config', 'giti/log', 'giti/remote', 'giti/status'
-\   ]
-\ }}
-" NeoBundle 'jaxbot/github-issues.vim'
-NeoBundle 'moznion/github-commit-comment.vim'
-NeoBundle 'gregsexton/gitv'
-NeoBundle 'osyo-manga/vim-over'
-NeoBundle 'rhysd/clever-f.vim'
-NeoBundle 'majutsushi/tagbar'
-NeoBundle 'koron/codic-vim'
-NeoBundle 'thinca/vim-quickrun'
-NeoBundle 'thinca/vim-visualstar'
-NeoBundle 'thinca/vim-ref'
-NeoBundle 'scrooloose/nerdcommenter'
-NeoBundle 'bling/vim-airline'
-NeoBundle 'haya14busa/incsearch.vim'
-NeoBundle 'haya14busa/incsearch-fuzzy.vim'
-NeoBundle 'haya14busa/incsearch-easymotion.vim'
-NeoBundle 'tpope/vim-endwise'
-NeoBundle 'tpope/vim-abolish'
-NeoBundle 'osyo-manga/shabadou.vim'
-NeoBundle 'osyo-manga/vim-watchdogs'
+if dein#load_state(s:dein_dir)
+  call dein#begin(s:dein_dir)
 
-" markdown
-NeoBundle 'tyru/open-browser.vim'
-NeoBundle 'kannokanno/previm'
-NeoBundle 'mattn/vim-maketable'
+  let g:rc_dir    = expand('~/.deinfiles')
+  let s:toml      = g:rc_dir . '/dein.toml'
+  let s:lazy_toml = g:rc_dir . '/dein_lazy.toml'
 
-" rails
-NeoBundle 'tpope/vim-rails'
-NeoBundle 'slim-template/vim-slim'
+  call dein#load_toml(s:toml,      {'lazy': 0})
+  call dein#load_toml(s:lazy_toml, {'lazy': 1})
+  call dein#end()
+  call dein#save_state()
+endif
 
-" elixir
-NeoBundle 'elixir-lang/vim-elixir'
-NeoBundle 'liquidz/vivi.vim', {
-    \ 'depends': [
-    \   'elixir-lang/vim-elixir',
-    \   'Shougo/vimproc.vim',
-    \   'Shougo/neocomplete.vim',
-    \   'thinca/vim-quickrun',
-    \   'thinca/vim-ref',
-    \   'osyo-manga/shabadou.vim',
-    \   'osyo-manga/vim-watchdogs'
-    \ ]}
-
-" coffee script
-NeoBundle 'kchmck/vim-coffee-script'
-
-" color schemes
-NeoBundle 'w0ng/vim-hybrid'
-NeoBundle 'vim-scripts/darkburn'
-NeoBundle 'nanotech/jellybeans.vim'
-NeoBundle 'jpo/vim-railscasts-theme'
-NeoBundle 'chriskempson/vim-tomorrow-theme'
-NeoBundle 'vim-scripts/twilight'
-NeoBundle 'vim-scripts/wombat256.vim'
-" }}} plugins
-call neobundle#end()
+if dein#check_install()
+  call dein#install()
+endif
 
 " Unite {{{
 nnoremap [unite] <Nop>
 nmap s [unite]
 let g:unite_enable_start_insert=1
-
-" pry historyのUnite Source追加
-augroup au_pry_history
-  autocmd!
-  let s:source = {
-    \ "name" : "pry_histories",
-    \ "description" : "pry history unite-source",
-    \ "default_action" : "insert",
-  \}
-  function! s:source.gather_candidates(args, context)
-    let histories = split(system("awk '!a[$0]++' ~/.pry_history | tail -r"), '\n')
-    return map(histories, '{"word"  : v:val}')
-  endfunction
-  call unite#define_source(s:source)
-  unlet s:source
-augroup END
-
-" gmilk コマンドの結果をUnite qf で表示する
-augroup au_milkode
-  autocmd!
-  command! -nargs=1 Gmilk call s:Gmilk("gmilk -a -n 200", <f-args>)
-
-  function! s:Gmilk(cmd, arg)
-    silent execute "cgetexpr system(\"" . a:cmd . " ". a:arg . "\")"
-    if len(getqflist()) == 0
-      echohl WarningMsg
-      echomsg "No match found."
-      echohl None
-    else
-      execute "Unite -auto-preview quickfix"
-      redraw!
-    endif
-  endfunction
-augroup END
 
 nnoremap [unite]f :<C-u>Unite file_rec/async<CR>
 nnoremap [unite]s :<C-u>Unite buffer file_mru<CR>
@@ -303,13 +195,7 @@ nnoremap [unite]r :<C-u>UniteResume search-buffer<CR>
 nnoremap [unite]l :<C-u>Unite line -buffer-name=lines<CR>
 nnoremap [unite]o :<C-u>Unite outline -buffer-name=outline<CR>
 nnoremap [unite]c :<C-u>Unite command<CR>
-nnoremap [unite]h :<C-u>Unite pry_histories -buffer-name=pry-histories<CR>
-nnoremap [unite]k :<C-u>Gmilk:. -buffer-name=milkode<CR>
 nnoremap [unite]q :Unite location_list<CR>
-nnoremap [unite]gg :Unite giti/grep<CR>
-nnoremap [unite]gl :Unite giti/log<CR>
-nnoremap [unite]gs :Unite giti/status<CR>
-nnoremap [unite]gb :Unite giti/branch_all<CR>
 let g:unite_source_rec_async_command='ag --follow --nocolor --nogroup --hidden -g ""'
 let g:unite_source_grep_command = 'ag'
 let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
@@ -382,15 +268,6 @@ endif
 let g:neosnippet#snippets_directory='~/.vim/snippets'
 " }}}
 
-" github-issues
-" let g:github_same_window = 1
-
-" gitv
-augroup au_gitv
-  autocmd!
-  autocmd FileType git :setlocal foldlevel=99
-augroup END
-
 " vim-over
 nnoremap <silent><Space>mm :OverCommandLine<CR>%s/
 nnoremap <silent><Space>mr :OverCommandLine<CR>%s/<C-R><C-W>
@@ -417,10 +294,6 @@ let g:tagbar_type_ruby = {
 
 " quickrun
 nnoremap <silent><Leader>r :call QuickRun -outputter/buffer/split \":botright 12sp\" -hook/time/enable 1<CR>
-
-" vimshell
-let g:vimshell_prompt_expr = 'getcwd()." ⮁ "'
-nnoremap <silent><Leader>sz :VimShellInteractive --split='split \| resize 20' zsh<CR>
 
 " syntastic
 let g:syntastic_always_populate_loc_list=1
@@ -468,7 +341,6 @@ function! s:config_easyfuzzymotion(...) abort
 endfunction
 noremap <silent><expr> <Space>/ incsearch#go(<SID>config_easyfuzzymotion())
 
-
 " previm
 augroup PrevimSettings
   autocmd!
@@ -481,91 +353,6 @@ augroup PrevimSettings
   nnoremap <silent> [previm]r :call previm#refresh()<CR>
 augroup END
 
-" ruby
-" rails用
-"{{{
-" vim-rails
-let g:rails_default_file='config/database.yml'
-let g:rails_level = 4
-let g:rails_mappings=1
-let g:rails_modelines=0
-let g:rails_some_option = 1
-
-function! s:SetUpRailsSetting()
-  nnoremap <buffer><Leader>r :R<CR>
-  nnoremap <buffer><Leader>a :A<CR>
-  nnoremap <buffer><Leader>m :Rmodel<Space>
-  nnoremap <buffer><Leader>c :Rcontroller<Space>
-  nnoremap <buffer><Leader>v :Rview<Space>
-
-  " endwise
-  let g:endwise_no_mappings=1
-
-  " vimshell
-  nnoremap <buffer><Leader>sc :VimShellInteractive rails console --split=""<CR>
-  nnoremap <buffer><Leader>ss :VimShellInteractive rails server --split=""<CR>
-  iab -r show-routes
-  iab -m find-method
-  iab -g --grep
-  iab !r reload!
-  autocmd FileType int-rails inoremap <C-r> <ESC>:<C-u>Unite pry_histories -buffer-name=pry-histories<CR>
-  autocmd FileType int-rails nnoremap <C-r> :<C-u>Unite pry_histories -buffer-name=pry-histories<CR>
-
-endfunction
-
-" neosnipptsとの共用設定
-function! s:set_snippet(type_name)
-  if strlen(a:type_name)
-    for type in ['controller', 'model', 'helper', 'routes', 'spec', 'slim']
-      "  echomsg a:type_name. " - ". type
-      if match(a:type_name, type) != -1
-        let snippet_path = printf($HOME. '/.vim/snippets/rails.%s.snip', type)
-        if filereadable(snippet_path)
-          call neosnippet#commands#_source(snippet_path)
-        else
-          echomsg 'unreadable '. snippet_path
-        endif
-      endif
-    endfor
-  endif
-endfunction
-
-aug setup_rails
-  autocmd!
-  autocmd User Rails call s:SetUpRailsSetting()
-  autocmd User Rails call s:set_snippet(rails#buffer().type_name())
-  " autocmd BufEnter *.rb call s:set_snippet(rails#buffer().type_name())
-  let &tags = './tags,./Gemfile.lock.tags'
-aug END
-"}}}
-
-aug coffee_script
-  au BufRead,BufNewFile,BufReadPre *.coffee   set filetype=coffee
-  " インデント設定
-  autocmd FileType coffee    setlocal sw=2 sts=2 ts=2 et
-  "保存と同時にコンパイルする
-  autocmd BufWritePost *.coffee silent make!
-  "エラーがあったら別ウィンドウで表示
-  autocmd QuickFixCmdPost * nested cwindow | redraw!
-aug END
-
-" vivi.vim {{{
-let g:vivi_enable_default_key_mappings = 1
-let g:vivi_enable_auto_syntax_checking = 1
-let g:vivi_enable_auto_warm_up_iex     = 1
-let g:vivi_enable_omni_completion      = 1
-
-" setlocal omnifunc=vivi#complete#omni
-
-" if !exists('g:neocomplete#sources#omni#input_patterns')
-  " let g:neocomplete#sources#omni#input_patterns = {}
-" endif
-" let g:neocomplete#sources#omni#input_patterns.elixir = '[^.[:digit:] *\t]\.'
-
-aug MyViviVim
-  au!
-  au BufWritePost *.ex call vivi#module#reload(vivi#module#name())
-aug END
 " }}}
 
 

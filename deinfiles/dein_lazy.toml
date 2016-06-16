@@ -1,0 +1,23 @@
+[[plugins]]
+repo = 'Shougo/neomru.vim'
+on_source = ['Shougo/unite.vim']
+
+[[plugins]]
+repo = 'Shougo/vimfiler.vim'
+on_source = ['Shougo/unite.vim']
+
+[[plugins]]
+repo = 'Shougo/neocomplete.vim'
+on_i = 1
+
+[[plugins]]
+repo = 'Shougo/unite-outline'
+on_source = ['Shougo/unite.vim']
+
+[[plugins]]
+repo = 'tsukkee/unite-tag'
+on_source = ['Shougo/unite.vim']
+
+[[plugins]]
+repo = 'vim-airline/vim-airline-themes'
+on_source = ['vim-airline/vim-airline']
