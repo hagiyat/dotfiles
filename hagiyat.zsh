@@ -5,13 +5,6 @@ prompt powerline
 export LANG=ja_JP.UTF-8
 export EDITOR=vim
 #export PAGER=vimpager
-export GOROOT=/usr/local/opt/go/libexec
-export GOPATH=$HOME/.go
-export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
-
-export DOCKER_HOST=tcp://192.168.59.103:2376
-export DOCKER_CERT_PATH=/Users/tomohirohagiya/.boot2docker/certs/boot2docker-vm
-export DOCKER_TLS_VERIFY=1
 
 # ヒストリー設定
 HISTFILE=~/.zsh_history
@@ -38,27 +31,16 @@ autoload -Uz zmv
 
 export TERM=xterm-256color
 
-alias tmux="LD_LIBRARY_PATH=/usr/local/lib /usr/local/bin/tmux"
-
 alias ll='ls -l'
 alias la='ls -al'
 
 alias git-delete-merged-branches="git branch --merged | grep -v '*' | xargs -I % git branch -d %"
-alias phpl="php -l"
 alias vdiff="vimdiff +VimdiffBootstrap"
 
 # brew api token
-if [ -f ~/.brew_api_token ];then
-  source ~/.brew_api_token
-fi
-
-#alias tag_update="tmux split-window -v -l 1 -c '#{pane_current_path}' \"echo 'tag updating...';gtags --gtagslabel=pygments;ctags -f tags -R;ctags -R -f Gemfile.lock.tags `bundle show --paths`\""
-function update_tags {
-  #gtags --gtagslabel=pygments & \
-  ctags -f tags -R & \
-  ctags -R -f Gemfile.lock.tags `bundle show --paths` & \
-  echo 'tag updating...'
-}
+# if [ -f ~/.brew_api_token ];then
+#   source ~/.brew_api_token
+# fi
 
 # 略語展開
 typeset -A abbreviations
@@ -175,15 +157,9 @@ function diff-branch() {
 }
 
 # コマンドラインのシンタックスハイライト
-# http://blog.glidenote.com/blog/2012/12/15/zsh-syntax-highlighting/
-if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
-  source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-fi
-
-# 範囲選択
-if [ -f ~/.zsh/selection.zsh ]; then
-  source ~/.zsh/selection.zsh
-fi
+source ~/.zplug/init.zsh
+zplug "zsh-users/zsh-syntax-highlighting", nice:10
+zplug load --verbose
 
 # git-remoteのURLをhttpsに変換してopenする
 function git-browse() {
