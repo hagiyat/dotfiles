@@ -31,8 +31,6 @@ values."
                       )
      better-defaults
      emacs-lisp
-     (org :variables
-          org-enable-github-support t)
      git
      github
      markdown
@@ -293,8 +291,8 @@ layers configuration. You are free to put any user code."
    magit-repository-directories '("~/repos/")
 
    ;; deft
-   deft-extensions '("org" "md" "txt")
-   deft-directory "~/notes"
+   deft-extensions '("md" "txt")
+   deft-directory "~/Dropbox/notes"
 
    ;; ruby
    ruby-insert-encoding-magic-comment nil
