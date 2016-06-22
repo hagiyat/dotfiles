@@ -1,0 +1,11 @@
+[user]
+	name = hagiyat
+	email = hagiyat@gmail.com
+[core]
+	editor = vim
+[pager]
+	log = diff-highlight | less
+	show = diff-highlight | less
+	diff = diff-highlight | less
+[diff]
+	compactionHeuristic = true
