@@ -122,6 +122,11 @@ bindkey "^x " no-magic-abbrev-expand
 # 便利系
 function agcount() { ag $1 | wc -l | tr -d " "; }
 
+# git diffのためにdiff-highlightのパス追加
+# http://qiita.com/takyam/items/d6afacc7934de9b0e85e
+export PATH="/usr/local/share/git-core/contrib/diff-highlight:$PATH"
+
+# anyenv
 if [ -d ${HOME}/.anyenv ] ; then
   export PATH="$HOME/.anyenv/bin:$PATH"
   eval "$(anyenv init -)"
