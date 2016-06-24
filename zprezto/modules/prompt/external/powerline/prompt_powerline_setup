@@ -98,10 +98,10 @@ function prompt_powerline_setup {
   #POWERLINE_LEFT_B="%k%f%F{white}%K{blue} "'${vcs_info_msg_0_}'" %k%f%F{blue}%K{black}"$POWERLINE_SEPARATOR
   POWERLINE_LEFT_A="%K{232}%F{208} %~ %k%f%F{232}%K{234}"$POWERLINE_SEPARATOR
   POWERLINE_LEFT_B="%k%f%F{227}%K{234} "'${vcs_info_msg_0_}'" %k%f%F{234}%K{236}"$POWERLINE_SEPARATOR
-  POWERLINE_LEFT_C=" %k%f%F{white}%K{236} %k%f%F{236}"$POWERLINE_SEPARATOR"%f "
+  # POWERLINE_LEFT_C=" %k%f%F{white}%K{236} %k%f%F{236}"$POWERLINE_SEPARATOR"%f "
+  POWERLINE_LEFT_C="%f "
 
   PROMPT=$POWERLINE_LEFT_A$POWERLINE_LEFT_B$POWERLINE_LEFT_C
 }
 
 prompt_powerline_setup "$@"
-
