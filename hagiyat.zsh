@@ -126,6 +126,16 @@ function agcount() { ag $1 | wc -l | tr -d " "; }
 # http://qiita.com/takyam/items/d6afacc7934de9b0e85e
 export PATH="/usr/local/share/git-core/contrib/diff-highlight:$PATH"
 
+# 自分shellを動かす用のパス追加
+if [ -d ${HOME}/bin ] ; then
+  export PATH="$HOME/bin:$PATH"
+fi
+
+# openコマンドでfile uri schemeをブラウザで開く(markdown preview用)
+if [ -d /Applications/Google\ Chrome.app/ ] ; then
+  alias browse="open -a /Applications/Google\ Chrome.app"
+fi
+
 # anyenv
 if [ -d ${HOME}/.anyenv ] ; then
   export PATH="$HOME/.anyenv/bin:$PATH"
