@@ -100,6 +100,7 @@ abbreviations=(
   "dmy" "open dash://mysql:"
   "da"  "open dash://"
   # other
+  "b" "browse"
   "qq" "exit"
 )
 
