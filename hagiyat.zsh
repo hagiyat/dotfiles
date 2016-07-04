@@ -230,8 +230,7 @@ if [ -x `which peco` > /dev/null 2>&1 ]; then
     fi
   }
   zle -N peco-cdr
-  bindkey '^[d' peco-cdr
-  bindkey '^[[25~d' peco-cdr
+  bindkey '^s^s' peco-cdr
 
   # peco版履歴検索
   function exists_command { which $1 &> /dev/null }
@@ -272,8 +271,7 @@ if [ -x `which peco` > /dev/null 2>&1 ]; then
     fi
   }
   zle -N peco-git-branches
-  bindkey '^[g' peco-git-branches
-  bindkey '^[[25~g' peco-git-branches
+  bindkey '^s^g' peco-git-branches
 
   # git addをGUIツールっぽくする
   alias pgitadd="git status -s | sed -e '/^[^ |\?]/d' | _peco --prompt='[git add]' | awk '{print \$2}' | xargs git add"
@@ -291,15 +289,7 @@ if [ -x `which peco` > /dev/null 2>&1 ]; then
   }
 
   # 選んでkillしたい
-  alias peco-kill="ps aux | _peco --prompt='[pkill]' | awk '{print \$2}' | xargs kill"
-
-  # hosts変更/複数選んだらくっつける
-  function change_hosts() {
-    sudo -v && ls /etc/hosts.* | sed -e '/equiv$/d' | _peco --prompt='[hosts]' | xargs cat | sort | uniq | sudo tee /etc/hosts
-    # if [[ ! -z `cat /etc/hosts | grep nanapi` ]]; then
-    #   networksetup -connectpppoeservice "nanapi"
-    # fi
-  }
+  alias peco-kill="ps aux | _peco --prompt='[pkill]' | awk '{print \$2}' | xargs kill -9"
 
   # カレントディレクトリのファイルリスト
   # ここからパイプしてxargsでrmとか
@@ -314,19 +304,6 @@ if [ -x `which peco` > /dev/null 2>&1 ]; then
     fi
   }
 
-  function nanapi-vpn() {
-    tmux split-window -v -l 1 "if [[ ! -z `networksetup -showpppoestatus nanapi | grep disconnected` ]]; then networksetup -connectpppoeservice nanapi; fi;"
-  }
-
-  function codic() {
-    TARG=$(cat ~/.vim/bundle/codic-vim/dict/naming-entry.csv | peco --prompt="[codic]" --initial-matcher="Migemo" | awk -F , '{print $1}')
-    if [ $? = 1 -o "$TARG" = "" ]; then
-      echo "no pattern was matched"
-      return 1
-    fi
-    cat ~/.vim/bundle/codic-vim/dict/naming-translation.csv | grep "$TARG" | awk -F , '{print "parts: " $3; print "mean: " $4; print "note: " $5 "\n";}'
-  }
-
   function peco-ssh-aws() {
     local host=$(gsed -ne '/### EC2SSH BEGIN ###/,$p' ~/.ssh/config | gsed -ne '/^Host /p' | gsed 's/^Host //g' | _peco_single --prompt="[AWS]")
     if [[ -n $host ]]; then
@@ -335,27 +312,7 @@ if [ -x `which peco` > /dev/null 2>&1 ]; then
     fi
   }
   zle -N peco-ssh-aws
-  bindkey '^[c' peco-ssh-aws
-  bindkey '^[[25~c' peco-ssh-aws
-
-  function peco-rails-command() {
-    local cmd=$(rails $1 -h | sed -ne '/^Please/,$p' | sed '/^ *$/d' | sed -ne '/^ /p' | sed 's/^[ ]*//g' | _peco_single --prompt="[rails $1]")
-    if [[ -n $cmd ]]; then
-      BUFFER="rails $1 $cmd"
-      CURSOR=$#BUFFER
-    fi
-  }
-  function peco-rails-generate() {
-    peco-rails-command generate
-  }
-  zle -N peco-rails-generate
-  bindkey "^xrg" peco-rails-generate
-
-  function peco-rails-destroy() {
-    peco-rails-command destroy
-  }
-  zle -N peco-rails-destroy
-  bindkey "^xrd" peco-rails-destroy
+  bindkey '^s^a' peco-ssh-aws
 
   # gommit-mでメッセージ検索
   # http://yuroyoro.hatenablog.com/entry/2015/11/10/132620
