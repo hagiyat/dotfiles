@@ -132,6 +132,11 @@ if [ -d ${HOME}/bin ] ; then
   export PATH="$HOME/bin:$PATH"
 fi
 
+# emacs-mac
+if [ -d /Applications/Emacs.app/ ] ; then
+  alias spacemacs="open /Applications/Emacs.app"
+fi
+
 # openコマンドでfile uri schemeをブラウザで開く(markdown preview用)
 if [ -d /Applications/Google\ Chrome.app/ ] ; then
   alias browse="open -a /Applications/Google\ Chrome.app"
