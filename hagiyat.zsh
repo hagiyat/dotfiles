@@ -134,12 +134,15 @@ fi
 
 # emacs-mac
 if [ -d /Applications/Emacs.app/ ] ; then
-  alias spacemacs="open /Applications/Emacs.app"
+  alias spacemacs="open -a /Applications/Emacs.app"
 fi
 
 # openコマンドでfile uri schemeをブラウザで開く(markdown preview用)
-if [ -d /Applications/Google\ Chrome.app/ ] ; then
-  alias browse="open -a /Applications/Google\ Chrome.app"
+# if [ -d /Applications/Google\ Chrome.app/ ] ; then
+#   alias browse="open -a /Applications/Google\ Chrome.app"
+# fi
+if [ -d /Applications/Firefox.app/ ] ; then
+  alias browse="open -a /Applications/Firefox.app"
 fi
 
 # anyenv
@@ -150,6 +153,15 @@ if [ -d ${HOME}/.anyenv ] ; then
   do
     export PATH="$HOME/.anyenv/envs/$D/shims:$PATH"
   done
+fi
+
+# direnv
+eval "$(direnv hook zsh)"
+
+# awscli completion
+if [ -f /usr/local/bin/aws_zsh_completer.sh ]; then
+  source /usr/local/share/zsh/site-functions/_aws
+  # source /usr/local/bin/aws_zsh_completer.sh
 fi
 
 # cdrを有効化
@@ -180,6 +192,7 @@ function diff-branch() {
 # コマンドラインのシンタックスハイライト
 source ~/.zplug/init.zsh
 zplug "zsh-users/zsh-syntax-highlighting", nice:10
+zplug "felixr/docker-zsh-completion"
 zplug load --verbose
 
 # git-remoteのURLをhttpsに変換してopenする
