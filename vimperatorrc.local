@@ -15,8 +15,8 @@ set noerrorbells
 " for :open prompt
 set complete=lts
 "
-" Hintモードでアルファベット使用
-set hintchars=hjklasdfgyuiopqwertnmzxcvb
+" valid hintchars
+set hintchars=ifjklasdhguonmerwc
 
 " commandモードでIMEオフ
 style! -name=commandline-ime chrome://* #liberator-commandline-command input {ime-mode: inactive;}
@@ -53,7 +53,7 @@ nnoremap <C-g> :nohlsearch<CR>
 nnoremap <Leader>u :undo<Space>
 
 " VisualモードでC-gで選択しているテキストでGoogle検索
-vmap <silent> <C-g> y<Esc><Esc>P
+" vmap <silent> <C-g>y<Esc><Esc>P
 
 " :panorama
 nnoremap <Leader>pc :<C-u>panorama<Space>
@@ -69,6 +69,11 @@ nnoremap <Leader>pr :<C-u>panorama remove<Space>
 "============================
 colorscheme indigo-fx3
 
+" hint style
+hi Hint font-family: Arial; font-size: 21px; font-weight: bold; text-shadow: -1px -1px 2px black, 1px -1px 2px black, -1px 1px 2px black, 1px 1px 2px black; color: #33cccc;
+hi HintElem color: gray; font-weight: bold;
+hi HintActive color: gray; font-style: italic;
+
 "============================
 " qmarks
 "============================
@@ -82,6 +87,7 @@ qmark T https://twitter.com/hagiyat/lists/engineers
 qmark g https://github.com/hagiyat
 qmark q https://qiita.com/
 qmark r https://trello.com/
+qmark d https://base.docbase.io/
 
 "============================
 " Plugins
