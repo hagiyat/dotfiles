@@ -44,11 +44,13 @@ values."
      python
      yaml
      html
-     javascript
+     (javascript :variables
+                 js2-basic-offset 2
+                 js-indent-level 2)
      osx
      emoji
      (shell :variables
-            shell-default-height 40
+            shell-default-height 30
             shell-default-position 'bottom
             shell-default-shell 'eshell
             shell-enable-smart-eshell t)
