@@ -33,10 +33,10 @@ set! ui.caretWidth=2
 "============================
 " Key mapping
 "============================
-map , <Leader>
+map s <Leader>
 
 " reload vimperatorrc
-nnoremap <Leader>r :source ~/.vimperatorrc
+nnoremap <Leader>r :source ~/.vimperatorrc<CR>
 
 " switch tab
 nnoremap h <C-p>
@@ -58,6 +58,7 @@ vmap <silent> <C-g> y<Esc><Esc>P
 " :panorama
 nnoremap <Leader>pc :<C-u>panorama<Space>
 nnoremap <Leader>pa :<C-u>panorama add<Space>
+nnoremap <Leader>ps :<C-u>panorama switch<Space>
 nnoremap <Leader>pl :<C-u>panorama list<CR>
 nnoremap <Leader>pp :<C-u>panorama pushtab<Space>
 nnoremap <Leader>pu :<C-u>panorama pulltab<Space>
