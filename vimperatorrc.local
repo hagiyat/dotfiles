@@ -30,39 +30,44 @@ set smartcase
 
 set! ui.caretWidth=2
 
+set nextpattern=^次(へ|のページ),\b次.*,\bnext\b,\bmore\b,next,→\b,^>$,^(>>|≫)$,^(>|≫),(>|≫)$
+set previouspattern=^前(へ|のページ),\b前.*,\bprev|previous\b,prev,\b←,^<$,^(<<|≪)$,^(<|≪),(<|≪)$
+
+
 "============================
 " Key mapping
 "============================
-map s <Leader>
+noremap  <C-g> <Esc>
+inoremap <C-g> <Esc>
+cnoremap <C-g> <Esc>
+vnoremap <C-g> <Esc>
 
 " reload vimperatorrc
-nnoremap <Leader>r :source ~/.vimperatorrc<CR>
+nnoremap <C-t><C-l> :source ~/.vimperatorrc<CR>
 
 " switch tab
-nnoremap h <C-p>
-nnoremap l <C-n>
+nnoremap h :tabprevious<CR>
+nnoremap l :tabnext<CR>
+map <C-p> <Nop>
+map <C-n> <Nop>
 
 " back/forward
 nnoremap <C-h> <A-Left>
 nnoremap <C-l> <A-Right>
 
 " reset hilight
-nnoremap <C-g> :nohlsearch<CR>
+nnoremap <C-t><C-g> :nohlsearch<CR>
 
 " undo list
-nnoremap <Leader>u :undo<Space>
+nnoremap <C-t><C-u> :undo<Space>
 
 " VisualモードでC-gで選択しているテキストでGoogle検索
-" vmap <silent> <C-g>y<Esc><Esc>P
+"vmap <silent> <C-s> y<Esc><Esc>P
 
 " :panorama
-nnoremap <Leader>pc :<C-u>panorama<Space>
-nnoremap <Leader>pa :<C-u>panorama add<Space>
-nnoremap <Leader>ps :<C-u>panorama switch<Space>
-nnoremap <Leader>pl :<C-u>panorama list<CR>
-nnoremap <Leader>pp :<C-u>panorama pushtab<Space>
-nnoremap <Leader>pu :<C-u>panorama pulltab<Space>
-nnoremap <Leader>pr :<C-u>panorama remove<Space>
+nnoremap <C-t><C-c> :<C-u>panorama<Space>
+nnoremap <C-t><C-a> :<C-u>panorama add<Space>
+nnoremap <C-t><C-t> :<C-u>panorama switch<Space>
 
 "============================
 " colorscheme
@@ -70,7 +75,7 @@ nnoremap <Leader>pr :<C-u>panorama remove<Space>
 colorscheme indigo-fx3
 
 " hint style
-hi Hint font-family: Arial; font-size: 21px; font-weight: bold; text-shadow: -1px -1px 2px black, 1px -1px 2px black, -1px 1px 2px black, 1px 1px 2px black; color: #33cccc;
+hi Hint font-family: Arial; font-size: 21px; font-weight: bold; text-shadow: -1px -1px 2px black, 1px -1px 2px black, -1px 1px 2px black, 1px 1px 2px black; color: #ff9933;
 hi HintElem color: gray; font-weight: bold;
 hi HintActive color: gray; font-style: italic;
 
@@ -105,4 +110,3 @@ let g:smooziee_scroll_interval="20"
 
 "読み込み完了メッセージ
 echo "vimperatorrc loaded."
-
