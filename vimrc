@@ -166,12 +166,60 @@ endif
 if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)
 
-  let g:rc_dir    = expand('~/.deinfiles')
-  let s:toml      = g:rc_dir . '/dein.toml'
-  let s:lazy_toml = g:rc_dir . '/dein_lazy.toml'
+  call dein#add('Shougo/dein.vim')
 
-  call dein#load_toml(s:toml,      {'lazy': 0})
-  call dein#load_toml(s:lazy_toml, {'lazy': 1})
+  call dein#add('Shougo/vimproc', {'build': 'make'})
+  call dein#add('kana/vim-submode')
+
+  call dein#add('Shougo/unite.vim', {
+        \ 'depends': ['vimproc'],
+        \ 'on_cmd': ['Unite'],
+        \ 'lazy': 1})
+  call dein#add('Shougo/neomru.vim', {'depdens': ['unite.vim']})
+  call dein#add('Shougo/unite-outline', {'depdens': ['unite.vim']})
+  call dein#add('Shougo/neosnippet')
+  call dein#add('Shougo/neosnippet-snippets', {'depdens': ['neosnippet']})
+  call dein#add('Shougo/context_filetype.vim')
+
+  call dein#add('Shougo/vimfiler.vim', {'depdens': ['unite.vim']})
+
+  if has('lua')
+    call dein#add('Shougo/neocomplete.vim', { 'on_i': 1, 'lazy': 1})
+  endif
+
+  call dein#add('scrooloose/syntastic', {'depends': ['vimproc']})
+  call dein#add('bling/vim-bufferline')
+
+  call dein#add('tpope/vim-fugitive')
+  call dein#add('osyo-manga/vim-over')
+  call dein#add('thinca/vim-quickrun')
+  call dein#add('thinca/vim-visualstar')
+  call dein#add('thinca/vim-ref')
+  call dein#add('scrooloose/nerdcommenter')
+  call dein#add('haya14busa/incsearch.vim')
+  call dein#add('haya14busa/incsearch-fuzzy.vim')
+  call dein#add('haya14busa/incsearch-easymotion.vim')
+  call dein#add('tpope/vim-endwise')
+  call dein#add('tpope/vim-abolish')
+  call dein#add('tyru/open-browser.vim')
+  call dein#add('kannokanno/previm')
+
+  call dein#add('tpope/vim-rails')
+  call dein#add('slim-template/vim-slim')
+  call dein#add('elixir-lang/vim-elixir')
+  call dein#add('kchmck/vim-coffee-script')
+
+  call dein#add('vim-airline/vim-airline')
+  call dein#add('vim-airline/vim-airline-themes')
+
+  call dein#add('w0ng/vim-hybrid')
+  call dein#add('vim-scripts/darkburn')
+  call dein#add('nanotech/jellybeans.vim')
+  call dein#add('jpo/vim-railscasts-theme')
+  call dein#add('chriskempson/vim-tomorrow-theme')
+  call dein#add('vim-scripts/twilight')
+  call dein#add('vim-scripts/wombat256.vim')
+
   call dein#end()
   call dein#save_state()
 endif
@@ -361,19 +409,7 @@ filetype plugin on
 filetype indent on
 set mouse=n
 
-aug initvim
-  autocmd!
-  " tabstop / shiftwidth
-  autocmd! FileType vim,ruby,eruby,slim,php,javascript,html,zsh,markdown setlocal shiftwidth=2 tabstop=2
-  " 保存時に行末の空白を除去する
-  autocmd BufWritePre * :%s/\s\+$//ge
-  autocmd Colorscheme * :call s:init_visual()
-augroup END
-
 function! s:init_visual()
-  " 256色表示
-  set t_Co=256
-
   hi LineNr ctermbg=234
   hi DiffAdd    ctermfg=226 ctermbg=235
   hi DiffChange ctermfg=7 ctermbg=235
@@ -386,16 +422,30 @@ function! s:init_visual()
   hi NonText ctermbg=235
   hi Normal ctermbg=235
   " for jellybeans
-  " hi rubyRegexpDelimiter guifg=#8d4e9a ctermfg=
+  " hi rubyRegexpDelimiter guifg=#8d4e9a
   " hi rubyRegexp guifg=#db6db4
   " hi rubyRegexpSpecial guifg=#a3518a
 
   " 背景色でクリアする
   set t_ut=
 
+  " 256色表示
+  set t_Co=256
+
   set lazyredraw
 endfunction
-" colorscheme wombat256mod
-" colorscheme jellybeans
-colorscheme railscasts
+
+aug initvim
+  autocmd!
+  " tabstop / shiftwidth
+  autocmd FileType vim,ruby,eruby,slim,php,javascript,html,zsh,markdown setlocal shiftwidth=2 tabstop=2
+  " 保存時に行末の空白を除去する
+  autocmd BufWritePre * :%s/\s\+$//ge
+  autocmd Colorscheme * :call s:init_visual()
+augroup END
+
+" colorscheme railscasts
 " colorscheme Tomorrow-Night-Eighties
+colorscheme jellybeans
+colorscheme wombat256mod
+
