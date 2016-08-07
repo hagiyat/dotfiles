@@ -104,8 +104,8 @@ vimppm "_smooziee.js"
 vimppm "caret-hint.js"
 jimppm "command_menu.js"
 
-let g:smooziee_scroll_amount="250"
-let g:smooziee_scroll_interval="20"
+let g:smooziee_scroll_amount="500"
+let g:smooziee_scroll_interval="10"
 
 
 "読み込み完了メッセージ
