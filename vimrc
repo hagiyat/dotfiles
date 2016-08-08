@@ -446,6 +446,6 @@ augroup END
 
 " colorscheme railscasts
 " colorscheme Tomorrow-Night-Eighties
-colorscheme jellybeans
 colorscheme wombat256mod
+colorscheme jellybeans
 
