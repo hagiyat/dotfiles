@@ -212,13 +212,18 @@ if dein#load_state(s:dein_dir)
   call dein#add('vim-airline/vim-airline')
   call dein#add('vim-airline/vim-airline-themes')
 
-  call dein#add('w0ng/vim-hybrid')
   call dein#add('vim-scripts/darkburn')
   call dein#add('nanotech/jellybeans.vim')
   call dein#add('jpo/vim-railscasts-theme')
   call dein#add('chriskempson/vim-tomorrow-theme')
   call dein#add('vim-scripts/twilight')
   call dein#add('vim-scripts/wombat256.vim')
+
+  call dein#add('juanedi/predawn.vim')
+  call dein#add('tyrannicaltoucan/vim-deep-space')
+  call dein#add('AlessandroYorba/Alduin')
+  call dein#add('xero/sourcerer.vim')
+  call dein#add('jlund3/colorschemer')
 
   call dein#end()
   call dein#save_state()
@@ -361,9 +366,8 @@ if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
 set laststatus=2
-let g:airline_theme='badwolf'
-"let g:airline_theme='serene'
-"let g:airline_theme='simple'
+" let g:airline_theme='badwolf'
+let g:airline_theme='tomorrow'
 let g:airline_detect_modified=1
 let g:airline#extensions#bufferline#enabled = 1
 let g:airline_left_sep = '⮀'
@@ -438,14 +442,19 @@ endfunction
 aug initvim
   autocmd!
   " tabstop / shiftwidth
-  autocmd FileType vim,ruby,eruby,slim,php,javascript,html,zsh,markdown setlocal shiftwidth=2 tabstop=2
+  autocmd FileType vim,ruby,eruby,slim,php,javascript,html,zsh,markdown,yaml setlocal shiftwidth=2 tabstop=2
   " 保存時に行末の空白を除去する
   autocmd BufWritePre * :%s/\s\+$//ge
   autocmd Colorscheme * :call s:init_visual()
 augroup END
 
+" colorscheme wombat256mod
+" colorscheme darkburn
 " colorscheme railscasts
+" colorscheme twilight
+" colorscheme Tomorrow-Night
 " colorscheme Tomorrow-Night-Eighties
-colorscheme wombat256mod
-colorscheme jellybeans
-
+" colorscheme sourcerer
+" colorscheme lucid
+" colorscheme jellybeans
+colorscheme alduin
