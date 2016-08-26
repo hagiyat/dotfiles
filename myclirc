@@ -29,12 +29,12 @@ table_format = psql
 # Syntax Style. Possible values: manni, igor, xcode, vim, autumn, vs, rrt,
 # native, perldoc, borland, tango, emacs, friendly, monokai, paraiso-dark,
 # colorful, murphy, bw, pastie, paraiso-light, trac, default, fruity
-syntax_style = vim
+syntax_style = native
 
 # Keybindings: Possible values: emacs, vi.
 # Emacs mode: Ctrl-A is home, Ctrl-E is end. All emacs keybindings are available in the REPL.
 # When Vi mode is enabled you can use modal editing features offered by Vi in the REPL.
-key_bindings = vi
+key_bindings = emacs
 
 # Enabling this option will show the suggestions in a wider menu. Thus more items are suggested.
 wider_completion_menu = False
@@ -45,4 +45,5 @@ wider_completion_menu = False
 # \h - Hostname of the server
 # \d - Database name
 # \n - Newline
-prompt = '\t \u@\h:\d> '
+prompt = "\t \u@\h:\d> "
+[favorite_queries]
