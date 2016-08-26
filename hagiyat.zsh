@@ -37,11 +37,6 @@ alias la='ls -al'
 alias git-delete-merged-branches="git branch --merged | grep -v '*' | xargs -I % git branch -d %"
 alias vdiff="vimdiff +VimdiffBootstrap"
 
-# brew api token
-# if [ -f ~/.brew_api_token ];then
-#   source ~/.brew_api_token
-# fi
-
 # 略語展開
 typeset -A abbreviations
 abbreviations=(
