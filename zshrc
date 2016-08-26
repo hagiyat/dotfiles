@@ -35,6 +35,16 @@ alias la='ls -al'
 # for git diff
 export PATH=$PATH:/usr/local/share/git-core/contrib/diff-highlight
 
+# git-remoteのURLをhttpsに変換してopenする
+function git-browse() {
+  git rev-parse --git-dir >/dev/null 2>&1
+  if [[ $? == 0 ]]; then
+    open `git config --get remote.origin.url | sed -e 's|\:|/|' -e 's|^git@|https://|' -e 's|.git$||'`
+  else
+    echo ".git not found.\n"
+  fi
+}
+
 # 略語展開
 typeset -A abbreviations
 abbreviations=(
@@ -67,7 +77,6 @@ abbreviations=(
   "gbf"  "git checkout -b feature/"
   "gbh"  "git checkout -b hotfix/"
   "gbr"  "git-browse"
-  "gbrp" "git-browse-with-peco"
   # tmux
   "tmv"  "tmux split-window -v -c '#{pane_current_path}'"
   "tmh"  "tmux split-window -h -c '#{pane_current_path}'"
@@ -158,6 +167,7 @@ zplug "mollifier/anyframe"
 zplug "zsh-users/zsh-completions"
 zplug "felixr/docker-zsh-completion"
 
+# uses colortheme for iTerm2 `hybrid`
 # ls color
 export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
 if [ -x "`which dircolors`" ]; then
@@ -173,7 +183,7 @@ alias grep="grep --color=auto"
 # theme
 autoload colors && colors
 setopt prompt_subst # Make sure propt is able to be generated properly.
-zplug "tylerreckart/hyperzsh", use:hyperzsh.zsh-theme, nice:11
+zplug "hagiyat/hyperzsh", at:customize, use:hyperzsh.zsh-theme, nice:11
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
