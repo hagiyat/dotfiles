@@ -3,7 +3,8 @@
         "C-j": "peco.SelectDown",
         "C-k": "peco.SelectUp",
         "C-s": "peco.ToggleSelectionAndSelectNext",
-        "C-c": "peco.Cancel"
+        "C-c": "peco.Cancel",
+        "C-g": "peco.Cancel"
     },
     "CustomFilter": {
         "Migemo": {
