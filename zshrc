@@ -101,6 +101,9 @@ abbreviations=(
   "drs" "open dash://rspec:"
   "dmy" "open dash://mysql:"
   "da"  "open dash://"
+  # docker
+  "d" "docker"
+  "dc" "docker-compose"
   # other
   "b" "browse"
   "qq" "exit"

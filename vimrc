@@ -225,6 +225,8 @@ if dein#load_state(s:dein_dir)
   call dein#add('xero/sourcerer.vim')
   call dein#add('jlund3/colorschemer')
 
+  call dein#add('cohama/lexima.vim')
+
   call dein#end()
   call dein#save_state()
 endif
