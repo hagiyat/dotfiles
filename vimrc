@@ -199,15 +199,16 @@ if dein#load_state(s:dein_dir)
   call dein#add('haya14busa/incsearch.vim')
   call dein#add('haya14busa/incsearch-fuzzy.vim')
   call dein#add('haya14busa/incsearch-easymotion.vim')
-  call dein#add('tpope/vim-endwise')
   call dein#add('tpope/vim-abolish')
   call dein#add('tyru/open-browser.vim')
   call dein#add('kannokanno/previm')
+  call dein#add('cohama/lexima.vim')
 
   call dein#add('tpope/vim-rails')
   call dein#add('slim-template/vim-slim')
   call dein#add('elixir-lang/vim-elixir')
   call dein#add('kchmck/vim-coffee-script')
+  call dein#add('hashivim/vim-terraform')
 
   call dein#add('vim-airline/vim-airline')
   call dein#add('vim-airline/vim-airline-themes')
@@ -224,8 +225,6 @@ if dein#load_state(s:dein_dir)
   call dein#add('AlessandroYorba/Alduin')
   call dein#add('xero/sourcerer.vim')
   call dein#add('jlund3/colorschemer')
-
-  call dein#add('cohama/lexima.vim')
 
   call dein#end()
   call dein#save_state()
@@ -444,7 +443,7 @@ endfunction
 aug initvim
   autocmd!
   " tabstop / shiftwidth
-  autocmd FileType vim,ruby,eruby,slim,php,javascript,html,zsh,markdown,yaml setlocal shiftwidth=2 tabstop=2
+  autocmd FileType vim,ruby,eruby,slim,php,javascript,html,zsh,markdown,yaml,terraform setlocal shiftwidth=2 tabstop=2
   " 保存時に行末の空白を除去する
   autocmd BufWritePre * :%s/\s\+$//ge
   autocmd Colorscheme * :call s:init_visual()
