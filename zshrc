@@ -169,6 +169,7 @@ zplug "mollifier/anyframe"
 # completions
 zplug "zsh-users/zsh-completions"
 zplug "felixr/docker-zsh-completion"
+zplug "zsh-users/zsh-autosuggestions"
 
 # uses colortheme for iTerm2 `hybrid`
 # ls color
