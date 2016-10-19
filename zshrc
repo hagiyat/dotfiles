@@ -152,7 +152,7 @@ fi
 eval "$(direnv hook zsh)"
 
 # pip upgrade all packages
-alias pip-update='pip freeze --local | grep -v '^\-e' | cut -d = -f 1 | xargs pip install -U'
+alias pip-update='pip list --outdated | awk '{print $1}' | xargs pip install -U'
 
 # pip zsh completion start
 function _pip_completion {
