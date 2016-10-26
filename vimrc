@@ -10,7 +10,7 @@ set fileencodings=utf-8,cp932,euc-jp,iso-20220-jp,default,latin
 " escapeキーをマッピング
 noremap! <C-j> <ESC>
 noremap  <C-j> <ESC>
-inoremap <silent> jj <ESC>
+inoremap <C-g> <ESC>
 
 " leaderを , に割り当て
 let mapleader = ','
