@@ -26,7 +26,9 @@ local function enableAllHotkeys()
 end
 
 local function switchIME2AlphaNum()
-    hs.eventtap.keyStroke({"ctrl", "shift"}, ";")
+    -- brew install https://raw.github.com/tasuten/homebrew-myformulas/master/inputsource.rb
+    -- ref. http://tasuten.hatenablog.com/entry/20120806/1344184608
+    hs.execute("/usr/local/bin/inputsource com.google.inputmethod.Japanese.Roman")
 end
 
 local function handleGlobalAppEvent(name, event, app)
@@ -34,10 +36,11 @@ local function handleGlobalAppEvent(name, event, app)
         -- hs.alert.show(name)
         if hs.fnutils.contains({"Emacs", "iTerm2", "ターミナル"}, name) then
             disableAllHotkeys()
-            switchIME2AlphaNum()
         else
             enableAllHotkeys()
         end
+        -- いっそのこと毎回IMEを英数字にしてしまう
+        switchIME2AlphaNum()
     end
 end
 
