@@ -6,7 +6,7 @@ for mac
 zsh
 ---
 
-- require zprezto, peco, anyenv
+- require zplug, peco, anyenv
 
 
 spacemacs
@@ -19,6 +19,9 @@ spacemacs
 vim
 ---
 
-- 7.4
-
 brew install vim --with-lua --with-luajit --with-ruby --with-python --with-clipboard
+
+vimfx
+---
+
+https://github.com/akhodakivskiy/VimFx/blob/master/documentation/config-file.md#getting-started
