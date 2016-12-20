@@ -336,12 +336,13 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   (global-set-key (kbd "C-g") 'evil-escape)
+  (define-key evil-normal-state-map (kbd "C-g") 'evil-search-highlight-persist-remove-all)
   (setq-default
    evil-escape-delay 0.2
    )
   (setq
    neo-theme 'nerd
-   powerline-default-separator 'slant
+   powerline-default-separator 'arrow
    linum-format "%4d"
 
    ;; magit
