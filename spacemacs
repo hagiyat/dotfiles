@@ -355,26 +355,30 @@ you should place your code here."
    ruby-insert-encoding-magic-comment nil
    )
 
-   ;; define our own super awesome hook that will remove the before-save-hook
-   (defun remove-enh-magic-comment ()
-     (remove-hook 'before-save-hook 'enh-ruby-mode-set-encoding t))
+  ;; define our own super awesome hook that will remove the before-save-hook
+  (defun remove-enh-magic-comment ()
+    (remove-hook 'before-save-hook 'enh-ruby-mode-set-encoding t))
 
-   ;; add the hook to call our super awesome function.
-   (add-hook 'enh-ruby-mode-hook 'remove-enh-magic-comment)
+  ;; add the hook to call our super awesome function.
+  (add-hook 'enh-ruby-mode-hook 'remove-enh-magic-comment)
 
-   ;; 入力ソースの設定が必要
-   (defun mac-selected-keyboard-input-source-change-hook-func ()
-     ;; 入力モードが英語の時はカーソルの色をorangeに、日本語の時はredにする
-     (set-cursor-color (if (string-match "\\.Roman$" (mac-input-source))
-                           "orange" "red")))
-   (add-hook 'mac-selected-keyboard-input-source-change-hook
-             'mac-selected-keyboard-input-source-change-hook-func)
-   ;; evilのnormal-stateになったらIMEを英語に戻す
-   (add-hook 'evil-normal-state-entry-hook
-             '(lambda () (mac-select-input-source "com.google.inputmethod.Japanese.Roman")))
-   ;; EmacsをアクティブにしたらIMEを英語に戻す
-   (add-hook 'focus-in-hook
-             '(lambda () (mac-select-input-source "com.google.inputmethod.Japanese.Roman")))
+  ;; display time in powerline
+  (display-time-mode t)
+  (setq display-time-24hr-format t)
+
+  ;; 入力ソースの設定が必要
+  (defun mac-selected-keyboard-input-source-change-hook-func ()
+    ;; 入力モードが英語の時はカーソルの色をorangeに、日本語の時はredにする
+    (set-cursor-color (if (string-match "\\.Roman$" (mac-input-source))
+                          "orange" "red")))
+  (add-hook 'mac-selected-keyboard-input-source-change-hook
+            'mac-selected-keyboard-input-source-change-hook-func)
+  ;; evilのnormal-stateになったらIMEを英語に戻す
+  (add-hook 'evil-normal-state-entry-hook
+            '(lambda () (mac-select-input-source "com.google.inputmethod.Japanese.Roman")))
+  ;; EmacsをアクティブにしたらIMEを英語に戻す
+  (add-hook 'focus-in-hook
+            '(lambda () (mac-select-input-source "com.google.inputmethod.Japanese.Roman")))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
