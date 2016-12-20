@@ -363,8 +363,10 @@ you should place your code here."
   (add-hook 'enh-ruby-mode-hook 'remove-enh-magic-comment)
 
   ;; display time in powerline
-  (display-time-mode t)
   (setq display-time-24hr-format t)
+  (setq display-time-day-and-date t)
+  (setq display-time-default-load-average nil)
+  (display-time-mode t)
 
   ;; 入力ソースの設定が必要
   (defun mac-selected-keyboard-input-source-change-hook-func ()
