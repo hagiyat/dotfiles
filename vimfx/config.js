@@ -50,6 +50,7 @@
   let qmarks = [
     ['addons', 'gja', 'about:addons'],
     ['preferences', 'gjp', 'about:preferences'],
+    ['config', 'gjc', 'about:config'],
     ['lastpass', 'gjl', 'chrome://lastpass/content/home2.xul']
   ];
 
