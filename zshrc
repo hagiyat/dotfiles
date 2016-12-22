@@ -1,5 +1,6 @@
 export LANG=ja_JP.UTF-8
 export EDITOR=vim
+export XDG_CONFIG_HOME=~/.config
 #export PAGER=vimpager
 
 # emacs keybind
@@ -166,7 +167,6 @@ function _pip_completion {
 compctl -K _pip_completion pip
 # pip zsh completion end
 
-
 # plugins
 if [[ ! -d ~/.zplug ]]; then
   curl -sL zplug.sh/installer | zsh
@@ -176,6 +176,7 @@ source ~/.zplug/init.zsh
 
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "zsh-users/zsh-history-substring-search"
+zplug "zsh-users/zsh-autosuggestions"
 zplug "b4b4r07/enhancd", use:init.sh
 zplug "mollifier/cd-gitroot"
 zplug "plugins/git", from:oh-my-zsh
@@ -183,8 +184,9 @@ zplug "mollifier/anyframe"
 
 # completions
 zplug "zsh-users/zsh-completions"
-zplug "felixr/docker-zsh-completion"
-zplug "zsh-users/zsh-autosuggestions"
+zplug "docker/compose", as:command, use:"contrib/completion/zsh/_docker-compose"
+zplug "docker/docker", as:command, use:"contrib/completion/zsh/_docker"
+zplug "glidenote/ag-zsh-completion"
 
 # uses colortheme for iTerm2 `hybrid`
 # ls color
@@ -228,3 +230,6 @@ if zplug check "mollifier/anyframe"; then
 fi
 
 zplug load --verbose
+
+# awscli completions
+[ -f /usr/local/share/zsh/site-functions/_aws ] && source /usr/local/share/zsh/site-functions/_aws
