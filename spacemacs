@@ -340,6 +340,11 @@ you should place your code here."
   (setq-default
    evil-escape-delay 0.2
    )
+
+  ;; for MacOS
+  (setq ns-use-srgb-colorspace nil)
+  (setq powerline-default-separator 'utf-8)
+
   (setq
    neo-theme 'nerd
    powerline-default-separator 'arrow
