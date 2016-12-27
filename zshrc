@@ -50,8 +50,7 @@ function git-browse() {
 typeset -A abbreviations
 abbreviations=(
   # vim
-  "v" "vim"
-  "nv" "nvim"
+  "v" "nvim"
   "vrc" "vim -c \"VimShellInteractive rails console --split=''\""
   "vrs" "vim -c \"VimShellInteractive rails server --split=''\""
   # pipe
