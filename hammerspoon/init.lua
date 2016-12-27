@@ -1,5 +1,3 @@
-local ssids = require "ssids"
-
 local function keyCode(key, modifiers)
     modifiers = modifiers or {}
     return function()
