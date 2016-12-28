@@ -251,7 +251,7 @@ if zplug check "mollifier/anyframe"; then
   zle -N checkout_git_branch
 
   function insert_filename() {
-    anyframe-source-list-file "$BUFFER" \
+    rg --files \
       | fzy -p "file > " \
       | anyframe-action-insert -q
     zle redisplay

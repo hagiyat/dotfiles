@@ -6,7 +6,7 @@ for mac
 zsh
 ---
 
-- require zplug, fzy, anyenv
+- require zplug, fzy, rg, anyenv
 
 
 spacemacs
