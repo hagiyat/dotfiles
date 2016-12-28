@@ -54,8 +54,7 @@ abbreviations=(
   "vrc" "nvim -c \"VimShellInteractive rails console --split=''\""
   "vrs" "nvim -c \"VimShellInteractive rails server --split=''\""
   # pipe
-  "lps"  "| peco --rcfile ~/.peco/config_single.json"
-  "lp"   "| peco"
+  "lf"   "| fzy"
   "lvi"  "| nvim -Rc 'set ft=zsh' -"
   "lsin"  "| xargs cat | nvim -Rc 'set ft=zsh' -"
   "lg" "| ag"
@@ -213,19 +212,66 @@ if ! zplug check --verbose; then
   fi
 fi
 
+if zplug check "b4b4r07/enhancd"; then
+  ENHANCD_FILTER=fzy:peco
+  export ENHANCD_FILTER
+fi
+
 if zplug check "zsh-users/zsh-history-substring-search"; then
   bindkey '^P' history-substring-search-up
   bindkey '^N' history-substring-search-down
 fi
 
 if zplug check "mollifier/anyframe"; then
-  bindkey '^r' anyframe-widget-put-history
-  bindkey '^xi' anyframe-widget-insert-git-branch
-  bindkey '^x^i' anyframe-widget-insert-git-branch
-  bindkey '^xc' anyframe-widget-checkout-git-branch
-  bindkey '^x^c' anyframe-widget-checkout-git-branch
-  bindkey '^x^x' anyframe-widget-checkout-git-branch
-  bindkey '^x^f' anyframe-widget-insert-filename
+  # zle redisplayしないと表示がおかしくなるので、anyframeで完結できない。。
+  function put_history() {
+    anyframe-source-history \
+      | fzy -p "history > " \
+      | anyframe-action-put
+    zle redisplay
+  }
+  zle -N put_history
+
+  function insert_git_branch() {
+    anyframe-source-git-branch -i \
+      | fzy -p "insert branch > " \
+      | awk '{print $1}' \
+      | anyframe-action-insert
+    zle redisplay
+  }
+  zle -N insert_git_branch
+
+  function checkout_git_branch() {
+    anyframe-source-git-branch -n \
+      | fzy -p "checkout branch > " \
+      | awk '{print $1}' \
+      | anyframe-action-execute git checkout
+    zle redisplay
+  }
+  zle -N checkout_git_branch
+
+  function insert_filename() {
+    anyframe-source-list-file "$BUFFER" \
+      | fzy -p "file > " \
+      | anyframe-action-insert -q
+    zle redisplay
+  }
+  zle -N insert_filename
+
+  function kill_process() {
+    anyframe-source-process \
+      | fzy -p "kill process > " \
+      | awk '{print $1}' \
+      | anyframe-action-execute kill -9
+    zle redisplay
+  }
+  zle -N kill_process
+
+  bindkey '^r' put_history
+  bindkey '^x^i' insert_git_branch
+  bindkey '^x^c' checkout_git_branch
+  bindkey '^x^f' insert_filename
+  bindkey '^x^p' kill_process
 fi
 
 zplug load --verbose

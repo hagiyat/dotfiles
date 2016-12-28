@@ -6,20 +6,30 @@ for mac
 zsh
 ---
 
-- require zplug, peco, anyenv
+- require zplug, fzy, anyenv
 
 
 spacemacs
 ------
 
-- [emacs-mac install](https://github.com/syl20bnr/spacemacs#os-x)
+- [emacs-mac install](https://github.com/railwaycat/homebrew-emacsmacport)
 - [spacemacs install](https://github.com/syl20bnr/spacemacs#install)
 - `ln -s dotfiles/spacemacs ~/.spacemacs`
 
-vim
+
+vim(deprecated)
 ---
 
 brew install vim --with-lua --with-luajit --with-ruby --with-python --with-clipboard
+
+
+neovim
+---
+
+brew install neovim/neovim/neovim
+brew install python3
+pip3 install --upgrade neovim
+
 
 vimfx
 ---
