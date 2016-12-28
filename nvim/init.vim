@@ -47,8 +47,26 @@ noremap  <C-g> <ESC>
 noremap! <C-g> <ESC>
 nmap <silent> <C-g><C-g> :nohlsearch<CR>
 
-" map leader
 nnoremap <Space> <Nop>
+
+" window
+nnoremap <Space>wh <C-w>h
+nnoremap <Space>wj <C-w>j
+nnoremap <Space>wk <C-w>k
+nnoremap <Space>wl <C-w>l
+nnoremap <Space>w- :<C-u>split<CR>
+nnoremap <Space>w/ :<C-u>vsplit<CR>
+nnoremap <Space>wq :<C-u>q<CR>
+
+" buffer
+nnoremap <Space>bn :<C-u>bnext<CR>
+nnoremap <Space>bp :<C-u>bprevious<CR>
+nnoremap <Space>bd :<C-u>bdelete<CR>
+
+" write and quit
+nnoremap <Space>qz :<C-u>wq<CR>
+nnoremap <Space>qa :<C-u>qa<CR>
+
 
 " dein
 let s:dein_dir = expand('~/.cache/dein')
