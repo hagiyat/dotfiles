@@ -1,5 +1,5 @@
 export LANG=ja_JP.UTF-8
-export EDITOR=vim
+export EDITOR=nvim
 export XDG_CONFIG_HOME=~/.config
 #export PAGER=vimpager
 
@@ -51,13 +51,13 @@ typeset -A abbreviations
 abbreviations=(
   # vim
   "v" "nvim"
-  "vrc" "vim -c \"VimShellInteractive rails console --split=''\""
-  "vrs" "vim -c \"VimShellInteractive rails server --split=''\""
+  "vrc" "nvim -c \"VimShellInteractive rails console --split=''\""
+  "vrs" "nvim -c \"VimShellInteractive rails server --split=''\""
   # pipe
   "lps"  "| peco --rcfile ~/.peco/config_single.json"
   "lp"   "| peco"
-  "lvi"  "| vim -Rc 'set ft=zsh' -"
-  "lsin"  "| xargs cat | vim -Rc 'set ft=zsh' -"
+  "lvi"  "| nvim -Rc 'set ft=zsh' -"
+  "lsin"  "| xargs cat | nvim -Rc 'set ft=zsh' -"
   "lg" "| ag"
   # git
   "g"  "git status"
