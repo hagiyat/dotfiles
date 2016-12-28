@@ -83,22 +83,20 @@ endif
 
 " colorscheme
 function! s:init_visual()
-  hi LineNr ctermbg=234
-  hi DiffAdd    ctermfg=226 ctermbg=235
-  hi DiffChange ctermfg=7 ctermbg=235
-  hi DiffDelete ctermfg=52 ctermbg=233
-  hi DiffText   cterm=none ctermfg=208 ctermbg=235
-  hi SpellBad   cterm=underline ctermfg=208 ctermbg=235
-  hi SpellLocal cterm=italic ctermfg=209 ctermbg=235
-  hi SpellRare  cterm=bold ctermfg=210 ctermbg=235
-  hi SpecialKey ctermfg=238 ctermbg=235
-  hi NonText ctermbg=235
-  hi Normal ctermbg=235
-  hi CursorLine ctermbg=234
-  " for jellybeans
-  " hi rubyRegexpDelimiter guifg=#8d4e9a
-  " hi rubyRegexp guifg=#db6db4
-  " hi rubyRegexpSpecial guifg=#a3518a
+  if g:colors_name != "iceberg"
+    hi LineNr ctermbg=234
+    hi DiffAdd    ctermfg=226 ctermbg=235
+    hi DiffChange ctermfg=7 ctermbg=235
+    hi DiffDelete ctermfg=52 ctermbg=233
+    hi DiffText   cterm=none ctermfg=208 ctermbg=235
+    hi SpellBad   cterm=underline ctermfg=208 ctermbg=235
+    hi SpellLocal cterm=italic ctermfg=209 ctermbg=235
+    hi SpellRare  cterm=bold ctermfg=210 ctermbg=235
+    hi SpecialKey ctermfg=238 ctermbg=235
+    hi NonText ctermbg=235
+    hi Normal ctermbg=235
+    hi CursorLine ctermbg=234
+  endif
 endfunction
 
 aug initvim
@@ -109,10 +107,8 @@ aug initvim
   autocmd BufWritePre * :%s/\s\+$//ge
   autocmd Colorscheme * :call s:init_visual()
 
-  " colorscheme railscasts
-  " colorscheme Tomorrow-Night
-  " colorscheme Tomorrow-Night-Eighties
   " colorscheme jellybeans
+  " colorscheme iceberg
   colorscheme alduin
 augroup END
 
