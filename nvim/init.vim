@@ -64,6 +64,8 @@ nnoremap <Space>bp :<C-u>bprevious<CR>
 nnoremap <Space>bd :<C-u>bdelete<CR>
 
 " write and quit
+nnoremap <Space>fs :<C-u>w<CR>
+nnoremap <Space>qq :<C-u>q<CR>
 nnoremap <Space>qz :<C-u>wq<CR>
 nnoremap <Space>qa :<C-u>qa<CR>
 
@@ -121,6 +123,7 @@ aug initvim
   autocmd!
   " tabstop / shiftwidth
   autocmd FileType vim,ruby,eruby,slim,php,javascript,html,zsh,markdown,yaml,terraform setlocal shiftwidth=2 tabstop=2
+  autocmd FileType python setlocal shiftwidth=4 tabstop=4
   " 保存時に行末の空白を除去する
   autocmd BufWritePre * :%s/\s\+$//ge
   autocmd Colorscheme * :call s:init_visual()
