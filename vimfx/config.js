@@ -51,6 +51,7 @@
     ['addons', 'gja', 'about:addons'],
     ['preferences', 'gjp', 'about:preferences'],
     ['config', 'gjc', 'about:config'],
+    ['about', 'gjA', 'about:about'],
     ['lastpass', 'gjl', 'chrome://lastpass/content/home2.xul']
   ];
 
