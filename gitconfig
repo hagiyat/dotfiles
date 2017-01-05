@@ -2,7 +2,7 @@
 	name = hagiyat
 	email = hagiyat@gmail.com
 [core]
-	editor = vim
+	editor = nvim
 [pager]
 	log = diff-highlight | less
 	show = diff-highlight | less
