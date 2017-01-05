@@ -51,6 +51,7 @@ typeset -A abbreviations
 abbreviations=(
   # vim
   "v" "nvim"
+  "vd" "nvim -d"
   "vrc" "nvim -c \"VimShellInteractive rails console --split=''\""
   "vrs" "nvim -c \"VimShellInteractive rails server --split=''\""
   # pipe
