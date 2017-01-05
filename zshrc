@@ -131,11 +131,9 @@ if [ -d /Applications/Emacs.app/ ] ; then
 fi
 
 # openコマンドでfile uri schemeをブラウザで開く(markdown preview用)
-# if [ -d /Applications/Google\ Chrome.app/ ] ; then
-#   alias browse="open -a /Applications/Google\ Chrome.app"
-# fi
 if [ -d /Applications/Firefox.app/ ] ; then
-  alias browse="open -a /Applications/Firefox.app"
+  # alias browse="open -a /Applications/Firefox.app"
+  alias browse="open -a /Applications/FirefoxDeveloperEdition.app"
 fi
 
 # anyenv
