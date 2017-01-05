@@ -54,9 +54,9 @@ nnoremap <Space>wh <C-w>h
 nnoremap <Space>wj <C-w>j
 nnoremap <Space>wk <C-w>k
 nnoremap <Space>wl <C-w>l
-nnoremap <Space>w- :<C-u>split<CR>
-nnoremap <Space>w/ :<C-u>vsplit<CR>
-nnoremap <Space>wq :<C-u>q<CR>
+nnoremap <silent> <Space>w- :<C-u>split<CR>
+nnoremap <silent> <Space>w/ :<C-u>vsplit<CR>
+nnoremap <silent> <Space>wq :<C-u>q<CR>
 
 " buffer
 nnoremap <Space>bn :<C-u>bnext<CR>
