@@ -30,6 +30,12 @@ autoload -Uz zmv
 
 export TERM=xterm-256color
 
+# less colorize / [required] brew install source-highlight
+if type "source-highlight" > /dev/null 2>&1; then
+  export LESS='-R'
+  export LESSOPEN='| src-hilite-lesspipe.sh %s'
+fi
+
 alias ll='ls -l'
 alias la='ls -al'
 
