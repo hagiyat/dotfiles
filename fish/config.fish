@@ -13,7 +13,7 @@ begin
   # anyenv
   if test -d "$HOME/.anyenv"
     set -U fish_user_paths $HOME/.anyenv/bin $fish_user_paths
-    status --is-interactive; and source (anyenv init - | psub)
+    # status --is-interactive; and source (anyenv init - | psub)
   end
 
   # direnv
@@ -39,16 +39,6 @@ begin
   end
   complete -fa "(__fish_complete_pip)" -c pip
 end
-
-# fuzzy-finder
-function put_history
-  builtin history | fzy -p "histroy > " | read selected
-  if [ $selected ]
-    commandline $selected
-  else
-  end
-end
-bind \cr 'put_history'
 
 # emacs-mac
 if test -d /Applications/Emacs.app/

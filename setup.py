@@ -8,6 +8,7 @@ links = [
     (".config/fish/config.fish", "fish/config.fish"),
     (".config/fish/fishfile", "fish/fishfile"),
     (".config/fish/functions", "fish/functions"),
+    (".config/fish/conf.d", "fish/conf.d"),
     (".gitconfig", "gitconfig"),
     (".hammerspoon", "hammerspoon"),
     (".myclirc", "myclirc"),
