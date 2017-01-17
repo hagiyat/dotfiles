@@ -29,6 +29,7 @@ setopt extended_glob
 autoload -Uz zmv
 
 export TERM=xterm-256color
+export NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 # less colorize / [required] brew install source-highlight
 if type "source-highlight" > /dev/null 2>&1; then

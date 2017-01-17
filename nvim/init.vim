@@ -1,5 +1,9 @@
 " set encoding=utf-8 scriptencoding utf-8
 
+if has("termguicolors")
+  set termguicolors
+endif
+
 set number
 set t_vb=
 set novisualbell
@@ -128,9 +132,12 @@ aug initvim
   autocmd BufWritePre * :%s/\s\+$//ge
   autocmd Colorscheme * :call s:init_visual()
 
-  " colorscheme jellybeans
-  " colorscheme iceberg
+  colorscheme iceberg
   colorscheme alduin
+  colorscheme quantum
+  colorscheme hybrid_material
+  colorscheme spacegray
+  colorscheme neodark
 augroup END
 
 " denite keymaps {{{

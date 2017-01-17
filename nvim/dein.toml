@@ -84,6 +84,11 @@ let g:airline_symbols.linenr = '⭡'
 repo = 'cespare/vim-toml'
 on_ft = 'toml'
 
+[[plugins]]
+repo = 'dag/vim-fish'
+on_ft = 'fish'
+
+
 ################################################################
 # colorschemes
 ################################################################
@@ -93,3 +98,18 @@ repo = 'AlessandroYorba/Alduin'
 [[plugins]]
 repo = 'cocopon/iceberg.vim'
 
+[[plugins]]
+repo = 'KeitaNakamura/neodark.vim'
+hook_add = '''
+let g:neodark#background='black' " black, gray or brown
+let g:neodark#use_256color = 1
+'''
+
+[[plugins]]
+repo = 'tyrannicaltoucan/vim-quantum'
+
+[[plugins]]
+repo = 'kristijanhusak/vim-hybrid-material'
+
+[[plugins]]
+repo = 'ajh17/Spacegray.vim'
