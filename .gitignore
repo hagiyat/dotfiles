@@ -4,3 +4,8 @@ Gemfile.lock
 *.log
 .ruby-version
 .bundle
+
+# fish
+fish/functions/*.fish
+!fish/functions/nofisher*
+

@@ -5,6 +5,9 @@ import os
 links = [
     (".config/nvim", "nvim"),
     (".config/vimfx", "vimfx"),
+    (".config/fish/config.fish", "fish/config.fish"),
+    (".config/fish/fishfile", "fish/fishfile"),
+    (".config/fish/functions", "fish/functions"),
     (".gitconfig", "gitconfig"),
     (".hammerspoon", "hammerspoon"),
     (".myclirc", "myclirc"),
