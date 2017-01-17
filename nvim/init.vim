@@ -70,7 +70,7 @@ nnoremap <Space>bd :<C-u>bdelete<CR>
 " write and quit
 nnoremap <Space>fs :<C-u>w<CR>
 nnoremap <Space>qq :<C-u>q<CR>
-nnoremap <Space>qz :<C-u>wq<CR>
+nnoremap <Space>qw :<C-u>wq<CR>
 nnoremap <Space>qa :<C-u>qa<CR>
 
 
