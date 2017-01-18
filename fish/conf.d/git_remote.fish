@@ -8,6 +8,6 @@ function git-browse
   if git_is_repo
     command open (git_remote_uri)
   else
-    printf ".git not found.\n"
+    echo ".git?"
   end
 end
