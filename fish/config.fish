@@ -4,6 +4,11 @@ set -x XDG_CONFIG_HOME ~/.config
 set -x TERM xterm-256color
 set -x NVIM_TUI_ENABLE_TRUE_COLOR 1
 
+if type -q sk
+  set -x SKIM_DEFAULT_OPTIONS '--ansi -c rg'
+  set -x FUZZY_FINDER sk
+end
+
 # paths
 begin
   # homebrew
@@ -38,21 +43,4 @@ begin
       string split \  -- (eval $COMP_WORDS[1])
   end
   complete -fa "(__fish_complete_pip)" -c pip
-end
-
-# emacs-mac
-if test -d /Applications/Emacs.app/
-  alias spacemacs "open -a /Applications/Emacs.app"
-end
-
-# openコマンドでfile uri schemeをブラウザで開く(markdown preview用)
-begin
-  if test -d "/Applications/Firefox.app"
-    alias _firefox="open -a /Applications/Firefox.app"
-  end
-  # developer editionだとmarkdown preview動かない・・？
-  if test -d "/Applications/FirefoxDeveloperEdition.app"
-    alias firefox="open -a /Applications/FirefoxDeveloperEdition.app"
-  end
-  alias browse=_firefox
 end
