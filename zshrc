@@ -30,6 +30,8 @@ autoload -Uz zmv
 
 export TERM=xterm-256color
 export NVIM_TUI_ENABLE_TRUE_COLOR=1
+export SKIM_DEFAULT_OPTIONS='--ansi -c rg'
+export FUZZY_FINDER_APP=sk
 
 # less colorize / [required] brew install source-highlight
 if type "source-highlight" > /dev/null 2>&1; then
@@ -171,6 +173,10 @@ function _pip_completion {
 compctl -K _pip_completion pip
 # pip zsh completion end
 
+if type sk > /dev/null; then
+  export SKIM_DEFAULT_OPTIONS='--ansi -c rg'
+fi
+
 # plugins
 if [[ ! -d ~/.zplug ]]; then
   curl -sL zplug.sh/installer | zsh
@@ -219,7 +225,7 @@ if ! zplug check --verbose; then
 fi
 
 if zplug check "b4b4r07/enhancd"; then
-  ENHANCD_FILTER=fzy:peco
+  ENHANCD_FILTER=sk:fzy
   export ENHANCD_FILTER
 fi
 
@@ -232,7 +238,7 @@ if zplug check "mollifier/anyframe"; then
   # zle redisplayしないと表示がおかしくなるので、anyframeで完結できない。。
   function put_history() {
     anyframe-source-history \
-      | fzy -p "history > " \
+      | sk -p "history > " \
       | anyframe-action-put
     zle redisplay
   }
@@ -240,7 +246,7 @@ if zplug check "mollifier/anyframe"; then
 
   function insert_git_branch() {
     anyframe-source-git-branch -i \
-      | fzy -p "insert branch > " \
+      | sk -p "insert branch > " \
       | awk '{print $1}' \
       | anyframe-action-insert
     zle redisplay
@@ -249,7 +255,7 @@ if zplug check "mollifier/anyframe"; then
 
   function checkout_git_branch() {
     anyframe-source-git-branch -n \
-      | fzy -p "checkout branch > " \
+      | sk -p "checkout branch > " \
       | awk '{print $1}' \
       | anyframe-action-execute git checkout
     zle redisplay
@@ -258,7 +264,7 @@ if zplug check "mollifier/anyframe"; then
 
   function insert_filename() {
     rg --files \
-      | fzy -p "file > " \
+      | sk -p "file > " \
       | anyframe-action-insert -q
     zle redisplay
   }
@@ -266,7 +272,7 @@ if zplug check "mollifier/anyframe"; then
 
   function kill_process() {
     anyframe-source-process \
-      | fzy -p "kill process > " \
+      | sk -p "kill process > " \
       | awk '{print $1}' \
       | anyframe-action-execute kill -9
     zle redisplay
