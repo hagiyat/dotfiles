@@ -63,13 +63,15 @@ nnoremap <silent> <Space>w/ :<C-u>vsplit<CR>
 nnoremap <silent> <Space>wq :<C-u>q<CR>
 
 " buffer
-nnoremap <Space>bn :<C-u>bnext<CR>
-nnoremap <Space>bp :<C-u>bprevious<CR>
-nnoremap <Space>bd :<C-u>bdelete<CR>
+nnoremap <silent> <Space>bn :<C-u>bnext<CR>
+nnoremap <silent> <Space>bp :<C-u>bprevious<CR>
+nnoremap <silent> <Space>bd :<C-u>bdelete<CR>
+nnoremap <silent> <Space>ba :<C-u>enew<CR>
 
 " write and quit
 nnoremap <Space>fs :<C-u>w<CR>
 nnoremap <Space>qq :<C-u>q<CR>
+nnoremap <Space>qz ZQ
 nnoremap <Space>qw :<C-u>wq<CR>
 nnoremap <Space>qa :<C-u>qa<CR>
 
