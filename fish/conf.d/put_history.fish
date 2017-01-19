@@ -79,6 +79,6 @@ function cdr_widget
     | __fuzzy_finder "cd > " \
     | read -l selected
   if [ $selected ]
-    cd $selected
+    builtin cd $selected
   end
 end
