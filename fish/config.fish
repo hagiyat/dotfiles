@@ -6,10 +6,7 @@ set -x NVIM_TUI_ENABLE_TRUE_COLOR 1
 
 if type -q sk
   set -x SKIM_DEFAULT_OPTIONS '--ansi -c rg'
-  set -x FUZZY_FINDER_APP sk
-end
-if type -q fzy
-  set -x FUZZY_FINDER_APP fzy
+  set -x ANYFFF__FINDER_APP sk
 end
 
 # paths

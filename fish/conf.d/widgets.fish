@@ -1,9 +1,18 @@
-# fuzzy-finder
-function __fuzzy_finder
-  eval "$FUZZY_FINDER_APP -p '$argv'"
+set -l ANYFFF__APP_COLLECTIONS fzy sk peco fzf percol
+if not set -q ANYFFF__FINDER_APP
+  for f in $ANYFFF__APP_COLLECTIONS
+    if test -x $f
+      set -x $ANYFFF__FINDER_APP $f
+      break
+    end
+  end
 end
 
-function put_history
+function __fuzzy_finder
+  eval "$ANYFFF__FINDER_APP -p '$argv'"
+end
+
+function put_history_widget
   builtin history \
     | __fuzzy_finder "history > " \
     | read -l selected
@@ -13,7 +22,7 @@ function put_history
   commandline -f repaint
 end
 
-function insert_filename
+function insert_filename_widget
   rg --files \
     | __fuzzy_finder "file > " \
     | read -l selected
@@ -23,7 +32,7 @@ function insert_filename
   end
 end
 
-function checkout_git_branch
+function checkout_git_branch_widget
   if git_is_repo
     begin \
       git branch; \
@@ -48,7 +57,7 @@ function checkout_git_branch
   end
 end
 
-function insert_git_branch
+function insert_git_branch_widget
   if git_is_repo
     git branch \
       | __fuzzy_finder "branch > " \
@@ -63,7 +72,7 @@ function insert_git_branch
   end
 end
 
-function kill_process
+function kill_process_widget
   ps -u $USER -o pid,stat,%cpu,%mem,cputime,command \
     | sed 1,2d \
     | __fuzzy_finder "kill > " \

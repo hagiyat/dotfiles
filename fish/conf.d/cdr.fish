@@ -1,31 +1,31 @@
-set -x CDR_CACHE_PATH ~/.cache/fish
-if not test -d $CDR_CACHE_PATH
-  mkdir -p $CDR_CACHE_PATH
+set -x ANYFFF__CDR_CACHE_PATH ~/.cache/fish
+if not test -d $ANYFFF__CDR_CACHE_PATH
+  mkdir -p $ANYFFF__CDR_CACHE_PATH
 end
 
-set -x CDR_HISTORIES_FILE cdr.log
-set -x CDR_HISTORIES_MARK '-'
-set -x CDR_HISTORIES_PATH "$CDR_CACHE_PATH/$CDR_HISTORIES_FILE"
-if not test -e $CDR_HISTORIES_PATH
-  touch $CDR_HISTORIES_PATH
+set -x ANYFFF__CDR_HISTORIES_FILE cdr.log
+set -x ANYFFF__CDR_HISTORIES_MARK '-'
+set -x ANYFFF__CDR_HISTORIES_PATH "$ANYFFF__CDR_CACHE_PATH/$ANYFFF__CDR_HISTORIES_FILE"
+if not test -e $ANYFFF__CDR_HISTORIES_PATH
+  touch $ANYFFF__CDR_HISTORIES_PATH
 end
 
-set -x CDR_SIBLINGS_FILE (printf "/tmp/siblings_dirs.%s" %self)
-set -x CDR_SIBLINGS_MARK ':'
-if not test -e $CDR_SIBLINGS_FILE
-  touch $CDR_SIBLINGS_FILE
+set -x ANYFFF__CDR_SIBLINGS_FILE (printf "/tmp/siblings_dirs.%s" %self)
+set -x ANYFFF__CDR_SIBLINGS_MARK ':'
+if not test -e $ANYFFF__CDR_SIBLINGS_FILE
+  touch $ANYFFF__CDR_SIBLINGS_FILE
 end
 
-set -x CDR_BRANCHES_FILE (printf "/tmp/branches_dirs.%s" %self)
-set -x CDR_BRANCHES_MARK '>'
-if not test -e $CDR_BRANCHES_FILE
-  touch $CDR_BRANCHES_FILE
+set -x ANYFFF__CDR_BRANCHES_FILE (printf "/tmp/branches_dirs.%s" %self)
+set -x ANYFFF__CDR_BRANCHES_MARK '>'
+if not test -e $ANYFFF__CDR_BRANCHES_FILE
+  touch $ANYFFF__CDR_BRANCHES_FILE
 end
 
-set -x CDR_ROOT_FILE (printf "/tmp/root_dirs.%s" %self)
-set -x CDR_ROOT_MARK '<'
-if not test -e $CDR_ROOT_FILE
-  touch $CDR_ROOT_FILE
+set -x ANYFFF__CDR_ROOT_FILE (printf "/tmp/root_dirs.%s" %self)
+set -x ANYFFF__CDR_ROOT_MARK '<'
+if not test -e $ANYFFF__CDR_ROOT_FILE
+  touch $ANYFFF__CDR_ROOT_FILE
 end
 
 function __filter_pwd
@@ -52,53 +52,52 @@ function __unique
 end
 
 function __append_cd_history
-  pwd >> $CDR_HISTORIES_PATH
-  cat $CDR_HISTORIES_PATH \
+  pwd >> $ANYFFF__CDR_HISTORIES_PATH
+  cat $ANYFFF__CDR_HISTORIES_PATH \
     | __reverse \
     | __unique \
     | __reverse \
-    > $CDR_HISTORIES_PATH
+    > $ANYFFF__CDR_HISTORIES_PATH
 end
 
 function __siblings_dirs
   find ../. -type d -depth 1 \
     | xargs realpath \
-    > $CDR_SIBLINGS_FILE
+    > $ANYFFF__CDR_SIBLINGS_FILE
 end
 
 function __branches_dirs
   find . -type d -depth 1 \
     | xargs realpath \
-    > $CDR_BRANCHES_FILE
+    > $ANYFFF__CDR_BRANCHES_FILE
 end
 
 function __root_dirs
-  echo '/' > $CDR_ROOT_FILE
+  echo '/' > $ANYFFF__CDR_ROOT_FILE
   pwd \
     | string split '/' \
     | sed 1,1d \
     | awk '{v=sprintf("%s/%s", v, $0); print v;}' \
-    >> $CDR_ROOT_FILE
+    >> $ANYFFF__CDR_ROOT_FILE
 end
 
 function __cdr_source
   begin
-    # cat $CDR_HISTORIES_PATH[1..(count $CDR_HISTORIES_PATH)] \
-    cat $CDR_HISTORIES_PATH \
+    cat $ANYFFF__CDR_HISTORIES_PATH \
       | __filter_pwd \
-      | __add_cdr_type_mark $CDR_HISTORIES_MARK \
+      | __add_cdr_type_mark $ANYFFF__CDR_HISTORIES_MARK \
       | __reverse
-    cat $CDR_SIBLINGS_FILE \
+    cat $ANYFFF__CDR_SIBLINGS_FILE \
       | __filter_pwd \
-      | __add_cdr_type_mark $CDR_SIBLINGS_MARK \
+      | __add_cdr_type_mark $ANYFFF__CDR_SIBLINGS_MARK \
       | __reverse
-    cat $CDR_BRANCHES_FILE \
+    cat $ANYFFF__CDR_BRANCHES_FILE \
       | __filter_pwd \
-      | __add_cdr_type_mark $CDR_BRANCHES_MARK \
+      | __add_cdr_type_mark $ANYFFF__CDR_BRANCHES_MARK \
       | __reverse
-    cat $CDR_ROOT_FILE \
+    cat $ANYFFF__CDR_ROOT_FILE \
       | __filter_pwd \
-      | __add_cdr_type_mark $CDR_ROOT_MARK \
+      | __add_cdr_type_mark $ANYFFF__CDR_ROOT_MARK \
       | __reverse
   end
 end
