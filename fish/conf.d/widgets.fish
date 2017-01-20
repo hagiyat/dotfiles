@@ -1,6 +1,6 @@
-set -l ANYFFF__APP_COLLECTIONS fzy sk peco fzf percol
+set -l ANYFFF__FINDER_COLLECTION fzy sk peco fzf percol
 if not set -q ANYFFF__FINDER_APP
-  for f in $ANYFFF__APP_COLLECTIONS
+  for f in $ANYFFF__FINDER_COLLECTION
     if test -x $f
       set -x $ANYFFF__FINDER_APP $f
       break
@@ -23,8 +23,9 @@ function put_history_widget
 end
 
 function insert_filename_widget
-  rg --files \
+  __context_file_extraction \
     | __fuzzy_finder "file > " \
+    | __last_element \
     | read -l selected
   if [ $selected ]
     commandline -i $selected

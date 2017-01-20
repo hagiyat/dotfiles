@@ -105,4 +105,3 @@ end
 function __cdr_selected_item_cleanup
   cut -c3-
 end
-
