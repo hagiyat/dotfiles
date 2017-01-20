@@ -76,7 +76,8 @@ end
 
 function cdr_widget
   __cdr_source \
-    | __fuzzy_finder "cd > " \
+    | __fuzzy_finder "cd:$PWD > " \
+    | __cdr_selected_item_cleanup \
     | read -l selected
   if [ $selected ]
     builtin cd $selected

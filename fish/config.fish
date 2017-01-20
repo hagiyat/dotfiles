@@ -8,6 +8,9 @@ if type -q sk
   set -x SKIM_DEFAULT_OPTIONS '--ansi -c rg'
   set -x FUZZY_FINDER_APP sk
 end
+if type -q fzy
+  set -x FUZZY_FINDER_APP fzy
+end
 
 # paths
 begin
