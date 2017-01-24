@@ -15,21 +15,21 @@ if type -q sk
   set -x ANYFFF__FINDER_APP_OPTION_MULTIPLE '-m'
 end
 
-# paths
-begin
-  # homebrew
-  set -U fish_user_paths /usr/local/bin
-  set -U fish_user_paths /usr/local/sbin $fish_user_paths
+# homebrew
+set -U fish_user_paths /usr/local/bin
+set -U fish_user_paths /usr/local/sbin $fish_user_paths
 
-  # anyenv
-  if test -d "$HOME/.anyenv"
-    set -U fish_user_paths $HOME/.anyenv/bin $fish_user_paths
-    # status --is-interactive; and source (anyenv init - | psub)
-  end
+# for git diff
+set -U fish_user_paths /usr/local/share/git-core/contrib/diff-highlight $fish_user_paths
 
-  # direnv
-  eval (direnv hook fish)
+# anyenv
+if test -d "$HOME/.anyenv"
+  set -U fish_user_paths $HOME/.anyenv/bin $fish_user_paths
+  # status --is-interactive; and source (anyenv init - | psub)
 end
+
+# direnv
+eval (direnv hook fish)
 
 # less colorize / [required] brew install source-highlight
 if type -q source-highlight

@@ -10,7 +10,7 @@ if status --is-interactive
     "gs, git stash" \
     "gb, git branch" \
     "gbb, git checkout -b" \
-    "gd, git diff" \
+    "gd, git diff --word-diff" \
     "gch, git checkout" \
     "gco, git commit -v" \
     "ga, git add" \
