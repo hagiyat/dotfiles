@@ -8,8 +8,18 @@ if not set -q ANYFFF__FINDER_APP
   end
 end
 
+# If you are using a multi-selectable finder, set this env.
+set -q ANYFFF__FINDER_APP_OPTION_MULTIPLE; \
+  and set -x ANYFFF__FINDER_APP_OPTION_MULTIPLE ''
+
 function __fuzzy_finder
   eval "$ANYFFF__FINDER_APP -p '$argv'"
+end
+
+function __fuzzy_finder_multiple
+  eval "$ANYFFF__FINDER_APP -p '$argv' $ANYFFF__FINDER_APP_OPTION_MULTIPLE" \
+    | __last_element \
+    | xargs
 end
 
 function put_history_widget
@@ -24,8 +34,7 @@ end
 
 function insert_filename_widget
   __context_file_extraction \
-    | __fuzzy_finder "file > " \
-    | __last_element \
+    | __fuzzy_finder_multiple "file > " \
     | read -l selected
   if [ $selected ]
     commandline -i $selected
@@ -85,11 +94,16 @@ function kill_process_widget
 end
 
 function cdr_widget
-  __cdr_source \
-    | __fuzzy_finder "cd:$PWD > " \
-    | __cdr_selected_item_cleanup \
-    | read -l selected
-  if [ $selected ]
-    builtin cd $selected
+  # set -q argv[1]; and set -l a $argv[1]
+  if test (count $argv) -gt 0
+    builtin cd $argv
+  else
+    __cdr_source \
+      | __fuzzy_finder "cd:$PWD > " \
+      | __last_element \
+      | read -l selected
+    if [ $selected ]
+      builtin cd $selected
+    end
   end
 end

@@ -6,6 +6,10 @@ function __last_element
   awk '{print $NF}'
 end
 
+function __first_element
+  awk '{print $NR}'
+end
+
 function __belongs_to_tracked_file
   set -l conditions 'git +add' 'git +checkout' 'git +reset'
   echo $argv | read -l cmd

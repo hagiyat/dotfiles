@@ -4,9 +4,15 @@ set -x XDG_CONFIG_HOME ~/.config
 set -x TERM xterm-256color
 set -x NVIM_TUI_ENABLE_TRUE_COLOR 1
 
+if not test -d ~/repos
+  mkdir -p ~/repos
+end
+set -g CDPATH . ~ ~/.config/ ~/repos
+
 if type -q sk
-  set -x SKIM_DEFAULT_OPTIONS '--ansi -c rg'
+  set -x SKIM_DEFAULT_OPTIONS '--ansi'
   set -x ANYFFF__FINDER_APP sk
+  set -x ANYFFF__FINDER_APP_OPTION_MULTIPLE '-m'
 end
 
 # paths
