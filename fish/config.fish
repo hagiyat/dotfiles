@@ -25,7 +25,7 @@ set -U fish_user_paths /usr/local/share/git-core/contrib/diff-highlight $fish_us
 # anyenv
 if test -d "$HOME/.anyenv"
   set -U fish_user_paths $HOME/.anyenv/bin $fish_user_paths
-  # status --is-interactive; and source (anyenv init - | psub)
+  status --is-interactive; and source (anyenv init -| psub)
 end
 
 # direnv

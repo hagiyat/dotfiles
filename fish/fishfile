@@ -1,12 +1,8 @@
+edc/bass
+oh-my-fish/theme-chain
 fisherman/docker-completion
 fisherman/fishkit
 fisherman/get
 fisherman/getopts
 fisherman/git_util
-fisherman/host_info
-fisherman/humanize_duration
-fisherman/last_job_id
 fisherman/menu
-fisherman/pwd_info
-fisherman/pwd_is_home
-fisherman/teapot

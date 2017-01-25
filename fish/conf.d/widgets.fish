@@ -24,6 +24,9 @@ end
 
 function put_history_widget
   builtin history \
+    | __reverse \
+    | __unique \
+    | __reverse \
     | __fuzzy_finder "history > " \
     | read -l selected
   if [ $selected ]
