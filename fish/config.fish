@@ -9,12 +9,6 @@ if not test -d ~/repos
 end
 set -g CDPATH . ~ ~/.config/ ~/repos
 
-if type -q sk
-  set -x SKIM_DEFAULT_OPTIONS '--ansi'
-  set -x ANYFFF__FINDER_APP sk
-  set -x ANYFFF__FINDER_APP_OPTION_MULTIPLE '-m'
-end
-
 # homebrew
 set -U fish_user_paths /usr/local/bin
 set -U fish_user_paths /usr/local/sbin $fish_user_paths
@@ -49,4 +43,18 @@ begin
       string split \  -- (eval $COMP_WORDS[1])
   end
   complete -fa "(__fish_complete_pip)" -c pip
+end
+
+# fundle
+if not functions -q fundle; eval (curl -sfL https://git.io/fundle-install); end
+fundle plugin 'fisherman/git_util'
+fundle plugin 'oh-my-fish/theme-chain'
+fundle plugin 'barnybug/docker-fish-completion'
+fundle plugin 'hagiyat/anyfff'
+fundle init
+
+if type -q sk
+  set -x SKIM_DEFAULT_OPTIONS '--ansi'
+  set -x ANYFFF__FINDER_APP sk
+  set -x ANYFFF__FINDER_APP_OPTION_MULTIPLE '-m'
 end
