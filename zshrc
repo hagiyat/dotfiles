@@ -145,14 +145,9 @@ if [ -d /Applications/Firefox.app/ ] ; then
   alias browse="open -a /Applications/FirefoxDeveloperEdition.app"
 fi
 
-# anyenv
-if [ -d ${HOME}/.anyenv ] ; then
-  export PATH="$HOME/.anyenv/bin:$PATH"
-  eval "$(anyenv init -)"
-  for D in `ls $HOME/.anyenv/envs`
-  do
-    export PATH="$HOME/.anyenv/envs/$D/shims:$PATH"
-  done
+# asdf
+if [ -d $HOME/.asdf ] ; then
+  . ~/.asdf/asdf.sh
 fi
 
 # direnv
@@ -290,3 +285,6 @@ zplug load --verbose
 
 # awscli completions
 [ -f /usr/local/share/zsh/site-functions/_aws ] && source /usr/local/share/zsh/site-functions/_aws
+if [ -d $HOME/.asdf ] ; then
+  source ~/.asdf/completions/asdf.bash
+fi
