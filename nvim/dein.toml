@@ -35,6 +35,12 @@ repo = 'thinca/vim-ref'
 
 [[plugins]]
 repo = 'scrooloose/nerdcommenter'
+hook_add = '''
+  let g:NERDCreateDefaultMappings = 0
+  let g:NERDSpaceDelims = 1
+  nmap <Space>, <Plug>NERDCommenterToggle
+  vmap <Space>, <Plug>NERDCommenterToggle
+'''
 
 [[plugins]]
 repo = 'haya14busa/incsearch.vim'

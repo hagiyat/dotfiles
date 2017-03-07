@@ -38,6 +38,7 @@ set nobackup
 set noswapfile
 
 filetype indent on
+filetype plugin on
 set tabstop=2
 set shiftwidth=2
 set expandtab
@@ -156,9 +157,3 @@ nnoremap [denite]r :<C-u>Denite -resume<CR>
 nnoremap [denite]sc :<C-u>Denite command<CR>
 nnoremap [denite]sh :<C-u>Denite help<CR>
 " }}}
-
-" NERDCommenter
-let g:NERDCreateDefaultMappings = 0
-let NERDSpaceDelims = 1
-nmap <Space>c <Plug>NERDCommenterToggle
-vmap <Space>c <Plug>NERDCommenterToggle
