@@ -8,10 +8,10 @@ directories = [
 links = [
     (".config/nvim", "nvim"),
     (".config/vimfx", "vimfx"),
-    (".config/fish/config.fish", "fish/config.fish"),
-    (".config/fish/conf.d", "fish/conf.d"),
+    # (".config/fish/config.fish", "fish/config.fish"),
+    # (".config/fish/conf.d", "fish/conf.d"),
     (".gitconfig", "gitconfig"),
-    (".hammerspoon", "hammerspoon"),
+    # (".hammerspoon", "hammerspoon"),
     (".myclirc", "myclirc"),
     (".spacemacs", "spacemacs"),
     (".tmux.conf", "tmux.conf"),
