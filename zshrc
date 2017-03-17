@@ -43,7 +43,7 @@ alias ll='ls -l'
 alias la='ls -al'
 
 # for git diff
-export PATH=$PATH:/usr/local/share/git-core/contrib/diff-highlight
+# export PATH=$PATH:/usr/local/share/git-core/contrib/diff-highlight
 
 # git-remoteのURLをhttpsに変換してopenする
 function git-browse() {
@@ -91,11 +91,11 @@ abbreviations=(
   "tmh"  "tmux split-window -h -c '#{pane_current_path}'"
   "tmw"  "tmux new-window -c '#{pane_current_path}'"
   # rails
-  # "rs" "rails server"
-  # "rc" "rails console"
-  # "rg" "rails generate"
-  # "rgm" "rails generate migration"
-  # "rr" "rails runner"
+  "rs" "rails server"
+  "rc" "rails console"
+  "rg" "rails generate"
+  "rgm" "rails generate migration"
+  "rr" "rails runner"
   # bundle exec
   "be" "bundle exec"
   "bi" "bundle install --jobs=4 --path=vendor/bundle"
@@ -195,10 +195,10 @@ zplug "glidenote/ag-zsh-completion"
 
 # uses colortheme for iTerm2 `hybrid`
 # ls color
-export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
+# export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
 if [ -x "`which dircolors`" ]; then
   # brew install coreutils
-  zplug "joel-porquet/zsh-dircolors-solarized", hook-load:"setupsolarized dircolors.ansi-universal"
+  # zplug "joel-porquet/zsh-dircolors-solarized", hook-load:"setupsolarized dircolors.ansi-universal"
   alias ls="ls --color=auto"
 else
   # export LSCOLORS=xbfxcxdxbxegedabagacad
@@ -209,7 +209,7 @@ alias grep="grep --color=auto"
 # theme
 autoload colors && colors
 setopt prompt_subst # Make sure propt is able to be generated properly.
-zplug "hagiyat/hyperzsh", at:customize, use:hyperzsh.zsh-theme, nice:11
+zplug "hagiyat/hyperzsh", at:customize, use:hyperzsh.zsh-theme, defer:2
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
@@ -281,7 +281,8 @@ if zplug check "mollifier/anyframe"; then
   bindkey '^x^p' kill_process
 fi
 
-zplug load --verbose
+# zplug load --verbose
+zplug load
 
 # awscli completions
 [ -f /usr/local/share/zsh/site-functions/_aws ] && source /usr/local/share/zsh/site-functions/_aws
