@@ -1,6 +1,7 @@
 " set encoding=utf-8 scriptencoding utf-8
 
-if has("termguicolors")
+" if has("termguicolors")
+if has("xterm-256color")
   set termguicolors
 endif
 
@@ -75,7 +76,6 @@ nnoremap <Space>qq :<C-u>q<CR>
 nnoremap <Space>qz ZQ
 nnoremap <Space>qw :<C-u>wq<CR>
 nnoremap <Space>qa :<C-u>qa<CR>
-
 
 " dein
 let s:dein_dir = expand('~/.cache/dein')
