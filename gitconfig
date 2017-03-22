@@ -11,3 +11,7 @@
 	diff = diff-highlight | less
 [interactive]
 	diffFilter = diff-highlight
+[merge]
+	tool = vimdiff
+[mergetool "vimdiff"]
+  cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
