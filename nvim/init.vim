@@ -8,12 +8,12 @@ endif
 set number
 set t_vb=
 set novisualbell
-set ambiwidth=double
+" set ambiwidth=double
 set expandtab
 set cursorline
 set clipboard+=unnamedplus
 
-set fileencodings=utf-8,cp932,euc-jp,iso-20220-jp,default,latin
+set fileencodings=utf-8,cp932,iso-20220-jp,default,latin
 
 set autoindent
 set showmatch
@@ -22,6 +22,8 @@ set smartindent
 set smarttab
 set ignorecase
 set smartcase
+" FIXME: まだ！
+" set inncommand=split
 set hlsearch
 
 set list
@@ -126,6 +128,14 @@ function! s:init_visual()
   endif
 endfunction
 
+" Insertモードから抜けるとIMをOFFに
+function! Fcitx2en()
+  let s:input_status = system("fcitx-remote")
+  if s:input_status == 2
+    let l:a = system("fcitx-remote -c")
+  endif
+endfunction
+
 aug initvim
   autocmd!
   " tabstop / shiftwidth
@@ -135,6 +145,10 @@ aug initvim
   autocmd BufWritePre * :%s/\s\+$//ge
   autocmd Colorscheme * :call s:init_visual()
 
+  set ttimeoutlen=150
+  autocmd InsertLeave * call Fcitx2en()
+
+  set background=dark
   colorscheme iceberg
   colorscheme alduin
   colorscheme quantum
