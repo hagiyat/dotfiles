@@ -93,7 +93,7 @@ abbreviations=(
   # rails
   "rs" "rails server"
   "rc" "rails console"
-  "rg" "rails generate"
+  # "rg" "rails generate"
   "rgm" "rails generate migration"
   "rr" "rails runner"
   # bundle exec
