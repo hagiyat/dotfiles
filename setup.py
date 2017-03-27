@@ -15,8 +15,9 @@ links = [
     (".myclirc", "myclirc"),
     (".spacemacs", "spacemacs"),
     (".tmux.conf", "tmux.conf"),
-    (".vimrc", "vimrc"),
+    # (".vimrc", "vimrc"),
     (".zshrc", "zshrc"),
+    (".config/termite", "termite"),
 ]
 
 home = os.environ["HOME"]
