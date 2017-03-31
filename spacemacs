@@ -63,6 +63,7 @@ values."
            ruby-enable-enh-ruby-mode t
            ruby-version-manager 'rbenv
            ruby-test-runner 'rspec
+           ruby-insert-encoding-magic-comment nil
            )
      ruby-on-rails
      elixir
@@ -124,7 +125,7 @@ values."
    ;; with `:variables' keyword (similar to layers). Check the editing styles
    ;; section of the documentation for details on available variables.
    ;; (default 'vim)
-   dotspacemacs-editing-style 'vim
+   dotspacemacs-editing-style 'hybrid
    ;; If non nil output loading progress in `*Messages*' buffer. (default nil)
    dotspacemacs-verbose-loading nil
    ;; Specify the startup banner. Default value is `official', it displays
@@ -160,8 +161,11 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Source Han Code JP"
-                               :size 16
+   dotspacemacs-default-font '("CodeNewRoman Nerd Font"
+   ;; dotspacemacs-default-font '("mononoki Nerd Font"
+                               :size 18
+   ;; dotspacemacs-default-font '("Source Han Code JP"
+   ;;                             :size 16
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -332,8 +336,8 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
-  ;; (global-set-key (kbd "C-g") 'evil-escape)
-  (define-key evil-insert-state-map (kbd "C-g") 'evil-escape)
+  (global-set-key (kbd "C-g") 'evil-escape)
+  (define-key evil-visual-selection (kbd "C-g") 'evil-escape)
   (define-key evil-normal-state-map (kbd "C-g") 'evil-search-highlight-persist-remove-all)
   (setq-default evil-escape-delay 0.1)
 
@@ -348,15 +352,16 @@ you should place your code here."
   (setq deft-extensions '("md" "txt"))
   (setq deft-directory "~/Dropbox/notes")
 
-  ;; ruby
-  (setq ruby-insert-encoding-magic-comment nil)
-
   ;; define our own super awesome hook that will remove the before-save-hook
   (defun remove-enh-magic-comment ()
     (remove-hook 'before-save-hook 'enh-ruby-mode-set-encoding t))
 
   ;; add the hook to call our super awesome function.
   (add-hook 'enh-ruby-mode-hook 'remove-enh-magic-comment)
+
+  ;; this is for ruby mode
+  (setq ruby-insert-encoding-magic-comment nil)
+
 
   ;; display time in powerline
   (setq display-time-24hr-format t)

@@ -7,10 +7,12 @@ allow_bold = true
 dynamic_title = true
 urgent_on_bell = true
 clickable_url = true
-font = Ricty Diminished Regular 14
-font = Source Han Code JP R 12
-font = Mgen+ 1m regular 12
-font = Hermit medium 12
+
+font = ShureTechMono Nerd Font Regular 15
+font = Hurmit Nerd Font 13
+font = CodeNewRoman Nerd Font 15
+font = mononoki Nerd Font 15
+
 scrollback_lines = 10000
 search_wrap = true
 #icon_name = terminal
@@ -74,8 +76,8 @@ color15 = #ffffff
 # XRDB2Xreources.py
 #
 foreground =  #bdbaae
-background =  #222222
-cursorColor = #bbbbbb
+background =  #282a2a
+cursorColor = #99bbbb
 #
 # Black
 color0 =      #15171c
