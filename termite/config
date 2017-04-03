@@ -10,8 +10,8 @@ clickable_url = true
 
 font = ShureTechMono Nerd Font Regular 15
 font = Hurmit Nerd Font 13
-font = CodeNewRoman Nerd Font 15
-font = mononoki Nerd Font 15
+font = mononoki Nerd Font 14
+font = CodeNewRoman Nerd Font 14
 
 scrollback_lines = 10000
 search_wrap = true
