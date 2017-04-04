@@ -60,11 +60,9 @@ values."
      deft
      (ruby :variables
            ruby-enable-ruby-on-rails-support t
-           ruby-enable-enh-ruby-mode t
-           ruby-version-manager 'rbenv
-           ruby-test-runner 'rspec
+           ;; ruby-enable-enh-ruby-mode t
            ruby-insert-encoding-magic-comment nil
-           )
+           ruby-test-runner 'rspec)
      ruby-on-rails
      elixir
      python
@@ -351,17 +349,6 @@ you should place your code here."
   ;; deft
   (setq deft-extensions '("md" "txt"))
   (setq deft-directory "~/Dropbox/notes")
-
-  ;; define our own super awesome hook that will remove the before-save-hook
-  (defun remove-enh-magic-comment ()
-    (remove-hook 'before-save-hook 'enh-ruby-mode-set-encoding t))
-
-  ;; add the hook to call our super awesome function.
-  (add-hook 'enh-ruby-mode-hook 'remove-enh-magic-comment)
-
-  ;; this is for ruby mode
-  (setq ruby-insert-encoding-magic-comment nil)
-
 
   ;; display time in powerline
   (setq display-time-24hr-format t)
