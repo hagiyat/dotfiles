@@ -230,10 +230,11 @@ if zplug check "zsh-users/zsh-history-substring-search"; then
 fi
 
 if zplug check "mollifier/anyframe"; then
+  local filter_app=fzf
   # zle redisplayしないと表示がおかしくなるので、anyframeで完結できない。。
   function put_history() {
     anyframe-source-history \
-      | sk -p "history > " \
+      | $filter_app --prompt "history > " \
       | anyframe-action-put
     zle redisplay
   }
@@ -241,7 +242,7 @@ if zplug check "mollifier/anyframe"; then
 
   function insert_git_branch() {
     anyframe-source-git-branch -i \
-      | sk -p "insert branch > " \
+      | $filter_app --prompt "insert branch > " \
       | awk '{print $1}' \
       | anyframe-action-insert
     zle redisplay
@@ -250,7 +251,7 @@ if zplug check "mollifier/anyframe"; then
 
   function checkout_git_branch() {
     anyframe-source-git-branch -n \
-      | sk -p "checkout branch > " \
+      | $filter_app --prompt "checkout branch > " \
       | awk '{print $1}' \
       | anyframe-action-execute git checkout
     zle redisplay
@@ -259,7 +260,7 @@ if zplug check "mollifier/anyframe"; then
 
   function insert_filename() {
     rg --files \
-      | sk -p "file > " \
+      | $filter_app --prompt "file > " \
       | anyframe-action-insert -q
     zle redisplay
   }
@@ -267,7 +268,7 @@ if zplug check "mollifier/anyframe"; then
 
   function kill_process() {
     anyframe-source-process \
-      | sk -p "kill process > " \
+      | $filter_app --prompt "kill process > " \
       | awk '{print $1}' \
       | anyframe-action-execute kill -9
     zle redisplay
