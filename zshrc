@@ -172,6 +172,14 @@ if type sk > /dev/null; then
   export SKIM_DEFAULT_OPTIONS='--ansi -c rg'
 fi
 
+if type fzf > /dev/null; then
+  export FZF_DEFAULT_OPTS='
+    --height 40% --reverse
+    --color fg:-1,bg:-1,hl:230,fg+:3,bg+:233,hl+:229
+    --color info:150,prompt:110,spinner:150,pointer:167,marker:174
+  '
+fi
+
 # plugins
 if [[ ! -d ~/.zplug ]]; then
   curl -sL zplug.sh/installer | zsh
@@ -220,7 +228,7 @@ if ! zplug check --verbose; then
 fi
 
 if zplug check "b4b4r07/enhancd"; then
-  ENHANCD_FILTER=sk:fzy
+  ENHANCD_FILTER=fzf:fzy:sk
   export ENHANCD_FILTER
 fi
 
