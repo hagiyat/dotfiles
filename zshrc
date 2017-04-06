@@ -214,6 +214,9 @@ else
 fi
 alias grep="grep --color=auto"
 
+# ctags for ruby
+alias rtags="ctags --tag-relative=yes -R --sort=yes --languages=ruby,javascript --exclude=.git --exclude=log . $(bundle list --paths)"
+
 # theme
 autoload colors && colors
 setopt prompt_subst # Make sure propt is able to be generated properly.
