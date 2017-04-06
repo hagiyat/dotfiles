@@ -175,16 +175,49 @@ on_ft = 'fish'
 ################################################################
 [[plugins]]
 repo = 'AlessandroYorba/Alduin'
+hook_add = '''
+" autocmd VimEnter * nested colorscheme alduin
+'''
 
 [[plugins]]
 repo = 'cocopon/iceberg.vim'
+hook_add = '''
+" autocmd VimEnter * nested colorscheme iceberg
+'''
 
 [[plugins]]
 repo = 'KeitaNakamura/neodark.vim'
 hook_add = '''
 let g:neodark#background='black' " black, gray or brown
 let g:neodark#use_256color = 1
+" autocmd VimEnter * nested colorscheme neodark
 '''
 
 [[plugins]]
-repo = 'ajh17/Spacegray.vim'
+repo = 'joshdick/onedark.vim'
+hook_add = '''
+" autocmd VimEnter * nested colorscheme onedark
+" let g:airline_theme='onedark'
+'''
+
+[[plugins]]
+repo = 'tyrannicaltoucan/vim-quantum'
+hook_add = '''
+" let g:quantum_black=1
+let g:airline_theme='quantum'
+autocmd VimEnter * nested colorscheme quantum
+'''
+
+[[plugins]]
+repo = 'roosta/vim-srcery'
+hook_add = '''
+" autocmd VimEnter * nested colorscheme srcery
+'''
+
+[[plugins]]
+repo = 'rakr/vim-one'
+hook_add = '''
+" autocmd VimEnter * nested colorscheme one
+" let g:airline_theme='one'
+'''
+

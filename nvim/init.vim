@@ -1,9 +1,7 @@
 " set encoding=utf-8 scriptencoding utf-8
 
-" if has("termguicolors")
-if has("xterm-256color")
-  set termguicolors
-endif
+set termguicolors
+set background=dark
 
 set number
 set t_vb=
@@ -109,25 +107,6 @@ if dein#check_install()
   call dein#install()
 endif
 
-
-" colorscheme
-function! s:init_visual()
-  if g:colors_name != "iceberg"
-    hi LineNr ctermbg=234
-    hi DiffAdd    ctermfg=226 ctermbg=235
-    hi DiffChange ctermfg=7 ctermbg=235
-    hi DiffDelete ctermfg=52 ctermbg=233
-    hi DiffText   cterm=none ctermfg=208 ctermbg=235
-    hi SpellBad   cterm=underline ctermfg=208 ctermbg=235
-    hi SpellLocal cterm=italic ctermfg=209 ctermbg=235
-    hi SpellRare  cterm=bold ctermfg=210 ctermbg=235
-    hi SpecialKey ctermfg=238 ctermbg=235
-    hi NonText ctermbg=235
-    hi Normal ctermbg=235
-    hi CursorLine ctermbg=234
-  endif
-endfunction
-
 " Insertモードから抜けるとIMをOFFに
 function! Fcitx2en()
   let s:input_status = system("fcitx-remote")
@@ -143,16 +122,9 @@ aug initvim
   autocmd FileType python setlocal shiftwidth=4 tabstop=4
   " 保存時に行末の空白を除去する
   autocmd BufWritePre * :%s/\s\+$//ge
-  autocmd Colorscheme * :call s:init_visual()
 
   set ttimeoutlen=150
   autocmd InsertLeave * call Fcitx2en()
-
-  set background=dark
-  colorscheme iceberg
-  colorscheme alduin
-  colorscheme spacegray
-  colorscheme neodark
 augroup END
 
 " denite keymaps {{{

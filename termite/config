@@ -101,7 +101,8 @@ color12 =     #4d84d1
 #
 # Magenta
 color5 =      #bf83c1
-color13 =     #ff55ff
+# color13 =     #ff55ff
+color13 =     #aa88ee
 #
 # Cyan
 color6 =      #57c2c1
