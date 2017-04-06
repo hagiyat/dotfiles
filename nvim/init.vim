@@ -125,6 +125,9 @@ aug initvim
 
   set ttimeoutlen=150
   autocmd InsertLeave * call Fcitx2en()
+
+  " autosave
+  autocmd CursorHold,CursorHoldI,InsertLeave * silent! wall
 augroup END
 
 " tagjump keymaps
