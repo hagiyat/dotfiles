@@ -6,6 +6,9 @@ repo = 'Shougo/vimproc'
 build = 'make'
 
 [[plugins]]
+repo = 'tpope/vim-fugitive'
+
+[[plugins]]
 repo = 'osyo-manga/vim-precious'
 depends = ['context_filetype.vim']
 hook_add = '''
