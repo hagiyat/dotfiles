@@ -55,7 +55,30 @@ depends = ['neosnippet-snippets']
 
 [[plugins]]
 repo = 'osyo-manga/vim-monster'
-on_ft = ['ruby']
+on_ft = ['ruby', 'haml']
+
+[[plugins]]
+repo = 'tpope/vim-rails'
+on_ft = ['ruby', 'haml']
+hook_source = '''
+nnoremap <silent> <Space>ra :<C-u>A<CR>
+nnoremap <silent> <Space>rr :<C-u>R<CR>
+'''
+
+[[plugins]]
+repo = '5t111111/denite-rails'
+on_ft = ['ruby', 'haml']
+hook_source = '''
+nnoremap [rails] <Nop>
+nmap     <Space>r [rails]
+" nnoremap <silent> [rails]r :<C-u>Denite<Space>rails:dwim<Return>
+nnoremap <silent> [rails]m :<C-u>Denite<Space>rails:model<Return>
+nnoremap <silent> [rails]c :<C-u>Denite<Space>rails:controller<Return>
+nnoremap <silent> [rails]v :<C-u>Denite<Space>rails:view<Return>
+nnoremap <silent> [rails]h :<C-u>Denite<Space>rails:helper<Return>
+" nnoremap <silent> [rails]s :<C-u>Denite<Space>rails:test<Return>
+'''
+
 
 [[plugins]]
 repo = 'scrooloose/syntastic'
