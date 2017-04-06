@@ -127,6 +127,10 @@ aug initvim
   autocmd InsertLeave * call Fcitx2en()
 augroup END
 
+" tagjump keymaps
+nnoremap <Space>tl :exe("tjump ".expand('<cword>'))<CR>
+nnoremap <Space>th :pop<CR>
+
 " denite keymaps {{{
 nnoremap [denite] <Nop>
 nmap <Space> [denite]
