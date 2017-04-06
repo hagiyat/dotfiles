@@ -151,8 +151,6 @@ aug initvim
   set background=dark
   colorscheme iceberg
   colorscheme alduin
-  colorscheme quantum
-  colorscheme hybrid_material
   colorscheme spacegray
   colorscheme neodark
 augroup END

@@ -63,14 +63,14 @@ hook_add = '''
 repo = 'easymotion/vim-easymotion'
 hook_add = '''
 let g:EasyMotion_do_mapping = 0
-map h<Space> <Plug>(easymotion-linebackward)
-map j<Space> <Plug>(easymotion-j)
-map k<Space> <Plug>(easymotion-k)
-map l<Space> <Plug>(easymotion-lineforward)
+map sh <Plug>(easymotion-linebackward)
+map sj <Plug>(easymotion-j)
+map sk <Plug>(easymotion-k)
+map sl <Plug>(easymotion-lineforward)
 
 " s{char}{char} to move to {char}{char}
-nmap s <Plug>(easymotion-overwin-f2)
-vmap s <Plug>(easymotion-bd-f2)
+nmap ss <Plug>(easymotion-overwin-f2)
+vmap ss <Plug>(easymotion-bd-f2)
 '''
 
 [[plugins]]
@@ -182,12 +182,6 @@ hook_add = '''
 let g:neodark#background='black' " black, gray or brown
 let g:neodark#use_256color = 1
 '''
-
-[[plugins]]
-repo = 'tyrannicaltoucan/vim-quantum'
-
-[[plugins]]
-repo = 'kristijanhusak/vim-hybrid-material'
 
 [[plugins]]
 repo = 'ajh17/Spacegray.vim'
