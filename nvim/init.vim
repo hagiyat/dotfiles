@@ -64,7 +64,7 @@ nnoremap <Space>wk <C-w>k
 nnoremap <Space>wl <C-w>l
 nnoremap <silent> <Space>w- :<C-u>split<CR>
 nnoremap <silent> <Space>w/ :<C-u>vsplit<CR>
-nnoremap <silent> <Space>wq :<C-u>q<CR>
+nnoremap <silent> <Space>wd :<C-u>q<CR>
 
 " buffer
 nnoremap <silent> <Space>bn :<C-u>bnext<CR>
