@@ -79,8 +79,18 @@ nnoremap <silent> [rails]h :<C-u>Denite<Space>rails:helper<Return>
 " nnoremap <silent> [rails]s :<C-u>Denite<Space>rails:test<Return>
 '''
 
-
 [[plugins]]
-repo = 'scrooloose/syntastic'
-depends = ['vimproc']
+repo = 'osyo-manga/vim-watchdogs'
+depends = ['vim-quickrun', 'vimproc', 'shabadou.vim', 'vim-hier', 'quickfixstatus']
+on_event = ['BufWritePost']
+on_ft = ['vim', 'python', 'ruby', 'elixir', 'zsh']
+hook_source = '''
+let g:quickrun_config = get(g:, 'quickrun_config', {})
+let g:watchdogs_check_BufWritePost_enable = 1
+let g:quickrun_config = {
+\   "ruby/watchdogs_checker" : {
+\       "type" : "watchdogs_checker/rubocop"
+\   }
+\}
+'''
 

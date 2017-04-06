@@ -48,6 +48,15 @@ repo = 'tpope/vim-surround'
 repo = 'thinca/vim-quickrun'
 
 [[plugins]]
+repo = 'osyo-manga/shabadou.vim'
+
+[[plugins]]
+repo = 'jceb/vim-hier'
+
+[[plugins]]
+repo = 'dannyob/quickfixstatus'
+
+[[plugins]]
 repo = 'thinca/vim-visualstar'
 
 [[plugins]]
