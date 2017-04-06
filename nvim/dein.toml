@@ -69,8 +69,8 @@ map k<Space> <Plug>(easymotion-k)
 map l<Space> <Plug>(easymotion-lineforward)
 
 " s{char}{char} to move to {char}{char}
-nmap s<Space> <Plug>(easymotion-overwin-f2)
-vmap s<Space> <Plug>(easymotion-bd-f2)
+nmap s <Plug>(easymotion-overwin-f2)
+vmap s <Plug>(easymotion-bd-f2)
 '''
 
 [[plugins]]
