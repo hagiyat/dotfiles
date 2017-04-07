@@ -200,33 +200,28 @@ hook_add = '''
 let g:neodark#background='black' " black, gray or brown
 let g:neodark#use_256color = 1
 " autocmd VimEnter * nested colorscheme neodark
-'''
-
-[[plugins]]
-repo = 'joshdick/onedark.vim'
-hook_add = '''
-" autocmd VimEnter * nested colorscheme onedark
-" let g:airline_theme='onedark'
+autocmd ColorScheme neodark call NeoDarkPatch()
+function! NeoDarkPatch()
+  hi Normal guifg=#bebab8 guibg=#283024
+  hi IncSearch gui=bold,italic guifg=#ffcc00 guibg=#283024
+  hi Search gui=bold,italic guifg=#ffa64d guibg=#283024
+  hi CursorLine guibg=#182014
+endfunction
 '''
 
 [[plugins]]
 repo = 'tyrannicaltoucan/vim-quantum'
 hook_add = '''
-" let g:quantum_black=1
+let g:quantum_black=1
 let g:airline_theme='quantum'
 autocmd VimEnter * nested colorscheme quantum
-'''
-
-[[plugins]]
-repo = 'roosta/vim-srcery'
-hook_add = '''
-" autocmd VimEnter * nested colorscheme srcery
-'''
-
-[[plugins]]
-repo = 'rakr/vim-one'
-hook_add = '''
-" autocmd VimEnter * nested colorscheme one
-" let g:airline_theme='one'
+autocmd ColorScheme quantum call QuantumPatch()
+function! QuantumPatch()
+  hi IncSearch gui=bold,italic guifg=#ffcc00 guibg=#242424
+  hi Search gui=bold,italic guifg=#ffa64d guibg=#242424
+  hi CursorLine guibg=#383838
+  " hi CursorLineNr guifg=#69c5ce guibg=#383838
+  hi CursorLineNr guifg=#669999 guibg=#383838
+endfunction
 '''
 
