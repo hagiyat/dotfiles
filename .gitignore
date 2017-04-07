@@ -1,5 +1,6 @@
 tags
 Gemfile.lock
+Gemfile.local.lock
 *.pyc
 *.log
 .ruby-version

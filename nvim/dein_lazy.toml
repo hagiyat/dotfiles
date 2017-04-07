@@ -30,12 +30,6 @@ hook_source = '''
   inoremap <expr><tab> pumvisible() ? "\<C-n>" :
         \ neosnippet#expandable_or_jumpable() ?
         \    "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
-
-  " ruby
-  let g:monster#completion#rcodetools#backend = "async_rct_complete"
-  let g:deoplete#sources#omni#input_patterns = {
-  \   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
-  \}
 '''
 on_i = 1
 
@@ -56,6 +50,12 @@ depends = ['neosnippet-snippets']
 [[plugins]]
 repo = 'osyo-manga/vim-monster'
 on_ft = ['ruby', 'haml']
+hook_source = '''
+let g:monster#completion#rcodetools#backend = "async_rct_complete"
+let g:deoplete#sources#omni#input_patterns = {
+\   "ruby" : '[^. *\t]\.\w*\|\h\w*::',
+\}
+'''
 
 [[plugins]]
 repo = 'tpope/vim-rails'

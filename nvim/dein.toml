@@ -219,9 +219,8 @@ autocmd ColorScheme quantum call QuantumPatch()
 function! QuantumPatch()
   hi IncSearch gui=bold,italic guifg=#ffcc00 guibg=#242424
   hi Search gui=bold,italic guifg=#ffa64d guibg=#242424
-  hi CursorLine guibg=#383838
-  " hi CursorLineNr guifg=#69c5ce guibg=#383838
-  hi CursorLineNr guifg=#669999 guibg=#383838
+  hi CursorLine guibg=#343434
+  hi CursorLineNr guifg=#669999 guibg=#343434
 endfunction
 '''
 
