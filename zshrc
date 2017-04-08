@@ -208,13 +208,22 @@ if [ -x "`which dircolors`" ]; then
   # zplug "joel-porquet/zsh-dircolors-solarized", hook-load:"setupsolarized dircolors.ansi-universal"
   alias ls="ls --color=auto"
 else
-  # export LSCOLORS=xbfxcxdxbxegedabagacad
   alias ls="ls -G"
 fi
 alias grep="grep --color=auto"
 
 # ctags for ruby
-alias rtags="ctags --tag-relative=yes -R --sort=yes --languages=ruby,javascript --exclude=.git --exclude=log . $(bundle list --paths)"
+function rtags() {
+  if [ -e Gemfile -a -e Gemfile.lock ]; then
+    ctags --tag-relative=yes \
+      -R --sort=yes --languages=ruby \
+      --exclude=.git --exclude=log --exclude=tmp . \
+      $(bundle list --paths | rg -v bundler)
+  else
+    echo "Here is not from the Ruby project."
+    return 1
+  fi
+}
 
 # theme
 autoload colors && colors
