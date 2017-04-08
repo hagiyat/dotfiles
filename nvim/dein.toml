@@ -108,6 +108,12 @@ noremap <silent><expr> g/ incsearch#go(<SID>incsearch_config({'is_stay': 1}))
 '''
 
 [[plugins]]
+repo = 'kassio/neoterm'
+hook_add = '''
+'''
+
+
+[[plugins]]
 repo = 'tpope/vim-abolish'
 
 [[plugins]]
@@ -168,6 +174,7 @@ let g:airline_symbols.linenr = ''
 
 [[plugins]]
 repo = 'mhinz/vim-startify'
+depends = 'neoterm'
 hook_add = '''
 function! s:filter_header(lines) abort
   let longest_line   = max(map(copy(a:lines), 'len(v:val)'))
@@ -192,7 +199,7 @@ let g:startify_bookmarks = [
   \ '~/repos',
   \ '~/Dropbox/notes',
 \ ]
-let g:startify_commands = []
+let g:startify_commands = [['update ctags', ':T rtags']]
 let g:startify_list_order = [
   \ [join(['  🙄 MRU', getcwd()], ' ')],
   \ 'dir',

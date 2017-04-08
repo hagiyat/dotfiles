@@ -219,6 +219,12 @@ function rtags() {
       -R --sort=yes --languages=ruby \
       --exclude=.git --exclude=log --exclude=tmp . \
       $(bundle list --paths | rg -v bundler)
+    if [ $? -eq 0 ]; then
+      echo "Generated!"
+    else
+      echo "tags generate to failed.."
+      return 1
+    fi
   else
     echo "Here is not from the Ruby project."
     return 1
