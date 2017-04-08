@@ -1,7 +1,6 @@
 export LANG=ja_JP.UTF-8
 export EDITOR=nvim
 export XDG_CONFIG_HOME=~/.config
-#export PAGER=vimpager
 
 # emacs keybind
 bindkey -e
@@ -28,7 +27,7 @@ setopt extended_glob
 # zmv enable
 autoload -Uz zmv
 
-export TERM=xterm-256color
+# export TERM=xterm-256color
 export NVIM_TUI_ENABLE_TRUE_COLOR=1
 export SKIM_DEFAULT_OPTIONS='--ansi -c rg'
 export FUZZY_FINDER_APP=sk
