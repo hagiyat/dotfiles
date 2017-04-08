@@ -170,6 +170,8 @@ let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 '''
 
+
+
 [[plugins]] # toml syntax
 repo = 'cespare/vim-toml'
 on_ft = 'toml'
@@ -199,14 +201,17 @@ repo = 'KeitaNakamura/neodark.vim'
 hook_add = '''
 let g:neodark#background='black' " black, gray or brown
 let g:neodark#use_256color = 1
-" autocmd VimEnter * nested colorscheme neodark
-autocmd ColorScheme neodark call NeoDarkPatch()
-function! NeoDarkPatch()
-  hi Normal guifg=#bebab8 guibg=#283024
-  hi IncSearch gui=bold,italic guifg=#ffcc00 guibg=#283024
-  hi Search gui=bold,italic guifg=#ffa64d guibg=#283024
-  hi CursorLine guibg=#182014
+function! EnableNeoDark()
+  colorscheme neodark
+  hi Normal guifg=#bcbcbc guibg=#242424
+  hi IncSearch gui=bold,italic guifg=#ffcc00 guibg=#242424
+  hi Search gui=bold,italic guifg=#ffa64d guibg=#242424
+  hi LineNr guifg=#474646 guibg=#202020
+  hi CursorLine guibg=#343434
+  hi CursorLineNr guifg=#669999 guibg=#343434
+  " hi CursorLine guibg=#182014
 endfunction
+autocmd VimEnter * nested call EnableNeoDark()
 '''
 
 [[plugins]]
@@ -214,13 +219,15 @@ repo = 'tyrannicaltoucan/vim-quantum'
 hook_add = '''
 let g:quantum_black=1
 let g:airline_theme='quantum'
-autocmd VimEnter * nested colorscheme quantum
-autocmd ColorScheme quantum call QuantumPatch()
-function! QuantumPatch()
+function! EnableQuantum()
+  colorscheme quantum
   hi IncSearch gui=bold,italic guifg=#ffcc00 guibg=#242424
   hi Search gui=bold,italic guifg=#ffa64d guibg=#242424
+  hi LineNr guifg=#474646 guibg=#202020
   hi CursorLine guibg=#343434
   hi CursorLineNr guifg=#669999 guibg=#343434
+  hi MatchParen gui=bold guifg=#1affb2 guibg=#242424
 endfunction
+" autocmd VimEnter * nested call EnableQuantum()
 '''
 
