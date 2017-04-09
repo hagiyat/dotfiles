@@ -75,6 +75,8 @@ hook_add = '''
 repo = 'easymotion/vim-easymotion'
 hook_add = '''
 let g:EasyMotion_do_mapping = 0
+
+nnoremap s <Nop>
 map sh <Plug>(easymotion-linebackward)
 map sj <Plug>(easymotion-j)
 map sk <Plug>(easymotion-k)

@@ -13,6 +13,7 @@ set clipboard+=unnamedplus
 
 set fileencodings=utf-8,cp932,iso-20220-jp,default,latin
 
+set showcmd
 set autoindent
 set showmatch
 set matchtime=3
@@ -52,8 +53,17 @@ cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
 noremap  <C-g> <ESC>
 noremap! <C-g> <ESC>
 nmap <silent> <C-g><C-g> :nohlsearch<CR>
+tnoremap <silent> <C-g> <C-\><C-n>
 
 nnoremap <Space> <Nop>
+
+" (insert mode) emacs
+inoremap <silent> <C-b> <Left>
+inoremap <silent> <C-f> <Right>
+inoremap <silent> <C-a> <S-Left>
+inoremap <silent> <C-e> <S-Right>
+inoremap <silent> <C-h> <C-g>u<C-h>
+inoremap <silent> <C-d> <C-g>u<Del>
 
 " window
 nnoremap <Space>wh <C-w>h
