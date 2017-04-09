@@ -114,6 +114,12 @@ repo = 'kassio/neoterm'
 hook_add = '''
 '''
 
+[[plugins]]
+repo = 'ludovicchabant/vim-gutentags'
+hook_add = '''
+let g:gutentags_cache_dir = '~/.cache/ctags'
+'''
+
 
 [[plugins]]
 repo = 'tpope/vim-abolish'
@@ -201,7 +207,11 @@ let g:startify_bookmarks = [
   \ '~/repos',
   \ '~/Dropbox/notes',
 \ ]
-let g:startify_commands = [['update ctags', ':T rtags']]
+let g:startify_commands = [
+  \ ['open file_rec', ":Denite `finddir('.git', ';') != '' ? 'file_rec/git' : 'file_rec'`"],
+  \ ['update ctags', ':GutentagsUpdate'],
+  \ ]
+
 let g:startify_list_order = [
   \ [join(['  🙄 MRU', getcwd()], ' ')],
   \ 'dir',

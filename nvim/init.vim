@@ -45,6 +45,9 @@ set tabstop=2
 set shiftwidth=2
 set expandtab
 
+" netrw
+let g:netrw_liststyle=3
+
 " バックスラッシュやクエスチョンを状況に合わせ自動的にエスケープ
 cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
 cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
@@ -55,6 +58,7 @@ noremap! <C-g> <ESC>
 nmap <silent> <C-g><C-g> :nohlsearch<CR>
 tnoremap <silent> <C-g> <C-\><C-n>
 
+nnoremap q <Nop>
 nnoremap <Space> <Nop>
 
 " (insert mode) emacs
