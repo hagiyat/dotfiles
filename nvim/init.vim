@@ -86,6 +86,7 @@ nnoremap <Space>qq :<C-u>q<CR>
 nnoremap <Space>qz ZQ
 nnoremap <Space>qw :<C-u>wq<CR>
 nnoremap <Space>qa :<C-u>qa<CR>
+nnoremap <Space>QQ :<C-u>qa!<CR>
 
 " dein
 let s:dein_dir = expand('~/.cache/dein')
@@ -143,19 +144,3 @@ augroup END
 " tagjump keymaps
 nnoremap <Space>tl :exe("tjump ".expand('<cword>'))<CR>
 nnoremap <Space>th :pop<CR>
-
-" denite keymaps {{{
-nnoremap [denite] <Nop>
-nmap <Space> [denite]
-nnoremap [denite]bb :<C-u>Denite buffer<CR>
-nnoremap [denite]bo :<C-u>Denite outline<CR>
-nnoremap [denite]bl :<C-u>Denite line<CR>
-nnoremap [denite]ff :<C-u>Denite file_mru<CR>
-nnoremap [denite]ft :<C-u>Denite filetype<CR>
-nnoremap [denite]fr :<C-u>Denite file_rec<CR>
-nnoremap [denite]gg :<C-u>Denite grep<CR>
-nnoremap [denite]gc :<C-u>DeniteCursorWord grep<CR>
-nnoremap [denite]dr :<C-u>Denite-resume<CR>
-nnoremap [denite]dc :<C-u>Denite command<CR>
-nnoremap [denite]dh :<C-u>Denite help<CR>
-" }}}

@@ -12,6 +12,10 @@ on_cmd = 'Denite'
 hook_post_source = '''
 call denite#custom#var('file_rec', 'command',
       \ ['rg', '--files', '--glob', '!.git'])
+call denite#custom#alias('source', 'file_rec/git', 'file_rec')
+call denite#custom#var('file_rec/git', 'command',
+      \ ['git', 'ls-files', '-co', '--exclude-standard'])
+
 call denite#custom#var('grep', 'command', ['rg'])
 call denite#custom#var('grep', 'recursive_opts', [])
 call denite#custom#var('grep', 'final_opts', [])
@@ -22,11 +26,31 @@ call denite#custom#map('insert', '<C-g>', '<denite:enter_mode:normal>', 'noremap
 call denite#custom#map('insert', '<C-n>', '<denite:move_to_next_line>')
 call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>')
 '''
+hook_add = '''
+nnoremap [denite] <Nop>
+nmap <Space> [denite]
+nnoremap [denite]bb :<C-u>Denite buffer<CR>
+nnoremap [denite]bo :<C-u>Denite outline<CR>
+nnoremap [denite]bl :<C-u>Denite line<CR>
+nnoremap [denite]ff :<C-u>Denite file_mru<CR>
+nnoremap [denite]ft :<C-u>Denite filetype<CR>
+" nnoremap [denite]fr :<C-u>Denite file_rec<CR>
+nnoremap [denite]fr :<C-u>Denite
+      \ `finddir('.git', ';') != '' ? 'file_rec/git' : 'file_rec'`<CR>
+nnoremap [denite]gg :<C-u>Denite grep<CR>
+nnoremap [denite]gc :<C-u>DeniteCursorWord grep<CR>
+nnoremap [denite]dr :<C-u>Denite-resume<CR>
+nnoremap [denite]dc :<C-u>Denite command<CR>
+nnoremap [denite]dh :<C-u>Denite help<CR>
+'''
 
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
 hook_source = '''
   let g:deoplete#enable_at_startup = 1
+  let g:deoplete#sources = {}
+  let g:deoplete#sources._ = ['buffer', 'tag']
+  let g:deoplete#tag#cache_limit_size = 10000000
   inoremap <expr><tab> pumvisible() ? "\<C-n>" :
         \ neosnippet#expandable_or_jumpable() ?
         \    "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
