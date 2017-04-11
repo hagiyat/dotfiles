@@ -222,6 +222,14 @@ let g:startify_list_order = [
   \]
 '''
 
+[[plugins]]
+repo = 'nathanaelkane/vim-indent-guides'
+hook_add = '''
+let g:indent_guides_auto_colors = 1
+let g:indent_guides_color_change_percent = 5
+nmap <silent> <Space>gt <Plug>IndentGuidesToggle
+'''
+
 [[plugins]] # toml syntax
 repo = 'cespare/vim-toml'
 on_ft = 'toml'
