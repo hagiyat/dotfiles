@@ -48,15 +48,6 @@ repo = 'tpope/vim-surround'
 repo = 'thinca/vim-quickrun'
 
 [[plugins]]
-repo = 'osyo-manga/shabadou.vim'
-
-[[plugins]]
-repo = 'jceb/vim-hier'
-
-[[plugins]]
-repo = 'dannyob/quickfixstatus'
-
-[[plugins]]
 repo = 'thinca/vim-visualstar'
 
 [[plugins]]
@@ -131,54 +122,93 @@ repo = 'kannokanno/previm'
 repo = 'cohama/lexima.vim'
 
 [[plugins]]
-repo = 'vim-airline/vim-airline'
+repo = 'itchyny/lightline.vim'
+depends = 'ale'
 hook_add = '''
-  let g:airline_powerline_fonts = 1
-  set laststatus=2
+let g:lightline = {
+  \ 'colorscheme': 'wombat',
+  \ 'mode_map': {'c': 'NORMAL'},
+  \ 'active': {
+  \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'branch', 'filename' ], [ 'ale' ] ],
+  \   'right': [ [ 'lineinfo' ],
+  \              [ 'percent' ], [ 'winform' ],
+  \              [ 'fileformat', 'fileencoding', 'filetype' ] ],
+  \ },
+  \ 'component_function': {
+  \   'linetotal': 'LightLineTotal',
+  \   'modified': 'LightLineModified',
+  \   'readonly': 'LightLineReadonly',
+  \   'fugitive': 'LightLineFugitive',
+  \   'filename': 'LightLineFilename',
+  \   'filepath': 'LightLineFilepath',
+  \   'ale': 'ALEStatus',
+  \   'fileformat': 'LightLineFileformat',
+  \   'filetype': 'LightLineFiletype',
+  \   'fileencoding': 'LightLineFileencoding',
+  \   'mode': 'LightLineMode',
+  \   'winform': 'LightLineWinform'
+  \ },
+  \ 'separator': { 'left': "\ue0bc", 'right': "\ue0ba" },
+  \ 'subseparator': { 'left': "\ue0bd", 'right': "\ue0bb" },
+  \}
+
+function! LightLineWinform()
+  return winwidth(0) > 50 ? 'w' . winwidth(0) . ':' . 'h' . winheight(0) : ''
+endfunction
+
+function! LightLineModified()
+  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+endfunction
+
+function! LightLineReadonly()
+  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? "\ue0a2" : ''
+endfunction
+
+function! LightLineFilename()
+  return ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
+        \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
+        \  &ft == 'unite' ? unite#get_status_string() :
+        \  &ft == 'vimshell' ? vimshell#get_status_string() :
+        \ '' != expand('%') && winwidth(0) <=120 ? expand('%:t') : winwidth(0) >120 ? expand('%:p') : '[No Name]') .
+        \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
+endfunction
+
+function! LightLineFilepath()
+  return winwidth(0) <=120 ? expand('%:h') : ''
+endfunction
+
+function! LightLineFugitive()
+  try
+    if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head') && winwidth(0) > 55
+      let _ = fugitive#head()
+      return strlen(_) ? "\ue0a0 "._ : ''
+    endif
+  catch
+  endtry
+  return ''
+endfunction
+
+function! LightLineFileformat()
+  return winwidth(0) > 80 ? &fileformat : ''
+endfunction
+
+function! LightLineFiletype()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+endfunction
+
+function! LightLineFileencoding()
+  return winwidth(0) > 60 ? (strlen(&fenc) ? &fenc : &enc) : ''
+endfunction
+
+function! LightLineMode()
+  return winwidth(0) > 30 ? lightline#mode() : ''
+endfunction
+
+function! ALEStatus()
+  return ALEGetStatusLine()
+endfunction
 '''
 
-[[plugins]]
-repo = 'vim-airline/vim-airline-themes'
-hook_add = '''
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
-set laststatus=2
-" let g:airline_theme='badwolf'
-let g:airline_theme='tomorrow'
-let g:airline_detect_modified=1
-let g:airline#extensions#bufferline#enabled = 1
-" unicode symbol
-let g:airline_left_sep = '»'
-let g:airline_left_sep = '▶'
-let g:airline_right_sep = '«'
-let g:airline_right_sep = '◀'
-let g:airline_symbols.crypt = '🔒'
-let g:airline_symbols.linenr = '␊'
-let g:airline_symbols.linenr = '␤'
-let g:airline_symbols.linenr = '¶'
-let g:airline_symbols.maxlinenr = '☰'
-let g:airline_symbols.maxlinenr = ''
-let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.paste = 'ρ'
-let g:airline_symbols.paste = 'Þ'
-let g:airline_symbols.paste = '∥'
-let g:airline_symbols.spell = 'Ꞩ'
-let g:airline_symbols.notexists = '∄'
-let g:airline_symbols.whitespace = 'Ξ'
-" powerline symbol
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_symbols.branch = ''
-let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = ''
-'''
 
 [[plugins]]
 repo = 'mhinz/vim-startify'
@@ -230,6 +260,31 @@ let g:indent_guides_color_change_percent = 5
 nmap <silent> <Space>gt <Plug>IndentGuidesToggle
 '''
 
+[[plugins]]
+repo = 'w0rp/ale'
+hook_add = '''
+let g:ale_linters = {
+  \  'javascript': ['eslint'],
+  \  'python': ['flake8'],
+  \  'ruby': ['rubocop'],
+  \}
+let g:ale_sign_error = '⨉'
+let g:ale_sign_warning = '⚠ '
+let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
+let g:ale_echo_msg_error_str='E'
+let g:ale_echo_msg_warning_str='W'
+let g:ale_echo_msg_format='[%linter%] %s [%severity%]'
+let g:ale_lint_on_save = 1
+let g:ale_lint_on_text_changed = 0
+" let g:ale_set_loclist = 0
+" let g:ale_set_quickfix = 1
+" let g:ale_open_list = 1
+" let g:ale_keep_list_window_open = 0
+nmap <silent> <Space>sp <Plug>(ale_previous_wrap)
+nmap <silent> <Space>sn <Plug>(ale_next_wrap)
+'''
+
+
 [[plugins]] # toml syntax
 repo = 'cespare/vim-toml'
 on_ft = 'toml'
@@ -257,7 +312,6 @@ hook_add = '''
 [[plugins]]
 repo = 'KeitaNakamura/neodark.vim'
 hook_add = '''
-let g:neodark#background='black' " black, gray or brown
 let g:neodark#use_256color = 1
 function! EnableNeoDark()
   colorscheme neodark
@@ -276,7 +330,6 @@ autocmd VimEnter * nested call EnableNeoDark()
 repo = 'tyrannicaltoucan/vim-quantum'
 hook_add = '''
 let g:quantum_black=1
-let g:airline_theme='quantum'
 function! EnableQuantum()
   colorscheme quantum
   hi IncSearch gui=bold,italic guifg=#ffcc00 guibg=#242424

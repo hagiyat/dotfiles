@@ -11,7 +11,7 @@ set expandtab
 set cursorline
 set clipboard+=unnamedplus
 
-set fileencodings=utf-8,cp932,iso-20220-jp,default,latin
+set fileencodings=iso-2022-jp,cp932,sjis,euc-jp,utf-8
 
 set showcmd
 set autoindent
