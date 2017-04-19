@@ -3,6 +3,7 @@
 	email = hagiyat@gmail.com
 [core]
 	editor = nvim
+	excludesfile = /home/hagiyat/.gitignore
 [diff]
 	compactionHeuristic = true
 [pager]
