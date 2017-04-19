@@ -2,7 +2,6 @@
 (function() {
   let {commands} = vimfx.modes.normal
   function addSearchCommand([name, specialKeyword, keybind, description]) {
-    console.log(name, specialKeyword, description)
     vimfx.addCommand({
       name: name,
       description: description,
@@ -34,6 +33,23 @@
     addSearchCommand(params);
   }
 })();
+
+vimfx.addCommand({
+  name: 'next_tab_groups',
+  description: 'next tabGroup',
+  category: 'tabs',
+}, ({vim}) => {
+  vim.window.tabGroups.TabView.switchGroup(false);
+});
+vimfx.set('custom.mode.normal.next_tab_groups', 'gn');
+
+vimfx.addCommand({
+  name: 'pocket',
+  description: 'Save to Pocket',
+}, ({vim}) => {
+  vim.window.document.getElementById('pocket-button').click();
+});
+vimfx.set('custom.mode.normal.pocket', 'gs');
 
 // quick jumps
 (function() {
