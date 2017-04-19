@@ -4,14 +4,15 @@ scroll_on_keystroke = true
 audible_bell = false
 mouse_autohide = true
 allow_bold = true
+allow_italic = true
 dynamic_title = true
 urgent_on_bell = true
 clickable_url = true
 
-font = ShureTechMono Nerd Font Regular 15
-font = Hurmit Nerd Font 13
-font = mononoki Nerd Font 14
-font = CodeNewRoman Nerd Font 14
+; font = Hurmit Nerd Font 12
+; font = mononoki Nerd Font 13
+; font = CodeNewRoman Nerd Font 13
+font = Monospace 14
 
 scrollback_lines = 10000
 search_wrap = true
