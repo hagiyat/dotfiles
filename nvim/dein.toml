@@ -116,9 +116,6 @@ let g:gutentags_cache_dir = '~/.cache/ctags'
 repo = 'tpope/vim-abolish'
 
 [[plugins]]
-repo = 'kannokanno/previm'
-
-[[plugins]]
 repo = 'cohama/lexima.vim'
 
 [[plugins]]
@@ -130,12 +127,10 @@ let g:lightline = {
   \ 'mode_map': {'c': 'NORMAL'},
   \ 'active': {
   \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'branch', 'filename' ], [ 'ale' ] ],
-  \   'right': [ [ 'lineinfo' ],
-  \              [ 'percent' ], [ 'winform' ],
+  \   'right': [ [ 'percent' ],
   \              [ 'fileformat', 'fileencoding', 'filetype' ] ],
   \ },
   \ 'component_function': {
-  \   'linetotal': 'LightLineTotal',
   \   'modified': 'LightLineModified',
   \   'readonly': 'LightLineReadonly',
   \   'fugitive': 'LightLineFugitive',
@@ -145,16 +140,11 @@ let g:lightline = {
   \   'fileformat': 'LightLineFileformat',
   \   'filetype': 'LightLineFiletype',
   \   'fileencoding': 'LightLineFileencoding',
-  \   'mode': 'LightLineMode',
-  \   'winform': 'LightLineWinform'
+  \   'mode': 'LightLineMode'
   \ },
   \ 'separator': { 'left': "\ue0bc", 'right': "\ue0ba" },
   \ 'subseparator': { 'left': "\ue0bd", 'right': "\ue0bb" },
   \}
-
-function! LightLineWinform()
-  return winwidth(0) > 50 ? 'w' . winwidth(0) . ':' . 'h' . winheight(0) : ''
-endfunction
 
 function! LightLineModified()
   return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
@@ -166,9 +156,7 @@ endfunction
 
 function! LightLineFilename()
   return ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
-        \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
-        \  &ft == 'unite' ? unite#get_status_string() :
-        \  &ft == 'vimshell' ? vimshell#get_status_string() :
+        \ (&ft == 'denite' ? denite#get_status_source() :
         \ '' != expand('%') && winwidth(0) <=120 ? expand('%:t') : winwidth(0) >120 ? expand('%:p') : '[No Name]') .
         \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
 endfunction
@@ -298,18 +286,6 @@ on_ft = 'fish'
 # colorschemes
 ################################################################
 [[plugins]]
-repo = 'AlessandroYorba/Alduin'
-hook_add = '''
-" autocmd VimEnter * nested colorscheme alduin
-'''
-
-[[plugins]]
-repo = 'cocopon/iceberg.vim'
-hook_add = '''
-" autocmd VimEnter * nested colorscheme iceberg
-'''
-
-[[plugins]]
 repo = 'KeitaNakamura/neodark.vim'
 hook_add = '''
 let g:neodark#use_256color = 1
@@ -342,3 +318,20 @@ endfunction
 " autocmd VimEnter * nested call EnableQuantum()
 '''
 
+[[plugins]]
+repo = 'joshdick/onedark.vim'
+hook_add = '''
+let g:onedark_termcolors=256
+function! EnableOnedark()
+  colorscheme onedark
+  let g:lightline.colorscheme = 'onedark'
+  hi Normal guifg=#abb2bf guibg=#242424
+  hi IncSearch gui=bold,italic guifg=#ffcc00 guibg=#242424
+  hi Search gui=bold,italic guifg=#ffa64d guibg=#242424
+  hi LineNr guifg=#474646 guibg=#202020
+  hi CursorLine guibg=#343434
+  " hi CursorLineNr guifg=#669999 guibg=#343434
+  hi MatchParen gui=bold guifg=#1affb2 guibg=#242424
+endfunction
+" autocmd VimEnter * nested call EnableOnedark()
+'''

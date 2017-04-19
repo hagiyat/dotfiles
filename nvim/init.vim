@@ -9,11 +9,10 @@ set novisualbell
 " set ambiwidth=double
 set expandtab
 set cursorline
-set clipboard+=unnamedplus
+set clipboard=unnamedplus
 
 set fileencodings=iso-2022-jp,cp932,sjis,euc-jp,utf-8
 
-set showcmd
 set autoindent
 set showmatch
 set matchtime=3

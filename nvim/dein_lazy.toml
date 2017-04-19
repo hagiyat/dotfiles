@@ -32,11 +32,12 @@ nmap <Space> [denite]
 nnoremap [denite]bb :<C-u>Denite buffer<CR>
 nnoremap [denite]bo :<C-u>Denite outline<CR>
 nnoremap [denite]bl :<C-u>Denite line<CR>
-nnoremap [denite]ff :<C-u>Denite file_mru<CR>
+nnoremap [denite]ff :<C-u>Denite buffer file_mru<CR>
 nnoremap [denite]ft :<C-u>Denite filetype<CR>
 " nnoremap [denite]fr :<C-u>Denite file_rec<CR>
-nnoremap [denite]fr :<C-u>Denite
-      \ `finddir('.git', ';') != '' ? 'file_rec/git' : 'file_rec'`<CR>
+" nnoremap [denite]fr :<C-u>Denite \ `finddir('.git', ';') != '' ? 'file_rec/git' : 'file_rec'`<CR>
+nnoremap [denite]fr :<C-u>Denite file_rec<CR>
+nnoremap [denite]fg :<C-u>Denite file_rec/git<CR>
 nnoremap [denite]gg :<C-u>Denite grep<CR>
 nnoremap [denite]gc :<C-u>DeniteCursorWord grep<CR>
 nnoremap [denite]dr :<C-u>Denite-resume<CR>
@@ -95,10 +96,36 @@ on_ft = ['ruby', 'haml']
 hook_source = '''
 nnoremap [rails] <Nop>
 nmap     <Space>r [rails]
-" nnoremap <silent> [rails]r :<C-u>Denite<Space>rails:dwim<Return>
-nnoremap <silent> [rails]m :<C-u>Denite<Space>rails:model<Return>
-nnoremap <silent> [rails]c :<C-u>Denite<Space>rails:controller<Return>
-nnoremap <silent> [rails]v :<C-u>Denite<Space>rails:view<Return>
-nnoremap <silent> [rails]h :<C-u>Denite<Space>rails:helper<Return>
-" nnoremap <silent> [rails]s :<C-u>Denite<Space>rails:test<Return>
+" nnoremap <silent> [rails]r :<C-u>Denite<Space>rails:dwim<CR>
+nnoremap <silent> [rails]m :<C-u>Denite<Space>rails:model<CR>
+nnoremap <silent> [rails]c :<C-u>Denite<Space>rails:controller<CR>
+nnoremap <silent> [rails]v :<C-u>Denite<Space>rails:view<CR>
+nnoremap <silent> [rails]h :<C-u>Denite<Space>rails:helper<CR>
+" nnoremap <silent> [rails]s :<C-u>Denite<Space>rails:test<CR>
+'''
+
+[[plugins]]
+repo = 'kannokanno/previm'
+on_ft = ['markdown']
+hook_source = '''
+let g:previm_open_cmd = 'firefox'
+nnoremap <silent> <Space>mp :<C-u>PrevimOpen<CR>
+'''
+
+[[plugins]]
+repo = 'godlygeek/tabular'
+on_ft = ['markdown']
+hook_source = '''
+'''
+
+[[plugins]]
+repo = 'plasticboy/vim-markdown'
+on_ft = ['markdown']
+depends = ['tabular']
+hook_source = '''
+let g:vim_markdown_folding_disabled = 1
+let g:vim_markdown_conceal = 2
+let g:vim_markdown_no_extensions_in_markdown = 1
+nnoremap <silent> <Space>mt :<C-u>TableFormat<CR>
+nnoremap <silent> <Space>mh :<C-u>Toch<CR>
 '''
