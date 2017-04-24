@@ -302,7 +302,7 @@ if zplug check "mollifier/anyframe"; then
 
   bindkey '^r' put_history
   bindkey '^x^i' insert_git_branch
-  bindkey '^x^c' checkout_git_branch
+  bindkey '^x^b' checkout_git_branch
   bindkey '^x^f' insert_filename
   bindkey '^x^p' kill_process
 fi
