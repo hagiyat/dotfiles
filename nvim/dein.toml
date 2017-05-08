@@ -142,9 +142,12 @@ let g:lightline = {
   \   'fileencoding': 'LightLineFileencoding',
   \   'mode': 'LightLineMode'
   \ },
-  \ 'separator': { 'left': "\ue0bc", 'right': "\ue0ba" },
-  \ 'subseparator': { 'left': "\ue0bd", 'right': "\ue0bb" },
+  \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
+  \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" },
   \}
+  " slash
+  " 'separator': { 'left': "\ue0bc", 'right': "\ue0ba" },
+  " 'subseparator': { 'left': "\ue0bd", 'right': "\ue0bb" },
 
 function! LightLineModified()
   return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'

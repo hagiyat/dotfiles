@@ -108,7 +108,7 @@ nnoremap <silent> [rails]h :<C-u>Denite<Space>rails:helper<CR>
 repo = 'kannokanno/previm'
 on_ft = ['markdown']
 hook_source = '''
-let g:previm_open_cmd = 'firefox'
+let g:previm_open_cmd = 'chromium'
 nnoremap <silent> <Space>mp :<C-u>PrevimOpen<CR>
 '''
 
