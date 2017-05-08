@@ -90,30 +90,23 @@ abbreviations=(
   "tmh"  "tmux split-window -h -c '#{pane_current_path}'"
   "tmw"  "tmux new-window -c '#{pane_current_path}'"
   # rails
-  "rs" "rails server"
-  "rc" "rails console"
+  "rs" "bin/rails server"
+  "rc" "bin/rails console"
   # "rg" "rails generate"
-  "rgm" "rails generate migration"
-  "rr" "rails runner"
+  "rgm" "bin/rails generate migration"
+  "rr" "bin/rails runner"
+  "rsp" "bin/rspec"
   # bundle exec
   "be" "bundle exec"
   "bi" "bundle install --jobs=4 --path=vendor/bundle"
   "bu" "bundle update"
   "br" "bundle exec rake"
   "bm" "bundle exec rake db:migrate"
-  # rbenv
-  "rer" "rbenv rehash"
-  # dash
-  "dru" "open dash://ruby:"
-  "dra" "open dash://rails:"
-  "drs" "open dash://rspec:"
-  "dmy" "open dash://mysql:"
-  "da"  "open dash://"
   # docker
   "d" "docker"
   "dc" "docker-compose"
   # other
-  "b" "browse"
+  "b" "chromium" # firefox
   "qq" "exit"
 )
 
