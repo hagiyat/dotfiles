@@ -44,6 +44,10 @@ alias la='ls -al'
 # for git diff
 # export PATH=$PATH:/usr/local/share/git-core/contrib/diff-highlight
 
+# linuxbrew
+export PATH="$HOME/.linuxbrew/bin:$PATH"
+export PKG_CONFIG_PATH="$HOME/.linuxbrew/lib/pkgconfig"
+
 # git-remoteのURLをhttpsに変換してopenする
 function git-browse() {
   git rev-parse --git-dir >/dev/null 2>&1
@@ -173,11 +177,12 @@ if type fzf > /dev/null; then
 fi
 
 # plugins
-if [[ ! -d ~/.zplug ]]; then
-  curl -sL zplug.sh/installer | zsh
+export ZPLUG_HOME=$HOME/.linuxbrew/opt/zplug
+if [[ ! -d $ZPLUG_HOME ]]; then
+  curl -sL --proto-redir -all,https https://zplug.sh/installer | zsh
   zplug update --self
 fi
-source ~/.zplug/init.zsh
+source $ZPLUG_HOME/init.zsh
 
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "zsh-users/zsh-history-substring-search"
@@ -191,7 +196,6 @@ zplug "mollifier/anyframe"
 zplug "zsh-users/zsh-completions"
 zplug "docker/compose", as:command, use:"contrib/completion/zsh/_docker-compose"
 zplug "docker/docker", as:command, use:"contrib/completion/zsh/_docker"
-zplug "glidenote/ag-zsh-completion"
 
 # uses colortheme for iTerm2 `hybrid`
 # ls color
@@ -307,4 +311,8 @@ zplug load
 [ -f /usr/local/share/zsh/site-functions/_aws ] && source /usr/local/share/zsh/site-functions/_aws
 if [ -d $HOME/.asdf ] ; then
   source ~/.asdf/completions/asdf.bash
+fi
+# linuxbrew completions
+if [ -d $HOME/.linuxbrew ]; then
+  source $HOME/.linuxbrew/share/zsh/site-functions
 fi
