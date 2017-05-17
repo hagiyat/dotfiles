@@ -1,6 +1,8 @@
 export LANG=ja_JP.UTF-8
 export EDITOR=nvim
 export XDG_CONFIG_HOME=~/.config
+export XDG_DATA_DIRS=/usr/local/share:/usr/share
+export BROWSER=vivaldi
 
 # emacs keybind
 bindkey -e
@@ -32,10 +34,10 @@ export NVIM_TUI_ENABLE_TRUE_COLOR=1
 export SKIM_DEFAULT_OPTIONS='--ansi -c rg'
 export FUZZY_FINDER_APP=sk
 
-# less colorize / [required] brew install source-highlight
+# less colorize / [required] sudo apt install -y source-highlight
 if type "source-highlight" > /dev/null 2>&1; then
   export LESS='-R'
-  export LESSOPEN='| src-hilite-lesspipe.sh %s'
+  export LESSOPEN='| /usr/share/source-highlight/src-hilite-lesspipe.sh %s'
 fi
 
 alias ll='ls -l'
@@ -45,14 +47,17 @@ alias la='ls -al'
 # export PATH=$PATH:/usr/local/share/git-core/contrib/diff-highlight
 
 # linuxbrew
-export PATH="$HOME/.linuxbrew/bin:$PATH"
-export PKG_CONFIG_PATH="$HOME/.linuxbrew/lib/pkgconfig"
+if type "brew" > /dev/null 2>&1; then
+  export PATH="$HOME/.linuxbrew/bin:$HOME/.linuxbrew/sbin:$PATH"
+  export XDG_DATA_DIRS="/home/hagiyat/.linuxbrew/share:$XDG_DATA_DIRS"
+  export PKG_CONFIG_PATH="$HOME/.linuxbrew/lib/pkgconfig"
+fi
 
 # git-remoteのURLをhttpsに変換してopenする
 function git-browse() {
   git rev-parse --git-dir >/dev/null 2>&1
   if [[ $? == 0 ]]; then
-    open `git config --get remote.origin.url | sed -e 's|\:|/|' -e 's|^git@|https://|' -e 's|.git$||'`
+    $BROWSER `git config --get remote.origin.url | sed -e 's|\:|/|' -e 's|^git@|https://|' -e 's|.git$||'`
   else
     echo ".git not found.\n"
   fi
@@ -133,12 +138,6 @@ bindkey "^x " no-magic-abbrev-expand
 # emacs-mac
 if [ -d /Applications/Emacs.app/ ] ; then
   alias spacemacs="open -a /Applications/Emacs.app"
-fi
-
-# openコマンドでfile uri schemeをブラウザで開く(markdown preview用)
-if [ -d /Applications/Firefox.app/ ] ; then
-  # alias browse="open -a /Applications/Firefox.app"
-  alias browse="open -a /Applications/FirefoxDeveloperEdition.app"
 fi
 
 # asdf
