@@ -5,8 +5,8 @@ set background=dark
 set number
 set t_vb=
 set novisualbell
+set noshowcmd
 " set ambiwidth=double
-set expandtab
 set cursorline
 set clipboard=unnamedplus
 
@@ -136,7 +136,7 @@ aug initvim
   " 保存時に行末の空白を除去する
   autocmd BufWritePre * :%s/\s\+$//ge
 
-  set ttimeoutlen=150
+  set ttimeoutlen=50
   autocmd InsertLeave * call Fcitx2en()
 
   " autosave
