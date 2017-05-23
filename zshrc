@@ -47,11 +47,9 @@ alias la='ls -al'
 # export PATH=$PATH:/usr/local/share/git-core/contrib/diff-highlight
 
 # linuxbrew
-if type "brew" > /dev/null 2>&1; then
-  export PATH="$HOME/.linuxbrew/bin:$HOME/.linuxbrew/sbin:$PATH"
-  export XDG_DATA_DIRS="/home/hagiyat/.linuxbrew/share:$XDG_DATA_DIRS"
-  export PKG_CONFIG_PATH="$HOME/.linuxbrew/lib/pkgconfig"
-fi
+export PATH="$HOME/.linuxbrew/bin:$HOME/.linuxbrew/sbin:$PATH"
+export XDG_DATA_DIRS="/home/hagiyat/.linuxbrew/share:$XDG_DATA_DIRS"
+export PKG_CONFIG_PATH="$HOME/.linuxbrew/lib/pkgconfig"
 
 # git-remoteのURLをhttpsに変換してopenする
 function git-browse() {
