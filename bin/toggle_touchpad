@@ -1,0 +1,13 @@
+#!/bin/bash
+# work on ubuntu gnome 17.04
+
+device=11
+state=`xinput list-props "$device" | grep "Device Enabled" | grep -o "[01]$"`
+
+if [ "$state" -eq '1' ];then
+  xinput disable "$device"
+  notify-send TouchPad "Disabled👋"
+else
+  xinput enable "$device"
+  notify-send TouchPad "Enabled💪"
+fi
