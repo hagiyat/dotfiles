@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 source 'http://rubygems.org'
 
+# usage: gem install --file path/to/Gemfile.local
+
+gem 'bundler'
 gem 'neovim'
 gem 'rcodetools'
 gem 'fastri'
