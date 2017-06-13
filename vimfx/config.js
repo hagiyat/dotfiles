@@ -20,7 +20,7 @@
 
   for (let params of [
     [
-      'search_by_tabs', '% ', 'gt',
+      'search_by_tabs', '% ', 'b',
       'Search for text in any open tabs'
     ], [
       'search_by_histories', '^ ', 'gh',
@@ -34,14 +34,10 @@
   }
 })();
 
-vimfx.addCommand({
-  name: 'next_tab_groups',
-  description: 'next tabGroup',
-  category: 'tabs',
-}, ({vim}) => {
-  vim.window.tabGroups.TabView.switchGroup(false);
-});
-vimfx.set('custom.mode.normal.next_tab_groups', 'gn');
+// タブ移動時にロケーションバーのフォーカスを外す
+vimfx.on('TabSelect', ({event}) => {
+  event.detail.previousTab.ownerDocument.activeElement.blur();
+})
 
 vimfx.addCommand({
   name: 'pocket',
@@ -68,7 +64,16 @@ vimfx.set('custom.mode.normal.pocket', 'gs');
     ['preferences', 'gjp', 'about:preferences'],
     ['config', 'gjc', 'about:config'],
     ['about', 'gjA', 'about:about'],
-    ['lastpass', 'gjl', 'chrome://lastpass/content/home2.xul']
+    ['lastpass', 'gjl', 'chrome://lastpass/content/home2.xul'],
+    ['github', 'gog', "https://github.com/hagiyat"],
+    ['tweetdeck', 'got', "https://tweetdeck.twitter.com/"],
+    ['feedly', 'gof', "https://feedly.com/i/latest"],
+    ['pocket', 'gop', "https://getpocket.com/a/queue/list/"],
+    ['hatebu', 'gob', "http://b.hatena.ne.jp/"],
+    ['trello', 'goT', "https://trello.com/"],
+    ['messenger', 'gom', "https://www.facebook.com/messages/"],
+    ['facebook', 'goF', "https://www.facebook.com/"],
+    ['yahoo realtime', 'goy', "https://search.yahoo.co.jp/#!/realtime"]
   ];
 
   for (let qmark of qmarks) { addQuickMark(qmark); }
