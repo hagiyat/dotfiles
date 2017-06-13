@@ -81,6 +81,7 @@ abbreviations=(
   "gbb"  "git checkout -b"
   "gd"  "git diff --word-diff"
   "gch"  "git checkout"
+  "gcl"  "git clean -df -n"
   "gco"  "git commit -v"
   "ga"  "git add"
   "gl"  "git log"
