@@ -1,5 +1,8 @@
-" set encoding=utf-8 scriptencoding utf-8
-
+"                      _      "
+"   ___  ___ ___ _  __(_)_ _  "
+"  / _ \/ -_) _ \ |/ / /  ` \ "
+" /_//_/\__/\___/___/_/_/_/_/ "
+"                             "
 set termguicolors
 set background=dark
 set number
@@ -32,6 +35,10 @@ set infercase
 set switchbuf=useopen
 set backspace=indent,eol,start
 
+" 日本語入力のときの文字化け対応
+set ttimeout
+set ttimeoutlen=50
+
 " Swapファイル,Backupファイルなど全て無効化する
 set nowritebackup
 set nobackup
@@ -42,6 +49,9 @@ filetype plugin on
 set tabstop=2
 set shiftwidth=2
 set expandtab
+
+let g:python_host_prog = '/usr/bin/python'
+let g:python3_host_prog = '/usr/bin/python3'
 
 " netrw
 let g:netrw_liststyle=3
@@ -67,7 +77,7 @@ inoremap <silent> <C-e> <S-Right>
 inoremap <silent> <C-h> <C-g>u<C-h>
 inoremap <silent> <C-d> <C-g>u<Del>
 
-" window
+" window(+vim-maximizer)
 nnoremap <Space>wh <C-w>h
 nnoremap <Space>wj <C-w>j
 nnoremap <Space>wk <C-w>k
@@ -75,6 +85,7 @@ nnoremap <Space>wl <C-w>l
 nnoremap <silent> <Space>w- :<C-u>split<CR>
 nnoremap <silent> <Space>w/ :<C-u>vsplit<CR>
 nnoremap <silent> <Space>wd :<C-u>q<CR>
+nnoremap <Space>w0 <C-w>=
 
 " buffer
 nnoremap <silent> <Space>bn :<C-u>bnext<CR>
@@ -127,6 +138,12 @@ function! Fcitx2en()
     let l:a = system("fcitx-remote -c")
   endif
 endfunction
+function! Fcitx2en()
+  let s:input_status = system("fcitx-remote")
+  if s:input_status == 2
+    let l:a = system("fcitx-remote -c")
+  endif
+endfunction
 
 aug initvim
   autocmd!
@@ -136,8 +153,7 @@ aug initvim
   " 保存時に行末の空白を除去する
   autocmd BufWritePre * :%s/\s\+$//ge
 
-  set ttimeoutlen=50
-  autocmd InsertLeave * call Fcitx2en()
+  autocmd InsertLeave,FocusGained,FocusLost * call Fcitx2en()
 
   " autosave
   autocmd CursorHold,CursorHoldI,InsertLeave * silent! wall

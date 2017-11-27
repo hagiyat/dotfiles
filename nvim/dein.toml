@@ -111,6 +111,13 @@ hook_add = '''
 let g:gutentags_cache_dir = '~/.cache/ctags'
 '''
 
+[[plugins]]
+repo = 'szw/vim-maximizer'
+hook_add = '''
+let g:maximizer_set_mapping_with_bang = 0
+nnoremap <silent> <Space>ww :<C-u>MaximizerToggle<CR>
+'''
+
 
 [[plugins]]
 repo = 'tpope/vim-abolish'
