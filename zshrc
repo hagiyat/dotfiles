@@ -2,7 +2,7 @@ export LANG=ja_JP.UTF-8
 export EDITOR=nvim
 export XDG_CONFIG_HOME=~/.config
 export XDG_DATA_DIRS=/usr/local/share:/usr/share
-export BROWSER=firefox
+export BROWSER=vivaldi
 
 # emacs keybind
 bindkey -e
@@ -46,7 +46,7 @@ alias la='ls -al'
 
 # linuxbrew
 export PATH="$HOME/.linuxbrew/bin:$HOME/.linuxbrew/sbin:$PATH"
-export XDG_DATA_DIRS="/home/hagiyat/.linuxbrew/share:$XDG_DATA_DIRS"
+export XDG_DATA_DIRS="$HOME/.linuxbrew/share:$XDG_DATA_DIRS"
 # export PKG_CONFIG_PATH="$HOME/.linuxbrew/lib/pkgconfig"
 
 # git-remoteのURLをhttpsに変換してopenする
@@ -113,7 +113,8 @@ abbreviations=(
   "d" "docker"
   "dc" "docker-compose"
   # other
-  "b" "chromium" # firefox
+  "bv" "vivaldi"
+  "bf" "firefox"
   "qq" "exit"
 )
 
@@ -133,14 +134,15 @@ zle -N no-magic-abbrev-expand
 bindkey " " magic-abbrev-expand
 bindkey "^x " no-magic-abbrev-expand
 
-# emacs-mac
-if [ -d /Applications/Emacs.app/ ] ; then
-  alias spacemacs="open -a /Applications/Emacs.app"
-fi
-
 # asdf
 if [ -d $HOME/.asdf ] ; then
   . ~/.asdf/asdf.sh
+fi
+
+# anyenv / pythonのcurlフルパス問題のために一時的に入れる
+if [ -d $HOME/.anyenv ] ; then
+  export PATH="$HOME/.anyenv/bin:$PATH"
+  eval "$(anyenv init -)"
 fi
 
 # direnv
@@ -161,10 +163,6 @@ function _pip_completion {
 compctl -K _pip_completion pip
 # pip zsh completion end
 
-if type sk > /dev/null; then
-  export SKIM_DEFAULT_OPTIONS='--ansi -c rg'
-fi
-
 if type fzf > /dev/null; then
   export FZF_DEFAULT_OPTS='
     --height 40% --reverse
@@ -172,6 +170,23 @@ if type fzf > /dev/null; then
     --color info:150,prompt:110,spinner:150,pointer:167,marker:174
   '
 fi
+
+# color test
+function _color_chart {
+  awk 'BEGIN{
+      s="/\\/\\/\\/\\/\\"; s=s s s s s s s s;
+      for (colnum = 0; colnum<77; colnum++) {
+          r = 255-(colnum*255/76);
+          g = (colnum*510/76);
+          b = (colnum*255/76);
+          if (g>255) g = 510-g;
+          printf "\033[48;2;%d;%d;%dm", r,g,b;
+          printf "\033[38;2;%d;%d;%dm", 255-r,255-g,255-b;
+          printf "%s\033[0m", substr(s,colnum+1,1);
+      }
+      printf "\n";
+  }'
+}
 
 # plugins
 export ZPLUG_HOME=$HOME/.linuxbrew/opt/zplug
@@ -231,15 +246,17 @@ setopt prompt_subst # Make sure propt is able to be generated properly.
 zplug "hagiyat/hyperzsh", at:customize, use:hyperzsh.zsh-theme, defer:2
 
 # Install plugins if there are plugins that have not been installed
-if ! zplug check --verbose; then
-  printf "Install? [y/N]: "
-  if read -q; then
-    echo; zplug install
+function _zplug_check_install() {
+  if ! zplug check --verbose; then
+    printf "Install? [y/N]: "
+    if read -q; then
+      echo; zplug install
+    fi
   fi
-fi
+}
 
 if zplug check "b4b4r07/enhancd"; then
-  ENHANCD_FILTER=fzf:fzy:sk
+  ENHANCD_FILTER=fzf:fzy
   export ENHANCD_FILTER
 fi
 
@@ -314,4 +331,8 @@ fi
 # linuxbrew completions
 if [ -d $HOME/.linuxbrew ]; then
   source $HOME/.linuxbrew/share/zsh/site-functions
+fi
+
+if (which zprof > /dev/null 2>&1) ;then
+  zprof
 fi
