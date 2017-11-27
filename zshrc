@@ -2,7 +2,7 @@ export LANG=ja_JP.UTF-8
 export EDITOR=nvim
 export XDG_CONFIG_HOME=~/.config
 export XDG_DATA_DIRS=/usr/local/share:/usr/share
-export BROWSER=vivaldi
+export BROWSER=firefox
 
 # emacs keybind
 bindkey -e
@@ -31,8 +31,6 @@ autoload -Uz zmv
 
 # export TERM=xterm-256color
 export NVIM_TUI_ENABLE_TRUE_COLOR=1
-export SKIM_DEFAULT_OPTIONS='--ansi -c rg'
-export FUZZY_FINDER_APP=sk
 
 # less colorize / [required] sudo apt install -y source-highlight
 if type "source-highlight" > /dev/null 2>&1; then
@@ -49,7 +47,7 @@ alias la='ls -al'
 # linuxbrew
 export PATH="$HOME/.linuxbrew/bin:$HOME/.linuxbrew/sbin:$PATH"
 export XDG_DATA_DIRS="/home/hagiyat/.linuxbrew/share:$XDG_DATA_DIRS"
-export PKG_CONFIG_PATH="$HOME/.linuxbrew/lib/pkgconfig"
+# export PKG_CONFIG_PATH="$HOME/.linuxbrew/lib/pkgconfig"
 
 # git-remoteのURLをhttpsに変換してopenする
 function git-browse() {
@@ -79,7 +77,8 @@ abbreviations=(
   "gs"  "git stash"
   "gb"  "git branch"
   "gbb"  "git checkout -b"
-  "gd"  "git diff --word-diff"
+  # "gd"  "git diff --word-diff"
+  "gd"  "git diff"
   "gch"  "git checkout"
   "gcl"  "git clean -df -n"
   "gco"  "git commit -v"
@@ -306,7 +305,9 @@ fi
 zplug load
 
 # awscli completions
-[ -f /usr/local/share/zsh/site-functions/_aws ] && source /usr/local/share/zsh/site-functions/_aws
+# [ -f /usr/local/share/zsh/site-functions/_aws ] && source /usr/local/share/zsh/site-functions/_aws
+[ -f /usr/local/bin/aws_zsh_completer.sh ] && source /usr/local/bin/aws_zsh_completer.sh
+
 if [ -d $HOME/.asdf ] ; then
   source ~/.asdf/completions/asdf.bash
 fi
