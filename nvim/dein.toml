@@ -2,11 +2,17 @@
 repo = 'Shougo/dein.vim'
 
 [[plugins]]
+repo = 'haya14busa/dein-command.vim'
+
+[[plugins]]
 repo = 'Shougo/vimproc'
 build = 'make'
 
 [[plugins]]
 repo = 'tpope/vim-fugitive'
+
+[[plugins]]
+repo = 'airblade/vim-gitgutter'
 
 [[plugins]]
 repo = 'osyo-manga/vim-precious'
