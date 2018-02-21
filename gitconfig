@@ -4,12 +4,9 @@
 [core]
 	editor = nvim
 	excludesfile = /home/hagiyat/.gitignore
+	pager = diff-so-fancy | less --tabs=4 -RFX
 [diff]
 	compactionHeuristic = true
-[pager]
-	log = diff-highlight | less
-	show = diff-highlight | less
-	diff = diff-highlight | less
 [interactive]
 	diffFilter = diff-highlight
 [merge]
