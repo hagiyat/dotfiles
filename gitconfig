@@ -8,7 +8,7 @@
 [diff]
 	compactionHeuristic = true
 [interactive]
-	diffFilter = diff-highlight
+	diffFilter = diff-so-fancy
 [merge]
 	tool = vimdiff
 [mergetool "vimdiff"]
