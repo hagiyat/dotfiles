@@ -50,7 +50,7 @@ set tabstop=2
 set shiftwidth=2
 set expandtab
 
-let g:python_host_prog = '/usr/bin/python'
+let g:python_host_prog = '/usr/bin/python2'
 let g:python3_host_prog = '/usr/bin/python3'
 
 " netrw
