@@ -2,7 +2,7 @@ export LANG=ja_JP.UTF-8
 export EDITOR=nvim
 export XDG_CONFIG_HOME=~/.config
 export XDG_DATA_DIRS=/usr/local/share:/usr/share
-export BROWSER=vivaldi
+export BROWSER=chromium
 
 # emacs keybind
 bindkey -e
@@ -35,7 +35,8 @@ export NVIM_TUI_ENABLE_TRUE_COLOR=1
 # less colorize / [required] sudo apt install -y source-highlight
 if type "source-highlight" > /dev/null 2>&1; then
   export LESS='-R'
-  export LESSOPEN='| /usr/share/source-highlight/src-hilite-lesspipe.sh %s'
+  # export LESSOPEN='| /usr/share/source-highlight/src-hilite-lesspipe.sh %s'
+  export LESSOPEN='| /usr/bin/src-hilite-lesspipe.sh %s'
 fi
 
 alias ll='ls -l'
@@ -43,6 +44,7 @@ alias la='ls -al'
 
 # for git diff
 # export PATH=$PATH:/usr/local/share/git-core/contrib/diff-highlight
+export PATH=$PATH:/usr/share/git/diff-highlight
 
 # linuxbrew
 export PATH="$HOME/.linuxbrew/bin:$HOME/.linuxbrew/sbin:$PATH"
@@ -113,8 +115,10 @@ abbreviations=(
   "d" "docker"
   "dc" "docker-compose"
   # other
+  "hd" '$HOME/'
   "bv" "vivaldi"
   "bf" "firefox"
+  "psa" "ps auxwf"
   "qq" "exit"
 )
 
@@ -137,12 +141,6 @@ bindkey "^x " no-magic-abbrev-expand
 # asdf
 if [ -d $HOME/.asdf ] ; then
   . ~/.asdf/asdf.sh
-fi
-
-# anyenv / pythonのcurlフルパス問題のために一時的に入れる
-if [ -d $HOME/.anyenv ] ; then
-  export PATH="$HOME/.anyenv/bin:$PATH"
-  eval "$(anyenv init -)"
 fi
 
 # direnv
@@ -324,13 +322,22 @@ zplug load
 # awscli completions
 # [ -f /usr/local/share/zsh/site-functions/_aws ] && source /usr/local/share/zsh/site-functions/_aws
 [ -f /usr/local/bin/aws_zsh_completer.sh ] && source /usr/local/bin/aws_zsh_completer.sh
+[ -f /usr/bin/aws_zsh_completer.sh ] && source /usr/bin/aws_zsh_completer.sh
 
 if [ -d $HOME/.asdf ] ; then
   source ~/.asdf/completions/asdf.bash
 fi
-# linuxbrew completions
-if [ -d $HOME/.linuxbrew ]; then
-  source $HOME/.linuxbrew/share/zsh/site-functions
+
+# zsh completions
+if [ -e /etc/arch-release ]; then
+  if [ -d /usr/share/zsh/site-functions ]; then
+    source /usr/share/zsh/site-functions
+  fi
+elif [ -e /etc/lsb-release ]; then
+  # linuxbrew completions
+  if [ -d $HOME/.linuxbrew ]; then
+    source $HOME/.linuxbrew/share/zsh/site-functions
+  fi
 fi
 
 if (which zprof > /dev/null 2>&1) ;then
