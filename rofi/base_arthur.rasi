@@ -1,0 +1,165 @@
+/**
+ * ROFI Color theme
+ * User: Qball
+ * Copyright: Dave Davenport
+ */
+
+configuration {
+
+    // The display name of this browser
+    display-ssh:                   "🖧";
+    // The display name of this browser
+    display-run:                   "💣";
+    // The display name of this browser
+    display-drun:                  "🔥";
+    // The display name of this browser
+    display-window:                "📺";
+    display-combi:                  "🛠️";
+    show-icons: true;
+}
+
+
+/**
+ * User: Qball
+ * Copyright: Dave Davenport
+ */
+* {
+    backlight:  #ffeedd88;
+    foreground:   #ccffeedd;
+    background-color:  transparent;
+    dark: #1c1c1c;
+    // Black
+    black:       #3d352a;
+    lightblack:  #554444;
+    tlightblack:  #554411cc;
+    //
+    // Red
+    red:         #cd5c5c;
+    lightred:    #cc5533;
+    //
+    // Green
+    //green:       #86af80;
+    green:       #668f60;
+    lightgreen:  #88cc22;
+    //
+    // Yellow
+    yellow:      #e8ae5b;
+    lightyellow:     #ffa75d;
+    //
+    // Blue
+    blue:      #6495ed;
+    lightblue:     #87ceeb;
+    //
+    // Magenta
+    magenta:      #deb887;
+    lightmagenta:     #996600;
+    //
+    // Cyan
+    cyan:      #b0c4de;
+    tcyan:      #ccb0c4de;
+    lightcyan:     #b0c4de;
+    //
+    // White
+    white:      #bbaa99;
+    lightwhite:     #ddccbb;
+    //
+    // Bold, Italic, Underline
+    highlight:     underline bold #e8ae5b;
+
+    transparent: rgba(0,0,0,0);
+    font: "Monospace 12";
+}
+#window {
+    location: center;
+    anchor:   center;
+    transparency: "screenshot";
+    padding: 10px;
+    border:  0px;
+    border-radius: 10px;
+    color: @magenta;
+    background-color: @transparent;
+    spacing: 0;
+    children:  [mainbox];
+    orientation: horizontal;
+}
+
+#mainbox {
+    spacing: 0;
+    children: [ inputbar, message, listview ];
+}
+
+#message {
+    border-color: @foreground;
+    border:  0px 2px 2px 2px;
+//    border-radius: 10px;
+    padding: 5;
+    background-color: @tcyan;
+}
+#message {
+    font: "Monospace 8";
+    color: @black;
+}
+
+#inputbar {
+    color: @lightyellow;
+    padding: 11px;
+    background-color: @tlightblack;
+    border: 2px 2px 2px 2px;
+    border-radius:  15px 15px 0px 0px;
+    border-color: @foreground;
+    font: "Monospace 18";
+}
+#entry,prompt,case-indicator {
+    text-font: inherit;
+    text-color:inherit;
+}
+#prompt {
+    margin:     0px 0.3em 0em 0em ;
+}
+#listview {
+    padding: 8px;
+    border-radius: 0px 0px 15px 15px;
+    border-color: @foreground;
+    border: 0px 2px 2px 2px;
+    background-color: #1c1c1ccc;
+    dynamic: false;
+    lines: 12;
+}
+#element {
+    padding: 3px;
+    vertical-align: 0.5;
+//    border: 2px;
+    border-radius: 4px;
+    background-color: transparent;
+    color: @foreground;
+    font:inherit;
+}
+#element selected normal {
+    background-color: @lightblack;
+}
+#element normal active {
+    foreground: @lightyellow;
+    background-color: @black;
+}
+#element normal urgent {
+    foreground: @lightred;
+}
+#element alternate normal {
+    foreground: @lightblue;
+}
+#element alternate active {
+    foreground: @lightblue;
+}
+#element alternate urgent {
+    foreground: @lightred;
+}
+#element selected active {
+    background-color: @green;
+    foreground: @dark;
+}
+#element selected urgent {
+    background-color: @lightred;
+    foreground: @dark;
+}
+#element normal normal {
+}

@@ -7,17 +7,19 @@ directories = [
 ]
 links = [
     (".config/nvim", "nvim"),
-    (".config/vimfx", "vimfx"),
+    # (".config/vimfx", "vimfx"),
     # (".config/fish/config.fish", "fish/config.fish"),
     # (".config/fish/conf.d", "fish/conf.d"),
     (".gitconfig", "gitconfig"),
     # (".hammerspoon", "hammerspoon"),
     (".myclirc", "myclirc"),
-    (".spacemacs", "spacemacs"),
+    # (".spacemacs", "spacemacs"),
     (".tmux.conf", "tmux.conf"),
     # (".vimrc", "vimrc"),
     (".zshrc", "zshrc"),
     (".config/termite", "termite"),
+    (".config/alacritty", "alacritty"),
+    (".config/rofi", "rofi"),
 ]
 
 home = os.environ["HOME"]
