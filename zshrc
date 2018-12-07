@@ -46,11 +46,6 @@ alias la='ls -al'
 # export PATH=$PATH:/usr/local/share/git-core/contrib/diff-highlight
 export PATH=$PATH:/usr/share/git/diff-highlight
 
-# linuxbrew
-export PATH="$HOME/.linuxbrew/bin:$HOME/.linuxbrew/sbin:$PATH"
-export XDG_DATA_DIRS="$HOME/.linuxbrew/share:$XDG_DATA_DIRS"
-# export PKG_CONFIG_PATH="$HOME/.linuxbrew/lib/pkgconfig"
-
 # git-remoteのURLをhttpsに変換してopenする
 function git-browse() {
   git rev-parse --git-dir >/dev/null 2>&1
@@ -187,7 +182,7 @@ function _color_chart {
 }
 
 # plugins
-export ZPLUG_HOME=$HOME/.linuxbrew/opt/zplug
+export ZPLUG_HOME=$HOME/.zplug
 if [[ ! -d $ZPLUG_HOME ]]; then
   curl -sL --proto-redir -all,https https://zplug.sh/installer | zsh
   zplug update --self
@@ -332,11 +327,6 @@ fi
 if [ -e /etc/arch-release ]; then
   if [ -d /usr/share/zsh/site-functions ]; then
     source /usr/share/zsh/site-functions
-  fi
-elif [ -e /etc/lsb-release ]; then
-  # linuxbrew completions
-  if [ -d $HOME/.linuxbrew ]; then
-    source $HOME/.linuxbrew/share/zsh/site-functions
   fi
 fi
 
