@@ -56,83 +56,6 @@ function git-browse() {
   fi
 }
 
-# 略語展開
-typeset -A abbreviations
-abbreviations=(
-  # vim
-  "v" "nvim"
-  "vd" "nvim -d"
-  "vrc" "nvim -c \"VimShellInteractive rails console --split=''\""
-  "vrs" "nvim -c \"VimShellInteractive rails server --split=''\""
-  # pipe
-  "lf"   "| fzy"
-  "lvi"  "| nvim -Rc 'set ft=zsh' -"
-  "lsin"  "| xargs cat | nvim -Rc 'set ft=zsh' -"
-  "lg" "| ag"
-  # git
-  "g"  "git status"
-  "gs"  "git stash"
-  "gb"  "git branch"
-  "gbb"  "git checkout -b"
-  # "gd"  "git diff --word-diff"
-  "gd"  "git diff"
-  "gch"  "git checkout"
-  "gcl"  "git clean -df -n"
-  "gco"  "git commit -v"
-  "ga"  "git add"
-  "gl"  "git log"
-  "gls"  "git log --stat"
-  "glg"  "git log --stat --graph --oneline --decorate"
-  "glm"  "git log --stat --author=hagiyat"
-  "gps"  "git push"
-  "gpl"  "git pull"
-  "gbf"  "git checkout -b feature/"
-  "gbh"  "git checkout -b hotfix/"
-  "gbr"  "git-browse"
-  # tmux
-  "tmv"  "tmux split-window -v -c '#{pane_current_path}'"
-  "tmh"  "tmux split-window -h -c '#{pane_current_path}'"
-  "tmw"  "tmux new-window -c '#{pane_current_path}'"
-  # rails
-  "rs" "bin/rails server"
-  "rc" "bin/rails console"
-  # "rg" "rails generate"
-  "rgm" "bin/rails generate migration"
-  "rr" "bin/rails runner"
-  "rsp" "bin/rspec"
-  # bundle exec
-  "be" "bundle exec"
-  "bi" "bundle install --jobs=4 --path=vendor/bundle"
-  "bu" "bundle update"
-  "br" "bundle exec rake"
-  "bm" "bundle exec rake db:migrate"
-  # docker
-  "d" "docker"
-  "dc" "docker-compose"
-  # other
-  "hd" '$HOME/'
-  "bv" "vivaldi"
-  "bf" "firefox"
-  "psa" "ps auxwf"
-  "qq" "exit"
-)
-
-magic-abbrev-expand() {
-  local MATCH
-  LBUFFER=${LBUFFER%%(#m)[-_a-zA-Z0-9]#}
-  LBUFFER+=${abbreviations[$MATCH]:-$MATCH}
-  zle self-insert
-}
-
-no-magic-abbrev-expand() {
-  LBUFFER+=' '
-}
-
-zle -N magic-abbrev-expand
-zle -N no-magic-abbrev-expand
-bindkey " " magic-abbrev-expand
-bindkey "^x " no-magic-abbrev-expand
-
 # asdf
 if [ -d $HOME/.asdf ] ; then
   . ~/.asdf/asdf.sh
@@ -196,6 +119,7 @@ zplug "b4b4r07/enhancd", use:init.sh
 zplug "mollifier/cd-gitroot"
 zplug "plugins/git", from:oh-my-zsh
 zplug "mollifier/anyframe"
+zplug "momo-lab/zsh-abbrev-alias"
 
 # completions
 zplug "zsh-users/zsh-completions"
@@ -313,6 +237,47 @@ fi
 
 # zplug load --verbose
 zplug load
+
+if zplug check "momo-lab/zsh-abbrev-alias"; then
+  abbrev-alias --init
+
+  abbrev-alias -g "v=nvim"
+  abbrev-alias -g "vd=nvim -d"
+
+  abbrev-alias -g "lf=| fzf"
+  abbrev-alias -g "lr=| rg"
+
+  abbrev-alias -g "g=git status"
+  abbrev-alias -g "gs=git stash"
+  abbrev-alias -g "gb=git branch"
+  abbrev-alias -g "gd=git diff"
+  abbrev-alias -g "gch=git checkout"
+  abbrev-alias -g "gcl=git clean -df -n"
+  abbrev-alias -g "gco=git commit -v"
+  abbrev-alias -g "ga=git add"
+  abbrev-alias -g "gl=git log"
+  abbrev-alias -g "glg=git log --stat --graph --oneline --decorate"
+  abbrev-alias -g "glm=git log --stat --author=hagiyat"
+  abbrev-alias -g "gps=git push"
+  abbrev-alias -g "gpf=git push --force-with-lease"
+  abbrev-alias -g "gpl=git pull"
+  abbrev-alias -g "gbf=git checkout -b feature/"
+  abbrev-alias -g "gbh=git checkout -b hotfix/"
+  abbrev-alias -g "gbr=git-browse"
+
+  abbrev-alias -g "tmv=tmux split-window -v -c '#{pane_current_path}'"
+  abbrev-alias -g "tmh=tmux split-window -h -c '#{pane_current_path}'"
+  abbrev-alias -g "tmw=tmux new-window -c '#{pane_current_path}'"
+
+  abbrev-alias -g "d=docker"
+  abbrev-alias -g "dc=docker-compose"
+  abbrev-alias -g "dce=docker-compose exec"
+
+  abbrev-alias -g "eh=$HOME/"
+  abbrev-alias -g "ec=$XDG_CONFIG_HOME/"
+  abbrev-alias -g "psa=ps auxwf"
+  abbrev-alias -g "qq=exit"
+fi
 
 # awscli completions
 # [ -f /usr/local/share/zsh/site-functions/_aws ] && source /usr/local/share/zsh/site-functions/_aws
