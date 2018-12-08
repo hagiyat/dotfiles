@@ -276,11 +276,11 @@ let g:startify_commands = [
   \ ]
 
 let g:startify_list_order = [
-  \ [join(['  🙄 MRU', getcwd()], ' ')],
+  \ [join(['   🗂  MRU', getcwd()], ' ')],
   \ 'dir',
-  \ ['  🏃 Commands'],
+  \ ['   🛠  Commands'],
   \ 'commands',
-  \ ['  🤔 Bookmarks'],
+  \ ['   🏷  Bookmarks'],
   \ 'bookmarks',
   \]
 '''
