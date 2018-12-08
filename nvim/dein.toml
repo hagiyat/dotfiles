@@ -109,12 +109,6 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'ludovicchabant/vim-gutentags'
-hook_add = '''
-let g:gutentags_cache_dir = '~/.cache/ctags'
-'''
-
-[[plugins]]
 repo = 'szw/vim-maximizer'
 hook_add = '''
 let g:maximizer_set_mapping_with_bang = 0
