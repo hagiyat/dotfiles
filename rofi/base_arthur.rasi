@@ -7,14 +7,14 @@
 configuration {
 
     // The display name of this browser
-    display-ssh:                   "🖧";
+    display-ssh: "🖧";
     // The display name of this browser
-    display-run:                   "💣";
+    display-run: "💣";
     // The display name of this browser
-    display-drun:                  "🔥";
+    display-drun: "🔥";
     // The display name of this browser
-    display-window:                "📺";
-    display-combi:                  "🛠️";
+    display-window: "📺";
+    display-combi: "🛠️";
     show-icons: true;
 }
 
@@ -30,7 +30,7 @@ configuration {
     dark: #1c1c1c;
     // Black
     black:       #3d352a;
-    lightblack:  #554444;
+    lightblack:  #665544;
     tlightblack:  #554411cc;
     //
     // Red
