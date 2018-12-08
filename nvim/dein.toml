@@ -9,12 +9,6 @@ repo = 'Shougo/vimproc'
 build = 'make'
 
 [[plugins]]
-repo = 'tpope/vim-fugitive'
-
-[[plugins]]
-repo = 'airblade/vim-gitgutter'
-
-[[plugins]]
 repo = 'osyo-manga/vim-precious'
 depends = ['context_filetype.vim']
 hook_add = '''
@@ -46,6 +40,9 @@ repo = 'kana/vim-submode'
 
 [[plugins]]
 repo = 'tpope/vim-fugitive'
+
+[[plugins]]
+repo = 'airblade/vim-gitgutter'
 
 [[plugins]]
 repo = 'tpope/vim-surround'
@@ -297,6 +294,28 @@ nmap <silent> <Space>gt <Plug>IndentGuidesToggle
 '''
 
 [[plugins]]
+repo = 'autozimu/LanguageClient-neovim'
+rev = 'next'
+build = 'bash install.sh'
+hook_add = '''
+    " required
+    " python: pip install 'python-language-server[pycodestyle]'
+    "         pip install 'python-language-server[yapf]'
+    " javascript: (AUR)javascript-typescript-langserver
+    set hidden
+    let g:LanguageClient_autoStart = 1
+    let g:LanguageClient_serverCommands = {
+          \ 'python': ['pyls'],
+          \ 'javascript': ['javascript-typescript-stdio'],
+          \ }
+
+nnoremap <Space>lm :call LanguageClient_contextMenu()<CR>
+nnoremap <silent><Space>lh :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent><Space>ld :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent><Space>lr :call LanguageClient#textDocument_references()<CR>
+'''
+
+[[plugins]]
 repo = 'w0rp/ale'
 hook_add = '''
 let g:ale_linters = {
@@ -320,14 +339,9 @@ nmap <silent> <Space>sp <Plug>(ale_previous_wrap)
 nmap <silent> <Space>sn <Plug>(ale_next_wrap)
 '''
 
-
 [[plugins]] # toml syntax
 repo = 'cespare/vim-toml'
 on_ft = 'toml'
-
-[[plugins]]
-repo = 'dag/vim-fish'
-on_ft = 'fish'
 
 
 ################################################################

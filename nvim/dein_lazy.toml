@@ -59,6 +59,9 @@ hook_source = '''
   inoremap <expr><tab> pumvisible() ? "\<C-n>" :
         \ neosnippet#expandable_or_jumpable() ?
         \    "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
+  call deoplete#custom#source('LanguageClient',
+        \ 'min_pattern_length',
+        \ 2)
 '''
 on_i = 1
 
