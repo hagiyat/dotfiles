@@ -149,15 +149,16 @@ let g:lightline = {
   \   'fileencoding': 'LightLineFileencoding',
   \   'mode': 'LightLineMode'
   \ },
-  \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
-  \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" },
-  \}
-  " slash (required: nerd fonts)
-  " 'separator': { 'left': "\ue0bc", 'right': "\ue0ba" },
-  " 'subseparator': { 'left': "\ue0bd", 'right': "\ue0bb" },
+  " slash-// (required: nerd fonts)
+  " \ 'separator': { 'left': "\ue0bc", 'right': "\ue0ba" },
+  " \ 'subseparator': { 'left': "\ue0bd", 'right': "\ue0bb" },
+  " slash-\\
+  \ 'separator': { 'left': "\ue0b8", 'right': "\ue0be" },
+  \ 'subseparator': { 'left': "\ue0b9", 'right': "\ue0bf" },
   " arrow
-  " 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
-  " 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" },
+  " \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
+  " \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" },
+  \}
 let b:ale_linters = {
       \   'javascript': ['eslint', 'eslint-plugin-vue'],
       \   'python': ['pyflakes', 'pep8'],
