@@ -246,6 +246,7 @@ if zplug check "momo-lab/zsh-abbrev-alias"; then
 
   abbrev-alias -g "lf=| fzf"
   abbrev-alias -g "lr=| rg"
+  abbrev-alias -g "lc=| xclip -selection c"
 
   abbrev-alias -g "g=git status"
   abbrev-alias -g "gs=git stash"
@@ -276,6 +277,7 @@ if zplug check "momo-lab/zsh-abbrev-alias"; then
   abbrev-alias -g "eh=$HOME/"
   abbrev-alias -g "ec=$XDG_CONFIG_HOME/"
   abbrev-alias -g "psa=ps auxwf"
+  abbrev-alias -g "xcp=xclip -selection c -o"
   abbrev-alias -g "qq=exit"
 fi
 
