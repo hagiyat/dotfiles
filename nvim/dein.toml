@@ -45,7 +45,19 @@ repo = 'tpope/vim-fugitive'
 repo = 'airblade/vim-gitgutter'
 
 [[plugins]]
-repo = 'tpope/vim-surround'
+repo = 'machakann/vim-sandwich'
+hook_add = '''
+" dとrは自動検出なので、マニュアルでやるときは、
+" ex) + から / に変換
+" sr+/ と入力
+" みたいな感じ
+nmap <Space>sa saiw
+nmap <Space>sd sdb
+nmap <Space>sr srb
+xmap <Space>sa saiw
+xmap <Space>sd sdb
+xmap <Space>sr srb
+'''
 
 [[plugins]]
 repo = 'thinca/vim-quickrun'
