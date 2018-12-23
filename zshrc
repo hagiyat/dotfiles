@@ -219,6 +219,15 @@ if zplug check "mollifier/anyframe"; then
   }
   zle -N insert_filename
 
+  function insert_commit_hash() {
+    git log --pretty=oneline \
+      | $filter_app --prompt "insert commit hash > " \
+      | awk '{print $1}' \
+      | anyframe-action-insert
+    zle redisplay
+  }
+  zle -N insert_commit_hash
+
   function kill_process() {
     anyframe-source-process \
       | $filter_app --prompt "kill process > " \
@@ -231,6 +240,7 @@ if zplug check "mollifier/anyframe"; then
   bindkey '^r' put_history
   bindkey '^x^i' insert_git_branch
   bindkey '^x^b' checkout_git_branch
+  bindkey '^x^h' insert_commit_hash
   bindkey '^x^f' insert_filename
   bindkey '^x^p' kill_process
 fi
