@@ -1,0 +1,17 @@
+# map f $lf -remote "send $id select $(fzf)"
+set info time
+set tabstop 4
+
+# commands
+cmd editpwd ${{
+  $EDITOR $(fd -t f | fzf)
+}}
+# required trash-cli
+cmd trash %trash-put $fx
+
+# keymaps
+map . set hidden!
+map ge editpwd
+map D trash
+map gm mark-load
+

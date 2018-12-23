@@ -244,7 +244,7 @@ if zplug check "momo-lab/zsh-abbrev-alias"; then
   abbrev-alias -g "v=nvim"
   abbrev-alias -g "vd=nvim -d"
 
-  abbrev-alias -g "lf=| fzf"
+  # abbrev-alias -g "lf=| fzf"
   abbrev-alias -g "lr=| rg"
   abbrev-alias -g "lc=| xclip -selection c"
 
