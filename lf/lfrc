@@ -6,6 +6,8 @@ set tabstop 4
 cmd editpwd ${{
   $EDITOR $(fd -t f | fzf)
 }}
+cmd rename %[ -e $1 ] && printf "file exists" || mv $f $1
+cmd named_copy %[ -e $1 ] && printf "file exists" || cp $f $1
 # required trash-cli
 cmd trash %trash-put $fx
 
@@ -13,5 +15,9 @@ cmd trash %trash-put $fx
 map . set hidden!
 map ge editpwd
 map D trash
+map gc %echo -n $f | xclip -selection c
+# TODO: $fの内容を初期値として入力のところに展開する
+map gr push :rename<space>
+map gp push :named_copy<space>
 map gm mark-load
 
