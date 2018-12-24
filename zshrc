@@ -119,7 +119,7 @@ zplug "b4b4r07/enhancd", use:init.sh
 zplug "mollifier/cd-gitroot"
 zplug "plugins/git", from:oh-my-zsh
 zplug "mollifier/anyframe"
-zplug "momo-lab/zsh-abbrev-alias"
+# zplug "momo-lab/zsh-abbrev-alias"
 
 # completions
 zplug "zsh-users/zsh-completions"
@@ -248,48 +248,77 @@ fi
 # zplug load --verbose
 zplug load
 
-if zplug check "momo-lab/zsh-abbrev-alias"; then
-  abbrev-alias --init
+# 略語展開
+# FIXME: global aliasを使わないプラグインを作るか、別ファイルに切り出すかする
+typeset -Ag _abbrevs
 
-  abbrev-alias -g "v=nvim"
-  abbrev-alias -g "vd=nvim -d"
+__magic_abbrev_expand() {
+  local MATCH
+  LBUFFER=${LBUFFER%%(#m)[-_a-zA-Z0-9]#}
+  local abbr=${_abbrevs[$MATCH]:-$MATCH}
+  # local newbuffer=${abbr[2,-1]}
+  LBUFFER+=$abbr
+  zle self-insert
+}
 
-  # abbrev-alias -g "lf=| fzf"
-  abbrev-alias -g "lr=| rg"
-  abbrev-alias -g "lc=| xclip -selection c"
+__no_magic_abbrev_expand() {
+  LBUFFER+=' '
+}
 
-  abbrev-alias -g "g=git status"
-  abbrev-alias -g "gs=git stash"
-  abbrev-alias -g "gb=git branch"
-  abbrev-alias -g "gd=git diff"
-  abbrev-alias -g "gch=git checkout"
-  abbrev-alias -g "gcl=git clean -df -n"
-  abbrev-alias -g "gco=git commit -v"
-  abbrev-alias -g "ga=git add"
-  abbrev-alias -g "gl=git log"
-  abbrev-alias -g "glg=git log --stat --graph --oneline --decorate"
-  abbrev-alias -g "glm=git log --stat --author=hagiyat"
-  abbrev-alias -g "gps=git push"
-  abbrev-alias -g "gpf=git push --force-with-lease"
-  abbrev-alias -g "gpl=git pull"
-  abbrev-alias -g "gbf=git checkout -b feature/"
-  abbrev-alias -g "gbh=git checkout -b hotfix/"
-  abbrev-alias -g "gbr=git-browse"
+__abbrev_init() {
+  setopt extended_glob
+  zle -N __magic_abbrev_expand
+  zle -N __no_magic_abbrev_expand
+  bindkey " "   __magic_abbrev_expand
+  bindkey "^x " __no_magic_abbrev_expand
+}
 
-  abbrev-alias -g "tmv=tmux split-window -v -c '#{pane_current_path}'"
-  abbrev-alias -g "tmh=tmux split-window -h -c '#{pane_current_path}'"
-  abbrev-alias -g "tmw=tmux new-window -c '#{pane_current_path}'"
+__abbrev_regist() {
+  local key=${1%%=*} value=${1#*=}
+  _abbrevs[$key]="$value"
+}
 
-  abbrev-alias -g "d=docker"
-  abbrev-alias -g "dc=docker-compose"
-  abbrev-alias -g "dce=docker-compose exec"
+__abbrev_init
 
-  abbrev-alias -g "eh=$HOME/"
-  abbrev-alias -g "ec=$XDG_CONFIG_HOME/"
-  abbrev-alias -g "psa=ps auxwf"
-  abbrev-alias -g "xcp=xclip -selection c -o"
-  abbrev-alias -g "qq=exit"
-fi
+__abbrev_regist "v=nvim"
+__abbrev_regist "vd=nvim -d"
+
+__abbrev_regist "lf=| fzf"
+__abbrev_regist "lr=| rg"
+__abbrev_regist "lc=| xclip -selection c"
+
+__abbrev_regist "g=git status"
+__abbrev_regist "gs=git stash"
+__abbrev_regist "gb=git branch"
+__abbrev_regist "gd=git diff"
+__abbrev_regist "gch=git checkout"
+__abbrev_regist "gcl=git clean -df -n"
+__abbrev_regist "gco=git commit -v"
+__abbrev_regist "ga=git add"
+__abbrev_regist "gl=git log"
+__abbrev_regist "glg=git log --stat --graph --oneline --decorate"
+__abbrev_regist "glm=git log --stat --author=hagiyat"
+__abbrev_regist "gps=git push"
+__abbrev_regist "gpf=git push --force-with-lease"
+__abbrev_regist "gpl=git pull"
+__abbrev_regist "gbf=git checkout -b feature/"
+__abbrev_regist "gbh=git checkout -b hotfix/"
+__abbrev_regist "gbr=git-browse"
+
+__abbrev_regist "tmv=tmux split-window -v -c '#{pane_current_path}'"
+__abbrev_regist "tmh=tmux split-window -h -c '#{pane_current_path}'"
+__abbrev_regist "tmw=tmux new-window -c '#{pane_current_path}'"
+
+__abbrev_regist "d=docker"
+__abbrev_regist "dc=docker-compose"
+__abbrev_regist "dce=docker-compose exec"
+
+__abbrev_regist "eh=$HOME/"
+__abbrev_regist "ec=$XDG_CONFIG_HOME/"
+__abbrev_regist "psa=ps auxwf"
+__abbrev_regist "xcp=xclip -selection c -o"
+__abbrev_regist "qq=exit"
+
 
 # awscli completions
 # [ -f /usr/local/share/zsh/site-functions/_aws ] && source /usr/local/share/zsh/site-functions/_aws
