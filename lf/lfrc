@@ -17,7 +17,7 @@ map . set hidden!
 map ge editpwd
 map d trash-push
 map D trash-pop
-map gc %echo -n $f | xclip -selection c
+map gy %echo -n $f | xclip -selection c
 # TODO: $fの内容を初期値として入力のところに展開する
 map gr push :rename<space>
 map gp push :named_copy<space>
