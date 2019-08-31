@@ -308,28 +308,6 @@ nmap <silent> <Space>gt <Plug>IndentGuidesToggle
 '''
 
 [[plugins]]
-repo = 'autozimu/LanguageClient-neovim'
-rev = 'next'
-build = 'bash install.sh'
-hook_add = '''
-    " required
-    " python: pip install 'python-language-server[pycodestyle]'
-    "         pip install 'python-language-server[yapf]'
-    " javascript: (AUR)javascript-typescript-langserver
-    set hidden
-    let g:LanguageClient_autoStart = 1
-    let g:LanguageClient_serverCommands = {
-          \ 'python': ['pyls'],
-          \ 'javascript': ['javascript-typescript-stdio'],
-          \ }
-
-nnoremap <Space>lm :call LanguageClient_contextMenu()<CR>
-nnoremap <silent><Space>lh :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent><Space>ld :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent><Space>lr :call LanguageClient#textDocument_references()<CR>
-'''
-
-[[plugins]]
 repo = 'neoclide/coc.nvim'
 merge = '0'
 rev = 'release'
