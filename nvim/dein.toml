@@ -51,12 +51,13 @@ hook_add = '''
 " ex) + から / に変換
 " sr+/ と入力
 " みたいな感じ
-nmap <Space>sa saiw
-nmap <Space>sd sdb
-nmap <Space>sr srb
-xmap <Space>sa saiw
-xmap <Space>sd sdb
-xmap <Space>sr srb
+nmap <Space>s [sandwich]
+nmap [sandwich]a saiw
+nmap [sandwich]d sdb
+nmap [sandwich]r srb
+xmap [sandwich]a saiw
+xmap [sandwich]d sdb
+xmap [sandwich]r srb
 '''
 
 [[plugins]]
@@ -200,7 +201,7 @@ endfunction
 
 function! LightLineFilename()
   return ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
-        \ (&ft == 'denite' ? denite#get_status_source() :
+        \ (&ft == 'denite' ? denite#get_status("sources") :
         \ '' != expand('%') && winwidth(0) <=120 ? expand('%:t') : winwidth(0) >120 ? expand('%:p') : '[No Name]') .
         \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
 endfunction
@@ -329,6 +330,44 @@ nnoremap <silent><Space>lr :call LanguageClient#textDocument_references()<CR>
 '''
 
 [[plugins]]
+repo = 'neoclide/coc.nvim'
+merge = '0'
+rev = 'release'
+hook_add = '''
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <Tab>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<Tab>" :
+      \ coc#refresh()
+
+let g:coc_global_extensions = [
+      \ 'coc-css',
+      \ 'coc-elixir',
+      \ 'coc-eslint',
+      \ 'coc-html',
+      \ 'coc-json',
+      \ 'coc-lists',
+      \ 'coc-python',
+      \ 'coc-solargraph',
+      \ 'coc-tsserver',
+      \ 'coc-vimlsp',
+      \ 'coc-yaml',
+      \ ]
+
+nmap <silent><Space>l [coc]
+nmap [coc]d <Plug>(coc-definition)
+nmap [coc]i <Plug>(coc-implementation)
+nmap [coc]r <Plug>(coc-references)
+
+autocmd CursorHold * silent call CocActionAsync('highlight')
+'''
+
+
+[[plugins]]
 repo = 'w0rp/ale'
 hook_add = '''
 let g:ale_linters = {
@@ -356,6 +395,9 @@ nmap <silent> <Space>sn <Plug>(ale_next_wrap)
 repo = 'cespare/vim-toml'
 on_ft = 'toml'
 
+[[plugins]]
+repo = 'elixir-editors/vim-elixir'
+on_ft = 'ex,eex,exs'
 
 ################################################################
 # colorschemes
