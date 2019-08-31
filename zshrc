@@ -56,11 +56,6 @@ function git-browse() {
   fi
 }
 
-# asdf
-if [ -d $HOME/.asdf ] ; then
-  . ~/.asdf/asdf.sh
-fi
-
 # direnv
 eval "$(direnv hook zsh)"
 
@@ -325,8 +320,14 @@ __abbrev_regist "qq=exit"
 [ -f /usr/local/bin/aws_zsh_completer.sh ] && source /usr/local/bin/aws_zsh_completer.sh
 [ -f /usr/bin/aws_zsh_completer.sh ] && source /usr/bin/aws_zsh_completer.sh
 
+# asdf
 if [ -d $HOME/.asdf ] ; then
-  source ~/.asdf/completions/asdf.bash
+  . $HOME/.asdf/asdf.sh
+  . $HOME/.asdf/completions/asdf.bash
+fi
+
+if type yarn> /dev/null 2>&1; then
+  export PATH="$PATH:`yarn global bin`"
 fi
 
 # zsh completions
