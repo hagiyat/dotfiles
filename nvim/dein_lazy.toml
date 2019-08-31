@@ -1,52 +1,16 @@
 [[plugins]]
-repo = 'Shougo/neomru.vim'
-on_path = '.*'
+repo = 'junegunn/fzf.vim'
 hook_add = '''
-let g:neomru#file_mru_limit = 10000
-'''
-
-[[plugins]]
-repo = 'Shougo/denite.nvim'
-depends = ['neomru.vim']
-on_cmd = 'Denite'
-hook_post_source = '''
-" call denite#custom#var('file_rec', 'command',
-      " \ ['rg', '--files', '--glob', '!.git'])
-call denite#custom#var('file_rec', 'command',
-      \ ['fd', '--follow', '--hidden', '--exclude', '.git', '--type', 'f', ''])
-call denite#custom#alias('source', 'file_rec/git', 'file_rec')
-call denite#custom#var('file_rec/git', 'command',
-      \ ['git', 'ls-files', '-co', '--exclude-standard'])
-
-call denite#custom#var('grep', 'command', ['rg'])
-call denite#custom#var('grep', 'default_opts',
-      \ ['--vimgrep', '--no-heading'])
-call denite#custom#var('grep', 'recursive_opts', [])
-call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
-call denite#custom#var('grep', 'separator', ['--'])
-call denite#custom#var('grep', 'final_opts', [])
-
-call denite#custom#map('insert', '<C-g>', '<denite:enter_mode:normal>', 'noremap')
-call denite#custom#map('insert', '<C-n>', '<denite:move_to_next_line>')
-call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>')
-'''
-hook_add = '''
-nnoremap [denite] <Nop>
-nmap <Space> [denite]
-nnoremap [denite]bb :<C-u>Denite buffer<CR>
-nnoremap [denite]bo :<C-u>Denite outline<CR>
-nnoremap [denite]bl :<C-u>Denite line<CR>
-nnoremap [denite]ff :<C-u>Denite buffer file_mru<CR>
-nnoremap [denite]ft :<C-u>Denite filetype<CR>
-" nnoremap [denite]fr :<C-u>Denite file_rec<CR>
-" nnoremap [denite]fr :<C-u>Denite \ `finddir('.git', ';') != '' ? 'file_rec/git' : 'file_rec'`<CR>
-nnoremap [denite]fr :<C-u>Denite file_rec<CR>
-nnoremap [denite]fg :<C-u>Denite file_rec/git<CR>
-nnoremap [denite]gg :<C-u>Denite grep<CR>
-nnoremap [denite]gc :<C-u>DeniteCursorWord grep<CR>
-nnoremap [denite]dr :<C-u>Denite-resume<CR>
-nnoremap [denite]dc :<C-u>Denite command<CR>
-nnoremap [denite]dh :<C-u>Denite help<CR>
+let g:fzf_command_prefix = 'Fzf'
+let g:fzf_files_source = '(if [ -d .git ];then git ls-files; else fd; fi)'
+nmap <Space>f [fzf]
+nnoremap [fzf]b :FzfBuffers<CR>
+nnoremap [fzf]x :FzfCommands<CR>
+nnoremap [fzf]F :FzfFiles<CR>
+nnoremap [fzf]f :call fzf#vim#files('', {'source': fzf_files_source})<CR>
+nnoremap [fzf]h :FzfHistory<CR>
+nnoremap [fzf]l :FzfLines<CR>
+nnoremap [fzf]g :FzfRg
 '''
 
 [[plugins]]
@@ -79,6 +43,7 @@ on_i  = 1
 on_ft = ['snippet']
 depends = ['neosnippet-snippets']
 
+
 [[plugins]]
 repo = 'previm/previm'
 on_ft = ['markdown']
@@ -104,7 +69,3 @@ let g:vim_markdown_no_extensions_in_markdown = 1
 nnoremap <silent> <Space>mt :<C-u>TableFormat<CR>
 nnoremap <silent> <Space>mh :<C-u>Toch<CR>
 '''
-
-[[plugins]]
-repo = 'mhartington/yats.vim'
-on_ft = ['typescript', 'tsx', 'typescript.tsx']
