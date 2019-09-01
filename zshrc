@@ -4,6 +4,8 @@ export XDG_CONFIG_HOME=~/.config
 export XDG_DATA_DIRS=/usr/local/share:/usr/share
 export BROWSER=chromium
 export PROJECTS_HOME=$HOME/repos
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
 
 # emacs keybind
 bindkey -e
