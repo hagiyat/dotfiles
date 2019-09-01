@@ -1,0 +1,50 @@
+[[plugins]]
+repo = 'KeitaNakamura/neodark.vim'
+hook_add = '''
+let g:neodark#use_256color = 1
+function! EnableNeoDark()
+  colorscheme neodark
+  hi Normal guifg=#bcbcbc guibg=#242424
+  hi IncSearch gui=bold,italic guifg=#ffcc00 guibg=#242424
+  hi Search gui=bold,italic guifg=#ffa64d guibg=#242424
+  hi LineNr guifg=#474646 guibg=#202020
+  hi CursorLine guibg=#343434
+  hi CursorLineNr guifg=#669999 guibg=#343434
+  " hi CursorLine guibg=#182014
+endfunction
+autocmd VimEnter * nested call EnableNeoDark()
+'''
+
+[[plugins]]
+repo = 'tyrannicaltoucan/vim-quantum'
+hook_add = '''
+let g:quantum_black=1
+function! EnableQuantum()
+  colorscheme quantum
+  hi IncSearch gui=bold,italic guifg=#ffcc00 guibg=#242424
+  hi Search gui=bold,italic guifg=#ffa64d guibg=#242424
+  hi LineNr guifg=#474646 guibg=#202020
+  hi CursorLine guibg=#343434
+  hi CursorLineNr guifg=#669999 guibg=#343434
+  hi MatchParen gui=bold guifg=#1affb2 guibg=#242424
+endfunction
+" autocmd VimEnter * nested call EnableQuantum()
+'''
+
+[[plugins]]
+repo = 'joshdick/onedark.vim'
+hook_add = '''
+let g:onedark_termcolors=256
+function! EnableOnedark()
+  colorscheme onedark
+  let g:lightline.colorscheme = 'onedark'
+  hi Normal guifg=#abb2bf guibg=#242424
+  hi IncSearch gui=bold,italic guifg=#ffcc00 guibg=#242424
+  hi Search gui=bold,italic guifg=#ffa64d guibg=#242424
+  hi LineNr guifg=#474646 guibg=#202020
+  hi CursorLine guibg=#343434
+  " hi CursorLineNr guifg=#669999 guibg=#343434
+  hi MatchParen gui=bold guifg=#1affb2 guibg=#242424
+endfunction
+" autocmd VimEnter * nested call EnableOnedark()
+'''

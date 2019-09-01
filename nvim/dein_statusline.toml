@@ -1,0 +1,120 @@
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+depends = 'ale'
+hook_add = '''
+let g:lightline = {
+  \ 'colorscheme': 'wombat',
+  \ 'mode_map': {'c': 'NORMAL'},
+  \ 'active': {
+  \   'left': [
+  \     [ 'mode', 'paste' ],
+  \     [ 'readonly', 'fugitive', 'branch', 'filename', 'modified' ],
+  \     [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ]
+  \   ],
+  \   'right': [ [ 'percent' ],
+  \              [ 'fileformat', 'fileencoding', 'filetype' ] ],
+  \ },
+  \ 'component_function': {
+  \   'modified': 'LightLineModified',
+  \   'readonly': 'LightLineReadonly',
+  \   'fugitive': 'LightLineFugitive',
+  \   'filename': 'LightLineFilename',
+  \   'filepath': 'LightLineFilepath',
+  \   'fileformat': 'LightLineFileformat',
+  \   'filetype': 'LightLineFiletype',
+  \   'fileencoding': 'LightLineFileencoding',
+  \   'mode': 'LightLineMode'
+  \ },
+  " slash-// (required: nerd fonts)
+  " \ 'separator': { 'left': "\ue0bc", 'right': "\ue0ba" },
+  " \ 'subseparator': { 'left': "\ue0bd", 'right': "\ue0bb" },
+  " slash-\\
+  " \ 'separator': { 'left': "\ue0b8", 'right': "\ue0be" },
+  " \ 'subseparator': { 'left': "\ue0b9", 'right': "\ue0bf" },
+  " slash-\/
+  " \ 'separator': { 'left': "\ue0b8", 'right': "\ue0ba" },
+  " \ 'subseparator': { 'left': "\ue0b9", 'right': "\ue0bb" },
+  " slash-/\
+  \ 'separator': { 'left': "\ue0bc", 'right': "\ue0be" },
+  \ 'subseparator': { 'left': "\ue0bd", 'right': "\ue0bf" },
+  " arrow
+  " \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
+  " \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" },
+  \}
+let b:ale_linters = {
+      \   'javascript': ['eslint', 'eslint-plugin-vue'],
+      \   'python': ['pyflakes', 'pep8'],
+      \   'ruby': ['rubocop'],
+      \   'tex': ['textlint'],
+      \   'markdown': ['textlint'],
+      \   'css': ['stylelint'],
+      \}
+let g:ale_statusline_format = ['E%d', 'W%d', 'ok']
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
+" nmap <silent> <C-n> <Plug>(ale_next_wrap)
+
+function! LightLineModified()
+  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+endfunction
+
+function! LightLineReadonly()
+  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? "\ue0a2" : ''
+endfunction
+
+function! LightLineFilename()
+  return ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
+        \ (&ft == 'denite' ? denite#get_status("sources") :
+        \ '' != expand('%') && winwidth(0) <=120 ? expand('%:t') : winwidth(0) >120 ? expand('%:p') : '[No Name]') .
+        \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
+endfunction
+
+function! LightLineFilepath()
+  return winwidth(0) <=120 ? expand('%:h') : ''
+endfunction
+
+function! LightLineFugitive()
+  try
+    if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head') && winwidth(0) > 55
+      let _ = fugitive#head()
+      return strlen(_) ? "\ue0a0 "._ : ''
+    endif
+  catch
+  endtry
+  return ''
+endfunction
+
+function! LightLineFileformat()
+  return winwidth(0) > 80 ? &fileformat : ''
+endfunction
+
+function! LightLineFiletype()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+endfunction
+
+function! LightLineFileencoding()
+  return winwidth(0) > 60 ? (strlen(&fenc) ? &fenc : &enc) : ''
+endfunction
+
+function! LightLineMode()
+  return winwidth(0) > 30 ? lightline#mode() : ''
+endfunction
+'''
+
+[[plugins]]
+repo = 'maximbaz/lightline-ale'
+depends = ['lightline.vim', 'ale']
+hook_add = '''
+let g:lightline.component_expand = {
+      \  'linter_checking': 'lightline#ale#checking',
+      \  'linter_warnings': 'lightline#ale#warnings',
+      \  'linter_errors': 'lightline#ale#errors',
+      \  'linter_ok': 'lightline#ale#ok',
+      \ }
+let g:lightline.component_type = {
+      \     'linter_checking': 'left',
+      \     'linter_warnings': 'warning',
+      \     'linter_errors': 'error',
+      \     'linter_ok': 'left',
+      \ }
+'''

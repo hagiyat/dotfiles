@@ -103,7 +103,7 @@ nnoremap <Space>qa :<C-u>qa<CR>
 nnoremap <Space>QQ :<C-u>qa!<CR>
 
 " dein
-let s:dein_dir = expand('~/.cache/dein')
+let s:dein_dir = expand('$XDG_CACHE_HOME/dein')
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 
 if &runtimepath !~# '/dein.vim'
@@ -116,13 +116,16 @@ endif
 if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)
 
-  let g:rc_dir    = expand("~/.config/nvim/")
-  let s:toml      = g:rc_dir . '/dein.toml'
-  let s:lazy_toml = g:rc_dir . '/dein_lazy.toml'
+  let g:rc_dir = expand('$XDG_CONFIG_HOME/nvim/')
 
   " cache
-  call dein#load_toml(s:toml,      {'lazy': 0})
-  call dein#load_toml(s:lazy_toml, {'lazy': 1})
+  call dein#load_toml(g:rc_dir.'/dein_base.toml', {'lazy': 0})
+  call dein#load_toml(g:rc_dir.'/dein_colors.toml', {'lazy': 0})
+  call dein#load_toml(g:rc_dir.'/dein_filer.toml', {'lazy': 0})
+  call dein#load_toml(g:rc_dir.'/dein_syntax.toml', {'lazy': 0})
+  call dein#load_toml(g:rc_dir.'/dein_lsp.toml', {'lazy': 0})
+  call dein#load_toml(g:rc_dir.'/dein_statusline.toml', {'lazy': 0})
+  call dein#load_toml(g:rc_dir.'/dein_lazy.toml', {'lazy': 1})
 
   call dein#end()
   call dein#save_state()

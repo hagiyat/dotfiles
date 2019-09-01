@@ -1,0 +1,36 @@
+[[plugins]]
+repo = 'neoclide/coc.nvim'
+merge = '0'
+rev = 'release'
+hook_add = '''
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <Tab>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<Tab>" :
+      \ coc#refresh()
+
+let g:coc_global_extensions = [
+      \ 'coc-css',
+      \ 'coc-elixir',
+      \ 'coc-eslint',
+      \ 'coc-html',
+      \ 'coc-json',
+      \ 'coc-lists',
+      \ 'coc-solargraph',
+      \ 'coc-tsserver',
+      \ 'coc-vimlsp',
+      \ 'coc-yaml',
+      \ ]
+
+nmap <silent><Space>l [coc]
+nmap [coc]d <Plug>(coc-definition)
+nmap [coc]i <Plug>(coc-implementation)
+nmap [coc]r <Plug>(coc-references)
+nmap [coc]c <Plug>(coc-list-outline)
+
+autocmd CursorHold * silent call CocActionAsync('highlight')
+'''

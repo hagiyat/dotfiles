@@ -1,0 +1,184 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]]
+repo = 'haya14busa/dein-command.vim'
+
+[[plugins]]
+repo = 'Shougo/vimproc'
+build = 'make'
+
+[[plugins]]
+repo = 'osyo-manga/vim-precious'
+depends = ['context_filetype.vim']
+hook_add = '''
+" http://d.hatena.ne.jp/osyo-manga/20130612/1371046408
+let g:precious_enable_switch_CursorMoved = {
+      \ "*" : 0,
+      \ "toml" : 1
+      \ }
+let g:precious_enable_switch_CursorMoved_i = {
+      \ "*" : 0,
+      \ "toml" : 1
+      \ }
+" insert に入った時にスイッチし、抜けた時に元に戻す
+augroup switch_precious
+  autocmd!
+  autocmd InsertEnter * :PreciousSwitch
+  autocmd InsertLeave * :PreciousReset
+augroup END
+'''
+
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+
+[[plugins]]
+repo = 'kana/vim-submode'
+
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+
+[[plugins]]
+repo = 'airblade/vim-gitgutter'
+
+[[plugins]]
+repo = 'machakann/vim-sandwich'
+hook_add = '''
+" dとrは自動検出なので、マニュアルでやるときは、
+" ex) + から / に変換
+" sr+/ と入力
+" みたいな感じ
+nmap <Space>s [sandwich]
+nmap [sandwich]a saiw
+nmap [sandwich]d sdb
+nmap [sandwich]r srb
+xmap [sandwich]a saiw
+xmap [sandwich]d sdb
+xmap [sandwich]r srb
+'''
+
+[[plugins]]
+repo = 'thinca/vim-quickrun'
+
+[[plugins]]
+repo = 'thinca/vim-visualstar'
+
+[[plugins]]
+repo = 'thinca/vim-ref'
+
+[[plugins]]
+repo = 'scrooloose/nerdcommenter'
+hook_add = '''
+  let g:NERDCreateDefaultMappings = 0
+  let g:NERDSpaceDelims = 1
+  nmap <Space>; <Plug>NERDCommenterToggle
+  vmap <Space>; <Plug>NERDCommenterToggle
+'''
+
+[[plugins]]
+repo = 'easymotion/vim-easymotion'
+hook_add = '''
+let g:EasyMotion_do_mapping = 0
+
+nnoremap s <Nop>
+map sh <Plug>(easymotion-linebackward)
+map sj <Plug>(easymotion-j)
+map sk <Plug>(easymotion-k)
+map sl <Plug>(easymotion-lineforward)
+
+" s{char}{char} to move to {char}{char}
+nmap ss <Plug>(easymotion-overwin-f2)
+vmap ss <Plug>(easymotion-bd-f2)
+'''
+
+[[plugins]]
+repo = 'haya14busa/incsearch.vim'
+
+[[plugins]]
+repo = 'haya14busa/incsearch-easymotion.vim'
+depends = ['incsearch.vim', 'vim-easymotion']
+hook_add = '''
+function! s:incsearch_config(...) abort
+  return incsearch#util#deepextend(deepcopy({
+  \   'modules': [incsearch#config#easymotion#module({'overwin': 1})],
+  \   'keymap': {
+  \     "\<C-l>": '<Over>(easymotion)'
+  \   },
+  \   'is_expr': 0
+  \ }), get(a:, 1, {}))
+endfunction
+
+noremap <silent><expr> /  incsearch#go(<SID>incsearch_config())
+noremap <silent><expr> ?  incsearch#go(<SID>incsearch_config({'command': '?'}))
+noremap <silent><expr> g/ incsearch#go(<SID>incsearch_config({'is_stay': 1}))
+'''
+
+[[plugins]]
+repo = 'kassio/neoterm'
+hook_add = '''
+'''
+
+[[plugins]]
+repo = 'szw/vim-maximizer'
+hook_add = '''
+let g:maximizer_set_mapping_with_bang = 0
+nnoremap <silent> <Space>ww :<C-u>MaximizerToggle<CR>
+'''
+
+[[plugins]]
+repo = 'tpope/vim-abolish'
+
+[[plugins]]
+repo = 'cohama/lexima.vim'
+
+[[plugins]]
+repo = 'mhinz/vim-startify'
+depends = 'neoterm'
+hook_add = '''
+function! s:filter_header(lines) abort
+  let longest_line   = max(map(copy(a:lines), 'len(v:val)'))
+  " let centered_lines = map(copy(a:lines),
+        " \ 'repeat(" ", (&columns / 2) - (longest_line / 2)) . v:val')
+  let centered_lines = map(copy(a:lines), 'repeat(" ", 4) . v:val')
+  return centered_lines
+endfunction
+function! UpdateTags()
+  ! exec zsh rtags
+endfunction
+
+let g:startify_custom_header = s:filter_header([
+ \ '                     _     ',
+ \ '  ___  ___ ___ _  __(_)_ _ ',
+ \ ' / _ \/ -_) _ \ |/ / /  ` \',
+ \ '/_//_/\__/\___/___/_/_/_/_/',
+ \])
+let g:startify_files_number = 5
+let g:startify_custom_indices = split("w r t y u o p a s d f g v b n")
+let g:startify_bookmarks = [
+  \ '~/repos/dotfiles',
+  \ '~/repos',
+  \ '~/Dropbox/notes',
+\ ]
+let g:startify_commands = [
+  \ ['open file_rec', ":Denite `finddir('.git', ';') != '' ? 'file_rec/git' : 'file_rec'`"],
+  \ ['update ctags', ':GutentagsUpdate'],
+  \ ]
+
+let g:startify_list_order = [
+  \ [join(['   🗂  MRU', getcwd()], ' ')],
+  \ 'dir',
+  \ ['   🛠  Commands'],
+  \ 'commands',
+  \ ['   🏷  Bookmarks'],
+  \ 'bookmarks',
+  \]
+'''
+
+[[plugins]]
+repo = 'nathanaelkane/vim-indent-guides'
+hook_add = '''
+let g:indent_guides_auto_colors = 1
+let g:indent_guides_color_change_percent = 5
+nmap <silent> <Space>gt <Plug>IndentGuidesToggle
+'''
+
