@@ -3,6 +3,7 @@ export EDITOR=nvim
 export XDG_CONFIG_HOME=~/.config
 export XDG_DATA_DIRS=/usr/local/share:/usr/share
 export BROWSER=chromium
+export PROJECTS_HOME=$HOME/repos
 
 # emacs keybind
 bindkey -e
@@ -37,6 +38,10 @@ if type "source-highlight" > /dev/null 2>&1; then
   export LESS='-R'
   # export LESSOPEN='| /usr/share/source-highlight/src-hilite-lesspipe.sh %s'
   export LESSOPEN='| /usr/bin/src-hilite-lesspipe.sh %s'
+fi
+
+if [ ! -d $PROJECTS_HOME ]; then
+  mkdir -p $PROJECTS_HOME
 fi
 
 alias ll='ls -l'
@@ -313,7 +318,6 @@ __abbrev_regist "ec=$XDG_CONFIG_HOME/"
 __abbrev_regist "psa=ps auxwf"
 __abbrev_regist "xcp=xclip -selection c -o"
 __abbrev_regist "qq=exit"
-
 
 # awscli completions
 # [ -f /usr/local/share/zsh/site-functions/_aws ] && source /usr/local/share/zsh/site-functions/_aws

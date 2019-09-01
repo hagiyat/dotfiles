@@ -3,6 +3,10 @@ repo = 'junegunn/fzf.vim'
 hook_add = '''
 let g:fzf_command_prefix = 'Fzf'
 let g:fzf_files_source = '(if [ -d .git ];then git ls-files; else fd; fi)'
+command! -nargs=* -complete=dir FzfProject call fzf#run(fzf#wrap(
+      \ {'source': 'fd --hidden --type=d .git $PROJECTS_HOME | sed -e "s/\/\.git.*$//" | sort | uniq',
+      \  'sink': 'cd'}))
+
 nmap <Space>f [fzf]
 nnoremap [fzf]b :FzfBuffers<CR>
 nnoremap [fzf]x :FzfCommands<CR>
@@ -11,6 +15,8 @@ nnoremap [fzf]f :call fzf#vim#files('', {'source': fzf_files_source})<CR>
 nnoremap [fzf]h :FzfHistory<CR>
 nnoremap [fzf]l :FzfLines<CR>
 nnoremap [fzf]g :FzfRg
+nnoremap [fzf]p :FzfProject<CR>
+
 '''
 
 [[plugins]]
