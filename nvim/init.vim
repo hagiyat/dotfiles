@@ -56,84 +56,11 @@ let g:python3_host_prog = '/usr/bin/python3'
 " netrw
 let g:netrw_liststyle=3
 
-" バックスラッシュやクエスチョンを状況に合わせ自動的にエスケープ
-cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
-cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
-
-" escape
-noremap  <C-g> <ESC>
-noremap! <C-g> <ESC>
-nmap <silent> <C-g><C-g> :nohlsearch<CR>
-nmap <silent> <ESC><ESC> :nohlsearch<CR>
-tnoremap <silent> <C-g> <C-\><C-n>
-
-nnoremap q <Nop>
-nnoremap <Space> <Nop>
-
-" (insert mode) emacs
-inoremap <silent> <C-b> <Left>
-inoremap <silent> <C-f> <Right>
-inoremap <silent> <C-a> <S-Left>
-inoremap <silent> <C-e> <S-Right>
-inoremap <silent> <C-h> <C-g>u<C-h>
-inoremap <silent> <C-d> <C-g>u<Del>
-
-" window(+vim-maximizer)
-nnoremap <Space>wh <C-w>h
-nnoremap <Space>wj <C-w>j
-nnoremap <Space>wk <C-w>k
-nnoremap <Space>wl <C-w>l
-nnoremap <silent> <Space>w- :<C-u>split<CR>
-nnoremap <silent> <Space>w/ :<C-u>vsplit<CR>
-nnoremap <silent> <Space>wd :<C-u>q<CR>
-nnoremap <Space>w0 <C-w>=
-
-" buffer
-nnoremap <silent> <Space>bn :<C-u>bnext<CR>
-nnoremap <silent> <Space>bp :<C-u>bprevious<CR>
-nnoremap <silent> <Space>bd :<C-u>bdelete<CR>
-nnoremap <silent> <Space>ba :<C-u>enew<CR>
-
-" write and quit
-nnoremap <Space>fs :<C-u>w<CR>
-nnoremap <Space>qq :<C-u>q<CR>
-nnoremap <Space>qz ZQ
-nnoremap <Space>qw :<C-u>wq<CR>
-nnoremap <Space>qa :<C-u>qa<CR>
-nnoremap <Space>QQ :<C-u>qa!<CR>
+" import keybinds
+runtime! keybinds.vim
 
 " dein
-let s:dein_dir = expand('$XDG_CACHE_HOME/dein')
-let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
-
-if &runtimepath !~# '/dein.vim'
-  if !isdirectory(s:dein_repo_dir)
-    execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
-  endif
-  execute 'set runtimepath^=' . fnamemodify(s:dein_repo_dir, ':p')
-endif
-
-if dein#load_state(s:dein_dir)
-  call dein#begin(s:dein_dir)
-
-  let g:rc_dir = expand('$XDG_CONFIG_HOME/nvim/')
-
-  " cache
-  call dein#load_toml(g:rc_dir.'/dein_base.toml', {'lazy': 0})
-  call dein#load_toml(g:rc_dir.'/dein_colors.toml', {'lazy': 0})
-  call dein#load_toml(g:rc_dir.'/dein_filer.toml', {'lazy': 0})
-  call dein#load_toml(g:rc_dir.'/dein_syntax.toml', {'lazy': 0})
-  call dein#load_toml(g:rc_dir.'/dein_lsp.toml', {'lazy': 0})
-  call dein#load_toml(g:rc_dir.'/dein_statusline.toml', {'lazy': 0})
-  call dein#load_toml(g:rc_dir.'/dein_lazy.toml', {'lazy': 1})
-
-  call dein#end()
-  call dein#save_state()
-endif
-
-if dein#check_install()
-  call dein#install()
-endif
+runtime! dein.vim
 
 " Insertモードから抜けるとIMをOFFに
 function! Fcitx2en()
@@ -152,7 +79,7 @@ endfunction
 aug initvim
   autocmd!
   " tabstop / shiftwidth
-  autocmd FileType vim,ruby,eruby,slim,php,javascript,html,zsh,markdown,yaml,terraform setlocal shiftwidth=2 tabstop=2
+  autocmd FileType vim,ruby,eruby,slim,javascript,html,zsh,markdown,yaml,terraform setlocal shiftwidth=2 tabstop=2
   autocmd FileType python setlocal shiftwidth=4 tabstop=4
   " 保存時に行末の空白を除去する
   autocmd BufWritePre * :%s/\s\+$//ge
@@ -181,6 +108,3 @@ aug initvim
   let g:terminal_color_15 = '#eeeeec'
 augroup END
 
-" tagjump keymaps
-nnoremap <Space>tl :exe("tjump ".expand('<cword>'))<CR>
-nnoremap <Space>th :pop<CR>
