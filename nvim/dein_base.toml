@@ -40,6 +40,18 @@ repo = 'tpope/vim-fugitive'
 
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
+hook_source = '''
+let g:gitgutter_sign_added = '✳'
+let g:gitgutter_sign_modified = '🔸'
+let g:gitgutter_sign_removed = '🔻'
+let g:gitgutter_sign_removed_first_line = '🈁'
+let g:gitgutter_sign_modified_removed = '♻'
+'''
+hook_add = '''
+nmap <Space>g [gitgutter]
+nmap [gitgutter]j <Plug>GitGutterNextHunk
+nmap [gitgutter]k <Plug>GitGutterPrevHunk
+'''
 
 [[plugins]]
 repo = 'machakann/vim-sandwich'

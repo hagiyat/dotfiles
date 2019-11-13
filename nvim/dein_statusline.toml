@@ -3,7 +3,7 @@ repo = 'itchyny/lightline.vim'
 depends = 'ale'
 hook_add = '''
 let g:lightline = {
-  \ 'colorscheme': 'wombat',
+  \ 'colorscheme': 'jellybeans',
   \ 'mode_map': {'c': 'NORMAL'},
   \ 'active': {
   \   'left': [
@@ -33,11 +33,11 @@ let g:lightline = {
   " \ 'separator': { 'left': "\ue0b8", 'right': "\ue0be" },
   " \ 'subseparator': { 'left': "\ue0b9", 'right': "\ue0bf" },
   " slash-\/
-  " \ 'separator': { 'left': "\ue0b8", 'right': "\ue0ba" },
-  " \ 'subseparator': { 'left': "\ue0b9", 'right': "\ue0bb" },
+  \ 'separator': { 'left': "\ue0b8", 'right': "\ue0ba" },
+  \ 'subseparator': { 'left': "\ue0b9", 'right': "\ue0bb" },
   " slash-/\
-  \ 'separator': { 'left': "\ue0bc", 'right': "\ue0be" },
-  \ 'subseparator': { 'left': "\ue0bd", 'right': "\ue0bf" },
+  " \ 'separator': { 'left': "\ue0bc", 'right': "\ue0be" },
+  " \ 'subseparator': { 'left': "\ue0bd", 'right': "\ue0bf" },
   " arrow
   " \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
   " \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" },
