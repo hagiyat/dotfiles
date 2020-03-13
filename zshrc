@@ -60,6 +60,10 @@ else
   alias la='ls -al'
 fi
 
+if [ -x "`which pacui`" ]; then
+  export PACUI_AUR_HELPER=yay
+fi
+
 # for git diff
 # export PATH=$PATH:/usr/local/share/git-core/contrib/diff-highlight
 export PATH=$PATH:/usr/share/git/diff-highlight
