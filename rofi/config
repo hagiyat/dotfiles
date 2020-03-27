@@ -1,6 +1,0 @@
-# rofi -modi window,drun -show window
-
-rofi.sidebar-mode: true
-rofi.hide-scrollbar: true
-rofi.kb-cancel: Escape,Control+bracketleft,Control+g
-rofi.theme: .config/rofi/base_arthur.rasi
