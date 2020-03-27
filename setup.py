@@ -14,6 +14,7 @@ links = [
     (".config/termite", "termite"),
     (".config/alacritty", "alacritty"),
     (".config/rofi", "rofi"),
+    (".config/fontconfig", "fontconfig"),
 ]
 
 home = os.environ["HOME"]
