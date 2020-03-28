@@ -10,9 +10,9 @@ urgent_on_bell = true
 clickable_url = true
 
 ; font = Hurmit Nerd Font 12
-; font = mononoki Nerd Font 13
-; font = CodeNewRoman Nerd Font 13
-font = Monospace 14
+; font = CodeNewRoman Nerd Font Mono 15
+; font = MesloLGM Nerd Font Mono 14
+font = Monospace 15
 
 scrollback_lines = 10000
 search_wrap = true
