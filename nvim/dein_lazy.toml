@@ -59,24 +59,24 @@ nnoremap [denite]c :<C-u>Denite command<CR>
 nnoremap [denite]h :<C-u>Denite help<CR>
 '''
 
-[[plugins]]
-repo = 'Shougo/deoplete.nvim'
-on_event = 'InsertEnter'
-hook_source = '''
-  let g:deoplete#enable_at_startup = 1
-  let g:deoplete#tag#cache_limit_size = 10000000
-  inoremap <expr><tab> pumvisible() ? "\<C-n>" :
-        \ neosnippet#expandable_or_jumpable() ?
-        \    "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
-  " call deoplete#custom#source('LanguageClient',
-        " \ 'min_pattern_length',
-        " \ 2)
-'''
+# [[plugins]]
+# repo = 'Shougo/deoplete.nvim'
+# on_event = 'InsertEnter'
+# depends = ['deoplete-lsp', 'deoplete-tabnine']
+# hook_source = '''
+  # let g:deoplete#enable_at_startup = 1
+  # let g:deoplete#tag#cache_limit_size = 10000000
+  # inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+  # inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>"
+  # inoremap <expr><CR>  pumvisible() ? deoplete#close_popup() : "<CR>"
+# '''
 
-[[plugins]]
-repo = 'tbodt/deoplete-tabnine'
-depends = ['deoplete']
-build = './install.sh'
+# [[plugins]]
+# repo = 'tbodt/deoplete-tabnine'
+# build = './install.sh'
+
+# [[plugins]]
+# repo = 'Shougo/deoplete-lsp'
 
 [[plugins]]
 repo = 'Shougo/neosnippet-snippets'
@@ -87,12 +87,12 @@ on_event = 'InsertEnter'
 on_ft = ['snippet']
 depends = ['neosnippet-snippets']
 hook_source = '''
-  imap <C-k> <Plug>(neosnippet_expand_or_jump)
-  smap <C-k> <Plug>(neosnippet_expand_or_jump)
-  xmap <C-k> <Plug>(neosnippet_expand_target)
-  if has('conceal')
-    set conceallevel=2 concealcursor=niv
-  endif
+imap <C-k> <Plug>(neosnippet_expand_or_jump)
+smap <C-k> <Plug>(neosnippet_expand_or_jump)
+xmap <C-k> <Plug>(neosnippet_expand_target)
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
+endif
 '''
 
 [[plugins]]

@@ -13,8 +13,9 @@ links = [
     (".zshrc", "zshrc"),
     (".config/termite", "termite"),
     (".config/alacritty", "alacritty"),
-    (".config/rofi", "rofi"),
+    #  (".config/rofi", "rofi"),
     (".config/fontconfig", "fontconfig"),
+    (".config/flake8", "flake8"),
 ]
 
 home = os.environ["HOME"]
