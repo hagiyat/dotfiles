@@ -7,7 +7,7 @@ let g:neomru#file_mru_limit = 10000
 
 [[plugins]]
 repo = 'Shougo/denite.nvim'
-depends = ['neomru.vim']
+depends = ['neomru.vim', 'coc-denite']
 on_cmd = 'Denite'
 hook_post_source = '''
 " call denite#custom#var('file_rec', 'command',
@@ -57,6 +57,8 @@ nnoremap [denite]g :<C-u>DeniteCursorWord grep<CR>
 nnoremap [denite]r :<C-u>Denite-resume<CR>
 nnoremap [denite]c :<C-u>Denite command<CR>
 nnoremap [denite]h :<C-u>Denite help<CR>
+nnoremap [denite]cc :<C-u>Denite coc-command<CR>
+nnoremap [denite]cs :<C-u>Denite coc-symbols<CR>
 '''
 
 # [[plugins]]

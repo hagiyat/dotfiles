@@ -59,3 +59,6 @@ nnoremap [coc]r  :<C-u>CocListResume<CR>
 
 autocmd CursorHold * silent call CocActionAsync('highlight')
 '''
+
+[[plugins]]
+repo = 'neoclide/coc-denite'
