@@ -28,4 +28,3 @@ for (dest, source) in links:
     else:
         os.symlink(sourcepath, destpath)
         print("[created] %s" % destpath)
-
