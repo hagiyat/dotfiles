@@ -25,6 +25,7 @@ let g:coc_global_extensions = [
       \ 'coc-vimlsp',
       \ 'coc-yaml',
       \ 'coc-docker',
+      \ 'coc-python',
       \ ]
 
 nmap <silent><Space>l [coc]

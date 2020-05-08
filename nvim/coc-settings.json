@@ -22,11 +22,7 @@
       "rootPatterns": ["sorbet/config"],
       "initializationOptions": {},
       "settings": {}
-    },
-    "python": {
-      "sortImports": {
-        "path": "isort"
-      }
     }
-  }
+  },
+  "python.sortImports.path": "isort"
 }
