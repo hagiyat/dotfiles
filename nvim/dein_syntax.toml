@@ -35,3 +35,11 @@ repo = 'elzr/vim-json'
 hook_add = '''
 let g:vim_json_syntax_conceal = 0
 '''
+
+[[plugins]]
+repo = 'aklt/plantuml-syntax'
+on_ft = 'pu,uml,puml,plantuml'
+hook_add = '''
+au FileType plantuml command! OpenUml :!chromium %
+'''
+
