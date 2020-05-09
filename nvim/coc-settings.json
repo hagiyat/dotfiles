@@ -4,27 +4,48 @@
       "command": "efm-langserver",
       // custom config path
       // "args": ["-c", "$XDG_CONFIG_HOME/efm-langserver/config.yaml"],
-      "filetypes": ["vim", "eruby", "markdown, yaml"]
+      "filetypes": [
+        "vim",
+        "eruby",
+        "markdown, yaml"
+      ]
     },
     "dockerfile": {
       "command": "docker-langserver",
-      "filetypes": ["dockerfile"],
-      "args": ["--stdio"]
+      "filetypes": [
+        "dockerfile"
+      ],
+      "args": [
+        "--stdio"
+      ]
     },
     "elixirLS": {
       "command": "/home/hagiyat/.local/bin/elixir-ls/language_server.sh",
-      "filetypes": ["elixir", "eelixir"]
+      "filetypes": [
+        "elixir",
+        "eelixir"
+      ]
     },
     "sorbet": {
       "command": "srb",
-      "args": ["tc", "--lsp", "--disable-watchman", "--enable-all-experimental-lsp-features"],
-      "filetypes": ["ruby"],
-      "rootPatterns": ["sorbet/config"],
+      "args": [
+        "tc",
+        "--lsp",
+        "--disable-watchman",
+        "--enable-all-experimental-lsp-features"
+      ],
+      "filetypes": [
+        "ruby"
+      ],
+      "rootPatterns": [
+        "sorbet/config"
+      ],
       "initializationOptions": {},
       "settings": {}
     }
   },
   "python.jediEnabled": false,
+  "python.linting.enabled": true,
   "python.linting.pylintEnabled": false,
   "python.linting.flake8Enabled": true,
   "python.sortImports.path": "isort",
