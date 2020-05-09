@@ -58,6 +58,7 @@ nnoremap [denite]r :<C-u>Denite-resume<CR>
 nnoremap [denite]c :<C-u>Denite command<CR>
 nnoremap [denite]h :<C-u>Denite help<CR>
 nnoremap [denite]cc :<C-u>Denite coc-command<CR>
+nnoremap [denite]cd :<C-u>Denite coc-diagnostic<CR>
 nnoremap [denite]cs :<C-u>Denite coc-symbols<CR>
 '''
 
