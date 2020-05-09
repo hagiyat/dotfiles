@@ -1,6 +1,6 @@
 [[plugins]]
 repo = 'itchyny/lightline.vim'
-depends = 'ale'
+depends = ['coc.nvim', 'gina.vim']
 hook_add = '''
 let g:lightline = {
   \ 'colorscheme': 'jellybeans',
@@ -8,22 +8,24 @@ let g:lightline = {
   \ 'active': {
   \   'left': [
   \     [ 'mode', 'paste' ],
-  \     [ 'readonly', 'fugitive', 'branch', 'filename', 'modified' ],
-  \     [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ]
+  \     [ 'gitbranch' ],
+  \     [ 'filename', 'cocstatus' ],
   \   ],
-  \   'right': [ [ 'percent' ],
-  \              [ 'fileformat', 'fileencoding', 'filetype' ] ],
+  \   'right': [
+  \     [ 'lineinfo' ],
+  \     [ 'fileformat', 'fileencoding', 'filetype' ]
+  \   ],
+  \ },
+  \ 'component': {
+  \   'lineinfo': '%3l:%-2v%<',
   \ },
   \ 'component_function': {
-  \   'modified': 'LightLineModified',
+  \   'cocstatus': 'coc#status',
+  \   'currentfunction': 'CocCurrentFunction',
+  \   'statusdiagnostic': 'StatusDiagnostic',
   \   'readonly': 'LightLineReadonly',
-  \   'fugitive': 'LightLineFugitive',
-  \   'filename': 'LightLineFilename',
-  \   'filepath': 'LightLineFilepath',
-  \   'fileformat': 'LightLineFileformat',
-  \   'filetype': 'LightLineFiletype',
-  \   'fileencoding': 'LightLineFileencoding',
-  \   'mode': 'LightLineMode'
+  \   'gitbranch': 'LightlineGitBranch',
+  \   'filename': 'LightLineFilename'
   \ },
   " slash-// (required: nerd fonts)
   " \ 'separator': { 'left': "\ue0bc", 'right': "\ue0ba" },
@@ -41,80 +43,23 @@ let g:lightline = {
   " \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
   " \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" },
   \}
-let b:ale_linters = {
-      \   'javascript': ['eslint', 'eslint-plugin-vue'],
-      \   'python': ['pyflakes', 'pep8'],
-      \   'ruby': ['rubocop'],
-      \   'tex': ['textlint'],
-      \   'markdown': ['textlint'],
-      \   'css': ['stylelint'],
-      \}
-let g:ale_statusline_format = ['E%d', 'W%d', 'ok']
-let g:ale_set_loclist = 0
-let g:ale_set_quickfix = 1
-" nmap <silent> <C-n> <Plug>(ale_next_wrap)
 
-function! LightLineModified()
-  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
-endfunction
-
-function! LightLineReadonly()
-  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? "\ue0a2" : ''
+function! LightlineReadonly()
+  return &readonly ? '' : ''
 endfunction
 
 function! LightLineFilename()
-  return ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
+  return ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
         \ (&ft == 'denite' ? denite#get_status("sources") :
-        \ '' != expand('%') && winwidth(0) <=120 ? expand('%:t') : winwidth(0) >120 ? expand('%:p') : '[No Name]') .
-        \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
+        \ '' != expand('%') && winwidth(0) <=120 ? expand('%:f') : winwidth(0) >120 ? expand('%:p') : '[No Name]') .
+        \ (&modified ? ' ◈' : '')
 endfunction
 
-function! LightLineFilepath()
-  return winwidth(0) <=120 ? expand('%:h') : ''
+function! LightlineGitBranch()
+  return '' != gina#component#repo#branch() ? "\ue0a0". gina#component#repo#branch() : ''
 endfunction
 
-function! LightLineFugitive()
-  try
-    if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head') && winwidth(0) > 55
-      let _ = fugitive#head()
-      return strlen(_) ? "\ue0a0 "._ : ''
-    endif
-  catch
-  endtry
-  return ''
+function! CocCurrentFunction()
+    return get(b:, 'coc_current_function', '')
 endfunction
-
-function! LightLineFileformat()
-  return winwidth(0) > 80 ? &fileformat : ''
-endfunction
-
-function! LightLineFiletype()
-  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
-endfunction
-
-function! LightLineFileencoding()
-  return winwidth(0) > 60 ? (strlen(&fenc) ? &fenc : &enc) : ''
-endfunction
-
-function! LightLineMode()
-  return winwidth(0) > 30 ? lightline#mode() : ''
-endfunction
-'''
-
-[[plugins]]
-repo = 'maximbaz/lightline-ale'
-depends = ['lightline.vim', 'ale']
-hook_add = '''
-let g:lightline.component_expand = {
-      \  'linter_checking': 'lightline#ale#checking',
-      \  'linter_warnings': 'lightline#ale#warnings',
-      \  'linter_errors': 'lightline#ale#errors',
-      \  'linter_ok': 'lightline#ale#ok',
-      \ }
-let g:lightline.component_type = {
-      \     'linter_checking': 'left',
-      \     'linter_warnings': 'warning',
-      \     'linter_errors': 'error',
-      \     'linter_ok': 'left',
-      \ }
 '''
