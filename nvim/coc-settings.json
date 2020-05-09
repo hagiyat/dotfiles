@@ -24,5 +24,9 @@
       "settings": {}
     }
   },
-  "python.sortImports.path": "isort"
+  "python.jediEnabled": false,
+  "python.linting.pylintEnabled": false,
+  "python.linting.flake8Enabled": true,
+  "python.sortImports.path": "isort",
+  "python.formatting.provider": "black"
 }
