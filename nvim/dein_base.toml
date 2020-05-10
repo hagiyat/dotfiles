@@ -76,9 +76,6 @@ repo = 'thinca/vim-quickrun'
 repo = 'thinca/vim-visualstar'
 
 [[plugins]]
-repo = 'thinca/vim-ref'
-
-[[plugins]]
 repo = 'scrooloose/nerdcommenter'
 hook_add = '''
   let g:NERDCreateDefaultMappings = 0
@@ -126,19 +123,11 @@ noremap <silent><expr> g/ incsearch#go(<SID>incsearch_config({'is_stay': 1}))
 '''
 
 [[plugins]]
-repo = 'kassio/neoterm'
-hook_add = '''
-'''
-
-[[plugins]]
 repo = 'szw/vim-maximizer'
 hook_add = '''
 let g:maximizer_set_mapping_with_bang = 0
 nnoremap <silent> <Space>ww :<C-u>MaximizerToggle<CR>
 '''
-
-[[plugins]]
-repo = 'tpope/vim-abolish'
 
 [[plugins]]
 repo = 'cohama/lexima.vim'
