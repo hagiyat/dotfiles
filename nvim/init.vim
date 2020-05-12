@@ -81,6 +81,7 @@ aug initvim
   " tabstop / shiftwidth
   autocmd FileType vim,ruby,eruby,slim,javascript,html,zsh,markdown,yaml,terraform setlocal shiftwidth=2 tabstop=2
   autocmd FileType python setlocal shiftwidth=4 tabstop=4
+  autocmd FileType make setlocal shiftwidth=4 tabstop=4 noexpandtab
   " 保存時に行末の空白を除去する
   autocmd BufWritePre * :%s/\s\+$//ge
 
