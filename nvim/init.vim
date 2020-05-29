@@ -90,8 +90,11 @@ aug initvim
   " autosave
   autocmd CursorHold,CursorHoldI,InsertLeave * silent! wall
 
+  " transparent
+  set pumblend=10
+
   " terminal color
-  let g:terminal_color_0  = '#2e3436'
+  let g:terminal_color_0  = '#171b1c'
   let g:terminal_color_1  = '#cc0000'
   let g:terminal_color_2  = '#4e9a06'
   let g:terminal_color_3  = '#c4a000'
