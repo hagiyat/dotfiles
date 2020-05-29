@@ -10,7 +10,7 @@ function! EnableNeoDark()
   hi LineNr guifg=#474646 guibg=#202020
   hi CursorLine guibg=#343434
   hi CursorLineNr guifg=#669999 guibg=#343434
-  " hi CursorLine guibg=#182014
+  hi NormalFloat guibg=#1a1a1a
 endfunction
 autocmd VimEnter * nested call EnableNeoDark()
 '''
@@ -28,6 +28,7 @@ function! EnableQuantum()
   hi CursorLine guibg=#343434
   hi CursorLineNr guifg=#669999 guibg=#343434
   hi MatchParen gui=bold guifg=#1affb2 guibg=#242424
+  hi NormalFloat guibg=#1a1a1a
 endfunction
 " autocmd VimEnter * nested call EnableQuantum()
 '''

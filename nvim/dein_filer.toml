@@ -20,9 +20,26 @@ repo = 'Shougo/defx.nvim'
 on_cmd = 'Defx'
 depends = ['nvim-yarp', 'vim-hug-neovim-rpc', 'defx-icons', 'defx-git']
 hook_source = '''
+" == split ==
+" let s:defx_win_width_percent = 0.85
+" let s:defx_win_height_percent = 0.7
+" call defx#custom#option('_', {
+"       \ 'columns': 'indent:git:icons:filename',
+"       \ 'show_ignored_files': 1,
+"       \ 'split': 'floating',
+"       \ 'winwidth': float2nr(&columns * s:defx_win_width_percent),
+"       \ 'wincol': float2nr((&columns - (&columns * s:defx_win_width_percent)) / 2),
+"       \ 'winheight': float2nr(&lines * s:defx_win_height_percent),
+"       \ 'winrow': float2nr((&lines - (&lines * s:defx_win_height_percent)) / 2),
+"       \ })
+
+" == vertical ==
 call defx#custom#option('_', {
       \ 'columns': 'indent:git:icons:filename',
       \ 'show_ignored_files': 1,
+      \ 'split': 'vertical',
+      \ 'winwidth': 40,
+      \ 'direction': 'topleft',
       \ })
 '''
 hook_add = '''
@@ -32,7 +49,9 @@ nnoremap <silent> <Space>e :<C-u>Defx -toggle<CR>
 function! s:defx_my_settings() abort
   " Define mappings
   nnoremap <silent><buffer><expr> <CR>
-        \ defx#do_action('open')
+        \ defx#is_directory() ?
+        \ defx#do_action('open_directory') :
+        \ defx#do_action('multi', ['drop', 'quit'])
   nnoremap <silent><buffer><expr> c
         \ defx#do_action('copy')
   nnoremap <silent><buffer><expr> m
@@ -40,9 +59,11 @@ function! s:defx_my_settings() abort
   nnoremap <silent><buffer><expr> p
         \ defx#do_action('paste')
   nnoremap <silent><buffer><expr> l
-        \ defx#do_action('open')
+        \ defx#is_directory() ?
+        \ defx#do_action('open_directory') :
+        \ defx#do_action('multi', ['drop', 'quit'])
   nnoremap <silent><buffer><expr> E
-        \ defx#do_action('open', 'vsplit')
+        \ defx#do_action('multi', [['open', 'vsplit'], 'quit'])
   nnoremap <silent><buffer><expr> P
         \ defx#do_action('open', 'pedit')
   nnoremap <silent><buffer><expr> o
@@ -93,5 +114,6 @@ function! s:defx_my_settings() abort
   nnoremap <silent><buffer><expr> cd
         \ defx#do_action('change_vim_cwd')
 endfunction
-'''
 
+autocmd FileType defx set winblend=10
+'''
