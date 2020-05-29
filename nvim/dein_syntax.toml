@@ -1,4 +1,53 @@
 [[plugins]]
+repo = 'scrooloose/nerdcommenter'
+hook_add = '''
+  let g:NERDCreateDefaultMappings = 0
+  let g:NERDSpaceDelims = 1
+  nmap <Space>; <Plug>NERDCommenterToggle
+  vmap <Space>; <Plug>NERDCommenterToggle
+'''
+
+[[plugins]]
+repo = 'machakann/vim-sandwich'
+hook_add = '''
+" dとrは自動検出なので、マニュアルでやるときは、
+" ex) + から / に変換
+" sr+/ と入力
+" みたいな感じ
+nmap <Space>s [sandwich]
+nmap [sandwich]a saiw
+nmap [sandwich]d sdb
+nmap [sandwich]r srb
+xmap [sandwich]a saiw
+xmap [sandwich]d sdb
+xmap [sandwich]r srb
+'''
+
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+
+[[plugins]]
+repo = 'osyo-manga/vim-precious'
+depends = ['context_filetype.vim']
+hook_add = '''
+" http://d.hatena.ne.jp/osyo-manga/20130612/1371046408
+let g:precious_enable_switch_CursorMoved = {
+      \ "*" : 0,
+      \ "toml" : 1
+      \ }
+let g:precious_enable_switch_CursorMoved_i = {
+      \ "*" : 0,
+      \ "toml" : 1
+      \ }
+" insert に入った時にスイッチし、抜けた時に元に戻す
+augroup switch_precious
+  autocmd!
+  autocmd InsertEnter * :PreciousSwitch
+  autocmd InsertLeave * :PreciousReset
+augroup END
+'''
+
+[[plugins]]
 repo = 'cespare/vim-toml'
 on_ft = 'toml'
 

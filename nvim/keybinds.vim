@@ -7,7 +7,6 @@ noremap  <C-g> <ESC>
 noremap! <C-g> <ESC>
 nmap <silent> <C-g><C-g> :nohlsearch<CR>
 nmap <silent> <ESC><ESC> :nohlsearch<CR>
-tnoremap <silent> <C-g> <C-\><C-n>
 
 nnoremap q <Nop>
 nnoremap <Space> <Nop>

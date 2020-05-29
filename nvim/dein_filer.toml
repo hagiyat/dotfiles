@@ -27,7 +27,7 @@ call defx#custom#option('_', {
 '''
 hook_add = '''
 autocmd FileType defx call s:defx_my_settings()
-nnoremap <silent> <Space>t :<C-u>Defx -toggle<CR>
+nnoremap <silent> <Space>e :<C-u>Defx -toggle<CR>
 
 function! s:defx_my_settings() abort
   " Define mappings
