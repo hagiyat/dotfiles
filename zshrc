@@ -31,6 +31,9 @@ setopt auto_cd
 
 setopt extended_glob
 
+# historyにコメントごと残すための設定
+setopt interactive_comments
+
 # zmv enable
 autoload -Uz zmv
 
