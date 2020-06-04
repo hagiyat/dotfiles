@@ -14,6 +14,7 @@ hook_add = '''
 let g:deol#shell_history_path = '~/.zsh_history'
 
 nmap <silent><Space>t [deol]
+nnoremap  [deol]t :Deol -split=floating<CR>
 nnoremap  [deol]f :Deol -split=floating<CR>
 nnoremap  [deol]v :Deol -split=vertical<CR>
 nnoremap  [deol]s :Deol -split=horizontal<CR>

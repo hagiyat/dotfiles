@@ -68,3 +68,8 @@ hook_add = '''
 au FileType plantuml command! OpenUml :!chromium %
 '''
 
+[[plugins]]
+repo = 'leafgarland/typescript-vim'
+
+[[plugins]]
+repo = 'peitalin/vim-jsx-typescript'
