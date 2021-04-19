@@ -3,7 +3,8 @@ export EDITOR=nvim
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
-export XDG_DATA_DIRS=/usr/local/share:/usr/share
+export XDG_DATA_DIRS=/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share:/usr/local/share:/usr/share
+# export XDG_DATA_DIRS=/usr/local/share:/usr/share
 export BROWSER=chromium
 export PROJECTS_HOME=$HOME/repos
 export GOPATH=$HOME/go
@@ -126,6 +127,7 @@ zplug "mollifier/cd-gitroot"
 zplug "plugins/git", from:oh-my-zsh
 zplug "mollifier/anyframe"
 # zplug "momo-lab/zsh-abbrev-alias"
+zplug "xxh/xxh-shell-zsh"
 
 # completions
 zplug "zsh-users/zsh-completions"
@@ -208,14 +210,14 @@ if zplug check "mollifier/anyframe"; then
   }
   zle -N insert_git_branch
 
-  function checkout_git_branch() {
+  function switch_git_branch() {
     anyframe-source-git-branch -n \
-      | $filter_app --prompt "checkout branch > " \
+      | $filter_app --prompt "switch branch > " \
       | awk '{print $1}' \
-      | anyframe-action-execute git checkout
+      | anyframe-action-execute git switch
     zle redisplay
   }
-  zle -N checkout_git_branch
+  zle -N switch_git_branch
 
   function insert_filename() {
     rg --files \
@@ -245,7 +247,7 @@ if zplug check "mollifier/anyframe"; then
 
   bindkey '^r' put_history
   bindkey '^x^i' insert_git_branch
-  bindkey '^x^b' checkout_git_branch
+  bindkey '^x^b' switch_git_branch
   bindkey '^x^h' insert_commit_hash
   bindkey '^x^f' insert_filename
   bindkey '^x^p' kill_process
@@ -294,7 +296,8 @@ __abbrev_regist "lr=| rg"
 __abbrev_regist "lc=| xclip -selection c"
 
 __abbrev_regist "g=git status"
-__abbrev_regist "gs=git stash"
+__abbrev_regist "gst=git stash"
+__abbrev_regist "gsw=git switch"
 __abbrev_regist "gb=git branch"
 __abbrev_regist "gd=git diff"
 __abbrev_regist "gch=git checkout"
@@ -307,8 +310,8 @@ __abbrev_regist "glm=git log --stat --author=hagiyat"
 __abbrev_regist "gps=git push"
 __abbrev_regist "gpf=git push --force-with-lease"
 __abbrev_regist "gpl=git pull"
-__abbrev_regist "gbf=git checkout -b feature/"
-__abbrev_regist "gbh=git checkout -b hotfix/"
+__abbrev_regist "gbf=git switch -c feature/"
+__abbrev_regist "gbh=git switch -c hotfix/"
 __abbrev_regist "gbr=git-browse"
 
 __abbrev_regist "tmv=tmux split-window -v -c '#{pane_current_path}'"
