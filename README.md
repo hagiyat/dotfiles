@@ -30,4 +30,34 @@ cli applications
 - fzf
 - ripgrep
 - fd
+- exa
+- direnv
 - ...
+
+
+for lsp
+---
+
+* python
+* typescript
+
+## system libraries
+
+* dotnet-runtime
+* microsoft-python-language-server
+
+## python modules
+
+* flake8
+* black
+* isort
+
+## npm modules
+
+* pyright
+* tern
+* typescript
+* typescript-language-server
+* prettier
+* eslint
+* tslint
