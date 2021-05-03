@@ -19,13 +19,6 @@
         "--stdio"
       ]
     },
-    "elixirLS": {
-      "command": "/home/hagiyat/.local/bin/elixir-ls/language_server.sh",
-      "filetypes": [
-        "elixir",
-        "eelixir"
-      ]
-    },
     "sorbet": {
       "command": "srb",
       "args": [
@@ -48,6 +41,11 @@
   "python.linting.enabled": true,
   "python.linting.pylintEnabled": false,
   "python.linting.flake8Enabled": true,
-  "python.sortImports.path": "isort",
-  "python.formatting.provider": "black"
+  "python.linting.flake8Path": "~/.local/bin/flake8",
+  "python.linting.flake8Args": ["--show-source", "--ignore", "E203,W503,W504", "--max-line-length", "120"],
+  "python.sortImports.path": "~/.local/bin/isort",
+  "python.sortImports.args": ["-l", "120", "--multi-line", "3", "--trailing-comma", "--ensure-newline-before-comments"],
+  "python.formatting.provider": "black",
+  "python.formatting.blackPath": "~/.local/bin/black",
+  "python.formatting.blackArgs": ["-l", "120"]
 }

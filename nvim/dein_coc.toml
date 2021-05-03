@@ -28,7 +28,7 @@ let g:coc_global_extensions = [
       \ 'coc-python',
       \ ]
 
-nmap <silent><Space>l [coc]
+nmap <silent><Space>m [coc]
 
 nmap [coc]gd <Plug>(coc-definition)
 nmap [coc]gt <Plug>(coc-type-definition)
