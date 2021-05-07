@@ -82,7 +82,6 @@ This function should only modify configuration layer settings."
             shell-default-height 30
             shell-default-position 'bottom)
      deft
-     themes-megapack
      treemacs
      )
 
@@ -99,6 +98,7 @@ This function should only modify configuration layer settings."
                                       rjsx-mode
                                       yasnippet-snippets
                                       prettier-js
+                                      doom-themes
                                       )
 
    ;; A list of packages that cannot be updated.
@@ -253,10 +253,12 @@ It should only modify the values of Spacemacs settings."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(sanityinc-tomorrow-night
-                         gruvbox-dark-medium
-                         majapahit-dark
-                         solarized-dark-high-contrast
+   dotspacemacs-themes '(doom-wilmersdorf
+                         doom-oceanic-next
+                         doom-tomorrow-night
+                         doom-spacegrey
+                         doom-gruvbox
+                         doom-rouge
                          spacemacs-dark
                          spacemacs-light)
 
@@ -611,6 +613,12 @@ before packages are loaded."
   (add-hook 'web-mode-hook 'company-mode)
   (add-hook 'web-mode-hook 'prettier-js-mode)
   (add-hook 'web-mode-hook #'turn-on-smartparens-mode t)
+
+  ;; ime
+  (defun force-ime-off ()
+    (interactive)
+    (shell-command "[ `fcitx-remote` -eq 2 ] && fcitx-remote -c"))
+  (add-hook 'evil-hybrid-state-exit-hook 'force-ime-off)
   )
 
 

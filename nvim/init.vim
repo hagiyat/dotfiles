@@ -64,16 +64,7 @@ runtime! dein.vim
 
 " Insertモードから抜けるとIMをOFFに
 function! Fcitx2en()
-  let s:input_status = system("fcitx-remote")
-  if s:input_status == 2
-    let l:a = system("fcitx-remote -c")
-  endif
-endfunction
-function! Fcitx2en()
-  let s:input_status = system("fcitx-remote")
-  if s:input_status == 2
-    let l:a = system("fcitx-remote -c")
-  endif
+  let l:a = system("[ `fcitx-remote` -eq 2 ] && fcitx-remote -c")
 endfunction
 
 aug initvim
