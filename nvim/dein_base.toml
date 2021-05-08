@@ -14,10 +14,10 @@ hook_add = '''
 let g:deol#shell_history_path = '~/.zsh_history'
 
 nmap <silent><Space>t [deol]
-nnoremap  [deol]t :Deol -split=floating<CR>
-nnoremap  [deol]f :Deol -split=floating<CR>
-nnoremap  [deol]v :Deol -split=vertical<CR>
-nnoremap  [deol]s :Deol -split=horizontal<CR>
+nnoremap  [deol]t :Deol -split=horizontal -winheight=30<CR>
+nnoremap  [deol]f :Deol -split=floating -winheight=30<CR>
+nnoremap  [deol]l :Deol -split=farleft<CR>
+nnoremap  [deol]r :Deol -split=farright<CR>
 
 " terminalをnormal modeに
 tnoremap <C-g> <C-\><C-n>
@@ -60,14 +60,14 @@ hook_add = '''
 let g:EasyMotion_do_mapping = 0
 
 nnoremap s <Nop>
-map sh <Plug>(easymotion-linebackward)
-map sj <Plug>(easymotion-j)
-map sk <Plug>(easymotion-k)
-map sl <Plug>(easymotion-lineforward)
+map gsh <Plug>(easymotion-linebackward)
+map gsj <Plug>(easymotion-j)
+map gsk <Plug>(easymotion-k)
+map gsl <Plug>(easymotion-lineforward)
 
 " s{char}{char} to move to {char}{char}
-nmap ss <Plug>(easymotion-overwin-f2)
-vmap ss <Plug>(easymotion-bd-f2)
+nmap gss <Plug>(easymotion-overwin-f2)
+vmap gss <Plug>(easymotion-bd-f2)
 '''
 
 [[plugins]]
