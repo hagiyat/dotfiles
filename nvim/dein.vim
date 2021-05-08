@@ -1,5 +1,6 @@
 let s:dein_dir = expand('$XDG_CACHE_HOME/dein')
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
+let g:dein#install_github_api_token = $GITHUB_API_TOKEN
 
 if &runtimepath !~# '/dein.vim'
   if !isdirectory(s:dein_repo_dir)

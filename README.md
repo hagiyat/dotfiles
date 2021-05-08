@@ -7,13 +7,13 @@ desktop applications
 ---
 
 - terminal emulator
-  - **termite**
-  - alacritty
+  - termite
+  - **alacritty**
   - guake
 
 - editor
-  - **neovim**
-  - emacs(spacemacs)
+  - neovim
+  - **emacs(spacemacs)**
 
 - browser
   - **chromium**
@@ -33,6 +33,12 @@ cli applications
 - exa
 - direnv
 - ...
+
+for neovim 
+---
+
+* [requires: github personal access token](https://docs.github.com/ja/github/authenticating-to-github/creating-a-personal-access-token)
+  * Set to environment variable in an appropriate way. for expample, ```echo "export GITHUB_API_TOKEN=xxxxx" >> /path/to/.zshenv```
 
 
 for lsp
