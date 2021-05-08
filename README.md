@@ -61,3 +61,4 @@ for lsp
 * prettier
 * eslint
 * tslint
+* vmd
