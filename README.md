@@ -34,7 +34,7 @@ cli applications
 - direnv
 - ...
 
-for neovim 
+for neovim
 ---
 
 * [requires: github personal access token](https://docs.github.com/ja/github/authenticating-to-github/creating-a-personal-access-token)
@@ -46,6 +46,7 @@ for lsp
 
 * python
 * typescript
+* bash
 
 ## system libraries
 
@@ -68,3 +69,4 @@ for lsp
 * eslint
 * tslint
 * vmd
+* bash-language-server
