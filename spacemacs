@@ -32,7 +32,7 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
+   '(yaml
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
@@ -50,6 +50,7 @@ This function should only modify configuration layer settings."
      git
      helm
      (markdown :variables markdown-live-preview-engine 'vmd)
+     (plantuml :variables plantuml-jar-path "/usr/share/java/plantuml/plantuml.jar")
      ;; multiple-cursors
      ;; org
      ;; spell-checking
@@ -79,7 +80,7 @@ This function should only modify configuration layer settings."
            html-enable-lsp t)
      imenu-list
      (shell :variables
-            shell-default-height 30
+            shell-default-height 36
             shell-default-position 'bottom)
      (shell-scripts :variables shell-scripts-backend 'lsp)
      deft
@@ -259,7 +260,6 @@ It should only modify the values of Spacemacs settings."
                          doom-tomorrow-night
                          doom-spacegrey
                          doom-gruvbox
-                         doom-rouge
                          spacemacs-dark
                          spacemacs-light)
 
@@ -279,8 +279,8 @@ It should only modify the values of Spacemacs settings."
    ;; Default font or prioritized list of fonts. The `:size' can be specified as
    ;; a non-negative integer (pixel size), or a floating-point (point size).
    ;; Point size is recommended, because it's device independent. (default 10.0)
-   dotspacemacs-default-font '("Source Han Mono"
-                               :size 13.0
+   dotspacemacs-default-font '("monospace"
+                               :size 14.5
                                :weight normal
                                :width normal)
 
@@ -582,7 +582,28 @@ before packages are loaded."
   (set-default-coding-systems 'utf-8-unix)
   (setq deft-directory "~/Dropbox/notes/")
   (setq vmd-binary-path "~/.asdf/shims/vmd")
+
   (set-fontset-font nil '(#x1F000 . #x1FAFF) "Noto Color Emoji")
+  (dolist (target '(jisx0201
+                    latin-jisx0201
+                    japanese-jisx0208
+                    japanese-jisx0208-1978
+                    japanese-jisx0212
+                    japanese-jisx0213-1
+                    japanese-jisx0213-2
+                    japanese-jisx0213-a
+                    japanese-jisx0213.2004-1
+                    katakana-sjis
+                    katakana-jisx0201
+                    (#x3040 . #x309f)
+                    (#x30a0 . #x30ff)
+                    (#xff00 . #xffef)
+                    (#x0370 . #x03ff)))
+    (set-fontset-font (frame-parameter nil 'font) target
+                      (font-spec :family "Source Han Sans JP" :size 12.0)))
+
+  (setq-default line-spacing 2)
+
   ;; tide def func:
   (defun tide-setup-hook ()
       (tide-setup)
@@ -753,7 +774,7 @@ This function is called at the very end of Spacemacs initialization."
  '(nrepl-message-colors
    '("#fb4933" "#d65d0e" "#d79921" "#747400" "#b9b340" "#14676b" "#689d6a" "#d3869b" "#b16286"))
  '(package-selected-packages
-   '(insert-shebang flycheck-bashate fish-mode company-shell xterm-color web-mode tagedit slim-mode shell-pop scss-mode sass-mode pug-mode multi-term imenu-list helm-css-scss haml-mode eshell-z eshell-prompt-extras esh-help emmet-mode company-web web-completion-data yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode dash-functional helm-pydoc cython-mode company-anaconda anaconda-mode pythonic helm-company helm-c-yasnippet fuzzy company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree toc-org spaceline powerline smeargle restart-emacs rainbow-delimiters popwin persp-mode pcre2el paradox spinner orgit org-plus-contrib org-bullets open-junk-file neotree move-text mmm-mode markdown-toc markdown-mode magit-gitflow magit-popup magit macrostep lorem-ipsum linum-relative link-hint indent-guide hydra lv hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile pkg-info epl helm-mode-manager helm-make helm-gitignore request helm-flx helm-descbinds helm-ag google-translate golden-ratio gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-commit with-editor transient gh-md flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired f evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg eval-sexp-fu elisp-slime-nav dumb-jump dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))
+   '(yaml-mode xterm-color web-mode tagedit slim-mode shell-pop scss-mode sass-mode pug-mode multi-term imenu-list helm-css-scss haml-mode eshell-z eshell-prompt-extras esh-help emmet-mode company-web web-completion-data yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode dash-functional helm-pydoc cython-mode company-anaconda anaconda-mode pythonic helm-company helm-c-yasnippet fuzzy company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree toc-org spaceline powerline smeargle restart-emacs rainbow-delimiters popwin persp-mode pcre2el paradox spinner orgit org-plus-contrib org-bullets open-junk-file neotree move-text mmm-mode markdown-toc markdown-mode magit-gitflow magit-popup magit macrostep lorem-ipsum linum-relative link-hint indent-guide hydra lv hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile pkg-info epl helm-mode-manager helm-make helm-gitignore request helm-flx helm-descbinds helm-ag google-translate golden-ratio gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-commit with-editor transient gh-md flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired f evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg eval-sexp-fu elisp-slime-nav dumb-jump dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))
  '(pos-tip-background-color "#32302f")
  '(pos-tip-foreground-color "#bdae93")
  '(smartrep-mode-line-active-bg (solarized-color-blend "#98971a" "#32302f" 0.2))
