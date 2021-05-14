@@ -32,8 +32,7 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(yaml
-     ;; ----------------------------------------------------------------
+   '(;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
      ;; `M-m f e R' (Emacs style) to install them.
@@ -46,17 +45,17 @@ This function should only modify configuration layer settings."
                       auto-completion-complete-with-key-sequence-delay 0.1
                       auto-completion-private-snippets-directory nil)
      better-defaults
-     emacs-lisp
-     git
      helm
+     theming
+     imenu-list
+     git
+     deft
+     treemacs
+     emacs-lisp
+     yaml
+     lsp
      (markdown :variables markdown-live-preview-engine 'vmd)
      (plantuml :variables plantuml-jar-path "/usr/share/java/plantuml/plantuml.jar")
-     ;; multiple-cursors
-     ;; org
-     ;; spell-checking
-     ;; syntax-checking
-     ;; version-control
-     lsp
      (python :variables
              python-backend 'lsp
              python-lsp-server 'pyright
@@ -78,13 +77,15 @@ This function should only modify configuration layer settings."
            less-enable-lsp t
            scss-enable-lsp t
            html-enable-lsp t)
-     imenu-list
      (shell :variables
             shell-default-height 36
             shell-default-position 'bottom)
      (shell-scripts :variables shell-scripts-backend 'lsp)
-     deft
-     treemacs
+     ;; multiple-cursors
+     ;; org
+     ;; spell-checking
+     ;; syntax-checking
+     ;; version-control
      )
 
 
@@ -255,11 +256,10 @@ It should only modify the values of Spacemacs settings."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(doom-wilmersdorf
-                         doom-oceanic-next
+   dotspacemacs-themes '(doom-oceanic-next
                          doom-tomorrow-night
                          doom-spacegrey
-                         doom-gruvbox
+                         doom-wilmersdorf
                          spacemacs-dark
                          spacemacs-light)
 
@@ -270,7 +270,8 @@ It should only modify the values of Spacemacs settings."
    ;; refer to the DOCUMENTATION.org for more info on how to create your own
    ;; spaceline theme. Value can be a symbol or list with additional properties.
    ;; (default '(spacemacs :separator wave :separator-scale 1.5))
-   dotspacemacs-mode-line-theme '(spacemacs :separator slant :separator-scale 1.5)
+
+   dotspacemacs-mode-line-theme '(spacemacs :separator slant :separator-scale 1.8)
 
    ;; If non-nil the cursor color matches the state color in GUI Emacs.
    ;; (default t)
@@ -279,7 +280,7 @@ It should only modify the values of Spacemacs settings."
    ;; Default font or prioritized list of fonts. The `:size' can be specified as
    ;; a non-negative integer (pixel size), or a floating-point (point size).
    ;; Point size is recommended, because it's device independent. (default 10.0)
-   dotspacemacs-default-font '("monospace"
+   dotspacemacs-default-font '("CodeNewRoman Nerd Font Mono"
                                :size 14.5
                                :weight normal
                                :width normal)
@@ -562,7 +563,24 @@ See the header of this file for more information."
 This function is called immediately after `dotspacemacs/init', before layer
 configuration.
 It is mostly for variables that should be set before packages are loaded.
-If you are unsure, try setting them in `dotspacemacs/user-config' first.")
+If you are unsure, try setting them in `dotspacemacs/user-config' first."
+  ;; theming
+  (setq theming-modifications
+        '((doom-tomorrow-night
+           ;; Font locking
+           ;; (font-lock-comment-face :foreground "saddle brown")
+           ;; (font-lock-doc-face :foreground "sienna")
+           (font-lock-comment-face :foreground "slate gray")
+           (font-lock-doc-face :foreground "light slate gray")
+           )
+          (doom-spacegrey
+           ;; Font locking
+           (default :background "#182030")
+           (font-lock-function-name-face :foreground "light coral")
+           )
+          )
+        )
+  )
 
 
 (defun dotspacemacs/user-load ()
