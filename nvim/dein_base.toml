@@ -60,8 +60,8 @@ hook_add = '''
 let g:EasyMotion_do_mapping = 0
 
 nnoremap s <Nop>
-map gsh <Plug>(easymotion-linebackward)
-map gsj <Plug>(easymotion-j)
+map gsb <Plug>(easymotion-linebackward)
+map gsw <Plug>(easymotion-j)
 map gsk <Plug>(easymotion-k)
 map gsl <Plug>(easymotion-lineforward)
 
