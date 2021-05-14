@@ -6,6 +6,7 @@ links = [
     # (".config/fish/config.fish", "fish/config.fish"),
     # (".config/fish/conf.d", "fish/conf.d"),
     (".gitconfig", "gitconfig"),
+    (".config/git/ignore", "gitignore_global"),
     (".myclirc", "myclirc"),
     # (".spacemacs", "spacemacs"),
     (".tmux.conf", "tmux.conf"),
