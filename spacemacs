@@ -601,6 +601,15 @@ before packages are loaded."
   (setq deft-directory "~/Dropbox/notes/")
   (setq vmd-binary-path "~/.asdf/shims/vmd")
 
+  (defun highlight-selected-window ()
+    "Highlight selected window with a different background color."
+    (walk-windows (lambda (w)
+                    (unless (eq w (selected-window))
+                      (with-current-buffer (window-buffer w)
+                        (buffer-face-set '(:background "gray20"))))))
+    (buffer-face-set 'default))
+  (add-hook 'buffer-list-update-hook 'highlight-selected-window)
+
   (set-fontset-font nil '(#x1F000 . #x1FAFF) "Noto Color Emoji")
   (dolist (target '(jisx0201
                     latin-jisx0201
