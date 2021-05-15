@@ -102,6 +102,7 @@ This function should only modify configuration layer settings."
                                       yasnippet-snippets
                                       prettier-js
                                       doom-themes
+                                      auto-dim-other-buffers
                                       )
 
    ;; A list of packages that cannot be updated.
@@ -580,6 +581,9 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
            )
           )
         )
+  (add-hook 'after-init-hook (lambda ()
+                               (when (fboundp 'auto-dim-other-buffers-mode)
+                                 (auto-dim-other-buffers-mode t))))
   )
 
 
@@ -600,15 +604,6 @@ before packages are loaded."
   (set-default-coding-systems 'utf-8-unix)
   (setq deft-directory "~/Dropbox/notes/")
   (setq vmd-binary-path "~/.asdf/shims/vmd")
-
-  (defun highlight-selected-window ()
-    "Highlight selected window with a different background color."
-    (walk-windows (lambda (w)
-                    (unless (eq w (selected-window))
-                      (with-current-buffer (window-buffer w)
-                        (buffer-face-set '(:background "gray20"))))))
-    (buffer-face-set 'default))
-  (add-hook 'buffer-list-update-hook 'highlight-selected-window)
 
   (set-fontset-font nil '(#x1F000 . #x1FAFF) "Noto Color Emoji")
   (dolist (target '(jisx0201
@@ -801,7 +796,7 @@ This function is called at the very end of Spacemacs initialization."
  '(nrepl-message-colors
    '("#fb4933" "#d65d0e" "#d79921" "#747400" "#b9b340" "#14676b" "#689d6a" "#d3869b" "#b16286"))
  '(package-selected-packages
-   '(yaml-mode xterm-color web-mode tagedit slim-mode shell-pop scss-mode sass-mode pug-mode multi-term imenu-list helm-css-scss haml-mode eshell-z eshell-prompt-extras esh-help emmet-mode company-web web-completion-data yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode dash-functional helm-pydoc cython-mode company-anaconda anaconda-mode pythonic helm-company helm-c-yasnippet fuzzy company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree toc-org spaceline powerline smeargle restart-emacs rainbow-delimiters popwin persp-mode pcre2el paradox spinner orgit org-plus-contrib org-bullets open-junk-file neotree move-text mmm-mode markdown-toc markdown-mode magit-gitflow magit-popup magit macrostep lorem-ipsum linum-relative link-hint indent-guide hydra lv hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile pkg-info epl helm-mode-manager helm-make helm-gitignore request helm-flx helm-descbinds helm-ag google-translate golden-ratio gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-commit with-editor transient gh-md flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired f evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg eval-sexp-fu elisp-slime-nav dumb-jump dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))
+   '(auto-dim-other-buffers xterm-color web-mode tagedit slim-mode shell-pop scss-mode sass-mode pug-mode multi-term imenu-list helm-css-scss haml-mode eshell-z eshell-prompt-extras esh-help emmet-mode company-web web-completion-data yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode dash-functional helm-pydoc cython-mode company-anaconda anaconda-mode pythonic helm-company helm-c-yasnippet fuzzy company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree toc-org spaceline powerline smeargle restart-emacs rainbow-delimiters popwin persp-mode pcre2el paradox spinner orgit org-plus-contrib org-bullets open-junk-file neotree move-text mmm-mode markdown-toc markdown-mode magit-gitflow magit-popup magit macrostep lorem-ipsum linum-relative link-hint indent-guide hydra lv hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile projectile pkg-info epl helm-mode-manager helm-make helm-gitignore request helm-flx helm-descbinds helm-ag google-translate golden-ratio gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-commit with-editor transient gh-md flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired f evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg eval-sexp-fu elisp-slime-nav dumb-jump dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))
  '(pos-tip-background-color "#32302f")
  '(pos-tip-foreground-color "#bdae93")
  '(smartrep-mode-line-active-bg (solarized-color-blend "#98971a" "#32302f" 0.2))
@@ -840,5 +835,5 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(auto-dim-other-buffers-face ((t (:background "gray20")))))
 )
