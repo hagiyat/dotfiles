@@ -8,7 +8,7 @@ links = [
     (".gitconfig", "gitconfig"),
     (".config/git/ignore", "gitignore_global"),
     (".myclirc", "myclirc"),
-    # (".spacemacs", "spacemacs"),
+    (".spacemacs", "spacemacs"),
     (".tmux.conf", "tmux.conf"),
     # (".vimrc", "vimrc"),
     (".zshrc", "zshrc"),
