@@ -353,3 +353,9 @@ fi
 if (which zprof > /dev/null 2>&1) ;then
   zprof
 fi
+
+# eterm
+if [ $TERM = 'eterm-color' ]; then
+  export FZF_DEFAULT_OPTS='--height 40% --reverse'
+  export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=black"
+fi

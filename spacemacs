@@ -45,7 +45,9 @@ This function should only modify configuration layer settings."
                       auto-completion-complete-with-key-sequence-delay 0.1
                       auto-completion-private-snippets-directory nil)
      better-defaults
-     helm
+     (ivy :variables
+          ivy-enable-advanced-buffer-information t
+          ivy-height 20)
      theming
      imenu-list
      git
@@ -258,8 +260,7 @@ It should only modify the values of Spacemacs settings."
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(doom-tomorrow-night
-                         doom-oceanic-next
-                         doom-spacegrey
+                         doom-material
                          doom-wilmersdorf
                          spacemacs-dark
                          spacemacs-light)
@@ -565,19 +566,27 @@ This function is called immediately after `dotspacemacs/init', before layer
 configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
+  ;; omit message: package cl is deprecated
+  (setq byte-compile-warnings '(not cl-functions obsolete))
+
   ;; theming
   (setq theming-modifications
         '((doom-tomorrow-night
-           ;; Font locking
            ;; (font-lock-comment-face :foreground "saddle brown")
            ;; (font-lock-doc-face :foreground "sienna")
+           (hl-line :background "gray20")
+           (region :foreground "light green")
+           (term-color-black :foreground "light slate gray")
            (font-lock-comment-face :foreground "slate gray")
            (font-lock-doc-face :foreground "light slate gray")
            )
-          (doom-spacegrey
-           ;; Font locking
-           (default :background "#182030")
-           (font-lock-function-name-face :foreground "light coral")
+          (doom-material
+           (default :background "#182028")
+           (hl-line :background "#303840")
+           (region :foreground "turquoise")
+           (term-color-black :foreground "light slate gray")
+           (font-lock-comment-face :foreground "slate gray")
+           (font-lock-doc-face :foreground "light slate gray")
            )
           )
         )
@@ -603,6 +612,7 @@ before packages are loaded."
   (prefer-coding-system 'utf-8)
   (set-default-coding-systems 'utf-8-unix)
   (setq deft-directory "~/Dropbox/notes/")
+  (setq deft-extensions '("md"))
   (setq vmd-binary-path "~/.asdf/shims/vmd")
 
   (set-fontset-font nil '(#x1F000 . #x1FAFF) "Noto Color Emoji")
@@ -664,7 +674,7 @@ before packages are loaded."
   ;; ime
   (defun force-ime-off ()
     (interactive)
-    (shell-command "[ `fcitx-remote` -eq 2 ] && fcitx-remote -c"))
+    (shell-command-to-string "[ `fcitx-remote` -eq 2 ] && fcitx-remote -c"))
   (add-hook 'evil-hybrid-state-exit-hook 'force-ime-off)
   )
 
