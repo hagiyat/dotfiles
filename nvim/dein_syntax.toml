@@ -3,8 +3,8 @@ repo = 'scrooloose/nerdcommenter'
 hook_add = '''
   let g:NERDCreateDefaultMappings = 0
   let g:NERDSpaceDelims = 1
-  nmap <Space>; <Plug>NERDCommenterToggle
-  vmap <Space>; <Plug>NERDCommenterToggle
+  nmap gcc <Plug>NERDCommenterToggle
+  vmap gcc <Plug>NERDCommenterToggle
 '''
 
 [[plugins]]
