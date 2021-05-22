@@ -9,6 +9,7 @@ links = [
     (".config/git/ignore", "gitignore_global"),
     (".myclirc", "myclirc"),
     (".spacemacs", "spacemacs"),
+    (".config/doom", "doom"),
     (".tmux.conf", "tmux.conf"),
     # (".vimrc", "vimrc"),
     (".zshrc", "zshrc"),
