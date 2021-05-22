@@ -4,7 +4,6 @@
 (defgroup doom-spacegrey-theme nil
   "Options for doom-themes"
   :group 'doom-themes)
-
 (defcustom doom-spacegrey-brighter-modeline nil
   "If non-nil, more vivid colors will be used to style the mode-line."
   :group 'doom-spacegrey-theme
@@ -33,9 +32,9 @@ determine the exact padding."
 
   ;; name        default   256       16
   (;;(bg         '("#2b303b" nil       nil            ))
-   (bg         '("#202430" nil       nil            ))
-   ;;(bg-alt     '("#232830" nil       nil            ))
-   (bg-alt     '("#1f242d" nil       nil            ))
+   (bg         '("#121824" nil       nil            ))
+   ;; (bg-alt     '("#232830" nil       nil            ))
+   (bg-alt     '("#0d1018" nil       nil            ))
    (base0      '("#1B2229" "black"   "black"        ))
    (base1      '("#1c1f24" "#1e1e1e" "brightblack"  ))
    (base2      '("#202328" "#2e2e2e" "brightblack"  ))
@@ -103,10 +102,14 @@ determine the exact padding."
     (if -modeline-bright
         (doom-darken base3 0.05)
       base1))
+   ;; (modeline-bg-l
+   ;;  (if -modeline-bright
+   ;;      (doom-darken base3 0.1)
+   ;;    base1))
    (modeline-bg-l
     (if -modeline-bright
         (doom-darken base3 0.1)
-      base1))
+      base3))
    (modeline-bg-inactive (doom-darken bg 0.1))
    (modeline-bg-inactive-l `(,(doom-darken (car bg-alt) 0.05) ,@(cdr base1))))
 
@@ -175,7 +178,11 @@ determine the exact padding."
    (org-hide :foreground bg)
    (solaire-org-hide-face :foreground hidden)
 
-   (hl-line :background (doom-darken bg 0.3))
+   (hl-line :background (doom-darken bg 0.5))
+   (region :foreground "turquoise" :background (doom-darken bg -0.7))
+   (vterm-color-black :foreground doc-comments)
+   (term-color-black :foreground doc-comments)
+
    (tooltip              :background bg-alt :foreground fg))
 
   ;; --- extra variables ---------------------

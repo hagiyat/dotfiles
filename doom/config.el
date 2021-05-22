@@ -33,11 +33,10 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 (add-to-list 'custom-theme-load-path "~/.config/doom/themes")
-(setq doom-theme 'doom-tomorrow-night-custom)
+;; (setq doom-theme 'doom-spacegrey-custom)
+(setq doom-theme 'doom-wilmersdorf-custom)
 (when (file-exists-p "~/.config/doom/banners")
-  (setq +doom-dashboard-banner-padding '(0 . 2)
-        +doom-dashboard-banner-file "doom_banner.png"
-        +doom-dashboard-banner-dir "~/.config/doom/banners"))
+  (setq fancy-splash-image "~/.config/doom/banners/doom_banner.png"))
 
 
 ;; If you use `org' and don't want your org files in the default location below,

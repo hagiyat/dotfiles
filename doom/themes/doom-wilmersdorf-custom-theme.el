@@ -18,8 +18,9 @@ determine the exact padding."
 
   ;; name        default   256       16
   (;;(bg         '("#282b33" "#282b33" nil            ))
-   (bg         '("#24282f" "#282b33" nil            ))
-   (bg-alt     '("#1f2024" "#1f2024" nil            ))
+   (bg         '("#202428" "#282b33" nil            ))
+   ;; (bg-alt     '("#1f2024" "#1f2024" nil            ))
+   (bg-alt     '("#181920" "#1f2024" nil            ))
    (base0      '("#222228" "#222228" "black"        ))
    (base1      '("#282b33" "#282b33" "brightblack"  ))
    (base2      '("#34373e" "#34373e" "brightblack"  ))
@@ -81,8 +82,10 @@ determine the exact padding."
 
    (modeline-bg
     `(,(doom-darken (car bg) 0.15) ,@(cdr base0)))
+   ;; (modeline-bg-l
+   ;;  `(,(doom-darken (car bg) 0.1) ,@(cdr base0)))
    (modeline-bg-l
-    `(,(doom-darken (car bg) 0.1) ,@(cdr base0)))
+    `(,(doom-darken (car violet) 0.7) ,@(cdr base0)))
    (modeline-bg-inactive   (doom-darken bg 0.1))
    (modeline-bg-inactive-l `(,(car bg) ,@(cdr base1))))
 
@@ -153,6 +156,11 @@ determine the exact padding."
    ((org-block-begin-line &override) :background base2)
    (org-hide :foreground hidden)
    (solaire-org-hide-face :foreground hidden)
+
+   (hl-line :background (doom-darken bg 0.5))
+   (region :foreground "aquamarine" :background (doom-darken bg -0.7))
+   (vterm-color-black :foreground doc-comments)
+   (term-color-black :foreground doc-comments)
 
    ;; tooltip
    (tooltip              :background bg-alt :foreground fg))

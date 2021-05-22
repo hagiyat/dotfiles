@@ -102,6 +102,7 @@ determine the exact padding."
 
    (hl-line :background (doom-darken bg 0.4))
    (region :foreground "light green" :background (doom-darken bg 0.2))
+   (vterm-color-black :foreground "light slate gray")
    (term-color-black :foreground "light slate gray")
    (font-lock-comment-face :foreground "slate gray")
    (font-lock-doc-face :foreground "light slate gray")
