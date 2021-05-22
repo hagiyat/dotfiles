@@ -4,7 +4,7 @@ hook_add = '''
   let g:NERDCreateDefaultMappings = 0
   let g:NERDSpaceDelims = 1
   nmap gcc <Plug>NERDCommenterToggle
-  vmap gcc <Plug>NERDCommenterToggle
+  vmap gc <Plug>NERDCommenterToggle
 '''
 
 [[plugins]]
