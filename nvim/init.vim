@@ -50,6 +50,9 @@ set tabstop=2
 set shiftwidth=2
 set expandtab
 
+" 水平分割は下に開く
+set splitbelow
+
 let g:python_host_prog = '/usr/bin/python2'
 let g:python3_host_prog = '/usr/bin/python3'
 

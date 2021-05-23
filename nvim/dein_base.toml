@@ -93,6 +93,23 @@ noremap <silent><expr> g/ incsearch#go(<SID>incsearch_config({'is_stay': 1}))
 '''
 
 [[plugins]]
+repo = 'pelodelfuego/vim-swoop'
+hook_add = '''
+let g:defaultWinSwoopHeight = 20
+
+nmap <Space>ss :call Swoop()<CR>
+vmap <Space>ss :call SwoopSelection()<CR>
+
+" Swoop multi buffers
+nmap <Space>sm :call SwoopMulti()<CR>
+vmap <Space>sm :call SwoopMultiSelection()<CR>
+
+" FIXME: 元々のキーマップが消えてしまうのも微妙ではあるが、、
+autocmd BufEnter swoopBuf nnoremap <silent> q :bdelete! swoopBuf<CR>
+autocmd BufDelete swoopBuf nnoremap <silent> q <Nop>
+'''
+
+[[plugins]]
 repo = 'szw/vim-maximizer'
 hook_add = '''
 let g:maximizer_set_mapping_with_bang = 0
