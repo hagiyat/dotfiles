@@ -1,4 +1,5 @@
 export LANG=ja_JP.UTF-8
+export LC_ALL=ja_JP.UTF-8
 export EDITOR=nvim
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
@@ -166,9 +167,18 @@ function rtags() {
 }
 
 # theme
-autoload colors && colors
-setopt prompt_subst # Make sure propt is able to be generated properly.
-zplug "hagiyat/hyperzsh", at:customize, use:hyperzsh.zsh-theme, defer:2
+# autoload colors && colors
+# setopt prompt_subst # Make sure propt is able to be generated properly.
+# zplug "hagiyat/hyperzsh", at:customize, use:hyperzsh.zsh-theme, defer:3
+zplug mafredri/zsh-async, from:github
+zplug sindresorhus/pure, use:pure.zsh, from:github, as:theme
+PURE_GIT_STASH_SYMBOL="👾"
+PURE_PROMPT_SYMBOL="⋆🞟🢖"
+PURE_PROMPT_SYMBOL="⟖ ⪩"
+zstyle :prompt:pure:git:stash show yes
+autoload -Uz promptinit; promptinit
+# prompt pure
+
 
 # Install plugins if there are plugins that have not been installed
 function _zplug_check_install() {
