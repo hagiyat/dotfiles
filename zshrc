@@ -102,11 +102,7 @@ compctl -K _pip_completion pip
 # pip zsh completion end
 
 if type fzf > /dev/null; then
-  export FZF_DEFAULT_OPTS='
-    --height 40% --reverse
-    --color fg:-1,bg:-1,hl:230,fg+:3,bg+:233,hl+:229
-    --color info:150,prompt:110,spinner:150,pointer:167,marker:174
-  '
+  export FZF_DEFAULT_OPTS='--height 40% --reverse'
 fi
 
 # color test
@@ -166,19 +162,25 @@ function rtags() {
   fi
 }
 
-# theme
-# autoload colors && colors
-# setopt prompt_subst # Make sure propt is able to be generated properly.
-# zplug "hagiyat/hyperzsh", at:customize, use:hyperzsh.zsh-theme, defer:3
+# prompt configurations
 zplug mafredri/zsh-async, from:github
 zplug sindresorhus/pure, use:pure.zsh, from:github, as:theme
-PURE_GIT_STASH_SYMBOL="👾"
-PURE_PROMPT_SYMBOL="⋆🞟🢖"
-PURE_PROMPT_SYMBOL="⟖ ⪩"
+if [[ -v INSIDE_EMACS ]]; then
+  PURE_GIT_STASH_SYMBOL="👾"
+  PURE_GIT_UP_ARROW="🚀"
+  PURE_GIT_DOWN_ARROW="🌩"
+  PURE_PROMPT_SYMBOL="➤"
+else
+  PURE_GIT_STASH_SYMBOL="🗊"
+  PURE_GIT_UP_ARROW="🛪"
+  PURE_GIT_DOWN_ARROW="🗱"
+  # PURE_PROMPT_SYMBOL="⟖ ⪩"
+  PURE_PROMPT_SYMBOL="⋆🞟🢖"
+fi
 zstyle :prompt:pure:git:stash show yes
 autoload -Uz promptinit; promptinit
 # prompt pure
-
+# eval "$(starship init zsh)"
 
 # Install plugins if there are plugins that have not been installed
 function _zplug_check_install() {
@@ -362,10 +364,4 @@ fi
 
 if (which zprof > /dev/null 2>&1) ;then
   zprof
-fi
-
-# eterm
-if [ $TERM = 'eterm-color' ]; then
-  export FZF_DEFAULT_OPTS='--height 40% --reverse'
-  export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=black"
 fi
