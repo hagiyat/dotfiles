@@ -228,12 +228,22 @@ function kill_process() {
 }
 zle -N kill_process
 
+function select_aws_profile() {
+  awk 'match($0, /^\[profile\s(.+)\]$/, a){ print a[1]; }' $HOME/.aws/config \
+    | $filter_app --prompt="aws profile > " \
+    | awk '{print "--profile=" $1}' \
+    | anyframe-action-insert
+  zle redisplay
+}
+zle -N select_aws_profile
+
 bindkey '^r' put_history
 bindkey '^x^i' insert_git_branch
 bindkey '^x^b' switch_git_branch
 bindkey '^x^h' insert_commit_hash
 bindkey '^x^f' insert_filename
 bindkey '^x^p' kill_process
+bindkey '^x^a' select_aws_profile
 
 # 略語展開
 zinit ice wait'0' lucid atload'init_abbreviations'; zinit light "olets/zsh-abbr"
