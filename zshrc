@@ -139,18 +139,18 @@ autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 ### End of Zinit's installer chunk
 
-zinit ice wait'0' lucid; zinit load "zsh-users/zsh-syntax-highlighting"
+zinit ice wait'0' lucid; zinit light "zsh-users/zsh-syntax-highlighting"
 zinit ice wait'0' \
   atload'bindkey "^P" history-substring-search-up; bindkey "^N" history-substring-search-down' \
   lucid
-zinit load "zsh-users/zsh-history-substring-search"
+zinit light "zsh-users/zsh-history-substring-search"
 zinit ice wait'0' lucid; zinit load "zsh-users/zsh-autosuggestions"
 zinit ice proto'git' pick'init.sh' atload'export ENHANCD_FILTER=fzf:fzy'
 zinit light "b4b4r07/enhancd"
 # zinit load "plugins/git", from:oh-my-zsh
 
 # completions
-zinit load "zsh-users/zsh-completions"
+zinit light "zsh-users/zsh-completions"
 # zinit "docker/compose", as:command, use:"contrib/completion/zsh/_docker-compose"
 # zinit "docker/docker", as:command, use:"contrib/completion/zsh/_docker"
 #
@@ -174,7 +174,7 @@ autoload -Uz promptinit; promptinit
 # prompt pure
 # eval "$(starship init zsh)"
 
-zinit ice wait'0' lucid; zinit load "mollifier/anyframe"
+zinit ice wait'0' lucid; zinit light "mollifier/anyframe"
 local filter_app=fzf
 function put_history() {
   anyframe-source-history \
@@ -235,78 +235,50 @@ bindkey '^x^h' insert_commit_hash
 bindkey '^x^f' insert_filename
 bindkey '^x^p' kill_process
 
-
 # 略語展開
-# FIXME: global aliasを使わないプラグインを作るか、別ファイルに切り出すかする
-typeset -Ag _abbrevs
+zinit ice wait'0' lucid atload'init_abbreviations'; zinit light "olets/zsh-abbr"
+function init_abbreviations() {
+  abbr --quiet v="nvim"
+  abbr --quiet vd="nvim -d"
 
-__magic_abbrev_expand() {
-  local MATCH
-  LBUFFER=${LBUFFER%%(#m)[-_a-zA-Z0-9]#}
-  local abbr=${_abbrevs[$MATCH]:-$MATCH}
-  # local newbuffer=${abbr[2,-1]}
-  LBUFFER+=$abbr
-  zle self-insert
+  abbr --quiet lf="| fzf"
+  abbr --quiet lr="| rg"
+  abbr --quiet lc="| xclip -selection c"
+
+  abbr --quiet g="git status"
+  abbr --quiet gst="git stash"
+  abbr --quiet gsw="git switch"
+  abbr --quiet gb="git branch"
+  abbr --quiet gd="git diff"
+  abbr --quiet gch="git checkout"
+  abbr --quiet gcl="git clean -df -n"
+  abbr --quiet gco="git commit -v"
+  abbr --quiet ga="git add"
+  abbr --quiet gl="git log"
+  abbr --quiet glg="git log --stat --graph --oneline --decorate"
+  abbr --quiet glm="git log --stat --author=hagiyat"
+  abbr --quiet gps="git push"
+  abbr --quiet gpf="git push --force-with-lease"
+  abbr --quiet gpl="git pull"
+  abbr --quiet gbf="git switch -c feature/"
+  abbr --quiet gbh="git switch -c hotfix/"
+  abbr --quiet gbr="git-browse"
+
+  abbr --quiet tmv="tmux split-window -v -c '#{pane_current_path}'"
+  abbr --quiet tmh="tmux split-window -h -c '#{pane_current_path}'"
+  abbr --quiet tmw="tmux new-window -c '#{pane_current_path}'"
+
+  abbr --quiet d="docker"
+  abbr --quiet dc="docker-compose"
+  abbr --quiet dce="docker-compose exec"
+
+  abbr --quiet eh="$HOME/"
+  abbr --quiet ec="$XDG_CONFIG_HOME/"
+  abbr --quiet psa="ps auxwf"
+  abbr --quiet xcp="xclip -selection c -o"
+  abbr --quiet qq="exit"
 }
 
-__no_magic_abbrev_expand() {
-  LBUFFER+=' '
-}
-
-__abbrev_init() {
-  setopt extended_glob
-  zle -N __magic_abbrev_expand
-  zle -N __no_magic_abbrev_expand
-  bindkey " "   __magic_abbrev_expand
-  bindkey "^x " __no_magic_abbrev_expand
-}
-
-__abbrev_regist() {
-  local key=${1%%=*} value=${1#*=}
-  _abbrevs[$key]="$value"
-}
-
-__abbrev_init
-
-__abbrev_regist "v=nvim"
-__abbrev_regist "vd=nvim -d"
-
-__abbrev_regist "lf=| fzf"
-__abbrev_regist "lr=| rg"
-__abbrev_regist "lc=| xclip -selection c"
-
-__abbrev_regist "g=git status"
-__abbrev_regist "gst=git stash"
-__abbrev_regist "gsw=git switch"
-__abbrev_regist "gb=git branch"
-__abbrev_regist "gd=git diff"
-__abbrev_regist "gch=git checkout"
-__abbrev_regist "gcl=git clean -df -n"
-__abbrev_regist "gco=git commit -v"
-__abbrev_regist "ga=git add"
-__abbrev_regist "gl=git log"
-__abbrev_regist "glg=git log --stat --graph --oneline --decorate"
-__abbrev_regist "glm=git log --stat --author=hagiyat"
-__abbrev_regist "gps=git push"
-__abbrev_regist "gpf=git push --force-with-lease"
-__abbrev_regist "gpl=git pull"
-__abbrev_regist "gbf=git switch -c feature/"
-__abbrev_regist "gbh=git switch -c hotfix/"
-__abbrev_regist "gbr=git-browse"
-
-__abbrev_regist "tmv=tmux split-window -v -c '#{pane_current_path}'"
-__abbrev_regist "tmh=tmux split-window -h -c '#{pane_current_path}'"
-__abbrev_regist "tmw=tmux new-window -c '#{pane_current_path}'"
-
-__abbrev_regist "d=docker"
-__abbrev_regist "dc=docker-compose"
-__abbrev_regist "dce=docker-compose exec"
-
-__abbrev_regist "eh=$HOME/"
-__abbrev_regist "ec=$XDG_CONFIG_HOME/"
-__abbrev_regist "psa=ps auxwf"
-__abbrev_regist "xcp=xclip -selection c -o"
-__abbrev_regist "qq=exit"
 
 # awscli completions
 # [ -f /usr/local/share/zsh/site-functions/_aws ] && source /usr/local/share/zsh/site-functions/_aws
@@ -328,8 +300,4 @@ if [ -e /etc/arch-release ]; then
   if [ -d /usr/share/zsh/site-functions ]; then
     source /usr/share/zsh/site-functions
   fi
-fi
-
-if (which zprof > /dev/null 2>&1) ;then
-  zprof
 fi
