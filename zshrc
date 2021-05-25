@@ -39,6 +39,9 @@ setopt interactive_comments
 # zmv enable
 autoload -Uz zmv
 
+# compinit
+autoload -Uz compinit; compinit
+
 # export TERM=xterm-256color
 export NVIM_TUI_ENABLE_TRUE_COLOR=1
 
@@ -108,29 +111,6 @@ fi
 # color test
 alias colorchart='(x=`tput op` y=`printf %40s`;for i in {0..256};do o=00$i;echo -e ${o:${#o}-3:3} `tput setaf $i;tput setab $i`${y// /=}$x;done)'
 
-# plugins
-export ZPLUG_HOME=$HOME/.zplug
-if [[ ! -d $ZPLUG_HOME ]]; then
-  curl -sL --proto-redir -all,https https://zplug.sh/installer | zsh
-  zplug update --self
-fi
-source $ZPLUG_HOME/init.zsh
-
-zplug "zsh-users/zsh-syntax-highlighting"
-zplug "zsh-users/zsh-history-substring-search"
-zplug "zsh-users/zsh-autosuggestions"
-zplug "b4b4r07/enhancd", use:init.sh
-zplug "mollifier/cd-gitroot"
-zplug "plugins/git", from:oh-my-zsh
-zplug "mollifier/anyframe"
-# zplug "momo-lab/zsh-abbrev-alias"
-zplug "xxh/xxh-shell-zsh"
-
-# completions
-zplug "zsh-users/zsh-completions"
-zplug "docker/compose", as:command, use:"contrib/completion/zsh/_docker-compose"
-zplug "docker/docker", as:command, use:"contrib/completion/zsh/_docker"
-
 # uses colortheme for iTerm2 `hybrid`
 # ls color
 # export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
@@ -143,28 +123,40 @@ else
 fi
 alias grep="grep --color=auto"
 
-# ctags for ruby
-function rtags() {
-  if [ -e Gemfile -a -e Gemfile.lock ]; then
-    ctags --tag-relative=yes \
-      -R --sort=yes --languages=ruby \
-      --exclude=.git --exclude=log --exclude=tmp . \
-      $(bundle list --paths | rg -v bundler)
-    if [ $? -eq 0 ]; then
-      echo "Generated!"
-    else
-      echo "tags generate to failed.."
-      return 1
-    fi
-  else
-    echo "Here is not from the Ruby project."
-    return 1
-  fi
-}
 
+# plugins
+### Added by Zinit's installer
+if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
+    print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
+    command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
+        print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
+        print -P "%F{160}▓▒░ The clone has failed.%f%b"
+fi
+
+source "$HOME/.zinit/bin/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+### End of Zinit's installer chunk
+
+zinit ice wait'0' lucid; zinit load "zsh-users/zsh-syntax-highlighting"
+zinit ice wait'0' \
+  atload'bindkey "^P" history-substring-search-up; bindkey "^N" history-substring-search-down' \
+  lucid
+zinit load "zsh-users/zsh-history-substring-search"
+zinit ice wait'0' lucid; zinit load "zsh-users/zsh-autosuggestions"
+zinit ice proto'git' pick'init.sh' atload'export ENHANCD_FILTER=fzf:fzy'
+zinit light "b4b4r07/enhancd"
+# zinit load "plugins/git", from:oh-my-zsh
+
+# completions
+zinit load "zsh-users/zsh-completions"
+# zinit "docker/compose", as:command, use:"contrib/completion/zsh/_docker-compose"
+# zinit "docker/docker", as:command, use:"contrib/completion/zsh/_docker"
+#
 # prompt configurations
-zplug mafredri/zsh-async, from:github
-zplug sindresorhus/pure, use:pure.zsh, from:github, as:theme
+zinit ice pick"async.zsh" src"pure.zsh"
+zinit light sindresorhus/pure
 if [[ -v INSIDE_EMACS ]]; then
   PURE_GIT_STASH_SYMBOL="👾"
   PURE_GIT_UP_ARROW="🚀"
@@ -182,91 +174,67 @@ autoload -Uz promptinit; promptinit
 # prompt pure
 # eval "$(starship init zsh)"
 
-# Install plugins if there are plugins that have not been installed
-function _zplug_check_install() {
-  if ! zplug check --verbose; then
-    printf "Install? [y/N]: "
-    if read -q; then
-      echo; zplug install
-    fi
-  fi
+zinit ice wait'0' lucid; zinit load "mollifier/anyframe"
+local filter_app=fzf
+function put_history() {
+  anyframe-source-history \
+    | $filter_app --prompt="history > " \
+    | anyframe-action-put
+  zle redisplay
 }
+zle -N put_history
 
-if zplug check "b4b4r07/enhancd"; then
-  ENHANCD_FILTER=fzf:fzy
-  export ENHANCD_FILTER
-fi
+function insert_git_branch() {
+  anyframe-source-git-branch -i \
+    | $filter_app --prompt="insert branch > " \
+    | awk '{print $1}' \
+    | anyframe-action-insert
+  zle redisplay
+}
+zle -N insert_git_branch
 
-if zplug check "zsh-users/zsh-history-substring-search"; then
-  bindkey '^P' history-substring-search-up
-  bindkey '^N' history-substring-search-down
-fi
+function switch_git_branch() {
+  anyframe-source-git-branch -n \
+    | $filter_app --prompt="switch branch > " \
+    | awk '{print $1}' \
+    | anyframe-action-execute git switch
+  zle redisplay
+}
+zle -N switch_git_branch
 
-if zplug check "mollifier/anyframe"; then
-  local filter_app=fzf
-  # zle redisplayしないと表示がおかしくなるので、anyframeで完結できない。。
-  function put_history() {
-    anyframe-source-history \
-      | $filter_app --prompt "history > " \
-      | anyframe-action-put
-    zle redisplay
-  }
-  zle -N put_history
+function insert_filename() {
+  rg --files \
+    | $filter_app --prompt="file > " \
+    | anyframe-action-insert -q
+  zle redisplay
+}
+zle -N insert_filename
 
-  function insert_git_branch() {
-    anyframe-source-git-branch -i \
-      | $filter_app --prompt "insert branch > " \
-      | awk '{print $1}' \
-      | anyframe-action-insert
-    zle redisplay
-  }
-  zle -N insert_git_branch
+function insert_commit_hash() {
+  git log --pretty=oneline \
+    | $filter_app --prompt="insert commit hash > " \
+    | awk '{print $1}' \
+    | anyframe-action-insert
+  zle redisplay
+}
+zle -N insert_commit_hash
 
-  function switch_git_branch() {
-    anyframe-source-git-branch -n \
-      | $filter_app --prompt "switch branch > " \
-      | awk '{print $1}' \
-      | anyframe-action-execute git switch
-    zle redisplay
-  }
-  zle -N switch_git_branch
+function kill_process() {
+  anyframe-source-process \
+    | $filter_app --prompt="kill process > " \
+    | awk '{print $1}' \
+    | anyframe-action-execute kill -9
+  zle redisplay
+}
+zle -N kill_process
 
-  function insert_filename() {
-    rg --files \
-      | $filter_app --prompt "file > " \
-      | anyframe-action-insert -q
-    zle redisplay
-  }
-  zle -N insert_filename
+bindkey '^r' put_history
+bindkey '^x^i' insert_git_branch
+bindkey '^x^b' switch_git_branch
+bindkey '^x^h' insert_commit_hash
+bindkey '^x^f' insert_filename
+bindkey '^x^p' kill_process
 
-  function insert_commit_hash() {
-    git log --pretty=oneline \
-      | $filter_app --prompt "insert commit hash > " \
-      | awk '{print $1}' \
-      | anyframe-action-insert
-    zle redisplay
-  }
-  zle -N insert_commit_hash
-
-  function kill_process() {
-    anyframe-source-process \
-      | $filter_app --prompt "kill process > " \
-      | awk '{print $1}' \
-      | anyframe-action-execute kill -9
-    zle redisplay
-  }
-  zle -N kill_process
-
-  bindkey '^r' put_history
-  bindkey '^x^i' insert_git_branch
-  bindkey '^x^b' switch_git_branch
-  bindkey '^x^h' insert_commit_hash
-  bindkey '^x^f' insert_filename
-  bindkey '^x^p' kill_process
-fi
-
-# zplug load --verbose
-zplug load
 
 # 略語展開
 # FIXME: global aliasを使わないプラグインを作るか、別ファイルに切り出すかする
