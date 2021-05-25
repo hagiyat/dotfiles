@@ -174,76 +174,77 @@ autoload -Uz promptinit; promptinit
 # prompt pure
 # eval "$(starship init zsh)"
 
-zinit ice wait'0' lucid; zinit light "mollifier/anyframe"
-local filter_app=fzf
-function put_history() {
-  anyframe-source-history \
-    | $filter_app --prompt="history > " \
-    | anyframe-action-put
-  zle redisplay
-}
-zle -N put_history
+zinit ice wait'0' atload'filter_widgets' lucid; zinit light "mollifier/anyframe"
+function filter_widgets() {
+  function put_history() {
+    anyframe-source-history \
+      | fzf --prompt="history > " \
+      | anyframe-action-put
+    zle redisplay
+  }
+  zle -N put_history
 
-function insert_git_branch() {
-  anyframe-source-git-branch -i \
-    | $filter_app --prompt="insert branch > " \
-    | awk '{print $1}' \
-    | anyframe-action-insert
-  zle redisplay
-}
-zle -N insert_git_branch
+  function insert_git_branch() {
+    anyframe-source-git-branch -i \
+      | fzf --prompt="insert branch > " \
+      | awk '{print $1}' \
+      | anyframe-action-insert
+    zle redisplay
+  }
+  zle -N insert_git_branch
 
-function switch_git_branch() {
-  anyframe-source-git-branch -n \
-    | $filter_app --prompt="switch branch > " \
-    | awk '{print $1}' \
-    | anyframe-action-execute git switch
-  zle redisplay
-}
-zle -N switch_git_branch
+  function switch_git_branch() {
+    anyframe-source-git-branch -n \
+      | fzf --prompt="switch branch > " \
+      | awk '{print $1}' \
+      | anyframe-action-execute git switch
+    zle redisplay
+  }
+  zle -N switch_git_branch
 
-function insert_filename() {
-  rg --files \
-    | $filter_app --prompt="file > " \
-    | anyframe-action-insert -q
-  zle redisplay
-}
-zle -N insert_filename
+  function insert_filename() {
+    rg --files \
+      | fzf --prompt="file > " \
+      | anyframe-action-insert -q
+    zle redisplay
+  }
+  zle -N insert_filename
 
-function insert_commit_hash() {
-  git log --pretty=oneline \
-    | $filter_app --prompt="insert commit hash > " \
-    | awk '{print $1}' \
-    | anyframe-action-insert
-  zle redisplay
-}
-zle -N insert_commit_hash
+  function insert_commit_hash() {
+    git log --pretty=oneline \
+      | fzf --prompt="insert commit hash > " \
+      | awk '{print $1}' \
+      | anyframe-action-insert
+    zle redisplay
+  }
+  zle -N insert_commit_hash
 
-function kill_process() {
-  anyframe-source-process \
-    | $filter_app --prompt="kill process > " \
-    | awk '{print $1}' \
-    | anyframe-action-execute kill -9
-  zle redisplay
-}
-zle -N kill_process
+  function kill_process() {
+    anyframe-source-process \
+      | fzf --prompt="kill process > " \
+      | awk '{print $1}' \
+      | anyframe-action-execute kill -9
+    zle redisplay
+  }
+  zle -N kill_process
 
-function select_aws_profile() {
-  awk 'match($0, /^\[profile\s(.+)\]$/, a){ print a[1]; }' $HOME/.aws/config \
-    | $filter_app --prompt="aws profile > " \
-    | awk '{print "--profile=" $1}' \
-    | anyframe-action-insert
-  zle redisplay
-}
-zle -N select_aws_profile
+  function select_aws_profile() {
+    awk 'match($0, /^\[profile\s(.+)\]$/, a){ print a[1]; }' $HOME/.aws/config \
+      | fzf --prompt="aws profile > " \
+      | awk '{print "--profile=" $1}' \
+      | anyframe-action-insert
+    zle redisplay
+  }
+  zle -N select_aws_profile
 
-bindkey '^r' put_history
-bindkey '^x^i' insert_git_branch
-bindkey '^x^b' switch_git_branch
-bindkey '^x^h' insert_commit_hash
-bindkey '^x^f' insert_filename
-bindkey '^x^p' kill_process
-bindkey '^x^a' select_aws_profile
+  bindkey '^r' put_history
+  bindkey '^Ii' insert_git_branch
+  bindkey '^Ib' switch_git_branch
+  bindkey '^Ih' insert_commit_hash
+  bindkey '^If' insert_filename
+  bindkey '^Ip' kill_process
+  bindkey '^Ia' select_aws_profile
+}
 
 # 略語展開
 zinit ice wait'0' lucid atload'init_abbreviations'; zinit light "olets/zsh-abbr"
