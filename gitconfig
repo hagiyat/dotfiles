@@ -5,10 +5,15 @@
 	editor = nvim
 	excludesfile = ~/.config/git/ignore
 [pager]
-	diff = delta --theme='gruvbox-dark'
-	log = delta --theme='gruvbox-dark'
-	reflog = delta --theme='gruvbox-dark'
-	show = delta --theme='gruvbox-dark'
+	diff = delta
+	log = delta
+	reflog = delta
+	show = delta
+[delta]
+    plus-style = "syntax #214430"
+    minus-style = "syntax #542001"
+    syntax-theme = TwoDark
+    navigate = true
 [diff]
 	compactionHeuristic = true
 [interactive]
