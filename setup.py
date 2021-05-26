@@ -5,6 +5,7 @@ links = [
     (".config/nvim", "nvim"),
     # (".config/fish/config.fish", "fish/config.fish"),
     # (".config/fish/conf.d", "fish/conf.d"),
+    (".config/bat", "bat"),
     (".gitconfig", "gitconfig"),
     (".config/git/ignore", "gitignore_global"),
     (".myclirc", "myclirc"),
@@ -17,6 +18,7 @@ links = [
     (".config/alacritty", "alacritty"),
     #  (".config/rofi", "rofi"),
     (".config/fontconfig", "fontconfig"),
+    (".config/pmy", "pmy"),
     (".config/flake8", "flake8"),
 ]
 

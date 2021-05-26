@@ -4,11 +4,15 @@
 [core]
 	editor = nvim
 	excludesfile = ~/.config/git/ignore
-	pager = diff-so-fancy | less --tabs=4 -RFX
+[pager]
+	diff = delta --theme='gruvbox-dark'
+	log = delta --theme='gruvbox-dark'
+	reflog = delta --theme='gruvbox-dark'
+	show = delta --theme='gruvbox-dark'
 [diff]
 	compactionHeuristic = true
 [interactive]
-	diffFilter = diff-so-fancy
+	diffFilter = delta --color-only
 [merge]
 	tool = vimdiff
 [mergetool "vimdiff"]

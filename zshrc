@@ -1,6 +1,7 @@
 export LANG=ja_JP.UTF-8
 export LC_ALL=ja_JP.UTF-8
 export EDITOR=nvim
+export PAGER="less -RF"
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
@@ -46,11 +47,11 @@ autoload -Uz compinit; compinit
 export NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 # less colorize / [required] sudo apt install -y source-highlight
-if type "source-highlight" > /dev/null 2>&1; then
-  export LESS='-R'
-  # export LESSOPEN='| /usr/share/source-highlight/src-hilite-lesspipe.sh %s'
-  export LESSOPEN='| /usr/bin/src-hilite-lesspipe.sh %s'
-fi
+# if [ -x "$(command -v source-highlight)" ]; then
+  # export LESS='-R'
+  # # export LESSOPEN='| /usr/share/source-highlight/src-hilite-lesspipe.sh %s'
+  # export LESSOPEN='| /usr/bin/src-hilite-lesspipe.sh %s'
+# fi
 
 if [ ! -d $PROJECTS_HOME ]; then
   mkdir -p $PROJECTS_HOME
@@ -104,8 +105,8 @@ function _pip_completion {
 compctl -K _pip_completion pip
 # pip zsh completion end
 
-if type fzf > /dev/null; then
-  export FZF_DEFAULT_OPTS='--height 40% --reverse'
+if [ -x "$(command -v fzf)" ]; then
+  export FZF_DEFAULT_OPTS='-0 -1 --ansi --height 40% --reverse'
 fi
 
 # color test
@@ -114,7 +115,7 @@ alias colorchart='(x=`tput op` y=`printf %40s`;for i in {0..256};do o=00$i;echo 
 # uses colortheme for iTerm2 `hybrid`
 # ls color
 # export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
-if [ -x "`which dircolors`" ]; then
+if [ -x "$(command -v dircolors)" ]; then
   # brew install coreutils
   # zplug "joel-porquet/zsh-dircolors-solarized", hook-load:"setupsolarized dircolors.ansi-universal"
   alias ls="ls --color=auto"
@@ -123,6 +124,19 @@ else
 fi
 alias grep="grep --color=auto"
 
+
+if [ -x "$(command -v bat)" ]; then
+  # manに色付け
+  export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+fi
+
+function cdp() {
+  cd $(
+    fd --full-path --type=directory -I -H ".git$" /home/hagiyat/repos/ \
+      | sed "s/\/\.git$//g" \
+      | fzf --preview="if [ -e {}/README.* ]; then bat {}/README.* --line-range :36; else ls {}; fi" \
+    )
+}
 
 # plugins
 ### Added by Zinit's installer
@@ -247,48 +261,62 @@ function filter_widgets() {
 }
 
 # 略語展開
-zinit ice wait'0' lucid atload'init_abbreviations'; zinit light "olets/zsh-abbr"
+zinit ice wait'0' lucid atload'init_abbreviations'; zinit light "momo-lab/zsh-abbrev-alias"
 function init_abbreviations() {
-  abbr --quiet v="nvim"
-  abbr --quiet vd="nvim -d"
+  abbrev-alias -g v="nvim"
+  abbrev-alias -g vd="nvim -d"
 
-  abbr --quiet lf="| fzf"
-  abbr --quiet lr="| rg"
-  abbr --quiet lc="| xclip -selection c"
+  abbrev-alias -g F="| fzf"
+  abbrev-alias -g R="| rg"
+  abbrev-alias -g C="| xclip -selection c"
 
-  abbr --quiet g="git status"
-  abbr --quiet gst="git stash"
-  abbr --quiet gsw="git switch"
-  abbr --quiet gb="git branch"
-  abbr --quiet gd="git diff"
-  abbr --quiet gch="git checkout"
-  abbr --quiet gcl="git clean -df -n"
-  abbr --quiet gco="git commit -v"
-  abbr --quiet ga="git add"
-  abbr --quiet gl="git log"
-  abbr --quiet glg="git log --stat --graph --oneline --decorate"
-  abbr --quiet glm="git log --stat --author=hagiyat"
-  abbr --quiet gps="git push"
-  abbr --quiet gpf="git push --force-with-lease"
-  abbr --quiet gpl="git pull"
-  abbr --quiet gbf="git switch -c feature/"
-  abbr --quiet gbh="git switch -c hotfix/"
-  abbr --quiet gbr="git-browse"
+  abbrev-alias -g g="git status"
+  abbrev-alias -g gst="git stash"
+  abbrev-alias -g gsw="git switch"
+  abbrev-alias -g gb="git branch"
+  abbrev-alias -g gd="git diff"
+  abbrev-alias -g gch="git checkout"
+  abbrev-alias -g gcl="git clean -df -n"
+  abbrev-alias -g gco="git commit -v"
+  abbrev-alias -g ga="git add"
+  abbrev-alias -g gl="git log"
+  abbrev-alias -g glg="git log --stat --graph --oneline --decorate"
+  abbrev-alias -g glm="git log --stat --author=hagiyat"
+  abbrev-alias -g gps="git push"
+  abbrev-alias -g gpf="git push --force-with-lease"
+  abbrev-alias -g gpl="git pull"
+  abbrev-alias -g gbf="git switch -c feature/"
+  abbrev-alias -g gbh="git switch -c hotfix/"
+  abbrev-alias -g gbr="git-browse"
 
-  abbr --quiet tmv="tmux split-window -v -c '#{pane_current_path}'"
-  abbr --quiet tmh="tmux split-window -h -c '#{pane_current_path}'"
-  abbr --quiet tmw="tmux new-window -c '#{pane_current_path}'"
+  abbrev-alias -g tmv="tmux split-window -v -c '#{pane_current_path}'"
+  abbrev-alias -g tmh="tmux split-window -h -c '#{pane_current_path}'"
+  abbrev-alias -g tmw="tmux new-window -c '#{pane_current_path}'"
 
-  abbr --quiet d="docker"
-  abbr --quiet dc="docker-compose"
-  abbr --quiet dce="docker-compose exec"
+  abbrev-alias -g d="docker"
+  abbrev-alias -g d-="docker-compose"
+  abbrev-alias -g d-e="docker-compose exec"
 
-  abbr --quiet eh="$HOME/"
-  abbr --quiet ec="$XDG_CONFIG_HOME/"
-  abbr --quiet psa="ps auxwf"
-  abbr --quiet xcp="xclip -selection c -o"
-  abbr --quiet qq="exit"
+  abbrev-alias -g eh="$HOME/"
+  abbrev-alias -g ec="$XDG_CONFIG_HOME/"
+  abbrev-alias -g psa="ps auxwf"
+  abbrev-alias -g md="mkdir -p"
+  abbrev-alias -ge CO="$(xclip -selection c -o)"
+  abbrev-alias -g qq="exit"
 }
+
+function init_pmy() {
+  export PMY_TRIGGER_KEY="^[[Z" # shift + tab
+  export PMY_RULE_PATH="$XDG_CONFIG_HOME/pmy/rules"
+  export PMY_SNIPPET_PATH="$XDG_CONFIG_HOME/pmy/snippets"
+  export PMY_LOG_PATH="$XDG_CACHE_HOME/pmy/log.txt"
+
+  eval "$(pmy init)"
+}
+zinit ice lucid wait"0" as"program" from"gh-r" \
+    pick"pmy*/pmy" \
+    atload'init_pmy'
+zinit light 'relastle/pmy'
 
 
 # awscli completions
@@ -302,7 +330,7 @@ if [ -d $HOME/.asdf ] ; then
   . $HOME/.asdf/completions/asdf.bash
 fi
 
-if type yarn> /dev/null 2>&1; then
+if [ -x "$(command -v yarn)" ]; then
   export PATH="$PATH:`yarn global bin`"
 fi
 
