@@ -24,9 +24,9 @@
       doom-variable-pitch-font (font-spec :family "sans" :size 12.0))
 (defadvice! add-my-font-config (&rest _)
   :after #'unicode-fonts--setup-1
-  (set-fontset-font nil '(#x1F000 . #x1FAFF) "Noto Color Emoji")
   (set-fontset-font t 'japanese-jisx0208 (font-spec :family "Source Han Sans JP" :size 12.0))
   )
+(setq doom-unicode-font (font-spec :family "Noto Color Emoji"))
 (setq-default line-spacing 2)
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
@@ -69,8 +69,40 @@
 ;; they are implemented.
 (setq company-idle-delay 0.2)
 
+(setq vterm-module-cmake-args "-DUSE_SYSTEM_LIBVTERM=yes")
+
 ;; ime
 (defun force-ime-off ()
   (interactive)
   (shell-command-to-string "[ `fcitx-remote` -eq 2 ] && fcitx-remote -c"))
 (add-hook! 'evil-normal-state-entry-hook 'force-ime-off)
+
+;; company workaround
+(defun ans/unset-company-maps (&rest unused)
+  "Set default mappings (outside of company).
+Arguments (UNUSED) are ignored."
+  (general-def
+    :states 'insert
+    :keymaps 'override
+    "<up>" nil
+    "<down>" nil
+    "C-j" nil
+    "C-k" nil
+    "RET" nil
+    [return] nil))
+
+(defun ans/set-company-maps (&rest unused)
+  "Set maps for when you're inside company completion.
+Arguments (UNUSED) are ignored."
+  (general-def
+    :states 'insert
+    :keymaps 'override
+    "<down>" 'company-select-next
+    "<up>" 'company-select-previous
+    "C-j" 'company-select-next
+    "C-k" 'company-select-previous
+    "RET" 'company-complete
+    [return] 'company-complete))
+(add-hook 'company-completion-started-hook 'ans/set-company-maps)
+(add-hook 'company-completion-finished-hook 'ans/unset-company-maps)
+(add-hook 'company-completion-cancelled-hook 'ans/unset-company-maps)
