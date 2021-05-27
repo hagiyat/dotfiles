@@ -107,6 +107,15 @@ compctl -K _pip_completion pip
 
 if [ -x "$(command -v fzf)" ]; then
   export FZF_DEFAULT_OPTS='-0 -1 --ansi --height 40% --reverse'
+
+  function put-history() {
+    BUFFER=$(history -n -r 1 | awk '!a[$0]++' | fzf --no-sort --query "$LBUFFER" --prompt="histoy > ")
+    CURSOR=$#BUFFER
+    zle -R -c
+    zle redisplay
+  }
+  zle -N put-history
+  bindkey '^r' put-history
 fi
 
 # color test
@@ -182,14 +191,6 @@ autoload -Uz promptinit; promptinit
 
 zinit ice wait'0' atload'filter_widgets' lucid; zinit light "mollifier/anyframe"
 function filter_widgets() {
-  function put_history() {
-    anyframe-source-history \
-      | fzf --prompt="history > " \
-      | anyframe-action-put
-    zle redisplay
-  }
-  zle -N put_history
-
   function insert_git_branch() {
     anyframe-source-git-branch -i \
       | fzf --prompt="insert branch > " \
@@ -234,7 +235,6 @@ function filter_widgets() {
   }
   zle -N kill_process
 
-  bindkey '^r' put_history
   bindkey '^Ii' insert_git_branch
   bindkey '^Ib' switch_git_branch
   bindkey '^Ih' insert_commit_hash
