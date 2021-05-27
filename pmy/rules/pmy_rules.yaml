@@ -12,7 +12,7 @@
   buffer-right: '[]'
 
 - description: fuzzy search to directory (includes hidden)
-  regexp-left: ^\s*(?P<cmd>(cd|la|ll|ls|lt)) +(?P<path>([0-9A-Za-z_\/\-\.]*/)*)(?P<query>[0-9A-Za-z_\/\-\.]*)\.+$
+  regexp-left: ^\s*(?P<cmd>(cd|la|ll|ls|lt|diff|cp\s+\-r)) +(?P<path>([0-9A-Za-z_\/\-\.]*/)*)(?P<query>[0-9A-Za-z_\/\-\.]*)\.+$
   cmd-groups:
     - stmt: fd --full-path -H -I --type=d --color always "<query>" <path>
       after: awk '{print $0}'
@@ -24,7 +24,7 @@
   buffer-right: '[]'
 
 - description: fuzzy search to directory
-  regexp-left: ^\s*(?P<cmd>(cd|la|ll|ls|lt)) +(?P<path>([0-9A-Za-z_\/\-\.]*/)*)(?P<query>[0-9A-Za-z_\/\-\.]*)$
+  regexp-left: ^\s*(?P<cmd>(cd|la|ll|ls|lt|diff|cp\s+\-r)) +(?P<path>([0-9A-Za-z_\/\-\.]*/)*)(?P<query>[0-9A-Za-z_\/\-\.]*)$
   cmd-groups:
     - stmt: fd --full-path --type=d --color always "<query>" <path>
       after: awk '{print $0}'
@@ -37,7 +37,7 @@
   buffer-right: '[]'
 
 - description: fuzzy search to files (includes hidden)
-  regexp-left: ^\s*(?P<cmd>(bat|cat|less|nvim|vim)) +(?P<path>([0-9A-Za-z_\/\-\.]*/)*)(?P<query>[0-9A-Za-z_\/\-\.]*)\.+$
+  regexp-left: ^\s*(?P<cmd>(bat|cat|less|nvim|vim|cp|diff)) +(?P<path>([0-9A-Za-z_\/\-\.]*/)*)(?P<query>[0-9A-Za-z_\/\-\.]*)\.+$
   cmd-groups:
     - stmt: fd --full-path -H -I --type=f --color always "<query>" <path>
       after: awk '{print $0}'
@@ -50,7 +50,7 @@
   buffer-right: '[]'
 
 - description: fuzzy search to files
-  regexp-left: ^\s*(?P<cmd>(bat|cat|less|nvim|vim)) +(?P<path>([0-9A-Za-z_\/\-\.]*/)*)(?P<query>[0-9A-Za-z_\/\-\.]*)$
+  regexp-left: ^\s*(?P<cmd>(bat|cat|less|nvim|vim|cp|diff)) +(?P<path>([0-9A-Za-z_\/\-\.]*/)*)(?P<query>[0-9A-Za-z_\/\-\.]*)$
   cmd-groups:
     - stmt: fd --full-path --type=f --color always "<query>" <path>
       after: awk '{print $0}'
