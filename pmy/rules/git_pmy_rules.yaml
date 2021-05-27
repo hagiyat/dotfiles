@@ -1,0 +1,64 @@
+- description: git-add
+  regexp-left: git\s*add.*$
+  cmd-groups:
+    - stmt: git diff --name-only
+      tag: 📝:modified
+      after: awk '{print $0}'
+    - stmt: git ls-files . --exclude-standard --others
+      tag: 👀:untracked
+      after: awk '{print $0}'
+  # TODO: selectable to multiple files
+  fuzzy-finder-cmd: |
+    fzf -0 -1 --ansi --reverse \
+    --prompt="git add > " \
+    --preview="echo {} | awk '{ print \$NF }' | xargs -r git diff --color | tail -n +5"
+  buffer-left: '[] '
+  buffer-right: '[]'
+
+- description: git-switch-remote
+  regexp-left: git\s*switch\s*\-t.*$
+  cmd-groups:
+    - stmt: git branch --remotes
+      after: awk '{print $NF}'
+  fuzzy-finder-cmd: |
+    fzf -0 -1 --ansi --reverse \
+      --prompt="git switch (remote) > " \
+      --preview="echo {} | awk '{ print \$NF }' | xargs -r git show --stat | delta"
+  buffer-left: '[] '
+  buffer-right: '[]'
+
+- description: git-switch-local
+  regexp-left: git\s*switch.*$
+  cmd-groups:
+    - stmt: git branch
+      after: awk '{print $NF}'
+  fuzzy-finder-cmd: |
+    fzf -0 -1 --ansi --reverse \
+      --prompt="git switch (local) > " \
+      --preview="echo {} | awk '{ print \$NF }' | xargs -r git show --stat | delta"
+  buffer-left: '[] '
+  buffer-right: '[]'
+
+- description: git-restore-staged
+  regexp-left: git\s+restore\s+\-\-staged.*$
+  cmd-groups:
+    - stmt: git diff --staged --name-only
+      after: awk '{print $NF}'
+  fuzzy-finder-cmd: |
+    fzf -0 -1 --ansi --reverse \
+      --prompt="git restore (staged) > " \
+      --preview="echo {} | awk '{ print \$NF }' | xargs -r git diff HEAD --color -- | tail -n +5"
+  buffer-left: '[] '
+  buffer-right: '[]'
+
+- description: git-restore
+  regexp-left: git\s*restore.*$
+  cmd-groups:
+    - stmt: git status --untracked-files=no --short
+      after: awk '{print $NF}'
+  fuzzy-finder-cmd: |
+    fzf -0 -1 --ansi --reverse \
+      --prompt="git restore > " \
+      --preview="echo {} | awk '{ print \$NF }' | xargs -r git diff HEAD --color -- | tail -n +5"
+  buffer-left: '[] '
+  buffer-right: '[]'
