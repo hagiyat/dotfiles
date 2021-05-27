@@ -1,0 +1,11 @@
+- description: kill process
+  regexp-left: kill.*$
+  cmd-groups:
+    - stmt: ps -u $USER -o pid,command | tail -n +2
+      after: awk '{print $1}'
+  fuzzy-finder-cmd: |
+    fzf -0 -1 --ansi --reverse \
+      --prompt="kill process > " \
+      --preview="echo {} | awk '{ print \$1 }' | xargs -r ps -p"
+  buffer-left: ' [] '
+  buffer-right: '[]'
