@@ -189,59 +189,6 @@ autoload -Uz promptinit; promptinit
 # prompt pure
 # eval "$(starship init zsh)"
 
-zinit ice wait'0' atload'filter_widgets' lucid; zinit light "mollifier/anyframe"
-function filter_widgets() {
-  function insert_git_branch() {
-    anyframe-source-git-branch -i \
-      | fzf --prompt="insert branch > " \
-      | awk '{print $1}' \
-      | anyframe-action-insert
-    zle redisplay
-  }
-  zle -N insert_git_branch
-
-  function switch_git_branch() {
-    anyframe-source-git-branch -n \
-      | fzf --prompt="switch branch > " \
-      | awk '{print $1}' \
-      | anyframe-action-execute git switch
-    zle redisplay
-  }
-  zle -N switch_git_branch
-
-  function insert_filename() {
-    rg --files \
-      | fzf --prompt="file > " \
-      | anyframe-action-insert -q
-    zle redisplay
-  }
-  zle -N insert_filename
-
-  function insert_commit_hash() {
-    git log --pretty=oneline \
-      | fzf --prompt="insert commit hash > " \
-      | awk '{print $1}' \
-      | anyframe-action-insert
-    zle redisplay
-  }
-  zle -N insert_commit_hash
-
-  function kill_process() {
-    anyframe-source-process \
-      | fzf --prompt="kill process > " \
-      | awk '{print $1}' \
-      | anyframe-action-execute kill -9
-    zle redisplay
-  }
-  zle -N kill_process
-
-  bindkey '^Ii' insert_git_branch
-  bindkey '^Ib' switch_git_branch
-  bindkey '^Ih' insert_commit_hash
-  bindkey '^If' insert_filename
-  bindkey '^Ip' kill_process
-}
-
 # 略語展開
 zinit ice wait'0' lucid atload'init_abbreviations'; zinit light "momo-lab/zsh-abbrev-alias"
 function init_abbreviations() {
