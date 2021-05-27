@@ -24,8 +24,8 @@ nnoremap <Space>wh <C-w>h
 nnoremap <Space>wj <C-w>j
 nnoremap <Space>wk <C-w>k
 nnoremap <Space>wl <C-w>l
-nnoremap <silent> <Space>w- :<C-u>split<CR>
-nnoremap <silent> <Space>w/ :<C-u>vsplit<CR>
+nnoremap <silent> <Space>ws :<C-u>split<CR>
+nnoremap <silent> <Space>wv :<C-u>vsplit<CR>
 nnoremap <silent> <Space>wd :<C-u>q<CR>
 nnoremap <Space>w0 <C-w>=
 
