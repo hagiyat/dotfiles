@@ -130,14 +130,6 @@ if [ -x "$(command -v bat)" ]; then
   export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 fi
 
-function cdp() {
-  cd $(
-    fd --full-path --type=directory -I -H ".git$" /home/hagiyat/repos/ \
-      | sed "s/\/\.git$//g" \
-      | fzf --preview="if [ -e {}/README.* ]; then bat {}/README.* --line-range :36; else ls {}; fi" \
-    )
-}
-
 # plugins
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
@@ -302,6 +294,8 @@ function init_abbreviations() {
   abbrev-alias -g psa="ps auxwf"
   abbrev-alias -g md="mkdir -p"
   abbrev-alias -ge CO="$(xclip -selection c -o)"
+  abbrev-alias -g ep="$HOME/repos" # project home
+  abbrev-alias -g cdp="cd $HOME/repos"
   abbrev-alias -g qq="exit"
 }
 
