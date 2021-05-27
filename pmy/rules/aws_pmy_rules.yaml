@@ -1,0 +1,8 @@
+- description: select profile
+  regexp-left: ^(?P<body>.*?)\s+(\-p|\-\-profile)
+  cmd-groups:
+    - stmt: awk 'match($0, /^\[profile\s(.+)\]$/, a){ print a[1]; }' $HOME/.aws/config
+      after: awk '{print "--profile " $1}'
+  fuzzy-finder-cmd: fzf -0 -1 --ansi --reverse --prompt="aws profile > "
+  buffer-left: '<body> '
+  buffer-right: '[]'

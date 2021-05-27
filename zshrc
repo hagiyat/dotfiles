@@ -234,22 +234,12 @@ function filter_widgets() {
   }
   zle -N kill_process
 
-  function select_aws_profile() {
-    awk 'match($0, /^\[profile\s(.+)\]$/, a){ print a[1]; }' $HOME/.aws/config \
-      | fzf --prompt="aws profile > " \
-      | awk '{print "--profile=" $1}' \
-      | anyframe-action-insert
-    zle redisplay
-  }
-  zle -N select_aws_profile
-
   bindkey '^r' put_history
   bindkey '^Ii' insert_git_branch
   bindkey '^Ib' switch_git_branch
   bindkey '^Ih' insert_commit_hash
   bindkey '^If' insert_filename
   bindkey '^Ip' kill_process
-  bindkey '^Ia' select_aws_profile
 }
 
 # 略語展開
