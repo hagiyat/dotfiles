@@ -158,16 +158,15 @@ zinit ice wait'0' lucid; zinit light "zsh-users/zsh-syntax-highlighting"
 zinit ice wait'0' \
   atload'bindkey "^P" history-substring-search-up; bindkey "^N" history-substring-search-down' \
   lucid
-zinit light "zsh-users/zsh-history-substring-search"
-zinit ice wait'0' lucid; zinit load "zsh-users/zsh-autosuggestions"
+
+zinit ice wait'0' lucid; zinit light "zsh-users/zsh-history-substring-search"
+zinit ice wait'0' lucid; zinit light "zsh-users/zsh-autosuggestions"
+
 zinit ice proto'git' pick'init.sh' atload'export ENHANCD_FILTER=fzf:fzy'
 zinit light "b4b4r07/enhancd"
-# zinit load "plugins/git", from:oh-my-zsh
 
 # completions
-zinit light "zsh-users/zsh-completions"
-# zinit "docker/compose", as:command, use:"contrib/completion/zsh/_docker-compose"
-# zinit "docker/docker", as:command, use:"contrib/completion/zsh/_docker"
+zinit ice wait'0' lucid; zinit light "zsh-users/zsh-completions"
 #
 # prompt configurations
 zinit ice pick"async.zsh" src"pure.zsh"
