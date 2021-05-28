@@ -1,5 +1,5 @@
 - description: select to project root
-  regexp-left: ^\s*(?P<cmd>(cd|la|ll|ls|lt)) +\/home\/hagiyat\/repos\/? *$
+  regexp-left: ^(?P<cmd>.+\s+)(?P<query>[0-9A-Za-z_\/\-\.]*)\.r$
   cmd-groups:
     - stmt: fd --full-path --type=directory -I -H ".git$" $HOME/repos/ | sed "s/\/\.git$//g"
       after: awk '{print $0}'
@@ -8,56 +8,66 @@
     fzf -0 -1 --ansi --reverse \
       --prompt="project root > " \
       --preview="if [ -e {}/README.md -o -e {}/README.rst -o -e {}/README.org -o -e {}/README.txt ]; then bat {}/README.* --line-range :36; else echo '!!README not found!!'; ls {}; fi"
-  buffer-left: ' <cmd> '
+  buffer-left: '<cmd>'
   buffer-right: '[]'
 
-- description: fuzzy search to directory (includes hidden)
-  regexp-left: ^\s*(?P<cmd>(cd|la|ll|ls|lt|diff|cp\s+\-r)) +(?P<path>([0-9A-Za-z_\/\-\.]*/)*)(?P<query>[0-9A-Za-z_\/\-\.]*)\.+$
+
+- description: fuzzy search to directory (include dotfiles)
+  regexp-left: ^(?P<cmd>.+\s+)(?P<query>[0-9A-Za-z_\/\-\.]*)\.\.$
   cmd-groups:
-    - stmt: fd --full-path -H -I --type=d --color always "<query>" <path>
+    - stmt: if test "<query>" != ""; then echo <query>; else echo "."; fi | xargs fd --full-path -H -I --type=d --exclude=".git" --color=always <query>
       after: awk '{print $0}'
   fuzzy-finder-cmd: |
     fzf -0 -1 --ansi --reverse \
-      --prompt="directory+h > " \
+      --prompt="directory with dot > " \
       --preview="ls {} | head -n 30"
-  buffer-left: ' <cmd> '
+  buffer-left: '<cmd>'
   buffer-right: '[]'
 
+
 - description: fuzzy search to directory
-  regexp-left: ^\s*(?P<cmd>(cd|la|ll|ls|lt|diff|cp\s+\-r)) +(?P<path>([0-9A-Za-z_\/\-\.]*/)*)(?P<query>[0-9A-Za-z_\/\-\.]*)$
+  regexp-left: ^(?P<cmd>.+\s+)(?P<query>[0-9A-Za-z_\/\-\.]*)\.$
   cmd-groups:
-    - stmt: fd --full-path --type=d --color always "<query>" <path>
+    - stmt: if test "<query>" != ""; then echo <query>; else echo "."; fi | xargs fd --full-path --type=d --color always <query>
+      after: awk '{print $0}'
+    - stmt: if test "<query>" != ""; then echo <query>; else echo "."; fi | xargs realpath | awk '{v=""} {cnt=split($0,path,"/"); for (i=1; i<cnt; i++){ v=sprintf("%s%s/",v,path[i]); print v} }' | sort -nr
       after: awk '{print $0}'
   fuzzy-finder-cmd: |
     fzf -0 -1 --ansi --reverse \
       --prompt="directory > " \
-      --preview="ls {} | head -n 30" \
-      --query=<query>
-  buffer-left: ' <cmd> '
+      --preview="ls {} | head -n 30"
+  buffer-left: '<cmd>'
   buffer-right: '[]'
 
-- description: fuzzy search to files (includes hidden)
-  regexp-left: ^\s*(?P<cmd>(bat|cat|less|nvim|vim|cp|diff)) +(?P<path>([0-9A-Za-z_\/\-\.]*/)*)(?P<query>[0-9A-Za-z_\/\-\.]*)\.+$
+
+- description: fuzzy search to file (include dotfiles)
+  regexp-left: ^(?P<cmd>.+\s+)(?P<query>[0-9A-Za-z_\/\-\.]*)\*\*$
   cmd-groups:
-    - stmt: fd --full-path -H -I --type=f --color always "<query>" <path>
+    - stmt: if test "<query>" != ""; then echo <query>; else echo "."; fi | xargs fd --full-path -H -I --type=f --exclude=".git" --color=always <query>
       after: awk '{print $0}'
   fuzzy-finder-cmd: |
     fzf -0 -1 --ansi --reverse \
-      --prompt="file+h > " \
-      --preview="bat {} --line-range :40" \
-      --query=<query>
-  buffer-left: ' <cmd> '
+      --prompt="file with dot > " \
+      --preview="bat {} --line-range :40"
+  buffer-left: '<cmd>'
   buffer-right: '[]'
 
-- description: fuzzy search to files
-  regexp-left: ^\s*(?P<cmd>(bat|cat|less|nvim|vim|cp|diff)) +(?P<path>([0-9A-Za-z_\/\-\.]*/)*)(?P<query>[0-9A-Za-z_\/\-\.]*)$
+
+- description: fuzzy search to file
+  regexp-left: ^(?P<cmd>.+\s+)(?P<query>[0-9A-Za-z_\/\-\.]*)\*$
   cmd-groups:
-    - stmt: fd --full-path --type=f --color always "<query>" <path>
-      after: awk '{print $0}'
+    - stmt: if test "<query>" != ""; then echo <query>; else echo "."; fi | xargs fd --full-path --type=f --color=always <query>
+      #after: awk '{print $0}'
+      after: sed 's/ /\\ /g' | paste -s -d ' ' - # Escape spaces and replace EOL
   fuzzy-finder-cmd: |
     fzf -0 -1 --ansi --reverse \
       --prompt="file > " \
-      --preview="bat {} --line-range :40" \
-      --query=<query>
-  buffer-left: ' <cmd> '
+      --multi \
+      --preview="bat {} --line-range :40"
+  buffer-left: '<cmd>'
+  buffer-right: '[]'
+
+
+- description: fallthrough
+  buffer-left: '[]'
   buffer-right: '[]'

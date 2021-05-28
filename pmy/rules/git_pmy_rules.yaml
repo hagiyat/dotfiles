@@ -1,22 +1,18 @@
 - description: git-add
-  regexp-left: git\s*add.*$
+  regexp-left: ^(?P<cmd>\s*git\s+add\s+.*)\*$
   cmd-groups:
-    - stmt: git diff --name-only
-      tag: 📝:modified
-      after: awk '{print $0}'
-    - stmt: git ls-files . --exclude-standard --others
-      tag: 👀:untracked
-      after: awk '{print $0}'
-  # TODO: selectable to multiple files
+    - stmt: cat <(git diff --name-only | awk '{print "📝 " $0}') <(git ls-files . --exclude-standard --others | awk '{print "👀 " $0}')
+      after: awk '{print $NF}' | sed 's/ /\\ /g' | paste -s -d ' '
   fuzzy-finder-cmd: |
     fzf -0 -1 --ansi --reverse \
     --prompt="git add > " \
-    --preview="echo {} | awk '{ print \$NF }' | xargs -r git diff --color | tail -n +5"
-  buffer-left: '[] '
+    --preview="echo {} | awk '{ print \$NF }' | xargs -r git diff --color | tail -n +5" \
+    --multi
+  buffer-left: '<cmd>'
   buffer-right: '[]'
 
 - description: git-switch-remote
-  regexp-left: git\s*switch\s*\-t.*$
+  regexp-left: ^(?P<cmd>\s*git\s+switch\s+\-t\s+)b$
   cmd-groups:
     - stmt: git branch --remotes
       after: awk '{print $NF}'
@@ -24,11 +20,11 @@
     fzf -0 -1 --ansi --reverse \
       --prompt="git switch (remote) > " \
       --preview="echo {} | awk '{ print \$NF }' | xargs -r git show --stat | delta"
-  buffer-left: '[] '
+  buffer-left: '<cmd>'
   buffer-right: '[]'
 
 - description: git-switch-local
-  regexp-left: git\s*switch.*$
+  regexp-left: ^(?P<cmd>\s*git\s+switch\s+)b$
   cmd-groups:
     - stmt: git branch
       after: awk '{print $NF}'
@@ -36,23 +32,25 @@
     fzf -0 -1 --ansi --reverse \
       --prompt="git switch (local) > " \
       --preview="echo {} | awk '{ print \$NF }' | xargs -r git show --stat | delta"
-  buffer-left: '[] '
+  buffer-left: '<cmd>'
   buffer-right: '[]'
 
 - description: git-restore-staged
-  regexp-left: git\s+restore\s+\-\-staged.*$
+  regexp-left: ^(?P<cmd>\s*git\s+restore\s+\-\-staged\s+)\*$
+  # regexp-left: git\s+restore\s+\-\-staged.*$
   cmd-groups:
     - stmt: git diff --staged --name-only
       after: awk '{print $NF}'
   fuzzy-finder-cmd: |
     fzf -0 -1 --ansi --reverse \
       --prompt="git restore (staged) > " \
+      --multi \
       --preview="echo {} | awk '{ print \$NF }' | xargs -r git diff HEAD --color -- | tail -n +5"
-  buffer-left: '[] '
+  buffer-left: '<cmd>'
   buffer-right: '[]'
 
 - description: git-restore
-  regexp-left: git\s*restore.*$
+  regexp-left: ^(?P<cmd>\s*git\s+restore\s+)\*$
   cmd-groups:
     - stmt: git status --untracked-files=no --short
       after: awk '{print $NF}'
@@ -60,5 +58,5 @@
     fzf -0 -1 --ansi --reverse \
       --prompt="git restore > " \
       --preview="echo {} | awk '{ print \$NF }' | xargs -r git diff HEAD --color -- | tail -n +5"
-  buffer-left: '[] '
+  buffer-left: '<cmd>'
   buffer-right: '[]'
