@@ -199,9 +199,11 @@ function init_abbreviations() {
   abbrev-alias -g C="| xclip -selection c"
 
   abbrev-alias -g g="git status"
+  abbrev-alias -g gsh="git show"
   abbrev-alias -g gst="git stash"
   abbrev-alias -g gb="git branch"
   abbrev-alias -g gd="git diff"
+  abbrev-alias -g gds="git diff --staged"
   abbrev-alias -g gch="git checkout"
   abbrev-alias -g gr="git restore"
   abbrev-alias -g grs="git restore --staged"

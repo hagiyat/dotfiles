@@ -1,7 +1,7 @@
 - description: git-add
   regexp-left: ^(?P<cmd>\s*git\s+add\s+.*)\*$
   cmd-groups:
-    - stmt: cat <(git diff --name-only | awk '{print "📝 " $0}') <(git ls-files . --exclude-standard --others | awk '{print "👀 " $0}')
+    - stmt: cat <(git diff --name-only | awk '{print "📝 " $0}') <(git ls-files . --exclude-standard --others | awk '{print "👀 " $1}')
       after: awk '{print $NF}' | sed 's/ /\\ /g' | paste -s -d ' '
   fuzzy-finder-cmd: |
     fzf -0 -1 --ansi --reverse \
@@ -11,8 +11,51 @@
   buffer-left: '<cmd>'
   buffer-right: '[]'
 
-- description: git-switch-remote
-  regexp-left: ^(?P<cmd>\s*git\s+switch\s+\-t\s+)b$
+
+- description: git-restore-staged
+  regexp-left: ^(?P<cmd>\s*git\s+restore\s+\-\-staged\s+)\*$
+  cmd-groups:
+    - stmt: git diff --staged --name-only
+      after: awk '{print $NF}' | sed 's/ /\\ /g' | paste -s -d ' '
+  fuzzy-finder-cmd: |
+    fzf -0 -1 --ansi --reverse \
+      --prompt="git restore (staged) > " \
+      --multi \
+      --preview="echo {} | awk '{ print \$NF }' | xargs -r git diff HEAD --color -- | tail -n +5"
+  buffer-left: '<cmd>'
+  buffer-right: '[]'
+
+
+- description: git-restore
+  regexp-left: ^(?P<cmd>\s*git\s+restore\s+)\*$
+  cmd-groups:
+    - stmt: git status --untracked-files=no --short
+      after: awk '{print $NF}' | sed 's/ /\\ /g' | paste -s -d ' '
+  fuzzy-finder-cmd: |
+    fzf -0 -1 --ansi --reverse \
+      --prompt="git restore > " \
+      --multi \
+      --preview="echo {} | awk '{ print \$NF }' | xargs -r git diff HEAD --color -- | tail -n +5"
+  buffer-left: '<cmd>'
+  buffer-right: '[]'
+
+
+- description: git-select-commit
+  regexp-left: ^(?P<cmd>\s*git\s+.*\s+)[cl]$
+  cmd-groups:
+    - stmt: git log --oneline
+      after: awk '{print $1}' | sed 's/ /\\ /g' | paste -s -d ' '
+  fuzzy-finder-cmd: |
+    fzf -0 -1 --ansi --reverse \
+    --prompt="git diff (commit) > " \
+    --preview="echo {} | awk '{print \$1}' | xargs git show --stat" \
+    --multi
+  buffer-left: '<cmd>'
+  buffer-right: '[]'
+
+
+- description: git-select-remote-branch
+  regexp-left: ^(?P<cmd>\s*git\s+.*\s+)B$
   cmd-groups:
     - stmt: git branch --remotes
       after: awk '{print $NF}'
@@ -23,8 +66,9 @@
   buffer-left: '<cmd>'
   buffer-right: '[]'
 
-- description: git-switch-local
-  regexp-left: ^(?P<cmd>\s*git\s+switch\s+)b$
+
+- description: git-select-local-branch
+  regexp-left: ^(?P<cmd>\s*git\s+.*\s+)b$
   cmd-groups:
     - stmt: git branch
       after: awk '{print $NF}'
@@ -35,28 +79,15 @@
   buffer-left: '<cmd>'
   buffer-right: '[]'
 
-- description: git-restore-staged
-  regexp-left: ^(?P<cmd>\s*git\s+restore\s+\-\-staged\s+)\*$
-  # regexp-left: git\s+restore\s+\-\-staged.*$
-  cmd-groups:
-    - stmt: git diff --staged --name-only
-      after: awk '{print $NF}'
-  fuzzy-finder-cmd: |
-    fzf -0 -1 --ansi --reverse \
-      --prompt="git restore (staged) > " \
-      --multi \
-      --preview="echo {} | awk '{ print \$NF }' | xargs -r git diff HEAD --color -- | tail -n +5"
-  buffer-left: '<cmd>'
-  buffer-right: '[]'
-
-- description: git-restore
-  regexp-left: ^(?P<cmd>\s*git\s+restore\s+)\*$
-  cmd-groups:
-    - stmt: git status --untracked-files=no --short
-      after: awk '{print $NF}'
-  fuzzy-finder-cmd: |
-    fzf -0 -1 --ansi --reverse \
-      --prompt="git restore > " \
-      --preview="echo {} | awk '{ print \$NF }' | xargs -r git diff HEAD --color -- | tail -n +5"
-  buffer-left: '<cmd>'
-  buffer-right: '[]'
+  # FIXME: previewがうまく動かず
+# - description: git-commands
+  # regexp-left: ^(?P<cmd>\s*git\s+.*\s+)h$
+  # cmd-groups:
+    # - stmt: git help -a | awk "/\s{3,}[a-z0-9\-]+\s+/" | sed 's/^ *\| *$//'
+      # after: awk '{print $NR}'
+  # fuzzy-finder-cmd: |
+    # fzf -0 -1 --ansi --reverse \
+      # --prompt="git subcommand > " \
+      # --preview="echo {} | xargs -n2 bash -c 'git $1 -h'"
+  # buffer-left: '<cmd>'
+  # buffer-right: '[]'
