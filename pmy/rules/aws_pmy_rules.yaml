@@ -1,3 +1,44 @@
+- description: select service
+  regexp-left: ^(?P<aws>(\s*aws))\s+$
+  cmd-groups:
+    - stmt: aws help | sed '1,/AVAILABLE SERVICE/d;/SEE ALSO/,$d' | awk 'NF' | awk '{print $2}'
+      after: awk '{print $0}'
+  fuzzy-finder-cmd: fzf -0 -1 --ansi --reverse --prompt="aws service > "
+  buffer-left: '<aws> '
+  buffer-right: '[]'
+
+- description: select aws options
+  # FIXME: 一度コマンドまで入力しきってからカーソルを移動してこないと使えない問題
+  regexp-left: ^(?P<aws>(\s*aws))\s+\-\-$
+  cmd-groups:
+    - stmt: aws help | sed '1,/OPTIONS/d;/AVAILABLE SERVICES/,$d' | awk 'NF' | awk '{ sub(/^\s+/, ""); print }' | sed -n '/^\-\-/p'
+      after: sed -e 's/^\[//' -e 's/\]//'
+  fuzzy-finder-cmd: fzf -0 -1 --ansi --reverse --prompt="aws options > "
+  buffer-left: '<aws> '
+  buffer-right: '[]'
+
+
+- description: select command
+  regexp-left: ^(?P<aws>(\s*aws))\s+(?P<service>([A-Za-z0-9\-]+))\s+$
+  cmd-groups:
+    - stmt: aws <service> help | sed '1,/AVAILABLE COMMANDS/d;$d' | awk 'NF' | awk '{print $2}'
+      after: awk '{print $0}'
+  fuzzy-finder-cmd: fzf -0 -1 --ansi --reverse --prompt="aws <service> command > "
+  buffer-left: '<aws> <service> '
+  buffer-right: '[]'
+
+
+- description: select command options
+  regexp-left: ^(?P<aws>(\s*aws))\s+(?P<service>([A-Za-z0-9\-]+))\s+(?P<command>([A-Za-z0-9\-]+))\s+\-\-$
+  cmd-groups:
+    # - stmt: aws help | sed '1,/OPTIONS/d;/AVAILABLE SERVICES/,$d' | awk 'NF' | awk '{ sub(/^\s+/, ""); print }' | sed -n '/^\-\-/p'
+    - stmt: aws <service> <command> help | sed '1,/SYNOPSIS/d;/OPTIONS/,$d;/<command>/d' | awk 'NF' | awk '{ sub(/^\s+/, ""); print }'
+      after: sed -e 's/^\[//' -e 's/\]//'
+  fuzzy-finder-cmd: fzf -0 -1 --ansi --reverse --prompt="aws <service> <command> options > "
+  buffer-left: '<aws> <service> <command> '
+  buffer-right: '[]'
+
+
 - description: select profile
   regexp-left: ^(?P<body>.*?)\s+(\-p|\-\-profile)
   cmd-groups:
