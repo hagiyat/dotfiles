@@ -60,10 +60,10 @@ fi
 if [ -x "`which exa`" ]; then
   alias Ll='ls -l'
   alias La='ls -al'
-  alias ll='exa -l --git --time-style=long-iso'
-  alias la='exa -al --time-style=long-iso'
-  alias lt='exa -lT --git --time-style=long-iso'
-  alias lta='exa -laT --time-style=long-iso'
+  alias ll='exa -lh --git --time-style=long-iso --icons'
+  alias la='exa -alh --time-style=long-iso --icons'
+  alias lt='exa -lhT --git --time-style=long-iso --icons'
+  alias lta='exa -lahT --time-style=long-iso --icons'
 else
   alias ll='ls -l'
   alias la='ls -al'
@@ -222,8 +222,8 @@ function init_abbreviations() {
   abbrev-alias -g gbh="git switch -c hotfix/"
   abbrev-alias -g gbr="git-browse"
 
-  abbrev-alias -g tmv="tmux split-window -v -c '#{pane_current_path}'"
-  abbrev-alias -g tmh="tmux split-window -h -c '#{pane_current_path}'"
+  abbrev-alias -g tms="tmux split-window -v -c '#{pane_current_path}'"
+  abbrev-alias -g tmv="tmux split-window -h -c '#{pane_current_path}'"
   abbrev-alias -g tmw="tmux new-window -c '#{pane_current_path}'"
 
   abbrev-alias -g d="docker"
