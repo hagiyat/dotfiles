@@ -106,3 +106,13 @@ Arguments (UNUSED) are ignored."
 (add-hook 'company-completion-started-hook 'ans/set-company-maps)
 (add-hook 'company-completion-finished-hook 'ans/unset-company-maps)
 (add-hook 'company-completion-cancelled-hook 'ans/unset-company-maps)
+
+;; for vue
+;; refs: https://bleepcoder.com/doom-emacs/553195714/how-do-i-use-eslint-to-check-ts-tsx-files-instead-of-tsx
+(define-derived-mode vue-mode web-mode "Vue mode")
+(add-to-list 'auto-mode-alist '("\\.vue\\'" . vue-mode))
+(after! flycheck
+  (flycheck-add-mode 'javascript-eslint 'vue-mode)
+  (flycheck-add-mode 'css-stylelint 'vue-mode)
+  (add-hook 'vue-mode-hook (lambda () (flycheck-add-next-checker 'lsp-ui 'javascript-eslint)))
+  (add-hook 'vue-mode-hook (lambda () (flycheck-add-next-checker 'javascript-eslint 'css-stylelint))))
