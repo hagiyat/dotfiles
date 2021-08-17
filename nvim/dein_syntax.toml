@@ -15,12 +15,12 @@ hook_add = '''
 " sr+/ と入力
 " みたいな感じ
 nmap <Space>s [sandwich]
-nmap [sandwich]a saiw
-nmap [sandwich]d sdb
-nmap [sandwich]r srb
-xmap [sandwich]a saiw
-xmap [sandwich]d sdb
-xmap [sandwich]r srb
+nmap [sandwich]a <Plug>(operator-sandwich-add)
+nmap [sandwich]d <Plug>(operator-sandwich-delete)
+nmap [sandwich]r <Plug>(operator-sandwich-replace)
+vmap sa <Plug>(operator-sandwich-add)
+vmap sd <Plug>(operator-sandwich-delete)
+vmap sr <Plug>(operator-sandwich-replace)
 '''
 
 [[plugins]]
