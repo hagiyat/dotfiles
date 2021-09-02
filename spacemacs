@@ -674,7 +674,7 @@ before packages are loaded."
   ;; ime
   (defun force-ime-off ()
     (interactive)
-    (shell-command-to-string "[ `fcitx-remote` -eq 2 ] && fcitx-remote -c"))
+    (shell-command-to-string "[ `fcitx5-remote` -eq 2 ] && fcitx5-remote -c"))
   (add-hook 'evil-hybrid-state-exit-hook 'force-ime-off)
   )
 

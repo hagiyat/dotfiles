@@ -84,9 +84,9 @@ nnoremap <Space>qa :<C-u>qa<CR>
 nnoremap <Space>QQ :<C-u>qa!<CR>
 
 function! Fcitx2en()
-  let s:input_status = system("fcitx-remote")
+  let s:input_status = system("fcitx5-remote")
   if s:input_status == 2
-    let l:a = system("fcitx-remote -c")
+    let l:a = system("fcitx5-remote -c")
   endif
 endfunction
 

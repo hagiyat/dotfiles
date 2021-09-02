@@ -74,7 +74,7 @@
 ;; ime
 (defun force-ime-off ()
   (interactive)
-  (shell-command-to-string "[ `fcitx-remote` -eq 2 ] && fcitx-remote -c"))
+  (shell-command-to-string "[ `fcitx5-remote` -eq 2 ] && fcitx5-remote -c"))
 (add-hook! 'evil-normal-state-entry-hook 'force-ime-off)
 
 ;; company workaround
@@ -107,8 +107,9 @@ Arguments (UNUSED) are ignored."
 (add-hook 'company-completion-finished-hook 'ans/unset-company-maps)
 (add-hook 'company-completion-cancelled-hook 'ans/unset-company-maps)
 
+
 ;; for vue
-;; refs: https://bleepcoder.com/doom-emacs/553195714/how-do-i-use-eslint-to-check-ts-tsx-files-instead-of-tsx
+;; https://bleepcoder.com/doom-emacs/553195714/how-do-i-use-eslint-to-check-ts-tsx-files-instead-of-tsx
 (define-derived-mode vue-mode web-mode "Vue mode")
 (add-to-list 'auto-mode-alist '("\\.vue\\'" . vue-mode))
 (after! flycheck
