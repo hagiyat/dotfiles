@@ -26,16 +26,17 @@ let g:coc_global_extensions = [
       \ 'coc-yaml',
       \ 'coc-docker',
       \ 'coc-python',
+      \ 'coc-vetur',
       \ ]
 
-nmap <silent><Space>m [coc]
+nmap <silent><Space>c [coc]
 
-nmap [coc]gd <Plug>(coc-definition)
-nmap [coc]gt <Plug>(coc-type-definition)
-nmap [coc]gi <Plug>(coc-implementation)
-nmap [coc]gr <Plug>(coc-references)
-nmap [coc]gn <Plug>(coc-rename)
-nmap [coc]gf <Plug>(coc-format)
+nmap [coc]d <Plug>(coc-definition)
+nmap [coc]t <Plug>(coc-type-definition)
+nmap [coc]i <Plug>(coc-implementation)
+nmap [coc]D <Plug>(coc-references)
+nmap [coc]r <Plug>(coc-rename)
+nmap [coc]f <Plug>(coc-format)
 
 nmap [coc]k <Plug>(coc-diagnostic-prev)
 nmap [coc]j <Plug>(coc-diagnostic-next)
@@ -53,7 +54,7 @@ nnoremap [coc]o  :<C-u>CocList outline<cr>
 nnoremap [coc]s  :<C-u>CocList -I symbols<cr>
 " nnoremap [coc]j  :<C-u>CocNext<CR>
 " nnoremap [coc]k  :<C-u>CocPrev<CR>
-nnoremap [coc]r  :<C-u>CocListResume<CR>
+nnoremap [coc]R  :<C-u>CocListResume<CR>
 
 autocmd CursorHold * silent call CocActionAsync('highlight')
 '''
