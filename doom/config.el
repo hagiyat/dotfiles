@@ -112,26 +112,3 @@ Arguments (UNUSED) are ignored."
 ;; for vue
 (setq js-indent-level 2
       typescript-indent-level 2)
-
-;; TODO: 自動でアクティブにならず、明示的にvue-modeを実行する必要がある問題の解決
-(add-to-list 'auto-mode-alist '("\\.vue\\'" . vue-mode))
-
-(use-package! vue-mode
-  :hook (vue-mode-local-vars . lsp!))
-(setq lsp-vetur-format-default-formatter-html "prettier")
-
-(after! flycheck
-  (flycheck-add-mode 'javascript-eslint 'vue-mode)
-  (flycheck-add-mode 'css-stylelint 'vue-mode)
-  ;; (add-hook 'vue-mode-hook (lambda () (flycheck-add-next-checker 'lsp-ui 'javascript-eslint)))
-  ;; (add-hook 'vue-mode-hook (lambda () (flycheck-add-next-checker 'javascript-eslint 'css-stylelint)))
-  )
-
-
-(add-to-list 'eglot-server-programs '(web-mode "vls"))
-(after! eglot
-  :config
-  (add-hook web-mode-hook #'eglot-ensure)
-  (add-hook vue-mode-hook #'eglot-ensure)
-  (set-eglot-client! '(vue-mode) '("vls" "--stdio"))
-  )

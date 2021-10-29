@@ -23,7 +23,7 @@
        (company +childframe +tng)           ; the ultimate code completion backend
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
-       ivy                 ; a search engine for love and life
+       (ivy +icons)        ; a search engine for love and life
 
        :ui
        deft                ; notational velocity for Emacs
@@ -66,9 +66,9 @@
        ;;word-wrap         ; soft wrapping with language-aware indent
 
        :emacs
-       dired               ; making dired pretty [functional]
+       (dired +icons)      ; making dired pretty [functional]
        electric            ; smarter, keyword-based electric-indent
-       ;;ibuffer           ; interactive buffer management
+       (ibuffer +icons)    ; interactive buffer management
        undo                ; persistent, smarter undo for your inevitable mistakes
        vc                  ; version-control and Emacs, sitting in a tree
 
@@ -87,13 +87,16 @@
        ;;ansible
        ;;debugger          ; FIXME stepping through code, to help you add bugs
        ;;direnv
-       ;;docker
+       (docker +lsp)
        ;;editorconfig      ; let someone else argue about tabs vs spaces
        ;;ein               ; tame Jupyter notebooks with emacs
        (eval +overlay)     ; run code, run (also, repls)
        ;;gist              ; interacting with github gists
        lookup              ; navigate your code and its documentation
-       (lsp +eglot)
+       (lsp
+        +lsp-mode
+        +lsp-ui
+        +lsp-ivy)
        magit               ; a git porcelain for Emacs
        ;;make              ; run make tasks from Emacs
        ;;pass              ; password manager for nerds
@@ -101,7 +104,7 @@
        ;;prodigy           ; FIXME managing external services & code builders
        ;;rgb               ; creating color strings
        ;;taskrunner        ; taskrunner for all your projects
-       ;;terraform         ; infrastructure as code
+       terraform           ; infrastructure as code
        ;;tmux              ; an API for interacting with tmux
        ;;upload            ; map local to remote projects via ssh/ftp
 
@@ -134,7 +137,7 @@
        ;;(haskell +dante)  ; a language that's lazier than I am
        ;;hy                ; readability of scheme w/ speed of python
        ;;idris             ; a language you can depend on
-       json                ; At least it ain't XML
+       (json +lsp)         ; At least it ain't XML
        ;;(java +meghanada) ; the poster child for carpal tunnel syndrome
        (javascript +lsp)   ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia             ; a better, faster MATLAB
@@ -169,7 +172,7 @@
        ;;swift             ; who asked for emoji variables?
        ;;terra             ; Earth and Moon in alignment for performance.
        (web +lsp)          ; the tubes
-       yaml                ; JSON, but readable
+       (yaml +lsp)         ; JSON, but readable
        ;;zig               ; C, but simpler
 
        :email
