@@ -9,6 +9,9 @@ repo = 'Shougo/vimproc'
 build = 'make'
 
 [[plugins]]
+repo = 'vim-denops/denops.vim'
+
+[[plugins]]
 repo = 'Shougo/deol.nvim'
 hook_add = '''
 let g:deol#shell_history_path = '~/.zsh_history'
@@ -168,4 +171,9 @@ hook_add = '''
 let g:indent_guides_auto_colors = 1
 let g:indent_guides_color_change_percent = 5
 nmap <silent> <Space>gt <Plug>IndentGuidesToggle
+'''
+
+[[plugins]]
+repo = 'folke/which-key.nvim'
+hook_add = '''
 '''
