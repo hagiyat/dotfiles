@@ -7,7 +7,7 @@ let g:neomru#file_mru_limit = 10000
 
 [[plugins]]
 repo = 'Shougo/denite.nvim'
-depends = ['neomru.vim', 'coc-denite']
+depends = ['neomru.vim']
 on_cmd = 'Denite'
 hook_post_source = '''
 " call denite#custom#var('file_rec', 'command',
@@ -80,24 +80,30 @@ nnoremap [denite]cd :<C-u>Denite coc-diagnostic<CR>
 nnoremap [denite]cs :<C-u>Denite coc-symbols<CR>
 '''
 
-# [[plugins]]
-# repo = 'Shougo/deoplete.nvim'
-# on_event = 'InsertEnter'
-# depends = ['deoplete-lsp', 'deoplete-tabnine']
-# hook_source = '''
-  # let g:deoplete#enable_at_startup = 1
-  # let g:deoplete#tag#cache_limit_size = 10000000
-  # inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-  # inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>"
-  # inoremap <expr><CR>  pumvisible() ? deoplete#close_popup() : "<CR>"
-# '''
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+on_event = 'BufRead'
 
-# [[plugins]]
-# repo = 'tbodt/deoplete-tabnine'
-# build = './install.sh'
-
-# [[plugins]]
-# repo = 'Shougo/deoplete-lsp'
+[[plugins]]
+repo = 'osyo-manga/vim-precious'
+depends = ['context_filetype.vim']
+hook_add = '''
+" http://d.hatena.ne.jp/osyo-manga/20130612/1371046408
+let g:precious_enable_switch_CursorMoved = {
+      \ "*" : 0,
+      \ "toml" : 1
+      \ }
+let g:precious_enable_switch_CursorMoved_i = {
+      \ "*" : 0,
+      \ "toml" : 1
+      \ }
+" insert に入った時にスイッチし、抜けた時に元に戻す
+augroup switch_precious
+  autocmd!
+  autocmd InsertEnter * :PreciousSwitch
+  autocmd InsertLeave * :PreciousReset
+augroup END
+'''
 
 [[plugins]]
 repo = 'Shougo/neosnippet-snippets'
@@ -119,8 +125,8 @@ endif
 [[plugins]]
 repo = 'previm/previm'
 on_ft = ['markdown']
+on_cmd = 'PrevimOpen'
 hook_source = '''
-let g:previm_open_cmd = $BROWSER
-nnoremap <silent> <Space>mp :<C-u>PrevimOpen<CR>
+let g:previm_open_cmd = 'xdg-open -a $BROWSER'
 '''
 

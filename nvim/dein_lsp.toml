@@ -1,0 +1,44 @@
+[[plugins]]
+ repo = 'neovim/nvim-lspconfig'
+ on_event = 'BufEnter'
+ hook_source = '''
+ lua << EOF
+ local nvim_lsp = require('lspconfig')
+ local on_attach = function (client, bufnr)
+ local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+ local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+ local opts = { noremap=true, silent=true }
+  buf_set_keymap('n', '<space>cd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  buf_set_keymap('n', '<space>ci', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', '<space>ch', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', '<space>cD', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  buf_set_keymap('n', '<space>ct', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  buf_set_keymap('n', '<space>ce', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+  buf_set_keymap('n', 'g[', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', 'g]', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap('n', '<space>cf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+ end
+
+ require'lspconfig'.cssls.setup{}
+ require'lspconfig'.denols.setup{}
+ require'lspconfig'.html.setup{}
+ require'lspconfig'.jsonls.setup{}
+ require'lspconfig'.vuels.setup{}
+ require'lspconfig'.yamlls.setup{}
+
+ require'lspinstall'.setup()
+ local servers = require'lspinstall'.installed_servers()
+ for _, server in pairs(servers) do
+  require'lspconfig'[server].setup{}
+ end
+EOF
+'''
+
+[[plugins]]
+ repo = 'kabouzeid/nvim-lspinstall'
+ on_source = 'nvim-lspconfig'
+ hook_source = '''
+  lua require'lspinstall'.setup()
+'''
