@@ -27,6 +27,7 @@ lua << EOF
       p = { ":<C-u>bprevious<CR>", "previous" },
       d = { ":<C-u>bdelete<CR>", "delete" },
       a = { ":<C-u>enew<CR>", "add" },
+      w = { ":<C-u>w<CR>", "write" },
     }
   }, { prefix = "<space>", noremap = true, mode = "n" })
 
