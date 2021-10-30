@@ -27,7 +27,6 @@ lua << EOF
       p = { ":<C-u>bprevious<CR>", "previous" },
       d = { ":<C-u>bdelete<CR>", "delete" },
       a = { ":<C-u>enew<CR>", "add" },
-      w = { ":<C-u>w<CR>", "write" },
     }
   }, { prefix = "<space>", noremap = true, mode = "n" })
 
@@ -53,7 +52,8 @@ lua << EOF
 
 
   require("which-key").register({
-    ["<esc><esc>"] = { ":nohlsearch<CR>", "clear highlight" }
+    ["<esc><esc>"] = { ":nohlsearch<CR>", "clear highlight" },
+    ["gw"] = { ":<C-u>w<CR>", "save file" },
   }, { mode = "n" })
 EOF
 '''

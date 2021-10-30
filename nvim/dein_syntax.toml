@@ -14,7 +14,7 @@ hook_add = '''
 " ex) + から / に変換
 " sr+/ と入力
 " みたいな感じ
-nmap <Space>s [sandwich]
+nmap <Space>S [sandwich]
 nmap [sandwich]a <Plug>(operator-sandwich-add)
 nmap [sandwich]d <Plug>(operator-sandwich-delete)
 nmap [sandwich]r <Plug>(operator-sandwich-replace)
