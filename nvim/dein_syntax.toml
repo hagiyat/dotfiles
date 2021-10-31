@@ -1,11 +1,5 @@
 [[plugins]]
-repo = 'scrooloose/nerdcommenter'
-hook_add = '''
-  let g:NERDCreateDefaultMappings = 0
-  let g:NERDSpaceDelims = 1
-  nmap gcc <Plug>NERDCommenterToggle
-  vmap gc <Plug>NERDCommenterToggle
-'''
+repo = 'tyru/caw.vim'
 
 [[plugins]]
 repo = 'machakann/vim-sandwich'
