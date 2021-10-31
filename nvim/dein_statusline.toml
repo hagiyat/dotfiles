@@ -1,6 +1,6 @@
 [[plugins]]
 repo = 'itchyny/lightline.vim'
-depends = ['coc.nvim', 'gina.vim']
+depends = ['gina.vim']
 hook_add = '''
 let g:lightline = {
   \ 'colorscheme': 'jellybeans',
@@ -9,7 +9,7 @@ let g:lightline = {
   \   'left': [
   \     [ 'mode', 'paste' ],
   \     [ 'gitbranch' ],
-  \     [ 'filename', 'cocstatus' ],
+  \     [ 'filename' ],
   \   ],
   \   'right': [
   \     [ 'lineinfo' ],
@@ -20,8 +20,6 @@ let g:lightline = {
   \   'lineinfo': '%3l:%-2v%<',
   \ },
   \ 'component_function': {
-  \   'cocstatus': 'coc#status',
-  \   'currentfunction': 'CocCurrentFunction',
   \   'statusdiagnostic': 'StatusDiagnostic',
   \   'readonly': 'LightLineReadonly',
   \   'gitbranch': 'LightlineGitBranch',
@@ -60,9 +58,5 @@ endfunction
 
 function! LightlineGitBranch()
   return '' != gina#component#repo#branch() ? "\ue0a0". gina#component#repo#branch() : ''
-endfunction
-
-function! CocCurrentFunction()
-    return get(b:, 'coc_current_function', '')
 endfunction
 '''
