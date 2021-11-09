@@ -16,6 +16,7 @@ links = [
     (".zshrc", "zshrc"),
     (".config/termite", "termite"),
     (".config/alacritty", "alacritty"),
+    (".config/kitty", "kitty"),
     #  (".config/rofi", "rofi"),
     (".config/fontconfig", "fontconfig"),
     (".config/pmy", "pmy"),
