@@ -20,10 +20,11 @@ local on_attach = function (client, bufnr)
   buf_set_keymap('n', 'g[', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
   buf_set_keymap('n', 'g]', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<space>cf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  buf_set_keymap('n', '<space>cn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
 
 end
 
-local servers = { 'cssls', 'tsserver', 'html', 'jsonls', 'vuels', 'yamlls' }
+local servers = { 'cssls', 'tsserver', 'eslint', 'html', 'jsonls', 'vuels', 'yamlls', 'pyright' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
