@@ -12,7 +12,7 @@
 [delta]
     plus-style = "syntax #214430"
     minus-style = "syntax #542001"
-    syntax-theme = TwoDark
+    syntax-theme = OneHalfDark
     navigate = true
 [diff]
 	compactionHeuristic = true
@@ -40,3 +40,5 @@
 	rebase = true
 [init]
 	defaultBranch = main
+[fetch]
+	prune = true
