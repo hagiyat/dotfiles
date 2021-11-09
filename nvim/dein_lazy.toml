@@ -32,19 +32,23 @@ call denite#custom#map('insert', '<C-n>', '<denite:move_to_next_line>')
 call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>')
 
 " display configurations
-let s:denite_win_width_percent = 0.85
-let s:denite_win_height_percent = 0.7
+let s:denite_win_width_percent = 0.8
+let s:denite_win_height_percent = 0.4
 
 call denite#custom#option('default', {
-      \ 'split': 'floating',
-      \ 'winwidth': float2nr(&columns * s:denite_win_width_percent),
-      \ 'wincol': float2nr((&columns - (&columns * s:denite_win_width_percent)) / 2),
+      \ 'split': 'horizontal',
       \ 'winheight': float2nr(&lines * s:denite_win_height_percent),
-      \ 'winrow': float2nr((&lines - (&lines * s:denite_win_height_percent)) / 2),
       \ 'highlight_filter_background': 'DeniteFilter',
+      \ 'highlight_matched_char': 'None',
+      \ 'highlight_matched_range': 'Search',
+      \ 'match_highlight': v:true,
       \ 'prompt': '⫸ ',
       \ 'start_filter': v:true,
-      \ })
+      \ 'floating_preview': v:true,
+      \ 'preview_height': float2nr(&lines * s:denite_win_height_percent),
+      \ 'preview_width': float2nr(&columns * s:denite_win_width_percent),
+      \ 'auto_resize': v:true,
+      \})
 
 autocmd FileType denite set winblend=10
 autocmd FileType denite-filter set winblend=10
@@ -75,9 +79,6 @@ nnoremap [denite]g :<C-u>DeniteCursorWord grep<CR>
 nnoremap [denite]r :<C-u>Denite-resume<CR>
 nnoremap [denite]c :<C-u>Denite command<CR>
 nnoremap [denite]h :<C-u>Denite help<CR>
-nnoremap [denite]cc :<C-u>Denite coc-command<CR>
-nnoremap [denite]cd :<C-u>Denite coc-diagnostic<CR>
-nnoremap [denite]cs :<C-u>Denite coc-symbols<CR>
 '''
 
 [[plugins]]
