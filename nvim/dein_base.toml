@@ -14,13 +14,16 @@ repo = 'vim-denops/denops.vim'
 [[plugins]]
 repo = 'Shougo/deol.nvim'
 hook_add = '''
+" FIXME
 let g:deol#shell_history_path = '~/.zsh_history'
 
 nmap <silent><Space>t [deol]
-nnoremap  [deol]t :Deol -split=horizontal -winheight=30<CR>
-nnoremap  [deol]f :Deol -split=floating -winheight=30<CR>
-nnoremap  [deol]l :Deol -split=farleft<CR>
-nnoremap  [deol]r :Deol -split=farright<CR>
+" nnoremap  [deol]t :Deol -split=horizontal -winheight=30<CR>
+" nnoremap  [deol]f :Deol -split=floating -winheight=30<CR>
+" nnoremap  [deol]l :Deol -split=farleft<CR>
+" nnoremap  [deol]r :Deol -split=farright<CR>
+nnoremap [deol]t <Cmd>Deol -toggle<CR>
+nnoremap [deol]a <Cmd>Deol -split=floating -winheight=30<CR>
 
 " terminalをnormal modeに
 tnoremap <C-g> <C-\><C-n>
@@ -29,9 +32,6 @@ tnoremap <ESC> <C-\><C-n>
 " transparent
 autocmd FileType deol set winblend=10
 '''
-
-[[plugins]]
-repo = 'kana/vim-submode'
 
 [[plugins]]
 repo = 'lambdalisue/gina.vim'
@@ -96,26 +96,6 @@ noremap <silent><expr> g/ incsearch#go(<SID>incsearch_config({'is_stay': 1}))
 '''
 
 [[plugins]]
-repo = 'pelodelfuego/vim-swoop'
-hook_add = '''
-let g:defaultWinSwoopHeight = 20
-
-nnoremap [swoop] <Nop>
-nmap <Space>s [swoop]
-
-nmap [swoop]s :call Swoop()<CR>
-vmap [swoop]s :call SwoopSelection()<CR>
-
-" Swoop multi buffers
-nmap [swoop]m :call SwoopMulti()<CR>
-vmap [swoop]m :call SwoopMultiSelection()<CR>
-
-" FIXME: 元々のキーマップが消えてしまうのも微妙ではあるが、、
-autocmd BufEnter swoopBuf nnoremap <silent> q :bdelete! swoopBuf<CR>
-autocmd BufDelete swoopBuf nnoremap <silent> q <Nop>
-'''
-
-[[plugins]]
 repo = 'szw/vim-maximizer'
 hook_add = '''
 let g:maximizer_set_mapping_with_bang = 0
@@ -127,7 +107,6 @@ repo = 'cohama/lexima.vim'
 
 [[plugins]]
 repo = 'mhinz/vim-startify'
-depends = 'neoterm'
 hook_add = '''
 function! s:filter_header(lines) abort
   let longest_line   = max(map(copy(a:lines), 'len(v:val)'))
