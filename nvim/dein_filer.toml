@@ -35,7 +35,7 @@ hook_source = '''
 
 " == vertical ==
 call defx#custom#option('_', {
-      \ 'columns': 'indent:git:icons:filename',
+      \ 'columns': 'git:mark:icons:filename:type',
       \ 'show_ignored_files': 1,
       \ 'split': 'vertical',
       \ 'winwidth': 40,
