@@ -20,6 +20,7 @@ links = [
     #  (".config/rofi", "rofi"),
     (".config/fontconfig", "fontconfig"),
     (".config/pmy", "pmy"),
+    (".config/xkeysnail", "xkeysnail"),
     (".config/flake8", "flake8"),
 ]
 
