@@ -17,6 +17,7 @@ links = [
     (".config/termite", "termite"),
     (".config/alacritty", "alacritty"),
     (".config/kitty", "kitty"),
+    (".config/goneovim", "goneovim"),
     #  (".config/rofi", "rofi"),
     (".config/fontconfig", "fontconfig"),
     (".config/pmy", "pmy"),
