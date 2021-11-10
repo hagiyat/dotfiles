@@ -8,7 +8,7 @@ hook_add = '''
 " ex) + から / に変換
 " sr+/ と入力
 " みたいな感じ
-nmap <Space>S [sandwich]
+nmap <Space>s [sandwich]
 nmap [sandwich]a <Plug>(operator-sandwich-add)
 nmap [sandwich]d <Plug>(operator-sandwich-delete)
 nmap [sandwich]r <Plug>(operator-sandwich-replace)
@@ -43,3 +43,18 @@ repo = 'leafgarland/typescript-vim'
 
 [[plugins]]
 repo = 'peitalin/vim-jsx-typescript'
+
+[[plugins]]
+repo = 'posva/vim-vue'
+hook_add = '''
+autocmd FileType vue syntax sync fromstart
+'''
+
+[[plugins]]
+repo = 'prettier/vim-prettier'
+build = 'npm install'
+on_ft = ['javascript', 'typescript', 'vue', 'css', 'scss', 'json', 'markdown']
+hook_add = '''
+let g:prettier#autoformat = 0
+autocmd BufWritePre *.js,*.ts,*.vue,*.css,*.scss,*.json PrettierAsync
+'''
