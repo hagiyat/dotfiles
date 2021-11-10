@@ -65,11 +65,6 @@ runtime! keybinds.vim
 " dein
 runtime! dein.vim
 
-" Insertモードから抜けるとIMをOFFに
-function! Fcitx2en()
-  let l:a = system("[ `fcitx5-remote` -eq 2 ] && fcitx5-remote -c")
-endfunction
-
 aug initvim
   autocmd!
   " tabstop / shiftwidth
@@ -78,8 +73,6 @@ aug initvim
   autocmd FileType make setlocal shiftwidth=4 tabstop=4 noexpandtab
   " 保存時に行末の空白を除去する
   autocmd BufWritePre * :%s/\s\+$//ge
-
-  autocmd InsertLeave,FocusGained,FocusLost * call Fcitx2en()
 
   " autosave
   autocmd CursorHold,CursorHoldI,InsertLeave * silent! wall
