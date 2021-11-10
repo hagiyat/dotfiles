@@ -1,17 +1,3 @@
-export LANG=ja_JP.UTF-8
-export LC_ALL=ja_JP.UTF-8
-export EDITOR=nvim
-export PAGER="less -RF"
-export XDG_CONFIG_HOME=$HOME/.config
-export XDG_CACHE_HOME=$HOME/.cache
-export XDG_DATA_HOME=$HOME/.local/share
-export XDG_DATA_DIRS=/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share:/usr/local/share:/usr/share
-# export XDG_DATA_DIRS=/usr/local/share:/usr/share
-export BROWSER=chromium
-export PROJECTS_HOME=$HOME/repos
-export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/bin
-
 # emacs keybind
 bindkey -e
 
@@ -223,6 +209,7 @@ function init_abbreviations() {
   abbrev-alias -g gbr="git-browse"
 
   abbrev-alias -g tms="tmux split-window -v -c '#{pane_current_path}'"
+  abbrev-alias -g tmss="tmux split-window -v -c '#{pane_current_path}' -p 30"
   abbrev-alias -g tmv="tmux split-window -h -c '#{pane_current_path}'"
   abbrev-alias -g tmw="tmux new-window -c '#{pane_current_path}'"
 
