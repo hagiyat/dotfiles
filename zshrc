@@ -157,17 +157,18 @@ zinit ice wait'0' lucid; zinit light "zsh-users/zsh-completions"
 # prompt configurations
 zinit ice pick"async.zsh" src"pure.zsh"
 zinit light sindresorhus/pure
+PURE_GIT_STASH_SYMBOL="👾"
+PURE_GIT_UP_ARROW="🚀"
+PURE_GIT_DOWN_ARROW="📚"
 if [[ -v INSIDE_EMACS ]]; then
-  PURE_GIT_STASH_SYMBOL="👾"
-  PURE_GIT_UP_ARROW="🚀"
-  PURE_GIT_DOWN_ARROW="🌩"
   PURE_PROMPT_SYMBOL="➤"
 else
-  PURE_GIT_STASH_SYMBOL="🗊"
-  PURE_GIT_UP_ARROW="🛪"
-  PURE_GIT_DOWN_ARROW="🗱"
-  # PURE_PROMPT_SYMBOL="⟖ ⪩"
-  PURE_PROMPT_SYMBOL="⋆🞟🢖"
+  # PURE_GIT_STASH_SYMBOL="🗊"
+  # PURE_GIT_UP_ARROW="🛪"
+  # PURE_GIT_DOWN_ARROW="🗱"
+  # PURE_PROMPT_SYMBOL="⋆🞟🢖"
+  # PURE_PROMPT_SYMBOL="📢🧰"
+  PURE_PROMPT_SYMBOL="💭"
 fi
 zstyle :prompt:pure:git:stash show yes
 autoload -Uz promptinit; promptinit
