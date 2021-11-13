@@ -14,16 +14,15 @@ repo = 'vim-denops/denops.vim'
 [[plugins]]
 repo = 'Shougo/deol.nvim'
 hook_add = '''
-" FIXME
 let g:deol#shell_history_path = '~/.zsh_history'
 
+function! s:open_deol() abort
+  let winheight = &lines / 2
+  execute 'Deol -split=horizontal -toggle -winheight=' . winheight
+endfunction
+
 nmap <silent><Space>t [deol]
-" nnoremap  [deol]t :Deol -split=horizontal -winheight=30<CR>
-" nnoremap  [deol]f :Deol -split=floating -winheight=30<CR>
-" nnoremap  [deol]l :Deol -split=farleft<CR>
-" nnoremap  [deol]r :Deol -split=farright<CR>
-nnoremap [deol]t <Cmd>Deol -toggle<CR>
-nnoremap [deol]a <Cmd>Deol -split=floating -winheight=30<CR>
+nnoremap [deol]t <Cmd>call <SID>open_deol()<CR>
 
 " terminalをnormal modeに
 tnoremap <C-g> <C-\><C-n>
