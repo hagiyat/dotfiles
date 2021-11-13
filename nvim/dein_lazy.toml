@@ -2,7 +2,7 @@
 repo = 'Shougo/neomru.vim'
 on_path = '.*'
 hook_add = '''
-let g:neomru#file_mru_limit = 10000
+let g:neomru#file_mru_limit = 100
 '''
 
 [[plugins]]
@@ -10,9 +10,6 @@ repo = 'Shougo/denite.nvim'
 depends = ['neomru.vim']
 on_cmd = 'Denite'
 hook_post_source = '''
-" call denite#custom#var('file_rec', 'command',
-      " \ ['rg', '--files', '--glob', '!.git'])
-      "
 call denite#custom#var('file/rec', 'command',
       \ ['fd', '--follow', '--hidden', '--exclude', '.git', '--type', 'f', ''])
 call denite#custom#alias('source', 'file/rec/git', 'file/rec')
@@ -75,17 +72,16 @@ endfunction
 
 nnoremap [denite] <Nop>
 nmap <Space>f [denite]
-"nnoremap [denite]b :<C-u>Denite buffer<CR>
-nnoremap [denite]b :<C-u>Denite buffer file_mru<CR>
-nnoremap [denite]l :<C-u>Denite line -highlight-matched-char=None -highlight-matched-range=Search -match-highlight -auto-action=preview<CR><CR>
-nnoremap [denite]t :<C-u>Denite filetype<CR>
-nnoremap [denite]f :<C-u>DeniteProjectDir file/rec<CR>
-nnoremap [denite]F :<C-u>Denite file/rec<CR>
-nnoremap [denite]g :<C-u>DeniteProjectDir grep<CR>
-nnoremap [denite]G :<C-u>DeniteCursorWord grep<CR>
-nnoremap [denite]r :<C-u>Denite-resume<CR>
-nnoremap [denite]c :<C-u>Denite command<CR>
-nnoremap [denite]h :<C-u>Denite help<CR>
+nnoremap [denite]b <Cmd>Denite buffer file_mru<CR>
+nnoremap [denite]l <Cmd>Denite line -highlight-matched-char=None -highlight-matched-range=Search -match-highlight -auto-action=preview<CR><CR>
+nnoremap [denite]t <Cmd>Denite filetype<CR>
+nnoremap [denite]f <Cmd>DeniteProjectDir file/rec<CR>
+nnoremap [denite]F <Cmd>Denite file/rec<CR>
+nnoremap [denite]g <Cmd>DeniteProjectDir grep<CR>
+nnoremap [denite]G <Cmd>DeniteCursorWord grep<CR>
+nnoremap [denite]r <Cmd>Denite-resume<CR>
+nnoremap [denite]c <Cmd>Denite command<CR>
+nnoremap [denite]h <Cmd>Denite help<CR>
 '''
 
 [[plugins]]
@@ -138,3 +134,6 @@ hook_source = '''
 let g:previm_open_cmd = 'xdg-open -a $BROWSER'
 '''
 
+[[plugins]]
+repo     = 'delphinus/vim-emacscommandline'
+on_event = ['CmdlineEnter']
