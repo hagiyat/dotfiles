@@ -8,12 +8,12 @@ desktop applications
 
 - terminal emulator
   - termite
-  - **alacritty**
-  - guake
+  - alacritty
+  - **kitty**
 
 - editor
-  - neovim
-  - **emacs(spacemacs)**
+  - **neovim**
+  - emacs(doom emacs)
 
 - browser
   - **chromium**
@@ -23,14 +23,14 @@ desktop applications
 cli applications
 ---
 
-- tmux
+- ~tmux~
 - zsh
-  - zplug
-  - (only create symlinks 😂) setup.py
+  - zinit
 - fzf
 - ripgrep
 - fd
 - exa
+- delta
 - direnv
 - ...
 
@@ -39,14 +39,6 @@ for neovim
 
 * [requires: github personal access token](https://docs.github.com/ja/github/authenticating-to-github/creating-a-personal-access-token)
   * Set to environment variable in an appropriate way. for expample, ```echo "export GITHUB_API_TOKEN=xxxxx" >> /path/to/.zshenv```
-
-
-for lsp
----
-
-* python
-* typescript
-* bash
 
 ## system libraries
 
@@ -59,14 +51,14 @@ for lsp
 * black
 * isort
 
-## npm modules
+## npm global modules
 
-* pyright
-* tern
+* neovim
 * typescript
 * typescript-language-server
+* vscode-langservers-extracted
+* pyright
+* yaml-langage-server
+* vls
 * prettier
 * eslint
-* tslint
-* vmd
-* bash-language-server
