@@ -32,3 +32,45 @@ function! EnableQuantum()
 endfunction
 " autocmd VimEnter * nested call EnableQuantum()
 '''
+
+[[plugins]]
+repo = 'morhetz/gruvbox'
+hook_add = '''
+" colorscheme gruvbox
+'''
+hook_add = '''
+function! EnableGruvbox()
+  colorscheme gruvbox
+  " hi IncSearch gui=bold,italic guifg=#ffcc00 guibg=#242424
+endfunction
+" autocmd VimEnter * nested call EnableGruvbox()
+'''
+
+[[plugins]]
+repo = 'arcticicestudio/nord-vim'
+hook_add = '''
+function! EnableNord()
+  colorscheme nord
+  hi IncSearch gui=bold,italic guifg=#ffcc00 guibg=#242424
+endfunction
+" autocmd VimEnter * nested call EnableNord()
+'''
+
+[[plugins]]
+repo = 'sainnhe/everforest'
+hook_add = '''
+function! EnableEverforest()
+  colorscheme everforest
+  hi Normal guifg=#bcbcbc guibg=#242424
+endfunction
+" autocmd VimEnter * nested call EnableEverforest()
+'''
+
+[[plugins]]
+repo = 'doums/darcula'
+hook_add = '''
+function! EnableDarcula()
+  colorscheme darcula
+endfunction
+" autocmd VimEnter * nested call EnableDarcula()
+'''
