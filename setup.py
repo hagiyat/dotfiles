@@ -12,7 +12,7 @@ links = [
     (".spacemacs", "spacemacs"),
     (".config/doom", "doom"),
     (".tmux.conf", "tmux.conf"),
-    # (".vimrc", "vimrc"),
+    (".vimrc", "vimrc"),
     (".zshrc", "zshrc"),
     (".config/termite", "termite"),
     (".config/alacritty", "alacritty"),
