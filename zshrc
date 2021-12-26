@@ -215,8 +215,8 @@ function init_abbreviations() {
   abbrev-alias -g tmw="tmux new-window -c '#{pane_current_path}'"
 
   abbrev-alias -g d="docker"
-  abbrev-alias -g d-="docker-compose"
-  abbrev-alias -g d-e="docker-compose exec"
+  abbrev-alias -g d-="docker compose"
+  abbrev-alias -g d-e="docker compose exec"
 
   abbrev-alias -g eh="$HOME/"
   abbrev-alias -g ec="$XDG_CONFIG_HOME/"
