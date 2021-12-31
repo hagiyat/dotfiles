@@ -4,6 +4,12 @@ set noshowcmd
 set clipboard=unnamedplus
 set hlsearch
 set splitbelow
+set incsearch
+
+" incsearchのときに背景反転しないようにする
+hi IncSearch gui=bold,italic guifg=#ffcc00 guibg=#242424
+hi IncSearch cterm=bold,italic ctermfg=Red ctermbg=Black
+hi Search cterm=bold ctermfg=Yellow ctermbg=Black
 
 nmap <silent> <ESC><ESC> :nohlsearch<CR>
 
@@ -39,3 +45,4 @@ nnoremap <Space>qq :<C-u>q<CR>
 nnoremap <Space>qw :<C-u>wq<CR>
 nnoremap <Space>qa :<C-u>qa<CR>
 nnoremap <Space>qf :<C-u>qa!<CR>
+nnoremap q :<C-u>qa!<CR>
