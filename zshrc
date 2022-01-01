@@ -248,7 +248,9 @@ zinit light 'relastle/pmy'
 [ -f /usr/bin/aws_zsh_completer.sh ] && source /usr/bin/aws_zsh_completer.sh
 
 # asdf
-if [ -d $HOME/.asdf ] ; then
+if [ -d /opt/asdf-vm ] ; then
+  . /opt/asdf-vm/asdf.sh
+elif [ -d $HOME/.asdf ] ; then
   . $HOME/.asdf/asdf.sh
   . $HOME/.asdf/completions/asdf.bash
 fi
