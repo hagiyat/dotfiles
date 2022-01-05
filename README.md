@@ -7,7 +7,6 @@ desktop applications
 ---
 
 - terminal emulator
-  - termite
   - alacritty
   - **kitty**
 
@@ -58,7 +57,7 @@ for neovim
 * typescript-language-server
 * vscode-langservers-extracted
 * pyright
-* yaml-langage-server
+* yaml-language-server
 * vls
 * prettier
 * eslint
