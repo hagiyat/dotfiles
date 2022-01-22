@@ -1,0 +1,14 @@
+modmap:
+  - name: caps-ctrl-esc
+    remap:
+      CapsLock:
+        held: CONTROL_L
+        alone: ESC
+  - name: for fcitx
+    remap:
+      ALT_L:
+        held: ALT_L
+        alone: KEY_MUHENKAN
+      ALT_R:
+        held: ALT_R
+        alone: KEY_KATAKANAHIRAGANA

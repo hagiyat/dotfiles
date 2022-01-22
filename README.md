@@ -18,6 +18,10 @@ desktop applications
   - **chromium**
   - firefox
 
+services
+---
+
+- xremap
 
 cli applications
 ---
@@ -42,13 +46,6 @@ for neovim
 ## system libraries
 
 * dotnet-runtime
-* microsoft-python-language-server
-
-## python modules
-
-* flake8
-* black
-* isort
 
 ## npm global modules
 

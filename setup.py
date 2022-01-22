@@ -23,6 +23,7 @@ links = [
     (".config/pmy", "pmy"),
     (".config/xkeysnail", "xkeysnail"),
     (".config/flake8", "flake8"),
+    (".config/xremap", "xremap"),
 ]
 
 home = os.environ["HOME"]
