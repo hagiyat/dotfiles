@@ -12,3 +12,9 @@ modmap:
       ALT_R:
         held: ALT_R
         alone: KEY_KATAKANAHIRAGANA
+
+keymap:
+  - name: esc with muhenkan
+    remap:
+        ESC: [KEY_MUHENKAN, ESC]
+
