@@ -58,3 +58,7 @@ hook_add = '''
 let g:prettier#autoformat = 0
 autocmd BufWritePre *.js,*.ts,*.vue,*.css,*.scss,*.json PrettierAsync
 '''
+
+[[plugins]]
+repo = 'amadeus/vim-mjml'
+on_ft = ['mjml']
