@@ -1,0 +1,15 @@
+[Unit]
+Description=xremap
+
+[Service]
+Type=simple
+ExecStart=xremap --watch xremap/config.yml
+Restart=always
+TimeoutSec=0
+StandardOutput=tty
+RemainAfterExit=yes
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target

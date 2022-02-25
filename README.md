@@ -37,6 +37,18 @@ cli applications
 - direnv
 - ...
 
+setup xremap
+---
+
+Download xremap:
+https://github.com/k0kubun/xremap/releases
+
+```
+mv xremap ~/.local/bin/.
+sudo cp xremap/xremap.service /etc/systemd/system/.
+sudo chown root:root /etc/systemd/system/xremap.service
+```
+
 for neovim
 ---
 
