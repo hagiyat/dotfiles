@@ -11,4 +11,4 @@ export PROJECTS_HOME=$HOME/path/to
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 
-export GITHUB_API_TOKEN=xxxxxxxxxxxx
+export GITHUB_API_TOKEN=xxxxxxxxxxxxx
