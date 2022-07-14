@@ -205,8 +205,7 @@ function init_abbreviations() {
   abbrev-alias -g gpl="git pull"
   abbrev-alias -g gsw="git switch"
   abbrev-alias -g gswt="git switch -t"
-  abbrev-alias -g gbf="git switch -c feature/"
-  abbrev-alias -g gbh="git switch -c hotfix/"
+  abbrev-alias -g gbf="git switch -c"
   abbrev-alias -g gbr="git-browse"
 
   abbrev-alias -g tms="tmux split-window -v -c '#{pane_current_path}'"
