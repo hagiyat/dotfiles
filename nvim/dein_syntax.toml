@@ -62,3 +62,7 @@ autocmd BufWritePre *.js,*.ts,*.vue,*.css,*.scss,*.json PrettierAsync
 [[plugins]]
 repo = 'amadeus/vim-mjml'
 on_ft = ['mjml']
+
+[[plugins]]
+repo = 'hashivim/vim-terraform'
+on_ft = ['terraform']
