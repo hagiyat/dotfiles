@@ -1,4 +1,5 @@
 if v:false
+  call ddc#custom#patch_global('ui', 'native')
   call ddc#custom#patch_global('completionMenu', 'pum.vim')
 
   inoremap <silent><expr> <TAB>

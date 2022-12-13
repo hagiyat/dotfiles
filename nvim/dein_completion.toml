@@ -1,10 +1,14 @@
 [[plugins]]
 repo = 'Shougo/ddc.vim'
-depends = ['context_filetype.vim', 'pum.vim']
+depends = ['context_filetype.vim', 'pum.vim', 'ddc-ui-native']
 on_event = 'InsertEnter'
 hook_source = '''
   source $XDG_CONFIG_HOME/nvim/ddc.rc.vim
 '''
+
+[[plugins]]
+repo = 'Shougo/ddc-ui-native'
+on_source = 'ddc.vim'
 
 [[plugins]]
 repo = 'Shougo/pum.vim'
