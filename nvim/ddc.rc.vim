@@ -14,6 +14,7 @@ if v:false
 
   call pum#set_option('setline_insert', v:true)
 else
+  call ddc#custom#patch_global('ui', 'native')
   call ddc#custom#patch_global('completionMenu', 'native')
   inoremap <silent><expr> <TAB>
         \ pumvisible() ? '<C-n>' :
