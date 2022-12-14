@@ -1,141 +1,54 @@
 [[plugins]]
 repo = 'neovim/nvim-lspconfig'
-depends = ['nvim-lsp-installer', 'ddc.vim']
+depends = ['ddc.vim']
+on_event = 'BufEnter'
+
+[[plugins]]
+repo = 'williamboman/mason.nvim'
+on_source = 'mason-lspconfig'
+
+[[plugins]]
+repo = 'williamboman/mason-lspconfig.nvim'
+depends = ['nvim-lspconfig', 'mason.nvim']
 on_event = 'BufEnter'
 hook_source = '''
 lua << EOF
+local mason = require('mason')
+mason.setup({
+  ui = {
+    icons = {
+      package_installed = "✓",
+      package_pending = "➜",
+      package_uninstalled = "✗"
+    }
+  }
+})
+
 local nvim_lsp = require('lspconfig')
-local on_attach = function (client, bufnr)
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+local mason_lspconfig = require('mason-lspconfig')
+mason_lspconfig.setup_handlers({ function(server_name)
+  local opts = {}
+  opts.on_attach = function(_, bufnr)
+    local bufopts = { silent = true, buffer = bufnr }
+    -- vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+    -- vim.keymap.set('n', 'gtD', vim.lsp.buf.type_definition, bufopts)
+    -- vim.keymap.set('n', 'grf', vim.lsp.buf.references, bufopts)
+    -- vim.keymap.set('n', '<space>p', vim.lsp.buf.format, bufopts)
 
-  local opts = { noremap=true, silent=true }
-
-  buf_set_keymap('n', '<space>cd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', '<space>ci', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  buf_set_keymap('n', '<space>ch', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  buf_set_keymap('n', '<space>cD', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  buf_set_keymap('n', '<space>ct', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  buf_set_keymap('n', '<space>ce', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-  buf_set_keymap('n', 'g[', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-  buf_set_keymap('n', 'g]', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '<space>cf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-  buf_set_keymap('n', '<space>cn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-end
-
-local servers = {
-  cssls = {},
-  html = {},
-  pyright = {},
-  dockerls = {},
-  eslint = {},
-  vuels = {},
-  tsserver = {
-    root_dir = function(fname)
-      return nvim_lsp.util.root_pattern 'tsconfig.json'(fname)
-        or nvim_lsp.util.root_pattern(
-          'package.json',
-          'jsconfig.json',
-          '.git'
-        )(fname)
-        or nvim_lsp.util.path.dirname(fname)
-    end,
-  },
-  jsonls = {
-    filetypes = { 'json', 'jsonc' },
-    settings = {
-      json = {
-        -- Schemas https://www.schemastore.org
-        schemas = {
-          {
-            fileMatch = { 'package.json' },
-            url = 'https://json.schemastore.org/package.json',
-          },
-          {
-            fileMatch = { 'tsconfig*.json' },
-            url = 'https://json.schemastore.org/tsconfig.json',
-          },
-          {
-            fileMatch = {
-              '.prettierrc',
-              '.prettierrc.json',
-              'prettier.config.json',
-            },
-            url = 'https://json.schemastore.org/prettierrc.json',
-          },
-          {
-            fileMatch = { '.eslintrc', '.eslintrc.json' },
-            url = 'https://json.schemastore.org/eslintrc.json',
-          },
-          {
-            fileMatch = { '.babelrc', '.babelrc.json', 'babel.config.json' },
-            url = 'https://json.schemastore.org/babelrc.json',
-          },
-          {
-            fileMatch = { 'lerna.json' },
-            url = 'https://json.schemastore.org/lerna.json',
-          },
-          {
-            fileMatch = { 'now.json', 'vercel.json' },
-            url = 'https://json.schemastore.org/now.json',
-          },
-          {
-            fileMatch = {
-              '.stylelintrc',
-              '.stylelintrc.json',
-              'stylelint.config.json',
-            },
-            url = 'http://json.schemastore.org/stylelintrc.json',
-          },
-        },
-      },
-    },
-  },
-  yamlls = {
-    settings = {
-      yaml = {
-        -- Schemas https://www.schemastore.org
-        schemas = {
-          ['http://json.schemastore.org/gitlab-ci.json'] = {
-            '.gitlab-ci.yml',
-          },
-          ['https://json.schemastore.org/bamboo-spec.json'] = {
-            'bamboo-specs/*.{yml,yaml}',
-          },
-          ['https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json'] = {
-            'docker-compose*.{yml,yaml}',
-          },
-          ['http://json.schemastore.org/github-workflow.json'] = '.github/workflows/*.{yml,yaml}',
-          ['http://json.schemastore.org/github-action.json'] = '.github/action.{yml,yaml}',
-          ['http://json.schemastore.org/prettierrc.json'] = '.prettierrc.{yml,yaml}',
-          ['http://json.schemastore.org/stylelintrc.json'] = '.stylelintrc.{yml,yaml}',
-          ['http://json.schemastore.org/circleciconfig'] = '.circleci/**/*.{yml,yaml}',
-        },
-      },
-    },
-  },
-  terraformls = {},
-}
-
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-
-for server, config in pairs(servers) do
-  local server_disabled = (config.disabled ~= nil and config.disabled) or false
-
-  if not server_disabled then
-    nvim_lsp[server].setup(
-      vim.tbl_deep_extend(
-        'force',
-        { on_attach = on_attach, capabilities = capabilities },
-        config
-      )
-    )
+    vim.keymap.set('n', '<space>cd', '<Cmd>lua vim.lsp.buf.definition()<CR>', bufopts)
+    vim.keymap.set('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', bufopts)
+    vim.keymap.set('n', '<space>ci', '<cmd>lua vim.lsp.buf.implementation()<CR>', bufopts)
+    vim.keymap.set('n', '<space>ch', '<cmd>lua vim.lsp.buf.signature_help()<CR>', bufopts)
+    vim.keymap.set('n', '<space>cD', '<cmd>lua vim.lsp.buf.references()<CR>', bufopts)
+    vim.keymap.set('n', '<space>ct', '<cmd>lua vim.lsp.buf.type_definition()<CR>', bufopts)
+    vim.keymap.set('n', '<space>ce', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', bufopts)
+    vim.keymap.set('n', 'g[', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', bufopts)
+    vim.keymap.set('n', 'g]', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', bufopts)
+    -- vim.keymap.set('n', '<space>cf', '<cmd>lua vim.lsp.buf.formatting()<CR>', bufopts)
+    vim.keymap.set('n', '<space>cf', vim.lsp.buf.format, bufopts)
+    vim.keymap.set('n', '<space>cn', '<cmd>lua vim.lsp.buf.rename()<CR>', bufopts)
   end
-end
+  nvim_lsp[server_name].setup(opts)
+end })
+EOF
 '''
-
-[[plugins]]
-repo = 'williamboman/nvim-lsp-installer'
-on_source = 'nvim-lspconfig'
