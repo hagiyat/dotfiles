@@ -10,3 +10,5 @@ Gemfile.local.lock
 fish/functions/*.fish
 !fish/functions/nofisher*
 
+# nvim local settings
+nvim/init_local.vim

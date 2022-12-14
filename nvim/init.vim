@@ -59,6 +59,11 @@ let g:python3_host_prog = '/usr/bin/python3'
 " netrw
 let g:netrw_liststyle=3
 
+" local settings
+if filereadable(expand($XDG_CONFIG_HOME.'/nvim/init_local.vim'))
+  source $XDG_CONFIG_HOME/nvim/init_local.vim
+endif
+
 " import keybinds
 runtime! keybinds.vim
 
