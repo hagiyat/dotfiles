@@ -1,5 +1,8 @@
 [[plugins]]
 repo = 'tyru/caw.vim'
+hook_add = '''
+" gccでコメントをトグル
+'''
 
 [[plugins]]
 repo = 'machakann/vim-sandwich'
