@@ -46,7 +46,7 @@ repo = 'tani/ddc-fuzzy'
 on_source = 'ddc.vim'
 
 [[plugins]]
-repo = 'Shougo/ddc-nvim-lsp'
+repo = 'Shougo/ddc-source-nvim-lsp'
 if = "has('nvim')"
 on_source = 'ddc.vim'
 

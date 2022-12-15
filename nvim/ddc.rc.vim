@@ -34,7 +34,7 @@ call ddc#custom#patch_global('sourceOptions', {
       \ 'around': {'mark': 'A'},
       \ 'dictionary': {'maxCandidates': 6, 'mark': 'D', 'minAutoCompleteLength': 3},
       \ 'necovim': {'mark': 'neco', 'maxCandidates': 6},
-      \ 'nvim-lsp': {'mark': 'lsp', 'forceCompletionPattern': "\\.|:\\s*|->", 'ignoreCase': v:true},
+      \ 'nvim-lsp': #{ mark: 'lsp', forceCompletionPattern: '\.\w*|:\w*|->\w*' },
       \ 'buffer': {'mark': 'B', 'maxCandidates': 10, 'ignoreCase': v:true},
       \ 'file': {
       \   'mark': 'F',
