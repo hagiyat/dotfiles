@@ -137,3 +137,15 @@ let g:previm_open_cmd = 'xdg-open -a $BROWSER'
 [[plugins]]
 repo     = 'delphinus/vim-emacscommandline'
 on_event = ['CmdlineEnter']
+
+[[plugins]]
+repo = 'rgroli/other.nvim'
+on_cmd = ['Other', 'OtherSplit', 'OtherVSplit']
+hook_add = '''
+lua << EOF
+vim.api.nvim_set_keymap("n", "<space>ll", "<cmd>:Other<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<space>lp", "<cmd>:OtherSplit<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<space>lv", "<cmd>:OtherVSplit<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<space>lc", "<cmd>:OtherClear<CR>", { noremap = true, silent = true })
+EOF
+'''
