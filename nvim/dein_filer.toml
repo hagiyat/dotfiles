@@ -18,7 +18,7 @@ let g:defx_git#indicators = {
 [[plugins]]
 repo = 'Shougo/defx.nvim'
 on_cmd = 'Defx'
-depends = ['nvim-yarp', 'vim-hug-neovim-rpc', 'defx-icons', 'defx-git']
+depends = ['defx-icons', 'defx-git']
 hook_source = '''
 " == split ==
 " let s:defx_win_width_percent = 0.85
