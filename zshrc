@@ -203,9 +203,9 @@ function init_abbreviations() {
   abbrev-alias -g gps="git push"
   abbrev-alias -g gpf="git push --force-with-lease"
   abbrev-alias -g gpl="git pull"
-  abbrev-alias -g gsw="git switch"
-  abbrev-alias -g gswt="git switch -t"
-  abbrev-alias -g gbf="git switch -c"
+  abbrev-alias -g gs="git switch"
+  abbrev-alias -g gsw="git switch -t"
+  abbrev-alias -g gsc="git switch -c"
   abbrev-alias -g gbr="git-browse"
 
   abbrev-alias -g tms="tmux split-window -v -c '#{pane_current_path}'"
@@ -217,6 +217,8 @@ function init_abbreviations() {
   abbrev-alias -g dc="docker compose"
   abbrev-alias -g dce="docker compose exec"
   abbrev-alias -g dcu="docker compose up"
+
+  abbrev-alias -g tf="terraform"
 
   abbrev-alias -g eh="$HOME/"
   abbrev-alias -g ec="$XDG_CONFIG_HOME/"
