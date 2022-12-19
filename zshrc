@@ -201,7 +201,7 @@ function init_abbreviations() {
   abbrev-alias -g glg="git log --stat --graph --oneline --decorate"
   abbrev-alias -g glm="git log --stat --author=hagiyat"
   abbrev-alias -g gps="git push"
-  abbrev-alias -g gpf="git push --force-with-lease"
+  abbrev-alias -g gpf="git push --force-with-lease --force-if-includes"
   abbrev-alias -g gpl="git pull"
   abbrev-alias -g gs="git switch"
   abbrev-alias -g gsw="git switch -t"
