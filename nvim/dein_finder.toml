@@ -204,34 +204,122 @@ repo = 'Shougo/ddu-ui-filer'
 depends = ['ddu-kind-file']
 hook_add = '''
 lua << EOF
+local do_action = vim.fn['ddu#ui#filer#do_action']
 vim.api.nvim_create_autocmd('FileType', {
   pattern = { 'ddu-filer' },
   callback = function()
-    api.nvim_buf_set_keymap(0, 'n', '<CR>', '', {
+    vim.api.nvim_buf_set_keymap(0, 'n', '<CR>', '', {
         silent = true,
         noremap = true,
         callback = function()
-            if call('ddu#ui#filer#is_tree') then
-                call('ddu#ui#filer#do_action', 'expandItem', { mode = 'toggle' })
-            else
-                call('ddu#ui#filer#do_action', 'itemAction', { name = 'open' })
-            end
+          if vim.fn['ddu#ui#filer#is_tree']() then
+            -- do_action('expandItem', { mode = 'toggle' })
+            do_action('itemAction', { name = 'narrow' })
+          else
+            do_action('itemAction', { mode = 'open' })
+          end
         end
     })
-    api.nvim_buf_set_keymap(0, 'n', '<ESC>', '', {
+    vim.api.nvim_buf_set_keymap(0, 'n', '<ESC>', '', {
       silent = true,
       noremap = true,
-      callback = function() call('ddu#ui#filer#do_action', 'quit') end
+      callback = function() do_action('quit') end
     })
-    api.nvim_buf_set_keymap(0, 'n', 'q', '', {
+    vim.api.nvim_buf_set_keymap(0, 'n', 'q', '', {
       silent = true,
       noremap = true,
-      callback = function() call('ddu#ui#filer#do_action', 'quit') end
+      callback = function() do_action('quit') end
     })
-    api.nvim_buf_set_keymap(0, 'n', 'N', '', {
+    vim.api.nvim_buf_set_keymap(0, 'n', 'o', '', {
       silent = true,
       noremap = true,
-      callback = function() call('ddu#ui#filer#do_action', 'newfile') end
+      callback = function()
+        do_action('expandItem', { mode = 'toggle' })
+      end
+    })
+    vim.api.nvim_buf_set_keymap(0, 'n', '.', '', {
+      silent = true,
+      noremap = true,
+      callback = function()
+        -- FIXME
+        local result = vim.api.nvim_exec(
+        [[
+        function! s:ToggleHidden()
+          let current = ddu#custom#get_current(b:ddu_ui_name)
+          let source_options = get(current, 'sourceOptions', {})
+          let source_options_file = get(source_options, 'file', {})
+          let matchers = get(source_options_file, 'matchers', [])
+          return empty(matchers) ? ['matcher_hidden'] : []
+        endfunction
+        call s:ToggleHidden()
+        ]],
+        true)
+        do_action(
+          'updateOptions', {
+            sourceOptions = {
+              file = {
+                matchers = result
+              }
+            }
+          }
+        )
+      end
+    })
+    vim.api.nvim_buf_set_keymap(0, 'n', 'N', '', {
+      silent = true,
+      noremap = true,
+      -- callback = function() do_action('itemAction', { name = 'newFile' }) end
+      callback = function() do_action('itemAction', { name = 'newFile' }) end
+    })
+    vim.api.nvim_buf_set_keymap(0, 'n', 'mk', '', {
+      silent = true,
+      noremap = true,
+      callback = function() do_action('itemAction', { name = 'newDirectory' }) end
+    })
+    vim.api.nvim_buf_set_keymap(0, 'n', 'c', '', {
+      silent = true,
+      noremap = true,
+      callback = function() do_action('itemAction', { name = 'copy' }) end
+    })
+    vim.api.nvim_buf_set_keymap(0, 'n', 'p', '', {
+      silent = true,
+      noremap = true,
+      callback = function() do_action('itemAction', { name = 'paste' }) end
+    })
+    vim.api.nvim_buf_set_keymap(0, 'n', 'r', '', {
+      silent = true,
+      noremap = true,
+      callback = function() do_action('itemAction', { name = 'rename' }) end
+    })
+    vim.api.nvim_buf_set_keymap(0, 'n', 'd', '', {
+      silent = true,
+      noremap = true,
+      callback = function() do_action('itemAction', { name = 'delete' }) end
+    })
+    vim.api.nvim_buf_set_keymap(0, 'n', 'cd', '', {
+      silent = true,
+      noremap = true,
+      callback = function() do_action('itemAction', { name = 'change_vim_cwd' }) end
+    })
+    vim.api.nvim_buf_set_keymap(0, 'n', 'l', '', {
+      silent = true,
+      noremap = true,
+      callback = function()
+        if vim.fn['ddu#ui#filer#is_tree']() then
+          do_action('itemAction', { name = 'narrow' })
+        else
+          do_action('itemAction', { mode = 'open' })
+        end
+      end
+    })
+    vim.api.nvim_buf_set_keymap(0, 'n', 'h', '', {
+      silent = true,
+      noremap = true,
+      callback = function()
+        do_action(
+          'itemAction', { name = 'narrow', params = { path = '..' } }
+        )
+      end
     })
   end
 })
@@ -392,6 +480,11 @@ vim.fn['ddu#custom#patch_local']('filer', {
       params = {},
     }
   },
+  sourceOptions = {
+    ['_'] = {
+      columns = { 'icon_filename' },
+    },
+  },
   uiOptions = {
     filer = {
       toggle = true
@@ -427,6 +520,6 @@ local filer = function()
     name = 'filer'
   })
 end
-vim.keymap.set('n', '<space>se', function() return filer() end, { noremap = true, silent = true })
+vim.keymap.set('n', '<space>fe', function() return filer() end, { noremap = true, silent = true })
 EOF
 '''
