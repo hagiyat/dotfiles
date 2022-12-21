@@ -178,14 +178,75 @@ repo = 'shun/ddu-source-buffer'
 repo = 'matsui54/ddu-source-file_external'
 
 [[plugins]]
-repo = 'yuki-yano/ddu-filter-fzf'
+repo = 'lambdalisue/mr.vim'
+
+[[plugins]]
+repo = 'kuuote/ddu-source-mr'
+depends = 'mr.vim'
+
+[[plugins]]
+repo = 'matsui54/ddu-source-help'
+
+[[plugins]]
+repo = 'Shougo/ddu-filter-matcher_substring'
 
 [[plugins]]
 repo = 'Shougo/ddu-kind-file'
 
 [[plugins]]
+repo = 'ryota2357/ddu-column-icon_filename'
+
+[[plugins]]
+repo = 'Shougo/ddu-source-file'
+
+[[plugins]]
+repo = 'Shougo/ddu-ui-filer'
+depends = ['ddu-kind-file']
+hook_add = '''
+lua << EOF
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'ddu-filer' },
+  callback = function()
+    api.nvim_buf_set_keymap(0, 'n', '<CR>', '', {
+        silent = true,
+        noremap = true,
+        callback = function()
+            if call('ddu#ui#filer#is_tree') then
+                call('ddu#ui#filer#do_action', 'expandItem', { mode = 'toggle' })
+            else
+                call('ddu#ui#filer#do_action', 'itemAction', { name = 'open' })
+            end
+        end
+    })
+    api.nvim_buf_set_keymap(0, 'n', '<ESC>', '', {
+      silent = true,
+      noremap = true,
+      callback = function() call('ddu#ui#filer#do_action', 'quit') end
+    })
+    api.nvim_buf_set_keymap(0, 'n', 'q', '', {
+      silent = true,
+      noremap = true,
+      callback = function() call('ddu#ui#filer#do_action', 'quit') end
+    })
+    api.nvim_buf_set_keymap(0, 'n', 'N', '', {
+      silent = true,
+      noremap = true,
+      callback = function() call('ddu#ui#filer#do_action', 'newfile') end
+    })
+  end
+})
+EOF
+'''
+
+[[plugins]]
 repo = 'Shougo/ddu.vim'
-depends = ['ddu-ui-ff', 'ddu-source-file_rec', 'ddu-source-line' 'ddu-filter-fzf', 'ddu-kind-file']
+depends = [
+  'ddu-ui-ff', 'ddu-ui-filer',
+  'ddu-source-file_rec', 'ddu-source-file_external', 'ddu-source-line',
+  'ddu-source-rg', 'ddu-source-buffer', 'ddu-source-mr', 'ddu-source-help',
+  'ddu-filter-matcher_substring',
+  'ddu-source-file', 'ddu-column-icon_filename', 'ddu-kind-file'
+]
 on_cmd = 'Ddu'
 hook_add = '''
 lua << EOF
@@ -201,12 +262,10 @@ vim.fn['ddu#custom#patch_global']({
       previewFloating = true,
       previewFloatingBorder = 'rounded',
       filterSplitDirection = 'floating',
-      winRow = 0.5,
-      winHeight = winh,
-      winWidth = winw,
-      previewRow = 0.5,
+      winCol = vim.fn.round(vim.api.nvim_get_option('columns') * 0.05),
+      winWidth = vim.fn.round(vim.api.nvim_get_option('columns') * 0.9),
       previewHeight = winh,
-      previewWidth = winw,
+      previewWidth = vim.fn.round(vim.api.nvim_get_option('columns') * 0.9),
       startFilter = true,
       autoAction = {
         name = 'preview'
@@ -220,7 +279,7 @@ vim.fn['ddu#custom#patch_global']({
   },
   sourceOptions = {
     ['_'] = {
-      matchers = { 'matcher_fzf' },
+      matchers = { 'matcher_substring' },
       ignoreCase = true,
     },
     command_history = {
@@ -231,13 +290,16 @@ vim.fn['ddu#custom#patch_global']({
     }
   },
   filterParams = {
-    matcher_fzf = {
-      highlightMatched = 'Constant'
+    matcher_substring = {
+      highlightMatched = 'Title'
     }
   },
   sourceParams = {
+    file_rec = {
+      cmd = { 'fd', '--follow', '--hidden', '--exclude=.git', '--type=f' }
+    },
     file_external = {
-      cmd = { 'fd', '.', '-H', '-E', '__pycache__', '-t', 'f' },
+      cmd = { 'fd', '--follow', '--hidden', '--exclude=.git', '--type=f' }
     },
     rg = {
       args = { '--column', '--no-heading', '--color', 'never', '--json' }
@@ -254,7 +316,21 @@ local sources = {}
 sources.find_files = function()
   vim.fn['ddu#start']({
     sources = {
-      { name = 'file_rec' },
+      {
+        name = 'file_external',
+        params = { ignoredDirectories = {'.git', 'node_modules', 'vendor'} }
+      },
+    },
+  })
+end
+
+sources.file_rec = function()
+  vim.fn['ddu#start']({
+    sources = {
+      {
+        name = 'file_rec',
+        params = { ignoredDirectories = {'.git'} }
+      },
     },
   })
 end
@@ -268,10 +344,18 @@ sources.live_grep = function()
   })
 end
 
-sources.buffers = function()
+sources.recent_items = function()
   vim.fn['ddu#start']({
     sources = {
-      { name = 'buffer' },
+      {
+        name = 'buffer',
+      },
+      {
+        name = 'mr',
+        params = {
+          current = true
+        }
+      }
     },
   })
 end
@@ -284,9 +368,65 @@ sources.line = function()
   })
 end
 
-vim.keymap.set('n', '<space>sf', function() return sources.find_files() end, { noremap = true, silent = true })
-vim.keymap.set('n', '<space>sg', function() return sources.live_grep() end, { noremap = true, silent = true })
-vim.keymap.set('n', '<space>sb', function() return sources.buffers() end, { noremap = true, silent = true })
-vim.keymap.set('n', '<space>sl', function() return sources.line() end, { noremap = true, silent = true })
+sources.help = function()
+  vim.fn['ddu#start']({
+    sources = {
+      { name = 'help' },
+    },
+  })
+end
+
+vim.keymap.set('n', '<space>ff', function() return sources.find_files() end, { noremap = true, silent = true })
+vim.keymap.set('n', '<space>fF', function() return sources.file_rec() end, { noremap = true, silent = true })
+vim.keymap.set('n', '<space>fg', function() return sources.live_grep() end, { noremap = true, silent = true })
+vim.keymap.set('n', '<space>fb', function() return sources.recent_items() end, { noremap = true, silent = true })
+vim.keymap.set('n', '<space>fl', function() return sources.line() end, { noremap = true, silent = true })
+vim.keymap.set('n', '<space>fh', function() return sources.help() end, { noremap = true, silent = true })
+
+
+vim.fn['ddu#custom#patch_local']('filer', {
+  ui = 'filer',
+  sources = {
+    {
+      name = 'file',
+      params = {},
+    }
+  },
+  uiOptions = {
+    filer = {
+      toggle = true
+    }
+  },
+  uiParams = {
+    filer = {
+      split = 'vertical',
+      splitDirection = 'topleft',
+      winwidth = 30,
+      sort = 'filename',
+      sortTreeFirst = true,
+      search = vim.fn.expand('%:p')
+    }
+  },
+  columnParams = {
+    icon_filename = {
+      defaultIcon = {
+        icon = ''
+      },
+      useLinkIcon = 'grayout',
+    }
+  },
+  kindOptions = {
+    file = {
+      defaultAction = 'open'
+    }
+  }
+})
+
+local filer = function()
+  vim.fn['ddu#start']({
+    name = 'filer'
+  })
+end
+vim.keymap.set('n', '<space>se', function() return filer() end, { noremap = true, silent = true })
 EOF
 '''
