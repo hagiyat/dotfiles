@@ -2,11 +2,13 @@ return {
   setup = function(use)
     use {
       "folke/which-key.nvim",
-      event = "VimEnter",
+      module = { "which-key" },
+      event = "BufReadPre",
       config = function()
-        require("which-key").setup()
+        local wk = require("which-key")
+        wk.setup()
 
-        require("which-key").register({
+        wk.register({
           w = {
             name = "+window",
             h = { "<C-w>h", "move left" },
@@ -21,7 +23,7 @@ return {
           }
         }, { prefix = "<space>", noremap = true, mode = "n" })
 
-        require("which-key").register({
+        wk.register({
           b = {
             name = "+buffer",
             n = { ":<C-u>bnext<CR>", "next" },
@@ -31,7 +33,7 @@ return {
           }
         }, { prefix = "<space>", noremap = true, mode = "n" })
 
-        require("which-key").register({
+        wk.register({
           q = {
             name = "+quit",
             q = { ":<C-u>q<CR>", "quit" },
@@ -42,7 +44,7 @@ return {
         }, { prefix = "<space>", noremap = true, mode = "n" })
 
         -- emacs keys
-        require("which-key").register({
+        wk.register({
           ["<c-b>"] = { "<Left>", "left" },
           ["<c-f>"] = { "<Right>", "right" },
           ["<c-a>"] = { "<C-O>^", "home" },
@@ -52,7 +54,7 @@ return {
         }, { mode = "i" })
 
 
-        require("which-key").register({
+        wk.register({
           ["<esc><esc>"] = { ":nohlsearch<CR>", "clear highlight" },
           ["gw"] = { ":<C-u>w<CR>", "save file" },
         }, { mode = "n" })

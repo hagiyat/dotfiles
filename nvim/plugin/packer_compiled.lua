@@ -96,7 +96,7 @@ _G.packer_plugins = {
     url = "https://github.com/williamboman/mason-lspconfig.nvim"
   },
   ["mason.nvim"] = {
-    config = { "\27LJ\2\n§\a\0\2\t\0\30\0^5\2\0\0=\1\1\0026\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6\6\0'\a\a\0\18\b\2\0B\3\5\0016\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6\b\0'\a\t\0\18\b\2\0B\3\5\0016\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6\n\0'\a\v\0\18\b\2\0B\3\5\0016\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6\f\0'\a\r\0\18\b\2\0B\3\5\0016\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6\14\0'\a\15\0\18\b\2\0B\3\5\0016\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6\16\0'\a\17\0\18\b\2\0B\3\5\0016\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6\18\0'\a\19\0\18\b\2\0B\3\5\0016\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6\20\0'\a\21\0\18\b\2\0B\3\5\0016\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6\22\0'\a\23\0\18\b\2\0B\3\5\0016\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6\24\0006\a\2\0009\a\25\a9\a\26\a9\a\27\a\18\b\2\0B\3\5\0016\3\2\0009\3\3\0039\3\4\3'\5\5\0'\6\28\0'\a\29\0\18\b\2\0B\3\5\1K\0\1\0&<cmd>lua vim.lsp.buf.rename()<CR>\14<space>cn\vformat\bbuf\blsp\14<space>cf0<cmd>lua vim.lsp.diagnostic.goto_next()<CR>\ag]0<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>\ag[<<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>\14<space>ce/<cmd>lua vim.lsp.buf.type_definition()<CR>\14<space>ct*<cmd>lua vim.lsp.buf.references()<CR>\14<space>cD.<cmd>lua vim.lsp.buf.signature_help()<CR>\14<space>ch.<cmd>lua vim.lsp.buf.implementation()<CR>\14<space>ci%<Cmd>lua vim.lsp.buf.hover()<CR>\6K*<Cmd>lua vim.lsp.buf.definition()<CR>\14<space>cd\6n\bset\vkeymap\bvim\vbuffer\1\0\1\vsilent\2>\1\1\5\1\3\0\t4\1\0\0003\2\1\0=\2\0\1-\2\0\0008\2\0\0029\2\2\2\18\4\1\0B\2\2\1K\0\1\0\1À\nsetup\0\14on_attachõ\1\1\0\6\0\f\0\0236\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\6\0005\3\4\0005\4\3\0=\4\5\3=\3\a\2B\0\2\0016\0\0\0'\2\b\0B\0\2\0026\1\0\0'\3\t\0B\1\2\0029\2\n\0004\4\3\0003\5\v\0>\5\1\4B\2\2\0012\0\0€K\0\1\0\0\19setup_handlers\14lspconfig\20mason-lspconfig\aui\1\0\0\nicons\1\0\0\1\0\3\22package_installed\bâœ“\24package_uninstalled\bâœ—\20package_pending\bâžœ\nsetup\nmason\frequire\0" },
+    config = { "\27LJ\2\nÀ\a\0\2\t\1%\0-5\2\0\0=\1\1\2-\3\0\0009\3\2\0035\5\20\0005\6\3\0005\a\4\0=\a\5\0065\a\6\0=\a\a\0065\a\b\0=\a\t\0065\a\n\0=\a\v\0065\a\f\0=\a\r\0065\a\14\0=\a\15\0065\a\16\0=\a\17\0065\a\18\0=\a\19\6=\6\21\0055\6\22\0B\3\3\1-\3\0\0009\3\2\0035\5\28\0005\6\23\0005\a\24\0=\a\25\0065\a\26\0=\a\27\6=\6\29\0055\6\30\0B\3\3\0016\3\31\0009\3 \0039\3!\3'\5\"\0'\6#\0'\a$\0\18\b\2\0B\3\5\1K\0\1\0\0\0%<Cmd>lua vim.lsp.buf.hover()<CR>\6K\6n\bset\vkeymap\bvim\1\0\2\fnoremap\2\tmode\6n\6g\1\0\0\6.\1\3\0\0,<cmd>lua vim.diagnostic.goto_next()<CR>\20diagnostic next\6,\1\3\0\0,<cmd>lua vim.diagnostic.goto_prev()<CR>\20diagnostic prev\1\0\1\tname\t+lsp\1\0\3\tmode\6n\fnoremap\2\vprefix\f<space>\6c\1\0\0\6r\1\3\0\0&<Cmd>lua vim.lsp.buf.rename()<CR>\vrename\6f\1\3\0\0&<Cmd>lua vim.lsp.buf.format()<CR>\vformat\6e\1\3\0\0<<Cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>\26show line diagnostics\6t\1\3\0\0/<Cmd>lua vim.lsp.buf.type_definition()<CR>\20type definition\6D\1\3\0\0*<Cmd>lua vim.lsp.buf.references()<CR>\15references\6h\1\3\0\0.<Cmd>lua vim.lsp.buf.signature_help()<CR>\19signature help\6i\1\3\0\0.<Cmd>lua vim.lsp.buf.implementation()<CR>\19implementation\6d\1\3\0\0*<Cmd>lua vim.lsp.buf.definition()<CR>\15definition\1\0\1\tname\t+lsp\rregister\vbuffer\1\0\1\vsilent\2@\1\1\5\2\3\0\t4\1\0\0003\2\1\0=\2\0\1-\2\1\0008\2\0\0029\2\2\2\18\4\1\0B\2\2\1K\0\1\0\2À\1À\nsetup\0\14on_attach‹\2\1\0\a\0\r\0\0266\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\6\0005\3\4\0005\4\3\0=\4\5\3=\3\a\2B\0\2\0016\0\0\0'\2\b\0B\0\2\0026\1\0\0'\3\t\0B\1\2\0026\2\0\0'\4\n\0B\2\2\0029\3\v\0004\5\3\0003\6\f\0>\6\1\5B\3\2\0012\0\0€K\0\1\0\0\19setup_handlers\14which-key\14lspconfig\20mason-lspconfig\aui\1\0\0\nicons\1\0\0\1\0\3\20package_pending\bâžœ\22package_installed\bâœ“\24package_uninstalled\bâœ—\nsetup\nmason\frequire\0" },
     loaded = false,
     needs_bufread = false,
     only_cond = false,
@@ -136,10 +136,46 @@ _G.packer_plugins = {
     needs_bufread = false,
     path = "/home/hagiyat/.local/share/nvim/site/pack/packer/opt/packer.nvim",
     url = "https://github.com/wbthomason/packer.nvim"
+  },
+  ["which-key.nvim"] = {
+    config = { "\27LJ\2\nÞ\t\0\0\6\0@\0R6\0\0\0'\2\1\0B\0\2\0029\1\2\0B\1\1\0019\1\3\0005\3\22\0005\4\4\0005\5\5\0=\5\6\0045\5\a\0=\5\b\0045\5\t\0=\5\n\0045\5\v\0=\5\f\0045\5\r\0=\5\14\0045\5\15\0=\5\16\0045\5\17\0=\5\18\0045\5\19\0=\5\20\0045\5\21\0>\5\0\4=\4\20\0035\4\23\0B\1\3\0019\1\3\0005\3 \0005\4\24\0005\5\25\0=\5\26\0045\5\27\0=\5\28\0045\5\29\0=\5\18\0045\5\30\0=\5\31\4=\4!\0035\4\"\0B\1\3\0019\1\3\0005\3*\0005\4#\0005\5$\0=\5%\0045\5&\0=\5\20\0045\5'\0=\5\31\0045\5(\0=\5)\4=\4%\0035\4+\0B\1\3\0019\1\3\0005\3-\0005\4,\0=\4.\0035\4/\0=\0040\0035\0041\0=\0042\0035\0043\0=\0044\0035\0045\0=\0046\0035\0047\0=\0048\0035\0049\0B\1\3\0019\1\3\0005\3;\0005\4:\0=\4<\0035\4=\0=\4>\0035\4?\0B\1\3\1K\0\1\0\1\0\1\tmode\6n\agw\1\3\0\0\16:<C-u>w<CR>\14save file\15<esc><esc>\1\0\0\1\3\0\0\20:nohlsearch<CR>\20clear highlight\1\0\1\tmode\6i\n<c-d>\1\3\0\0\16<C-g>u<Del>\vdelete\n<c-h>\1\3\0\0\16<C-g>u<C-h>\19delete forward\n<c-e>\1\3\0\0\n<End>\bend\n<c-a>\1\3\0\0\v<C-O>^\thome\n<c-f>\1\3\0\0\f<Right>\nright\n<c-b>\1\0\0\1\3\0\0\v<Left>\tleft\1\0\3\tmode\6n\fnoremap\2\vprefix\f<space>\1\0\0\6f\1\3\0\0\18:<C-u>qa!<CR>\15force quit\1\3\0\0\17:<C-u>qa<CR>\rquit all\1\3\0\0\17:<C-u>wq<CR>\15with write\6q\1\3\0\0\16:<C-u>q<CR>\tquit\1\0\1\tname\n+quit\1\0\3\tmode\6n\fnoremap\2\vprefix\f<space>\6b\1\0\0\6a\1\3\0\0\19:<C-u>enew<CR>\badd\1\3\0\0\22:<C-u>bdelete<CR>\vdelete\6p\1\3\0\0\24:<C-u>bprevious<CR>\rprevious\6n\1\3\0\0\20:<C-u>bnext<CR>\tnext\1\0\1\tname\f+buffer\1\0\3\tmode\6n\fnoremap\2\vprefix\f<space>\1\0\0\1\3\0\0\v<C-w>=\15size reset\6w\1\3\0\0\25:MaximizerToggle<CR>\20toggle miximize\6d\1\3\0\0\16:<C-u>q<CR>\vdelete\6v\1\3\0\0\21:<C-u>vsplit<CR>\vvsplit\6s\1\3\0\0\20:<C-u>split<CR>\nsplit\6l\1\3\0\0\v<C-w>l\15move right\6k\1\3\0\0\v<C-w>k\fmove up\6j\1\3\0\0\v<C-w>j\14move down\6h\1\3\0\0\v<C-w>h\14move left\1\0\1\tname\f+window\rregister\nsetup\14which-key\frequire\0" },
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/home/hagiyat/.local/share/nvim/site/pack/packer/opt/which-key.nvim",
+    url = "https://github.com/folke/which-key.nvim"
   }
 }
 
 time([[Defining packer_plugins]], false)
+local module_lazy_loads = {
+  ["^which%-key"] = "which-key.nvim"
+}
+local lazy_load_called = {['packer.load'] = true}
+local function lazy_load_module(module_name)
+  local to_load = {}
+  if lazy_load_called[module_name] then return nil end
+  lazy_load_called[module_name] = true
+  for module_pat, plugin_name in pairs(module_lazy_loads) do
+    if not _G.packer_plugins[plugin_name].loaded and string.match(module_name, module_pat) then
+      to_load[#to_load + 1] = plugin_name
+    end
+  end
+
+  if #to_load > 0 then
+    require('packer.load')(to_load, {module = module_name}, _G.packer_plugins)
+    local loaded_mod = package.loaded[module_name]
+    if loaded_mod then
+      return function(modname) return loaded_mod end
+    end
+  end
+end
+
+if not vim.g.packer_custom_loader_enabled then
+  table.insert(package.loaders, 1, lazy_load_module)
+  vim.g.packer_custom_loader_enabled = true
+end
+
 -- Setup for: nvim-tree.lua
 time([[Setup for nvim-tree.lua]], true)
 try_loadstring("\27LJ\2\nY\0\0\5\0\6\0\b6\0\0\0009\0\1\0009\0\2\0'\2\3\0'\3\4\0'\4\5\0B\0\4\1K\0\1\0\28<Cmd>NvimTreeToggle<CR>\r<space>e\6n\bset\vkeymap\bvim\0", "setup", "nvim-tree.lua")
@@ -167,9 +203,9 @@ vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Event lazy-loads
 time([[Defining lazy-load event autocommands]], true)
-vim.cmd [[au VimEnter * ++once lua require("packer.load")({'nightfox.nvim', 'kanagawa.nvim'}, { event = "VimEnter *" }, _G.packer_plugins)]]
-vim.cmd [[au ColorSchemePre * ++once lua require("packer.load")({'nightfox.nvim', 'kanagawa.nvim'}, { event = "ColorSchemePre *" }, _G.packer_plugins)]]
-vim.cmd [[au BufReadPre * ++once lua require("packer.load")({'mason.nvim'}, { event = "BufReadPre *" }, _G.packer_plugins)]]
+vim.cmd [[au VimEnter * ++once lua require("packer.load")({'kanagawa.nvim', 'nightfox.nvim'}, { event = "VimEnter *" }, _G.packer_plugins)]]
+vim.cmd [[au BufReadPre * ++once lua require("packer.load")({'mason.nvim', 'which-key.nvim'}, { event = "BufReadPre *" }, _G.packer_plugins)]]
+vim.cmd [[au ColorSchemePre * ++once lua require("packer.load")({'kanagawa.nvim', 'nightfox.nvim'}, { event = "ColorSchemePre *" }, _G.packer_plugins)]]
 time([[Defining lazy-load event autocommands]], false)
 vim.cmd("augroup END")
 
