@@ -99,7 +99,7 @@ _G.packer_plugins = {
   },
   ["nvim-tree.lua"] = {
     commands = { "NvimTreeToggle" },
-    config = { "\27LJ\2\n7\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\14nvim-tree\frequire\0" },
+    config = { "\27LJ\2\n\b\0\0\b\0)\0G6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2#\0005\3!\0005\4\3\0004\5\26\0005\6\5\0005\a\4\0=\a\6\6>\6\1\0055\6\b\0005\a\a\0=\a\6\6>\6\2\0055\6\t\0>\6\3\0055\6\n\0>\6\4\0055\6\v\0>\6\5\0055\6\f\0>\6\6\0055\6\r\0>\6\a\0055\6\14\0>\6\b\0055\6\15\0>\6\t\0055\6\16\0>\6\n\0055\6\17\0>\6\v\0055\6\18\0>\6\f\0055\6\19\0>\6\r\0055\6\20\0>\6\14\0055\6\21\0>\6\15\0055\6\22\0>\6\16\0055\6\23\0>\6\17\0055\6\24\0>\6\18\0055\6\25\0>\6\19\0055\6\26\0>\6\20\0055\6\27\0>\6\21\0055\6\28\0>\6\22\0055\6\29\0>\6\23\0055\6\30\0>\6\24\0055\6\31\0>\6\25\5=\5 \4=\4\"\3=\3$\0025\3&\0005\4%\0=\4'\3=\3(\2B\0\2\1K\0\1\0\factions\14open_file\1\0\0\1\0\1\17quit_on_open\2\tview\1\0\0\rmappings\1\0\0\tlist\1\0\2\bkey\ag?\vaction\16toggle_help\1\0\2\bkey\6S\vaction\16search_node\1\0\2\bkey\6E\vaction\15expand_all\1\0\2\bkey\6W\vaction\17collapse_all\1\0\2\bkey\6q\vaction\nclose\1\0\2\bkey\6F\vaction\22clear_live_filter\1\0\2\bkey\6f\vaction\16live_filter\1\0\2\bkey\6-\vaction\vdir_up\1\0\2\bkey\6Y\vaction\23copy_absolute_path\1\0\2\bkey\6y\vaction\14copy_name\1\0\2\bkey\6P\vaction\npaste\1\0\2\bkey\6C\vaction\tcopy\1\0\2\bkey\6x\vaction\bcut\1\0\2\bkey\6r\vaction\vrename\1\0\2\bkey\6d\vaction\vremove\1\0\2\bkey\6a\vaction\vcreate\1\0\2\bkey\6R\vaction\frefresh\1\0\2\bkey\6.\vaction\20toggle_dotfiles\1\0\2\bkey\6p\vaction\fpreview\1\0\2\bkey\6h\vaction\15close_node\1\0\2\bkey\6H\vaction\16parent_node\1\0\2\bkey\6>\vaction\17next_sibling\1\0\2\bkey\6<\vaction\17prev_sibling\1\0\1\vaction\acd\1\2\0\0\n<TAB>\bkey\1\0\1\vaction\tedit\1\3\0\0\t<CR>\6l\1\0\1\16custom_only\2\nsetup\14nvim-tree\frequire\0" },
     loaded = false,
     needs_bufread = false,
     only_cond = false,
@@ -141,9 +141,9 @@ vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Event lazy-loads
 time([[Defining lazy-load event autocommands]], true)
-vim.cmd [[au VimEnter * ++once lua require("packer.load")({'kanagawa.nvim', 'nightfox.nvim'}, { event = "VimEnter *" }, _G.packer_plugins)]]
 vim.cmd [[au ColorSchemePre * ++once lua require("packer.load")({'kanagawa.nvim', 'nightfox.nvim'}, { event = "ColorSchemePre *" }, _G.packer_plugins)]]
 vim.cmd [[au BufEnter * ++once lua require("packer.load")({'gina.vim'}, { event = "BufEnter *" }, _G.packer_plugins)]]
+vim.cmd [[au VimEnter * ++once lua require("packer.load")({'kanagawa.nvim', 'nightfox.nvim'}, { event = "VimEnter *" }, _G.packer_plugins)]]
 time([[Defining lazy-load event autocommands]], false)
 vim.cmd("augroup END")
 
