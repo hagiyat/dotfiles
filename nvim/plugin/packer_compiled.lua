@@ -82,6 +82,14 @@ _G.packer_plugins = {
     path = "/home/hagiyat/.local/share/nvim/site/pack/packer/opt/gina.vim",
     url = "https://github.com/lambdalisue/gina.vim"
   },
+  ["gruvbox.nvim"] = {
+    config = { "\27LJ\2\n”\2\0\0\4\0\6\0\v6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0004\3\0\0=\3\4\0024\3\0\0=\3\5\2B\0\2\1K\0\1\0\14overrides\22palette_overrides\1\0\r\vitalic\2\finverse\2\14undercurl\2\17dim_inactive\1\rcontrast\5\tbold\2\25invert_intend_guides\1\19invert_tabline\1\17invert_signs\1\21invert_selection\1\18strikethrough\2\14underline\2\21transparent_mode\1\nsetup\fgruvbox\frequire\0" },
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/home/hagiyat/.local/share/nvim/site/pack/packer/opt/gruvbox.nvim",
+    url = "https://github.com/ellisonleao/gruvbox.nvim"
+  },
   ["hop.nvim"] = {
     config = { "\27LJ\2\nc\0\0\4\2\4\0\b-\0\0\0009\0\0\0005\2\2\0-\3\1\0009\3\1\3=\3\3\2B\0\2\1K\0\1\0\0À\1À\14direction\1\0\1\22current_line_only\2\17AFTER_CURSOR\15hint_char1d\0\0\4\2\4\0\b-\0\0\0009\0\0\0005\2\2\0-\3\1\0009\3\1\3=\3\3\2B\0\2\1K\0\1\0\0À\1À\14direction\1\0\1\22current_line_only\2\18BEFORE_CURSOR\15hint_char1u\0\0\4\2\4\0\b-\0\0\0009\0\0\0005\2\2\0-\3\1\0009\3\1\3=\3\3\2B\0\2\1K\0\1\0\0À\1À\14direction\1\0\2\16hint_offset\3ÿÿÿÿ\15\22current_line_only\2\17AFTER_CURSOR\15hint_char1r\0\0\4\2\4\0\b-\0\0\0009\0\0\0005\2\2\0-\3\1\0009\3\1\3=\3\3\2B\0\2\1K\0\1\0\0À\1À\14direction\1\0\2\16hint_offset\3\1\22current_line_only\2\18BEFORE_CURSOR\15hint_char1Û\2\1\0\b\0\22\0#6\0\0\0'\2\1\0B\0\2\0029\1\2\0005\3\3\0B\1\2\0016\1\0\0'\3\4\0B\1\2\0029\1\5\0016\2\0\0'\4\6\0B\2\2\0029\3\a\0025\5\n\0005\6\t\0003\a\b\0>\a\1\6=\6\v\0055\6\r\0003\a\f\0>\a\1\6=\6\14\0055\6\16\0003\a\15\0>\a\1\6=\6\17\0055\6\19\0003\a\18\0>\a\1\6=\6\20\0055\6\21\0B\3\3\0012\0\0€K\0\1\0\1\0\2\nremap\2\tmode\6n\6T\1\3\0\0\0\20hop backward +1\0\6t\1\3\0\0\0\19hop forward -1\0\6F\1\3\0\0\0\17hop backward\0\6f\1\0\0\1\3\0\0\0\16hop forward\0\rregister\14which-key\18HintDirection\rhop.hint\1\0\1\tkeys\28etovxqpdygfblzhckisuran\nsetup\bhop\frequire\0" },
     loaded = false,
@@ -91,7 +99,7 @@ _G.packer_plugins = {
     url = "https://github.com/phaazon/hop.nvim"
   },
   ["kanagawa.nvim"] = {
-    config = { "\27LJ\2\nº\3\0\0\4\0\20\0\0276\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\0024\3\0\0=\3\6\0025\3\a\0=\3\b\0025\3\t\0=\3\n\0024\3\0\0=\3\v\0025\3\f\0=\3\r\0025\3\14\0=\3\15\0024\3\0\0=\3\16\2B\0\2\0016\0\17\0009\0\18\0'\2\19\0B\0\2\1K\0\1\0\27 colorscheme kanagawa \bcmd\bvim\14overrides\vcolors\1\0\1\abg\f#272727\25variablebuiltinStyle\1\0\1\vitalic\2\14typeStyle\19statementStyle\1\0\1\tbold\2\17keywordStyle\1\0\1\vitalic\2\18functionStyle\17commentStyle\1\0\1\vitalic\2\1\0\b\ntheme\tdark\19terminalColors\2\17globalStatus\1\16dimInactive\1\16transparent\1\21specialException\2\18specialReturn\2\14undercurl\2\nsetup\rkanagawa\frequire\0" },
+    config = { "\27LJ\2\nº\3\0\0\4\0\20\0\0276\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\0024\3\0\0=\3\6\0025\3\a\0=\3\b\0025\3\t\0=\3\n\0024\3\0\0=\3\v\0025\3\f\0=\3\r\0025\3\14\0=\3\15\0024\3\0\0=\3\16\2B\0\2\0016\0\17\0009\0\18\0'\2\19\0B\0\2\1K\0\1\0\27 colorscheme kanagawa \bcmd\bvim\14overrides\vcolors\1\0\1\abg\f#272727\25variablebuiltinStyle\1\0\1\vitalic\2\14typeStyle\19statementStyle\1\0\1\tbold\2\17keywordStyle\1\0\1\vitalic\2\18functionStyle\17commentStyle\1\0\1\vitalic\2\1\0\b\14undercurl\2\ntheme\tdark\19terminalColors\2\17globalStatus\1\16dimInactive\1\16transparent\1\21specialException\2\18specialReturn\2\nsetup\rkanagawa\frequire\0" },
     loaded = false,
     needs_bufread = false,
     only_cond = false,
@@ -104,7 +112,7 @@ _G.packer_plugins = {
     url = "https://github.com/williamboman/mason-lspconfig.nvim"
   },
   ["mason.nvim"] = {
-    config = { "\27LJ\2\nÏ\a\0\2\b\1#\0,5\2\0\0=\1\1\2-\3\0\0009\3\2\0035\5\20\0005\6\3\0005\a\4\0=\a\5\0065\a\6\0=\a\a\0065\a\b\0=\a\t\0065\a\n\0=\a\v\0065\a\f\0=\a\r\0065\a\14\0=\a\15\0065\a\16\0=\a\17\0065\a\18\0=\a\19\6=\6\21\0055\6\22\0B\3\3\1-\3\0\0009\3\2\0035\5\28\0005\6\23\0005\a\24\0=\a\25\0065\a\26\0=\a\27\6=\6\29\0055\6\30\0B\3\3\1-\3\0\0009\3\2\0035\5 \0005\6\31\0=\6!\0055\6\"\0B\3\3\1K\0\1\0\0\0\1\0\2\tmode\6n\fnoremap\2\6K\1\0\0\1\3\0\0%<Cmd>lua vim.lsp.buf.hover()<CR>\14lsp hover\1\0\2\tmode\6n\fnoremap\2\6g\1\0\0\6.\1\3\0\0,<cmd>lua vim.diagnostic.goto_next()<CR>\20diagnostic next\6,\1\3\0\0,<cmd>lua vim.diagnostic.goto_prev()<CR>\20diagnostic prev\1\0\1\tname\t+lsp\1\0\3\vprefix\f<space>\tmode\6n\fnoremap\2\6c\1\0\0\6r\1\3\0\0&<Cmd>lua vim.lsp.buf.rename()<CR>\vrename\6f\1\3\0\0&<Cmd>lua vim.lsp.buf.format()<CR>\vformat\6e\1\3\0\0<<Cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>\26show line diagnostics\6t\1\3\0\0/<Cmd>lua vim.lsp.buf.type_definition()<CR>\20type definition\6D\1\3\0\0*<Cmd>lua vim.lsp.buf.references()<CR>\15references\6h\1\3\0\0.<Cmd>lua vim.lsp.buf.signature_help()<CR>\19signature help\6i\1\3\0\0.<Cmd>lua vim.lsp.buf.implementation()<CR>\19implementation\6d\1\3\0\0*<Cmd>lua vim.lsp.buf.definition()<CR>\15definition\1\0\1\tname\t+lsp\rregister\vbuffer\1\0\1\vsilent\2@\1\1\5\2\3\0\t4\1\0\0003\2\1\0=\2\0\1-\2\1\0008\2\0\0029\2\2\2\18\4\1\0B\2\2\1K\0\1\0\2À\1À\nsetup\0\14on_attach‹\2\1\0\a\0\r\0\0266\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\6\0005\3\4\0005\4\3\0=\4\5\3=\3\a\2B\0\2\0016\0\0\0'\2\b\0B\0\2\0026\1\0\0'\3\t\0B\1\2\0026\2\0\0'\4\n\0B\2\2\0029\3\v\0004\5\3\0003\6\f\0>\6\1\5B\3\2\0012\0\0€K\0\1\0\0\19setup_handlers\14which-key\14lspconfig\20mason-lspconfig\aui\1\0\0\nicons\1\0\0\1\0\3\20package_pending\bâžœ\22package_installed\bâœ“\24package_uninstalled\bâœ—\nsetup\nmason\frequire\0" },
+    config = { "\27LJ\2\nÏ\a\0\2\b\1#\0,5\2\0\0=\1\1\2-\3\0\0009\3\2\0035\5\20\0005\6\3\0005\a\4\0=\a\5\0065\a\6\0=\a\a\0065\a\b\0=\a\t\0065\a\n\0=\a\v\0065\a\f\0=\a\r\0065\a\14\0=\a\15\0065\a\16\0=\a\17\0065\a\18\0=\a\19\6=\6\21\0055\6\22\0B\3\3\1-\3\0\0009\3\2\0035\5\28\0005\6\23\0005\a\24\0=\a\25\0065\a\26\0=\a\27\6=\6\29\0055\6\30\0B\3\3\1-\3\0\0009\3\2\0035\5 \0005\6\31\0=\6!\0055\6\"\0B\3\3\1K\0\1\0\0\0\1\0\2\fnoremap\2\tmode\6n\6K\1\0\0\1\3\0\0%<Cmd>lua vim.lsp.buf.hover()<CR>\14lsp hover\1\0\2\fnoremap\2\tmode\6n\6g\1\0\0\6.\1\3\0\0,<cmd>lua vim.diagnostic.goto_next()<CR>\20diagnostic next\6,\1\3\0\0,<cmd>lua vim.diagnostic.goto_prev()<CR>\20diagnostic prev\1\0\1\tname\t+lsp\1\0\3\fnoremap\2\vprefix\f<space>\tmode\6n\6c\1\0\0\6r\1\3\0\0&<Cmd>lua vim.lsp.buf.rename()<CR>\vrename\6f\1\3\0\0&<Cmd>lua vim.lsp.buf.format()<CR>\vformat\6e\1\3\0\0<<Cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>\26show line diagnostics\6t\1\3\0\0/<Cmd>lua vim.lsp.buf.type_definition()<CR>\20type definition\6D\1\3\0\0*<Cmd>lua vim.lsp.buf.references()<CR>\15references\6h\1\3\0\0.<Cmd>lua vim.lsp.buf.signature_help()<CR>\19signature help\6i\1\3\0\0.<Cmd>lua vim.lsp.buf.implementation()<CR>\19implementation\6d\1\3\0\0*<Cmd>lua vim.lsp.buf.definition()<CR>\15definition\1\0\1\tname\t+lsp\rregister\vbuffer\1\0\1\vsilent\2@\1\1\5\2\3\0\t4\1\0\0003\2\1\0=\2\0\1-\2\1\0008\2\0\0029\2\2\2\18\4\1\0B\2\2\1K\0\1\0\2À\1À\nsetup\0\14on_attach‹\2\1\0\a\0\r\0\0266\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\6\0005\3\4\0005\4\3\0=\4\5\3=\3\a\2B\0\2\0016\0\0\0'\2\b\0B\0\2\0026\1\0\0'\3\t\0B\1\2\0026\2\0\0'\4\n\0B\2\2\0029\3\v\0004\5\3\0003\6\f\0>\6\1\5B\3\2\0012\0\0€K\0\1\0\0\19setup_handlers\14which-key\14lspconfig\20mason-lspconfig\aui\1\0\0\nicons\1\0\0\1\0\3\20package_pending\bâžœ\22package_installed\bâœ“\24package_uninstalled\bâœ—\nsetup\nmason\frequire\0" },
     loaded = false,
     needs_bufread = false,
     only_cond = false,
@@ -112,12 +120,20 @@ _G.packer_plugins = {
     url = "https://github.com/williamboman/mason.nvim"
   },
   ["nightfox.nvim"] = {
-    config = { "\27LJ\2\nÿ\1\0\0\6\0\15\0\0235\0\0\0004\1\0\0=\1\1\0004\1\0\0=\1\2\0005\1\3\0=\1\4\0004\1\0\0=\1\5\0004\1\0\0=\1\6\0006\1\a\0'\3\1\0B\1\2\0029\1\b\0015\3\f\0005\4\n\0005\5\t\0=\5\v\4=\4\r\3=\0\14\3B\1\2\1K\0\1\0\rpalettes\foptions\1\0\0\vstyles\1\0\0\1\0\3\rkeywords\tbold\ntypes\16italic,bold\rcomments\vitalic\nsetup\frequire\14carbonfox\fterafox\fnordfox\1\0\1\bbg1\f#1e2430\fduskfox\rnightfox\1\0\0\0" },
+    config = { "\27LJ\2\nÿ\1\0\0\6\0\15\0\0235\0\0\0004\1\0\0=\1\1\0004\1\0\0=\1\2\0005\1\3\0=\1\4\0004\1\0\0=\1\5\0004\1\0\0=\1\6\0006\1\a\0'\3\1\0B\1\2\0029\1\b\0015\3\f\0005\4\n\0005\5\t\0=\5\v\4=\4\r\3=\0\14\3B\1\2\1K\0\1\0\rpalettes\foptions\1\0\0\vstyles\1\0\0\1\0\3\ntypes\16italic,bold\rcomments\vitalic\rkeywords\tbold\nsetup\frequire\14carbonfox\fterafox\fnordfox\1\0\1\bbg1\f#1e2430\fduskfox\rnightfox\1\0\0\0" },
     loaded = false,
     needs_bufread = false,
     only_cond = false,
     path = "/home/hagiyat/.local/share/nvim/site/pack/packer/opt/nightfox.nvim",
     url = "https://github.com/EdenEast/nightfox.nvim"
+  },
+  ["nvim-autopairs"] = {
+    config = { "\27LJ\2\ny\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\21disable_filetype\1\0\0\1\3\0\0\20TelescopePrompt\rNvimTree\nsetup\19nvim-autopairs\frequire\0" },
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/home/hagiyat/.local/share/nvim/site/pack/packer/opt/nvim-autopairs",
+    url = "https://github.com/windwp/nvim-autopairs"
   },
   ["nvim-lspconfig"] = {
     loaded = true,
@@ -146,13 +162,16 @@ _G.packer_plugins = {
     path = "/home/hagiyat/.local/share/nvim/site/pack/packer/opt/packer.nvim",
     url = "https://github.com/wbthomason/packer.nvim"
   },
-  ["which-key"] = {
-    loaded = true,
-    path = "/home/hagiyat/.local/share/nvim/site/pack/packer/start/which-key",
-    url = "https://github.com/which-key"
+  ["tokyonight.nvim"] = {
+    config = { "\27LJ\2\n<\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\15tokyonight\frequire\0" },
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/home/hagiyat/.local/share/nvim/site/pack/packer/opt/tokyonight.nvim",
+    url = "https://github.com/folke/tokyonight.nvim"
   },
   ["which-key.nvim"] = {
-    config = { "\27LJ\2\nÞ\t\0\0\6\0@\0R6\0\0\0'\2\1\0B\0\2\0029\1\2\0B\1\1\0019\1\3\0005\3\22\0005\4\4\0005\5\5\0=\5\6\0045\5\a\0=\5\b\0045\5\t\0=\5\n\0045\5\v\0=\5\f\0045\5\r\0=\5\14\0045\5\15\0=\5\16\0045\5\17\0=\5\18\0045\5\19\0=\5\20\0045\5\21\0>\5\0\4=\4\20\0035\4\23\0B\1\3\0019\1\3\0005\3 \0005\4\24\0005\5\25\0=\5\26\0045\5\27\0=\5\28\0045\5\29\0=\5\18\0045\5\30\0=\5\31\4=\4!\0035\4\"\0B\1\3\0019\1\3\0005\3*\0005\4#\0005\5$\0=\5%\0045\5&\0=\5\20\0045\5'\0=\5\31\0045\5(\0=\5)\4=\4%\0035\4+\0B\1\3\0019\1\3\0005\3-\0005\4,\0=\4.\0035\4/\0=\0040\0035\0041\0=\0042\0035\0043\0=\0044\0035\0045\0=\0046\0035\0047\0=\0048\0035\0049\0B\1\3\0019\1\3\0005\3;\0005\4:\0=\4<\0035\4=\0=\4>\0035\4?\0B\1\3\1K\0\1\0\1\0\1\tmode\6n\agw\1\3\0\0\16:<C-u>w<CR>\14save file\15<esc><esc>\1\0\0\1\3\0\0\20:nohlsearch<CR>\20clear highlight\1\0\1\tmode\6i\n<c-d>\1\3\0\0\16<C-g>u<Del>\vdelete\n<c-h>\1\3\0\0\16<C-g>u<C-h>\19delete forward\n<c-e>\1\3\0\0\n<End>\bend\n<c-a>\1\3\0\0\v<C-O>^\thome\n<c-f>\1\3\0\0\f<Right>\nright\n<c-b>\1\0\0\1\3\0\0\v<Left>\tleft\1\0\3\vprefix\f<space>\tmode\6n\fnoremap\2\1\0\0\6f\1\3\0\0\18:<C-u>qa!<CR>\15force quit\1\3\0\0\17:<C-u>qa<CR>\rquit all\1\3\0\0\17:<C-u>wq<CR>\15with write\6q\1\3\0\0\16:<C-u>q<CR>\tquit\1\0\1\tname\n+quit\1\0\3\vprefix\f<space>\tmode\6n\fnoremap\2\6b\1\0\0\6a\1\3\0\0\19:<C-u>enew<CR>\badd\1\3\0\0\22:<C-u>bdelete<CR>\vdelete\6p\1\3\0\0\24:<C-u>bprevious<CR>\rprevious\6n\1\3\0\0\20:<C-u>bnext<CR>\tnext\1\0\1\tname\f+buffer\1\0\3\vprefix\f<space>\tmode\6n\fnoremap\2\1\0\0\1\3\0\0\v<C-w>=\15size reset\6w\1\3\0\0\25:MaximizerToggle<CR>\20toggle miximize\6d\1\3\0\0\16:<C-u>q<CR>\vdelete\6v\1\3\0\0\21:<C-u>vsplit<CR>\vvsplit\6s\1\3\0\0\20:<C-u>split<CR>\nsplit\6l\1\3\0\0\v<C-w>l\15move right\6k\1\3\0\0\v<C-w>k\fmove up\6j\1\3\0\0\v<C-w>j\14move down\6h\1\3\0\0\v<C-w>h\14move left\1\0\1\tname\f+window\rregister\nsetup\14which-key\frequire\0" },
+    config = { "\27LJ\2\nÞ\t\0\0\6\0@\0R6\0\0\0'\2\1\0B\0\2\0029\1\2\0B\1\1\0019\1\3\0005\3\22\0005\4\4\0005\5\5\0=\5\6\0045\5\a\0=\5\b\0045\5\t\0=\5\n\0045\5\v\0=\5\f\0045\5\r\0=\5\14\0045\5\15\0=\5\16\0045\5\17\0=\5\18\0045\5\19\0=\5\20\0045\5\21\0>\5\0\4=\4\20\0035\4\23\0B\1\3\0019\1\3\0005\3 \0005\4\24\0005\5\25\0=\5\26\0045\5\27\0=\5\28\0045\5\29\0=\5\18\0045\5\30\0=\5\31\4=\4!\0035\4\"\0B\1\3\0019\1\3\0005\3*\0005\4#\0005\5$\0=\5%\0045\5&\0=\5\20\0045\5'\0=\5\31\0045\5(\0=\5)\4=\4%\0035\4+\0B\1\3\0019\1\3\0005\3-\0005\4,\0=\4.\0035\4/\0=\0040\0035\0041\0=\0042\0035\0043\0=\0044\0035\0045\0=\0046\0035\0047\0=\0048\0035\0049\0B\1\3\0019\1\3\0005\3;\0005\4:\0=\4<\0035\4=\0=\4>\0035\4?\0B\1\3\1K\0\1\0\1\0\1\tmode\6n\agw\1\3\0\0\16:<C-u>w<CR>\14save file\15<esc><esc>\1\0\0\1\3\0\0\20:nohlsearch<CR>\20clear highlight\1\0\1\tmode\6i\n<c-d>\1\3\0\0\16<C-g>u<Del>\vdelete\n<c-h>\1\3\0\0\16<C-g>u<C-h>\19delete forward\n<c-e>\1\3\0\0\n<End>\bend\n<c-a>\1\3\0\0\v<C-O>^\thome\n<c-f>\1\3\0\0\f<Right>\nright\n<c-b>\1\0\0\1\3\0\0\v<Left>\tleft\1\0\3\fnoremap\2\vprefix\f<space>\tmode\6n\1\0\0\6f\1\3\0\0\18:<C-u>qa!<CR>\15force quit\1\3\0\0\17:<C-u>qa<CR>\rquit all\1\3\0\0\17:<C-u>wq<CR>\15with write\6q\1\3\0\0\16:<C-u>q<CR>\tquit\1\0\1\tname\n+quit\1\0\3\fnoremap\2\vprefix\f<space>\tmode\6n\6b\1\0\0\6a\1\3\0\0\19:<C-u>enew<CR>\badd\1\3\0\0\22:<C-u>bdelete<CR>\vdelete\6p\1\3\0\0\24:<C-u>bprevious<CR>\rprevious\6n\1\3\0\0\20:<C-u>bnext<CR>\tnext\1\0\1\tname\f+buffer\1\0\3\fnoremap\2\vprefix\f<space>\tmode\6n\1\0\0\1\3\0\0\v<C-w>=\15size reset\6w\1\3\0\0\25:MaximizerToggle<CR>\20toggle miximize\6d\1\3\0\0\16:<C-u>q<CR>\vdelete\6v\1\3\0\0\21:<C-u>vsplit<CR>\vvsplit\6s\1\3\0\0\20:<C-u>split<CR>\nsplit\6l\1\3\0\0\v<C-w>l\15move right\6k\1\3\0\0\v<C-w>k\fmove up\6j\1\3\0\0\v<C-w>j\14move down\6h\1\3\0\0\v<C-w>h\14move left\1\0\1\tname\f+window\rregister\nsetup\14which-key\frequire\0" },
     loaded = false,
     needs_bufread = false,
     only_cond = false,
@@ -218,9 +237,10 @@ vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Event lazy-loads
 time([[Defining lazy-load event autocommands]], true)
-vim.cmd [[au BufReadPre * ++once lua require("packer.load")({'mason.nvim', 'which-key.nvim'}, { event = "BufReadPre *" }, _G.packer_plugins)]]
-vim.cmd [[au ColorSchemePre * ++once lua require("packer.load")({'kanagawa.nvim', 'nightfox.nvim'}, { event = "ColorSchemePre *" }, _G.packer_plugins)]]
-vim.cmd [[au VimEnter * ++once lua require("packer.load")({'kanagawa.nvim', 'nightfox.nvim'}, { event = "VimEnter *" }, _G.packer_plugins)]]
+vim.cmd [[au VimEnter * ++once lua require("packer.load")({'tokyonight.nvim', 'kanagawa.nvim', 'nightfox.nvim', 'gruvbox.nvim'}, { event = "VimEnter *" }, _G.packer_plugins)]]
+vim.cmd [[au ColorSchemePre * ++once lua require("packer.load")({'tokyonight.nvim', 'kanagawa.nvim', 'nightfox.nvim', 'gruvbox.nvim'}, { event = "ColorSchemePre *" }, _G.packer_plugins)]]
+vim.cmd [[au BufEnter * ++once lua require("packer.load")({'nvim-autopairs'}, { event = "BufEnter *" }, _G.packer_plugins)]]
+vim.cmd [[au BufReadPre * ++once lua require("packer.load")({'which-key.nvim', 'mason.nvim'}, { event = "BufReadPre *" }, _G.packer_plugins)]]
 vim.cmd [[au BufReadPost * ++once lua require("packer.load")({'hop.nvim'}, { event = "BufReadPost *" }, _G.packer_plugins)]]
 time([[Defining lazy-load event autocommands]], false)
 vim.cmd("augroup END")

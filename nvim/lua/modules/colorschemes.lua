@@ -28,9 +28,10 @@ return {
           },
           palettes = palettes
         })
-        -- vim.cmd [[ colorscheme nordfox ]]
+        vim.cmd [[ colorscheme nordfox ]]
       end
     }
+
     use {
       "rebelot/kanagawa.nvim",
       event = { "VimEnter", "ColorSchemePre" },
@@ -40,10 +41,10 @@ return {
           undercurl = true,           -- enable undercurls
           commentStyle = { italic = true },
           functionStyle = {},
-          keywordStyle = { italic = true},
+          keywordStyle = { italic = true },
           statementStyle = { bold = true },
           typeStyle = {},
-          variablebuiltinStyle = { italic = true},
+          variablebuiltinStyle = { italic = true },
           specialReturn = true,       -- special highlight for the return keyword
           specialException = true,    -- special highlight for exception handling keywords
           transparent = false,        -- do not set background color
@@ -56,8 +57,46 @@ return {
           overrides = {},
           theme = "dark",             -- Load "default" theme or the experimental "light" theme
         })
-        vim.cmd [[ colorscheme kanagawa ]]
+        -- vim.cmd [[ colorscheme kanagawa ]]
       end
+    }
+
+    use {
+      "ellisonleao/gruvbox.nvim",
+      event = { "VimEnter", "ColorSchemePre" },
+      opt = true,
+      config = function()
+        require("gruvbox").setup({
+          undercurl = true,
+          underline = true,
+          bold = true,
+          italic = true,
+          strikethrough = true,
+          invert_selection = false,
+          invert_signs = false,
+          invert_tabline = false,
+          invert_intend_guides = false,
+          inverse = true, -- invert background for search, diffs, statuslines and errors
+          contrast = "", -- can be "hard", "soft" or empty string
+          palette_overrides = {},
+          overrides = {},
+          dim_inactive = false,
+          transparent_mode = false,
+        })
+        -- vim.cmd [[ colorscheme gruvbox ]]
+      end
+    }
+
+    use {
+      "folke/tokyonight.nvim",
+      event = { "VimEnter", "ColorSchemePre" },
+      opt = true,
+      config = function()
+        require("tokyonight").setup({
+          style = "moon"
+        })
+      end
+      -- vim.cmd [[ colorscheme tokyonight ]]
     }
   end
 }
