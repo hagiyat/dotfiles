@@ -14,7 +14,7 @@ return {
 
     use {
       "phaazon/hop.nvim",
-      requires = "which-key",
+      requires = "folke/which-key.nvim",
       event = "BufReadPost",
       branch = 'v2',
       config = function()
@@ -64,6 +64,27 @@ return {
           },
         },
         { remap = true, mode = "n" } )
+
+        wk.register({
+          f = {
+            name = "+hop",
+            f = {
+              function()
+                hop.hint_char2()
+              end,
+              "char2"
+            },
+            w = {
+              function()
+                hop.hint_words()
+              end,
+              "words"
+            },
+          }
+        },
+        { prefix = "<space>", remap = true, mode = "n" } )
+      end
+    }
       end
     }
   end
