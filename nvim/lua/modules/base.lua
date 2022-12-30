@@ -95,7 +95,30 @@ return {
         })
       end
     }
+
+    use {
+      "declancm/maximize.nvim",
+      requires = "folke/which-key.nvim",
+      config = function()
+        require('maximize').setup({
+          default_keymaps = false
+        })
+        require("which-key").register(
+          {
+            z = {
+              function()
+                require('maximize').toggle()
+              end,
+              "toggle maximize"
+            },
+          },
+          { prefix = "<space>", remap = true, mode = "n" }
+        )
       end
     }
+
+    -- TODO: startify
+    -- https://github.com/glepnir/dashboard-nvim
+    -- https://github.com/startup-nvim/startup.nvim
   end
 }
