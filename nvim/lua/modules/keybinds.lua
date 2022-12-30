@@ -3,7 +3,6 @@ return {
     use {
       "folke/which-key.nvim",
       module = { "which-key" },
-      event = "BufReadPre",
       config = function()
         local wk = require("which-key")
         wk.setup()

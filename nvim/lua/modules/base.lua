@@ -27,6 +27,43 @@ return {
       end
     }
 
+    use {
+      "akinsho/toggleterm.nvim",
+      event = { "VimEnter" },
+      requires = { "folke/which-key.nvim" },
+      config = function()
+        require("toggleterm").setup({
+          size = math.floor(vim.o.lines/3),
+          open_mapping = false,
+          direction = "float",
+          float_opts = {
+            border = "curved",
+          },
+          winbar = { enabled = false },
+        })
+
+        local Terminal = require('toggleterm.terminal').Terminal
+        local split_term = Terminal:new({
+          direction = "horizontal",
+          hidden = true,
+        })
+        function ToggleSplitTerminal()
+          split_term:toggle()
+        end
+
+        require("which-key").register(
+          {
+            t = {
+              name = "+terminal",
+              t = { "<cmd>ToggleTerm<cr>", "terminal" },
+              s = { function() ToggleSplitTerminal() end, "split" },
+            }
+          },
+          { prefix = "<space>", noremap = true, mode = "n" }
+        )
+      end
+    }
+
     -- TODO: startify
     -- https://github.com/glepnir/dashboard-nvim
     -- https://github.com/startup-nvim/startup.nvim
