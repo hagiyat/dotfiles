@@ -94,12 +94,14 @@ return {
         })
         require("which-key").register(
           {
-            z = {
-              function()
-                require('maximize').toggle()
-              end,
-              "toggle maximize"
-            },
+            w = {
+              z = {
+                function()
+                  require('maximize').toggle()
+                end,
+                "toggle maximize"
+              },
+            }
           },
           { prefix = "<space>", remap = true, mode = "n" }
         )
