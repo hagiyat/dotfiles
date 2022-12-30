@@ -3,6 +3,7 @@ return require('packer').startup(function(use)
   use({ "wbthomason/packer.nvim", opt = true })
 
   require("modules/base").setup(use)
+  require("modules/ui").setup(use)
   require("modules/syntaxes").setup(use)
   require("modules/colorschemes").setup(use)
   require("modules/completion").setup(use)
