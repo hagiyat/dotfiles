@@ -85,6 +85,16 @@ return {
         { prefix = "<space>", remap = true, mode = "n" } )
       end
     }
+
+    use {
+      "windwp/nvim-autopairs",
+      event = "BufEnter",
+      config = function()
+        require("nvim-autopairs").setup({
+          disable_filetype = { "TelescopePrompt" , "NvimTree" },
+        })
+      end
+    }
       end
     }
   end
