@@ -8,6 +8,7 @@ return {
         { "folke/which-key.nvim" },
       },
       event = { "BufReadPre" },
+      wants = { "cmp-nvim-lsp" },
       config = function()
         require('mason').setup({
           ui = {
@@ -51,9 +52,8 @@ return {
                 ["K"] = { "<Cmd>lua vim.lsp.buf.hover()<CR>", "lsp hover" },
               }, { buffer = bufnr, noremap = true, mode = "n" } )
             end
-            -- opts.capabilities = require('cmp_nvim_lsp').update_capabilities(
-            --   vim.lsp.protocol.make_client_capabilities()
-            -- )
+
+            opts.capabilities = require('cmp_nvim_lsp').default_capabilities()
 
             if server_name == "sumneko_lua" then
               local sumneko_opts = {
