@@ -38,3 +38,13 @@ vim.api.nvim_create_autocmd(
     command = "silent! wall",
   }
 )
+
+-- auto compile
+vim.api.nvim_create_autocmd(
+  { "BufWritePost" },
+  {
+    desc = "run PackerCompile",
+    pattern = { "plugins.lua", "modules/*.lua" },
+    command = "PackerCompile",
+  }
+)
