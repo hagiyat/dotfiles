@@ -1,4 +1,3 @@
-
 return {
   setup = function(use)
     use {
@@ -55,7 +54,7 @@ return {
         { remap = true, mode = "n" } )
 
         wk.register({
-          f = {
+          h = {
             name = "+hop",
             f = {
               function()
@@ -79,17 +78,21 @@ return {
       "windwp/nvim-autopairs",
       event = "BufEnter",
       config = function()
-        require("nvim-autopairs").setup({
-          disable_filetype = { "TelescopePrompt" , "NvimTree" },
+        local npairs = require("nvim-autopairs")
+        npairs.setup({
+          disable_filetype = { "ddu-ff", "ddu-ff-filter", "ddu-ff-filer" },
         })
+        npairs.add_rules(require("nvim-autopairs.rules.endwise-lua"))
+        npairs.add_rules(require("nvim-autopairs.rules.endwise-ruby"))
       end
     }
 
     use {
       "declancm/maximize.nvim",
       requires = "folke/which-key.nvim",
+      event = "BufReadPost",
       config = function()
-        require('maximize').setup({
+        require("maximize").setup({
           default_keymaps = false
         })
         require("which-key").register(
@@ -97,7 +100,7 @@ return {
             w = {
               z = {
                 function()
-                  require('maximize').toggle()
+                  require("maximize").toggle()
                 end,
                 "toggle maximize"
               },
