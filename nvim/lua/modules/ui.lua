@@ -75,19 +75,6 @@ return {
     }
 
     use {
-      "windwp/nvim-autopairs",
-      event = "BufEnter",
-      config = function()
-        local npairs = require("nvim-autopairs")
-        npairs.setup({
-          disable_filetype = { "ddu-ff", "ddu-ff-filter", "ddu-ff-filer" },
-        })
-        npairs.add_rules(require("nvim-autopairs.rules.endwise-lua"))
-        npairs.add_rules(require("nvim-autopairs.rules.endwise-ruby"))
-      end
-    }
-
-    use {
       "declancm/maximize.nvim",
       requires = "folke/which-key.nvim",
       event = "BufReadPost",
