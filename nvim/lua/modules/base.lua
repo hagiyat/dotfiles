@@ -7,6 +7,11 @@ return {
     }
 
     use {
+      "vim-denops/denops.vim",
+      module = { "denops" },
+    }
+
+    use {
       "nvim-tree/nvim-web-devicons",
       module = { "nvim-web-devicons" },
       opt = true
@@ -56,7 +61,7 @@ return {
             t = {
               name = "+terminal",
               t = { "<cmd>ToggleTerm<cr>", "terminal" },
-              s = { function() ToggleSplitTerminal() end, "split" },
+              s = { ToggleSplitTerminal, "split" },
             }
           },
           { prefix = "<space>", noremap = true, mode = "n" }
