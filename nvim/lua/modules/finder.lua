@@ -23,6 +23,7 @@ return {
           },
         },
         { "Shougo/ddu-filter-matcher_substring" },
+        { "Shougo/ddu-commands.vim" },
         { "folke/which-key.nvim" },
       },
       wants = {
