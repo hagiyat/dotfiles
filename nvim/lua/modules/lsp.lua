@@ -30,26 +30,26 @@ return {
               wk.register({
                 c = {
                   name = "+lsp",
-                  d = { "<Cmd>lua vim.lsp.buf.definition()<CR>", "definition" },
-                  i = { "<Cmd>lua vim.lsp.buf.implementation()<CR>", "implementation" },
-                  h = { "<Cmd>lua vim.lsp.buf.signature_help()<CR>", "signature help" },
-                  D = { "<Cmd>lua vim.lsp.buf.references()<CR>", "references" },
-                  t = { "<Cmd>lua vim.lsp.buf.type_definition()<CR>", "type definition" },
-                  e = { "<Cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>", "show line diagnostics" },
-                  f = { "<Cmd>lua vim.lsp.buf.format()<CR>", "format" },
-                  r = { "<Cmd>lua vim.lsp.buf.rename()<CR>", "rename" },
+                  d = { vim.lsp.buf.definition, "definition" },
+                  i = { vim.lsp.buf.implementation, "implementation" },
+                  h = { vim.lsp.buf.signature_help, "signature help" },
+                  D = { vim.lsp.buf.references, "references" },
+                  t = { vim.lsp.buf.type_definition, "type definition" },
+                  e = { vim.lsp.diagnostic.show_line_diagnostics, "show line diagnostics" },
+                  f = { vim.lsp.buf.format, "format" },
+                  r = { vim.lsp.buf.rename, "rename" },
                 }
               }, { buffer = bufnr, prefix = "<space>", noremap = true, mode = "n" })
               wk.register({
                 g = {
                   name = "+lsp",
-                  [","] = { "<cmd>lua vim.diagnostic.goto_prev()<CR>", "diagnostic prev" },
-                  ["."] = { "<cmd>lua vim.diagnostic.goto_next()<CR>", "diagnostic next" }
+                  [","] = { vim.diagnostic.goto_prev, "diagnostic prev" },
+                  ["."] = { vim.diagnostic.goto_next, "diagnostic next" }
                 }
 
               }, { buffer = bufnr, noremap = true, mode = "n" })
               wk.register({
-                ["K"] = { "<Cmd>lua vim.lsp.buf.hover()<CR>", "lsp hover" },
+                ["K"] = { vim.lsp.buf.hover, "lsp hover" },
               }, { buffer = bufnr, noremap = true, mode = "n" } )
             end
 
