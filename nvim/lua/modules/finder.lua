@@ -90,40 +90,43 @@ return {
         })
 
         local bufopts = {noremap = true, silent = true, buffer = 0}
-        local keymap = function(mode, key, callback)
-          vim.keymap.set(mode, key, callback, bufopts)
+        local n_keymap = function(key, callback)
+          vim.keymap.set("n", key, callback, bufopts)
+        end
+        local i_keymap = function(key, callback)
+          vim.keymap.set("i", key, callback, bufopts)
         end
 
         local ff_action = vim.fn['ddu#ui#ff#do_action']
         vim.api.nvim_create_autocmd("FileType", {
           pattern = {"ddu-ff"},
           callback = function()
-            keymap("n", "<CR>", function() return ff_action("itemAction") end)
-            keymap("n", "<space>", function() return ff_action("toggleSelectItem") end)
-            keymap("n", "<space>", function() return ff_action("toggleSelectItem") end)
-            keymap("n", "i", function() return ff_action("openFilterWindow") end)
-            keymap("n", "/", function() return ff_action("openFilterWindow") end)
-            keymap("n", "p", function() return ff_action("preview") end)
-            keymap("n", "c", function() return ff_action("chooseAction") end)
-            keymap("n", "e", function() return ff_action("itemAction", {name = "edit"}) end)
-            keymap("n", "d", function() return ff_action("itemAction", {name = "delete"}) end)
-            keymap("n", "<Esc>", function() return ff_action("quit") end)
-            keymap("n", "q", function() return ff_action("quit") end)
+           n_keymap("<CR>", function() return ff_action("itemAction") end)
+           n_keymap("<space>", function() return ff_action("toggleSelectItem") end)
+           n_keymap("<space>", function() return ff_action("toggleSelectItem") end)
+           n_keymap("i", function() return ff_action("openFilterWindow") end)
+           n_keymap("/", function() return ff_action("openFilterWindow") end)
+           n_keymap("p", function() return ff_action("preview") end)
+           n_keymap("c", function() return ff_action("chooseAction") end)
+           n_keymap("e", function() return ff_action("itemAction", {name = "edit"}) end)
+           n_keymap("d", function() return ff_action("itemAction", {name = "delete"}) end)
+           n_keymap("<Esc>", function() return ff_action("quit") end)
+           n_keymap("q", function() return ff_action("quit") end)
           end
         })
 
         vim.api.nvim_create_autocmd("FileType", {
           pattern = {"ddu-ff-filter"},
           callback = function()
-            keymap("i", "<CR>", "<Esc><Cmd>close<CR>")
-            keymap("n", "<CR>", "<Cmd>close<CR>")
-            keymap("n", "q", "<Cmd>close<CR>")
+            i_keymap("<CR>", "<Esc><Cmd>close<CR>")
+            n_keymap("<CR>", "<Cmd>close<CR>")
+            n_keymap("q", "<Cmd>close<CR>")
           end
         })
 
         local filter_action = vim.fn['ddu#ui#filer#do_action']
-        local buf_keymap = function(mode, key, callback)
-          vim.api.nvim_buf_set_keymap(0, mode, key, '', {
+        local buf_keymap = function(key, callback)
+          vim.api.nvim_buf_set_keymap(0, "n", key, "", {
             silent = true,
             noremap = true,
             callback = callback
@@ -132,7 +135,7 @@ return {
         vim.api.nvim_create_autocmd('FileType', {
           pattern = { 'ddu-filer' },
           callback = function()
-            buf_keymap('n', '<CR>', function()
+            buf_keymap('<CR>', function()
               if vim.fn['ddu#ui#filer#is_tree']() then
                 -- filter_action('expandItem', { mode = 'toggle' })
                 filter_action('itemAction', { name = 'narrow' })
@@ -140,10 +143,10 @@ return {
                 filter_action('itemAction', { mode = 'open' })
               end
             end)
-            buf_keymap('n', '<ESC>', function() filter_action('quit') end)
-            buf_keymap('n', 'q', function() filter_action('quit') end)
-            buf_keymap('n', 'o', function() filter_action('expandItem', { mode = 'toggle' }) end)
-            buf_keymap('n', '.', function()
+            buf_keymap('<ESC>', function() filter_action('quit') end)
+            buf_keymap('q', function() filter_action('quit') end)
+            buf_keymap('o', function() filter_action('expandItem', { mode = 'toggle' }) end)
+            buf_keymap('.', function()
               -- FIXME
               local result = vim.api.nvim_exec([[
                 function! s:ToggleHidden()
@@ -165,21 +168,21 @@ return {
                 }
               )
             end)
-            buf_keymap('n', 'N', function() filter_action('itemAction', { name = 'newFile' }) end)
-            buf_keymap('n', 'mk', function() filter_action('itemAction', { name = 'newDirectory' }) end)
-            buf_keymap('n', 'c', function() filter_action('itemAction', { name = 'copy' }) end)
-            buf_keymap('n', 'p', function() filter_action('itemAction', { name = 'paste' }) end)
-            buf_keymap('n', 'r', function() filter_action('itemAction', { name = 'rename' }) end)
-            buf_keymap('n', 'd', function() filter_action('itemAction', { name = 'delete' }) end)
-            buf_keymap('n', 'cd', function() filter_action('itemAction', { name = 'change_vim_cmd' }) end)
-            buf_keymap('n', 'l', function()
+            buf_keymap('N', function() filter_action('itemAction', { name = 'newFile' }) end)
+            buf_keymap('gN', function() filter_action('itemAction', { name = 'newDirectory' }) end)
+            buf_keymap('c', function() filter_action('itemAction', { name = 'copy' }) end)
+            buf_keymap('p', function() filter_action('itemAction', { name = 'paste' }) end)
+            buf_keymap('r', function() filter_action('itemAction', { name = 'rename' }) end)
+            buf_keymap('d', function() filter_action('itemAction', { name = 'delete' }) end)
+            buf_keymap('gC', function() filter_action('itemAction', { name = 'change_vim_cwd' }) end)
+            buf_keymap('l', function()
               if vim.fn['ddu#ui#filer#is_tree']() then
                 filter_action('itemAction', { name = 'narrow' })
               else
                 filter_action('itemAction', { mode = 'open' })
               end
             end)
-            buf_keymap('n', 'h', function()
+            buf_keymap('h', function()
               filter_action('itemAction', { name = 'narrow', params = { path = '..' } })
             end)
           end
