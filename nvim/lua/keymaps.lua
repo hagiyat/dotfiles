@@ -6,6 +6,7 @@ local function escape_slash()
   end
   return "/"
 end
+
 local function escape_question()
   if vim.fn.getcmdtype() == "/" then
     return "\\?"

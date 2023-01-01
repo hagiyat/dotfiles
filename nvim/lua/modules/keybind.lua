@@ -19,7 +19,7 @@ return {
             d = { ":<C-u>q<CR>", "delete" },
             w = { ":MaximizerToggle<CR>", "toggle miximize" },
             [0] = { "<C-w>=", "size reset" },
-          }
+          },
         }, { prefix = "<space>", noremap = true, mode = "n" })
 
         wk.register({
@@ -29,7 +29,7 @@ return {
             p = { ":<C-u>bprevious<CR>", "previous" },
             d = { ":<C-u>bdelete<CR>", "delete" },
             a = { ":<C-u>enew<CR>", "add" },
-          }
+          },
         }, { prefix = "<space>", noremap = true, mode = "n" })
 
         wk.register({
@@ -39,7 +39,7 @@ return {
             w = { ":<C-u>wq<CR>", "with write" },
             a = { ":<C-u>qa<CR>", "quit all" },
             f = { ":<C-u>qa!<CR>", "force quit" },
-          }
+          },
         }, { prefix = "<space>", noremap = true, mode = "n" })
 
         -- emacs keys
@@ -52,12 +52,11 @@ return {
           ["<c-d>"] = { "<C-g>u<Del>", "delete" },
         }, { mode = "i" })
 
-
         wk.register({
           ["<esc><esc>"] = { ":nohlsearch<CR>", "clear highlight" },
           ["gw"] = { ":<C-u>w<CR>", "save file" },
         }, { mode = "n" })
-      end
+      end,
     }
-  end
+  end,
 }

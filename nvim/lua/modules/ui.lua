@@ -4,60 +4,57 @@ return {
       "phaazon/hop.nvim",
       requires = "folke/which-key.nvim",
       event = "BufReadPost",
-      branch = 'v2',
+      branch = "v2",
       config = function()
         local hop = require("hop")
-        hop.setup({
+        hop.setup {
           keys = "etovxqpdygfblzhckisuran",
           quit_key = "<Esc>",
-        })
+        }
 
         local directions = require("hop.hint").HintDirection
         local wk = require("which-key")
         local setup_hop_line = function(mode)
-          wk.register(
-            {
-              ["f"] = {
-                function()
-                  hop.hint_char1({
-                    direction = directions.AFTER_CURSOR,
-                    current_line_only = true
-                  })
-                end,
-                "hop forward"
-              },
-              ["F"] = {
-                function()
-                  hop.hint_char1({
-                    direction = directions.BEFORE_CURSOR,
-                    current_line_only = true
-                  })
-                end,
-                "hop backward"
-              },
-              ["t"] = {
-                function()
-                  hop.hint_char1({
-                    direction = directions.AFTER_CURSOR,
-                    current_line_only = true,
-                    hint_offset = -1
-                  })
-                end,
-                "hop forward -1"
-              },
-              ["T"] = {
-                function()
-                  hop.hint_char1({
-                    direction = directions.BEFORE_CURSOR,
-                    current_line_only = true,
-                    hint_offset = 1
-                  })
-                end,
-                "hop backward +1"
-              },
+          wk.register({
+            ["f"] = {
+              function()
+                hop.hint_char1 {
+                  direction = directions.AFTER_CURSOR,
+                  current_line_only = true,
+                }
+              end,
+              "hop forward",
             },
-            { remap = true, mode = mode }
-          )
+            ["F"] = {
+              function()
+                hop.hint_char1 {
+                  direction = directions.BEFORE_CURSOR,
+                  current_line_only = true,
+                }
+              end,
+              "hop backward",
+            },
+            ["t"] = {
+              function()
+                hop.hint_char1 {
+                  direction = directions.AFTER_CURSOR,
+                  current_line_only = true,
+                  hint_offset = -1,
+                }
+              end,
+              "hop forward -1",
+            },
+            ["T"] = {
+              function()
+                hop.hint_char1 {
+                  direction = directions.BEFORE_CURSOR,
+                  current_line_only = true,
+                  hint_offset = 1,
+                }
+              end,
+              "hop backward +1",
+            },
+          }, { remap = true, mode = mode })
         end
         setup_hop_line("n")
         setup_hop_line("v")
@@ -69,19 +66,17 @@ return {
               function()
                 hop.hint_char2()
               end,
-              "char2"
+              "char2",
             },
             w = {
               function()
                 hop.hint_words()
               end,
-              "words"
+              "words",
             },
-          }
-        },
-        { remap = true, mode = "n" } )
-
-      end
+          },
+        }, { remap = true, mode = "n" })
+      end,
     }
 
     use {
@@ -89,23 +84,20 @@ return {
       requires = "folke/which-key.nvim",
       event = "BufReadPost",
       config = function()
-        require("maximize").setup({
-          default_keymaps = false
-        })
-        require("which-key").register(
-          {
-            w = {
-              z = {
-                function()
-                  require("maximize").toggle()
-                end,
-                "toggle maximize"
-              },
-            }
+        require("maximize").setup {
+          default_keymaps = false,
+        }
+        require("which-key").register({
+          w = {
+            z = {
+              function()
+                require("maximize").toggle()
+              end,
+              "toggle maximize",
+            },
           },
-          { prefix = "<space>", remap = true, mode = "n" }
-        )
-      end
+        }, { prefix = "<space>", remap = true, mode = "n" })
+      end,
     }
-  end
+  end,
 }

@@ -1,6 +1,6 @@
-vim.cmd [[packadd packer.nvim]]
-return require('packer').startup(function(use)
-  use({ "wbthomason/packer.nvim", opt = true })
+vim.cmd([[packadd packer.nvim]])
+return require("packer").startup(function(use)
+  use { "wbthomason/packer.nvim", opt = true }
 
   require("modules/base").setup(use)
   require("modules/keybind").setup(use)

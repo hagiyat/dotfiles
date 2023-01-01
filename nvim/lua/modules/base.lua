@@ -3,7 +3,12 @@ return {
     use {
       "lambdalisue/gina.vim",
       cmd = { "Gina" },
-      opt = true
+      opt = true,
+    }
+
+    use {
+      "nvim-lua/plenary.nvim",
+      opt = true,
     }
 
     use {
@@ -14,7 +19,7 @@ return {
     use {
       "nvim-tree/nvim-web-devicons",
       module = { "nvim-web-devicons" },
-      opt = true
+      opt = true,
     }
 
     use {
@@ -22,14 +27,14 @@ return {
       cmd = { "Glow" },
       opt = true,
       config = function()
-        require("glow").setup({
+        require("glow").setup {
           border = "shadow", -- floating window border config
           style = "dark",
           pager = false,
           width_ratio = 0.9,
           height_ratio = 0.9,
-        })
-      end
+        }
+      end,
     }
 
     use {
@@ -37,40 +42,37 @@ return {
       event = { "VimEnter" },
       requires = { "folke/which-key.nvim" },
       config = function()
-        require("toggleterm").setup({
-          size = math.floor(vim.o.lines/3),
+        require("toggleterm").setup {
+          size = math.floor(vim.o.lines / 3),
           open_mapping = false,
           direction = "float",
           float_opts = {
             border = "curved",
           },
           winbar = { enabled = false },
-        })
+        }
 
-        local Terminal = require('toggleterm.terminal').Terminal
-        local split_term = Terminal:new({
+        local Terminal = require("toggleterm.terminal").Terminal
+        local split_term = Terminal:new {
           direction = "horizontal",
           hidden = true,
-        })
+        }
         function ToggleSplitTerminal()
           split_term:toggle()
         end
 
-        require("which-key").register(
-          {
-            t = {
-              name = "+terminal",
-              t = { "<cmd>ToggleTerm<cr>", "terminal" },
-              s = { ToggleSplitTerminal, "split" },
-            }
+        require("which-key").register({
+          t = {
+            name = "+terminal",
+            t = { "<cmd>ToggleTerm<cr>", "terminal" },
+            s = { ToggleSplitTerminal, "split" },
           },
-          { prefix = "<space>", noremap = true, mode = "n" }
-        )
-      end
+        }, { prefix = "<space>", noremap = true, mode = "n" })
+      end,
     }
 
     -- TODO: startify
     -- https://github.com/glepnir/dashboard-nvim
     -- https://github.com/startup-nvim/startup.nvim
-  end
+  end,
 }
