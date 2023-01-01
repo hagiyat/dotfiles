@@ -54,7 +54,7 @@ return {
         { remap = true, mode = "n" } )
 
         wk.register({
-          h = {
+          s = {
             name = "+hop",
             f = {
               function()
@@ -70,7 +70,7 @@ return {
             },
           }
         },
-        { prefix = "<space>", remap = true, mode = "n" } )
+        { remap = true, mode = "n" } )
       end
     }
 
