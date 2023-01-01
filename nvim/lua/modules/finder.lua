@@ -322,9 +322,8 @@ return {
 
         require("which-key").register(
           {
-            ["e"] = {
-              filer,
-              "find files"
+            f = {
+              e = { filer, "file explorer" }
             }
           },
           { prefix = "<space>", noremap = true, mode = "n", silent = true }
