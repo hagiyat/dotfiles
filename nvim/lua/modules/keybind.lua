@@ -56,6 +56,18 @@ return {
           ["<esc><esc>"] = { ":nohlsearch<CR>", "clear highlight" },
           ["gw"] = { ":<C-u>w<CR>", "save file" },
         }, { mode = "n" })
+
+        wk.register({
+          p = {
+            name = "+packer",
+            S = { ":<C-u>PackerSync<CR>", "sync" },
+            s = { ":<C-u>PackerStatus<CR>", "status" },
+            c = { ":<C-u>PackerCompile<CR>", "compile" },
+            I = { ":<C-u>PackerInstall<CR>", "install" },
+            p = { ":<C-u>PackerProfile<CR>", "profile" },
+            C = { ":<C-u>PackerCompile profile=true<CR>", "compile profile" },
+          },
+        }, { prefix = "<space>", noremap = true, mode = "n" })
       end,
     }
   end,
