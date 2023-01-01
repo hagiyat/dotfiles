@@ -96,11 +96,11 @@ return {
               },
             },
             lsp_interop = {
-              enable = true,
-              peek_definition_code = {
-                ["<space>pf"] = "@function.outer",
-                ["<saace>pc"] = "@class.outer",
-              },
+              enable = false,
+              -- peek_definition_code = {
+              --   ["<space>pf"] = "@function.outer",
+              --   ["<saace>pc"] = "@class.outer",
+              -- },
             },
           },
           -- nvim-treesitter-endwise
