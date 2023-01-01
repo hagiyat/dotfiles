@@ -7,51 +7,60 @@ return {
       branch = 'v2',
       config = function()
         local hop = require("hop")
-        hop.setup({ keys = "etovxqpdygfblzhckisuran" })
+        hop.setup({
+          keys = "etovxqpdygfblzhckisuran",
+          quit_key = "<Esc>",
+        })
 
         local directions = require("hop.hint").HintDirection
         local wk = require("which-key")
-        wk.register({
-          ["f"] = {
-            function()
-              hop.hint_char1({
-                direction = directions.AFTER_CURSOR,
-                current_line_only = true
-              })
-            end,
-            "hop forward"
-          },
-          ["F"] = {
-            function()
-              hop.hint_char1({
-                direction = directions.BEFORE_CURSOR,
-                current_line_only = true
-              })
-            end,
-            "hop backward"
-          },
-          ["t"] = {
-            function()
-              hop.hint_char1({
-                direction = directions.AFTER_CURSOR,
-                current_line_only = true,
-                hint_offset = -1
-              })
-            end,
-            "hop forward -1"
-          },
-          ["T"] = {
-            function()
-              hop.hint_char1({
-                direction = directions.BEFORE_CURSOR,
-                current_line_only = true,
-                hint_offset = 1
-              })
-            end,
-            "hop backward +1"
-          },
-        },
-        { remap = true, mode = "n" } )
+        local setup_hop_line = function(mode)
+          wk.register(
+            {
+              ["f"] = {
+                function()
+                  hop.hint_char1({
+                    direction = directions.AFTER_CURSOR,
+                    current_line_only = true
+                  })
+                end,
+                "hop forward"
+              },
+              ["F"] = {
+                function()
+                  hop.hint_char1({
+                    direction = directions.BEFORE_CURSOR,
+                    current_line_only = true
+                  })
+                end,
+                "hop backward"
+              },
+              ["t"] = {
+                function()
+                  hop.hint_char1({
+                    direction = directions.AFTER_CURSOR,
+                    current_line_only = true,
+                    hint_offset = -1
+                  })
+                end,
+                "hop forward -1"
+              },
+              ["T"] = {
+                function()
+                  hop.hint_char1({
+                    direction = directions.BEFORE_CURSOR,
+                    current_line_only = true,
+                    hint_offset = 1
+                  })
+                end,
+                "hop backward +1"
+              },
+            },
+            { remap = true, mode = mode }
+          )
+        end
+        setup_hop_line("n")
+        setup_hop_line("v")
 
         wk.register({
           s = {
@@ -71,6 +80,7 @@ return {
           }
         },
         { remap = true, mode = "n" } )
+
       end
     }
 
