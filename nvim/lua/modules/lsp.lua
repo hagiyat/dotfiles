@@ -30,6 +30,14 @@ return {
         local cmp_nvim_lsp = require("cmp_nvim_lsp")
         local null_ls = require("null-ls")
 
+        -- quickfixに追加して開かずに、別のことをする
+        -- ref: https://github.com/neovim/neovim/pull/19213
+        local function on_list(options)
+          vim.fn.setqflist({}, " ", options)
+          -- FIXME: trouble.nvimがあろうとなかろうとおかまいなしなので、要修正
+          vim.api.nvim_command("TroubleToggle quickfix")
+        end
+
         mason_lspconfig.setup_handlers {
           function(server_name)
             local opts = {}
@@ -37,14 +45,40 @@ return {
               wk.register({
                 c = {
                   name = "+lsp",
-                  d = { vim.lsp.buf.definition, "definition" },
-                  i = { vim.lsp.buf.implementation, "implementation" },
+                  d = {
+                    function()
+                      vim.lsp.buf.definition { on_list = on_list }
+                    end,
+                    "definition",
+                  },
+                  i = {
+                    function()
+                      vim.lsp.buf.implementation { on_list = on_list }
+                    end,
+                    "implementation",
+                  },
                   h = { vim.lsp.buf.signature_help, "signature help" },
-                  D = { vim.lsp.buf.references, "references" },
-                  t = { vim.lsp.buf.type_definition, "type definition" },
+                  D = {
+                    function()
+                      vim.lsp.buf.references(nil, { on_list = on_list })
+                    end,
+                    "references",
+                  },
+                  t = {
+                    function()
+                      vim.lsp.buf.type_definition { on_list = on_list }
+                    end,
+                    "type definition",
+                  },
                   e = { vim.lsp.diagnostic.show_line_diagnostics, "show line diagnostics" },
                   f = { vim.lsp.buf.format, "format" },
                   r = { vim.lsp.buf.rename, "rename" },
+                  s = {
+                    function()
+                      vim.lsp.buf.document_symbol { on_list = on_list }
+                    end,
+                    "document symbols",
+                  },
                 },
               }, { buffer = bufnr, prefix = "<space>", noremap = true, mode = "n" })
               wk.register({

@@ -117,6 +117,10 @@ return {
             hint = "",
             other = "",
           },
+          action_keys = {
+            jump = { "<tab>" },
+            jump_close = { "<cr>", "o" },
+          },
           auto_jump = { "lsp_definitions" },
         }
 
