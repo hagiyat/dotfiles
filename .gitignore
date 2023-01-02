@@ -12,3 +12,5 @@ fish/functions/*.fish
 
 # nvim local settings
 nvim/init_local.vim
+nvim/lua/init_local.lua
+packer_compiled.lua
