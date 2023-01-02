@@ -110,6 +110,14 @@ return {
       config = function()
         require("trouble").setup {
           auto_close = true,
+          signs = {
+            error = "",
+            warn = "",
+            information = "",
+            hint = "",
+            other = "",
+          },
+          auto_jump = { "lsp_definitions" },
         }
 
         local wk = require("which-key")
