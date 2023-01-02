@@ -144,7 +144,15 @@ return {
             "lsp references",
           },
         }, { prefix = "g", noremap = true, silent = true, mode = "n" })
-      end
+      end,
+    }
+
+    use {
+      "lewis6991/gitsigns.nvim",
+      event = "BufReadPost",
+      config = function()
+        require("gitsigns").setup {}
+      end,
     }
   end,
 }
