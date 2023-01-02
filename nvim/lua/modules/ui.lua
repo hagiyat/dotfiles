@@ -99,5 +99,52 @@ return {
         }, { prefix = "<space>", remap = true, mode = "n" })
       end,
     }
+
+    use {
+      "folke/trouble.nvim",
+      requires = {
+        "kyazdani42/nvim-web-devicons",
+        "folke/which-key.nvim",
+      },
+      event = "BufReadPost",
+      config = function()
+        require("trouble").setup {
+          auto_close = true,
+        }
+
+        local wk = require("which-key")
+        wk.register({
+          x = {
+            x = {
+              "<cmd>TroubleToggle<cr>",
+              "all",
+            },
+            w = {
+              "<cmd>TroubleToggle workspace_diagnostics<cr>",
+              "workspace diagnostics",
+            },
+            d = {
+              "<cmd>TroubleToggle document_diagnostics<cr>",
+              "document diagnostics",
+            },
+            l = {
+              "<cmd>TroubleToggle loclist<cr>",
+              "loclist",
+            },
+            q = {
+              "<cmd>TroubleToggle quickfix<cr>",
+              "quickfix",
+            },
+          },
+        }, { prefix = "<space>", noremap = true, silent = true, mode = "n" })
+
+        wk.register({
+          R = {
+            "<cmd>TroubleToggle lsp_references<cr>",
+            "lsp references",
+          },
+        }, { prefix = "g", noremap = true, silent = true, mode = "n" })
+      end
+    }
   end,
 }
