@@ -7,7 +7,6 @@ desktop applications
 ---
 
 - terminal emulator
-  - alacritty
   - **kitty**
 
 - editor
@@ -59,14 +58,3 @@ for neovim
 
 * dotnet-runtime
 
-## npm global modules
-
-* neovim
-* typescript
-* typescript-language-server
-* vscode-langservers-extracted
-* pyright
-* yaml-language-server
-* vls
-* prettier
-* eslint
