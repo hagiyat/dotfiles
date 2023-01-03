@@ -126,8 +126,9 @@ return {
 
         local wk = require("which-key")
         wk.register({
-          x = {
-            x = {
+          h = {
+            name = "+trouble",
+            h = {
               "<cmd>TroubleToggle<cr>",
               "all",
             },
@@ -143,7 +144,7 @@ return {
               "<cmd>TroubleToggle loclist<cr>",
               "loclist",
             },
-            q = {
+            f = {
               "<cmd>TroubleToggle quickfix<cr>",
               "quickfix",
             },
