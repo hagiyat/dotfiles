@@ -15,13 +15,6 @@ return {
         { "matsui54/ddu-source-file_external" },
         { "kuuote/ddu-source-mr", requires = { "lambdalisue/mr.vim" } },
         { "matsui54/ddu-source-help" },
-        {
-          "Shougo/ddu-ui-filer",
-          requires = {
-            "Shougo/ddu-source-file",
-            "ryota2357/ddu-column-icon_filename",
-          },
-        },
         { "Shougo/ddu-filter-matcher_substring" },
         { "Shougo/ddu-commands.vim" },
         { "folke/which-key.nvim" },
@@ -147,91 +140,6 @@ return {
           end,
         })
 
-        local filter_action = vim.fn["ddu#ui#filer#do_action"]
-        local buf_keymap = function(key, callback)
-          vim.api.nvim_buf_set_keymap(0, "n", key, "", {
-            silent = true,
-            noremap = true,
-            callback = callback,
-          })
-        end
-        vim.api.nvim_create_autocmd("FileType", {
-          pattern = { "ddu-filer" },
-          callback = function()
-            buf_keymap("<CR>", function()
-              if vim.fn["ddu#ui#filer#is_tree"]() then
-                -- filter_action('expandItem', { mode = 'toggle' })
-                filter_action("itemAction", { name = "narrow" })
-              else
-                filter_action("itemAction", { mode = "open" })
-              end
-            end)
-            buf_keymap("<ESC>", function()
-              filter_action("quit")
-            end)
-            buf_keymap("q", function()
-              filter_action("quit")
-            end)
-            buf_keymap("o", function()
-              filter_action("expandItem", { mode = "toggle" })
-            end)
-            buf_keymap(".", function()
-              -- FIXME
-              local result = vim.api.nvim_exec(
-                [[
-                function! s:ToggleHidden()
-                  let current = ddu#custom#get_current(b:ddu_ui_name)
-                  let source_options = get(current, 'sourceOptions', {})
-                  let source_options_file = get(source_options, 'file', {})
-                  let matchers = get(source_options_file, 'matchers', [])
-                  return empty(matchers) ? ['matcher_hidden'] : []
-                endfunction
-                call s:ToggleHidden()
-              ]] ,
-                true
-              )
-              filter_action("updateOptions", {
-                sourceOptions = {
-                  file = {
-                    matchers = result,
-                  },
-                },
-              })
-            end)
-            buf_keymap("N", function()
-              filter_action("itemAction", { name = "newFile" })
-            end)
-            buf_keymap("gN", function()
-              filter_action("itemAction", { name = "newDirectory" })
-            end)
-            buf_keymap("c", function()
-              filter_action("itemAction", { name = "copy" })
-            end)
-            buf_keymap("p", function()
-              filter_action("itemAction", { name = "paste" })
-            end)
-            buf_keymap("r", function()
-              filter_action("itemAction", { name = "rename" })
-            end)
-            buf_keymap("d", function()
-              filter_action("itemAction", { name = "delete" })
-            end)
-            buf_keymap("gC", function()
-              filter_action("itemAction", { name = "change_vim_cwd" })
-            end)
-            buf_keymap("l", function()
-              if vim.fn["ddu#ui#filer#is_tree"]() then
-                filter_action("itemAction", { name = "narrow" })
-              else
-                filter_action("itemAction", { mode = "open" })
-              end
-            end)
-            buf_keymap("h", function()
-              filter_action("itemAction", { name = "narrow", params = { path = ".." } })
-            end)
-          end,
-        })
-
         local sources = {}
 
         sources.find_files = function()
@@ -306,64 +214,6 @@ return {
             r = { sources.recent_items, "recent items" },
             l = { sources.line, "lines" },
             h = { sources.help, "help" },
-          },
-        }, { prefix = "<space>", noremap = true, mode = "n", silent = true })
-
-        vim.fn["ddu#custom#patch_local"]("filer", {
-          ui = "filer",
-          sources = {
-            {
-              name = "file",
-              params = {},
-            },
-          },
-          sourceOptions = {
-            ["_"] = {
-              columns = { "icon_filename" },
-            },
-          },
-          uiOptions = {
-            filer = {
-              toggle = true,
-            },
-          },
-          actionOptions = {
-            narrow = { quit = false },
-          },
-          uiParams = {
-            filer = {
-              split = "vertical",
-              splitDirection = "topleft",
-              winWidth = vim.fn.round(vim.api.nvim_get_option("columns") * 0.3),
-              sort = "none",
-              sortTreeFirst = true,
-              search = vim.fn.expand("%:p"),
-            },
-          },
-          columnParams = {
-            icon_filename = {
-              defaultIcon = {
-                icon = "",
-              },
-              useLinkIcon = "grayout",
-            },
-          },
-          kindOptions = {
-            file = {
-              defaultAction = "open",
-            },
-          },
-        })
-
-        local filer = function()
-          vim.fn["ddu#start"] {
-            name = "filer",
-          }
-        end
-
-        require("which-key").register({
-          f = {
-            e = { filer, "file explorer" },
           },
         }, { prefix = "<space>", noremap = true, mode = "n", silent = true })
       end,
