@@ -35,7 +35,7 @@ return {
         -- FIXME: trouble.nvimのありなし判定をしたい
         local function on_list_to_qf(options)
           vim.fn.setqflist({}, " ", options)
-          vim.api.nvim_command("TroubleToggle loclist")
+          vim.api.nvim_command("TroubleToggle quickfix")
         end
 
         local function on_list_to_loclist(options)
