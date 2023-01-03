@@ -162,9 +162,57 @@ return {
 
     use {
       "lewis6991/gitsigns.nvim",
+      requires = {
+        "folke/which-key.nvim",
+      },
+      wants = { "trouble.nvim" },
       event = "BufReadPost",
       config = function()
-        require("gitsigns").setup {}
+        require("gitsigns").setup {
+          current_line_blame_opts = {
+            virt_text = true,
+            virt_text_pos = "right_align", -- 'eol' | 'overlay' | 'right_align'
+            delay = 1000,
+            ignore_whitespace = false,
+          },
+          trouble = true,
+          on_attach = function(bufnr)
+            local function map(mode, lhs, rhs, opts)
+              opts = vim.tbl_extend("force", { noremap = true, silent = true }, opts or {})
+              vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
+            end
+
+            -- Navigation
+            map("n", "<space>gj", "&diff ? '<space>gj' : '<cmd>Gitsigns next_hunk<CR>'", { expr = true })
+            map("n", "<space>gk", "&diff ? '<space>gk' : '<cmd>Gitsigns prev_hunk<CR>'", { expr = true })
+
+            -- Actions
+            map("n", "<space>gs", ":Gitsigns stage_hunk<CR>")
+            map("v", "<space>gs", ":Gitsigns stage_hunk<CR>")
+            map("n", "<space>gr", ":Gitsigns reset_hunk<CR>")
+            map("v", "<space>gr", ":Gitsigns reset_hunk<CR>")
+            map("n", "<space>gS", "<cmd>Gitsigns stage_buffer<CR>")
+            map("n", "<space>gu", "<cmd>Gitsigns undo_stage_hunk<CR>")
+            map("n", "<space>gR", "<cmd>Gitsigns reset_buffer<CR>")
+            map("n", "<space>gp", "<cmd>Gitsigns preview_hunk<CR>")
+            map("n", "<space>gb", '<cmd>lua require"gitsigns".blame_line{full=true}<CR>')
+            map("n", "<space>gB", "<cmd>Gitsigns toggle_current_line_blame<CR>")
+            -- map("n", "<space>gd", "<cmd>Gitsigns diffthis<CR>")
+            map("n", "<space>gD", '<cmd>lua require"gitsigns".diffthis("~")<CR>')
+            map("n", "<space>gd", "<cmd>Gitsigns toggle_deleted<CR>")
+            map("n", "<space>gl", '<cmd>lua require"gitsigns".setloclist(0, "all")<CR>')
+
+            -- Text object
+            map("o", "ih", ":<C-U>Gitsigns select_hunk<CR>")
+            map("x", "ih", ":<C-U>Gitsigns select_hunk<CR>")
+          end,
+        }
+
+        require("which-key").register {
+          ["<space>g"] = {
+            name = "+gitsigns",
+          },
+        }
       end,
     }
   end,
