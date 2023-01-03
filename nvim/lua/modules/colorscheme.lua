@@ -9,7 +9,9 @@ return {
           nightfox = {},
           duskfox = {},
           nordfox = {
-            bg1 = "#1e2430",
+            bg0 = "#232831", -- Dark bg (status line and float)
+            bg1 = "#1e2430", -- Default bg
+            bg3 = "#343c4e", -- Lighter bg (cursor line)
           },
           terafox = {},
           carbonfox = {},
@@ -83,18 +85,6 @@ return {
         }
         -- vim.cmd [[ colorscheme gruvbox ]]
       end,
-    }
-
-    use {
-      "folke/tokyonight.nvim",
-      event = { "VimEnter", "ColorSchemePre" },
-      opt = true,
-      config = function()
-        require("tokyonight").setup {
-          style = "moon",
-        }
-      end,
-      -- vim.cmd [[ colorscheme tokyonight ]]
     }
   end,
 }
