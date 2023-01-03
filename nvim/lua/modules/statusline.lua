@@ -4,6 +4,7 @@ return {
       "nvim-lualine/lualine.nvim",
       event = { "UIEnter" },
       requires = { "kyazdani42/nvim-web-devicons", opt = true },
+      wants = { "nvim-web-devicons" },
       config = function()
         local empty = require("lualine.component"):extend()
         function empty:draw(default_highlight)

@@ -13,9 +13,9 @@ return {
         { "hrsh7th/cmp-buffer", event = "InsertEnter" },
         { "hrsh7th/cmp-cmdline", event = "CmdlineEnter" },
         { "hrsh7th/cmp-cmdline", event = "CmdlineEnter" },
-        { "kyazdani42/nvim-web-devicons" },
+        { "kyazdani42/nvim-web-devicons", opt = true },
       },
-      wants = { "lspkind.nvim" },
+      wants = { "lspkind.nvim", "nvim-web-devicons" },
       config = function()
         local cmp = require("cmp")
         local lspkind = require("lspkind")
@@ -53,9 +53,9 @@ return {
                   return vim_item
                 end
               end
-              return lspkind.cmp_format({ with_text = true })(entry, vim_item)
-            end
-          }
+              return lspkind.cmp_format { with_text = true } (entry, vim_item)
+            end,
+          },
         }
         cmp.setup.cmdline("/", {
           mapping = cmp.mapping.preset.cmdline(),

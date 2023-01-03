@@ -6,12 +6,12 @@ return {
       event = { "VimEnter" },
       requires = {
         -- "nvim-lua/plenary.nvim",
-        "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-        "MunifTanjim/nui.nvim",
-        -- only needed if you want to use the commands with "_with_window_picker" suffix
+        { "kyazdani42/nvim-web-devicons", opt = true },
+        { "MunifTanjim/nui.nvim", opt = true },
         {
           "s1n7ax/nvim-window-picker",
           tag = "v1.*",
+          opt = true,
           config = function()
             require("window-picker").setup {
               autoselect_one = true,
@@ -34,6 +34,9 @@ return {
       },
       wants = {
         "plenary.nvim",
+        "nvim-web-devicons",
+        "nui.nvim",
+        "nvim-window-picker",
       },
       config = function()
         vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])

@@ -2,7 +2,10 @@ return {
   setup = function(use)
     use {
       "goolord/alpha-nvim",
-      requires = { "nvim-tree/nvim-web-devicons" },
+      requires = {
+        { "kyazdani42/nvim-web-devicons", opt = true },
+      },
+      wants = { "nvim-web-devicons" },
       config = function()
         local alpha = require("alpha")
         local dashboard = require("alpha.themes.dashboard")
