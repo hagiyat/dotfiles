@@ -3,13 +3,18 @@ return {
     use {
       "williamboman/mason.nvim",
       requires = {
-        { "neovim/nvim-lspconfig" },
-        { "williamboman/mason-lspconfig.nvim" },
+        { "neovim/nvim-lspconfig", opt = true },
+        { "williamboman/mason-lspconfig.nvim", opt = true },
         { "folke/which-key.nvim" },
-        { "jose-elias-alvarez/null-ls.nvim" },
+        { "jose-elias-alvarez/null-ls.nvim", opt = true },
+        { "glepnir/lspsaga.nvim", branch = "main", opt = true }
       },
       event = { "BufReadPre" },
       wants = {
+        "nvim-lspconfig",
+        "mason-lspconfig.nvim",
+        "null-ls.nvim",
+        "lspsaga.nvim",
         "cmp-nvim-lsp",
         "plenary.nvim",
         "trouble.nvim",
@@ -24,6 +29,10 @@ return {
               package_uninstalled = "✗",
             },
           },
+        }
+
+        require("lspsaga").init_lsp_saga {
+          border_style = "single",
         }
 
         local mason_lspconfig = require("mason-lspconfig")
@@ -175,17 +184,6 @@ return {
 
             lspconfig[server_name].setup(opts)
           end,
-        }
-      end,
-    }
-
-    use {
-      "glepnir/lspsaga.nvim",
-      branch = "main",
-      event = { "BufReadPre" },
-      config = function()
-        require("lspsaga").init_lsp_saga {
-          border_style = "single",
         }
       end,
     }
