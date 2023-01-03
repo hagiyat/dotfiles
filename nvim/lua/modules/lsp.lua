@@ -12,7 +12,8 @@ return {
       wants = {
         "cmp-nvim-lsp",
         "plenary.nvim",
-        "trouble.nvim"
+        "trouble.nvim",
+        "lspsaga.nvim",
       },
       config = function()
         require("mason").setup {
@@ -51,17 +52,12 @@ return {
               wk.register({
                 c = {
                   name = "+lsp",
+                  a = { "<cmd>Lspsaga code_action<CR>", "code action by saga" },
                   d = {
                     function()
                       vim.lsp.buf.definition { on_list = on_list_to_qf }
                     end,
                     "definition",
-                  },
-                  i = {
-                    function()
-                      vim.lsp.buf.implementation { on_list = on_list_to_qf }
-                    end,
-                    "implementation",
                   },
                   D = {
                     function()
@@ -69,24 +65,40 @@ return {
                     end,
                     "references",
                   },
-                  t = {
-                    function()
-                      vim.lsp.buf.type_definition { on_list = on_list_to_qf }
-                    end,
-                    "type definition",
-                  },
-                  -- h = { vim.lsp.buf.signature_help, "signature help" },
                   -- e = { vim.lsp.diagnostic.show_line_diagnostics, "show line diagnostics" },
                   f = { vim.lsp.buf.format, "format" },
-                  r = { vim.lsp.buf.rename, "rename" },
+                  F = { "<cmd>Lspsaga lsp_finder<CR>", "lsp finder by saga" },
+                  -- h = { vim.lsp.buf.signature_help, "signature help" },
+                  i = {
+                    function()
+                      vim.lsp.buf.implementation { on_list = on_list_to_qf }
+                    end,
+                    "implementation",
+                  },
+                  o = { "<cmd>Lspsaga outline<CR>", "outline by saga" },
+                  p = { "<cmd>Lspsaga peek_definition<CR>", "peek definition by saga" },
+                  -- r = { vim.lsp.buf.rename, "rename" },
+                  r = { "<cmd>Lspsaga rename<CR>", "rename by saga" },
                   s = {
                     function()
                       vim.lsp.buf.document_symbol { on_list = on_list_to_loclist }
                     end,
                     "document symbols",
                   },
+                  t = {
+                    function()
+                      vim.lsp.buf.type_definition { on_list = on_list_to_qf }
+                    end,
+                    "type definition",
+                  },
                 },
-              }, { buffer = bufnr, prefix = "<space>", noremap = true, mode = "n" })
+              }, { buffer = bufnr, prefix = "<space>", noremap = true, mode = "n", silent = true })
+              wk.register({
+                c = {
+                  name = "+lsp",
+                  a = { "<cmd>Lspsaga code_action<CR>", "code action by saga" },
+                },
+              }, { buffer = bufnr, prefix = "<space>", noremap = true, mode = "v", silent = true })
               wk.register({
                 g = {
                   name = "+lsp",
@@ -95,8 +107,9 @@ return {
                 },
               }, { buffer = bufnr, noremap = true, mode = "n" })
               wk.register({
-                ["K"] = { vim.lsp.buf.hover, "lsp hover" },
-              }, { buffer = bufnr, noremap = true, mode = "n" })
+                ["K"] = { "<cmd>Lspsaga hover_doc<CR>", "lsp hover by saga" },
+                -- ["K"] = { vim.lsp.buf.hover, "lsp hover" },
+              }, { buffer = bufnr, noremap = true, mode = "n", silent = true })
             end
 
             opts.capabilities = cmp_nvim_lsp.default_capabilities()
@@ -162,6 +175,17 @@ return {
 
             lspconfig[server_name].setup(opts)
           end,
+        }
+      end,
+    }
+
+    use {
+      "glepnir/lspsaga.nvim",
+      branch = "main",
+      event = { "BufReadPre" },
+      config = function()
+        require("lspsaga").init_lsp_saga {
+          border_style = "single",
         }
       end,
     }
