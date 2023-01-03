@@ -17,7 +17,7 @@ return {
     }
 
     use {
-      "nvim-tree/nvim-web-devicons",
+      "kyazdani42/nvim-web-devicons",
       module = { "nvim-web-devicons" },
       opt = true,
     }
