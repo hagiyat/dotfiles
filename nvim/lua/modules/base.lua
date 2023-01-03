@@ -1,12 +1,6 @@
 return {
   setup = function(use)
     use {
-      "lambdalisue/gina.vim",
-      cmd = { "Gina" },
-      opt = true,
-    }
-
-    use {
       "nvim-lua/plenary.nvim",
       opt = true,
     }
@@ -70,9 +64,5 @@ return {
         }, { prefix = "<space>", noremap = true, mode = "n" })
       end,
     }
-
-    -- TODO: startify
-    -- https://github.com/glepnir/dashboard-nvim
-    -- https://github.com/startup-nvim/startup.nvim
   end,
 }
