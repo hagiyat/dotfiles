@@ -215,5 +215,24 @@ return {
         }
       end,
     }
+
+    use {
+      "RRethy/vim-illuminate",
+      event = "BufReadPost",
+      config = function()
+        require("illuminate").configure {
+          delay = 1000,
+          filetype_denylist = {
+            "alpha",
+            "ddu-ff",
+            "ddu-ff-filter",
+            "Trouble",
+          },
+        }
+        vim.api.nvim_set_hl(0, "IlluminatedWordText", { bold = true })
+        vim.api.nvim_set_hl(0, "IlluminatedWordRead", { bold = true })
+        vim.api.nvim_set_hl(0, "IlluminatedWordWrite", { bold = true, underdotted = true })
+      end,
+    }
   end,
 }
