@@ -109,7 +109,7 @@ return {
           dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
           dashboard.button("SPC f f", "  Find file", ":Ddu file_rec<CR>"),
           dashboard.button("SPC f r", "  Recently opened files", ":Ddu mr<CR>"),
-          dashboard.button("SPC f g", "  Find word", ":Ddu rg<CR>"),
+          dashboard.button("SPC f g", "  Find word", ":DduRg<CR>"),
           dashboard.button("SPC e", "פּ  File explorer", ":Neotree reveal<CR>"),
           dashboard.button("SPC t t", "  Open terminal", ":ToggleTerm<CR>"),
           dashboard.button("SPC p S", "ﮮ  Update plugins", ":PackerSync<CR>"),
