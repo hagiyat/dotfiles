@@ -32,10 +32,15 @@ return {
 
         -- quickfixに追加して開かずに、別のことをする
         -- ref: https://github.com/neovim/neovim/pull/19213
-        local function on_list(options)
+        -- FIXME: trouble.nvimのありなし判定をしたい
+        local function on_list_to_qf(options)
           vim.fn.setqflist({}, " ", options)
-          -- FIXME: trouble.nvimがあろうとなかろうとおかまいなしなので、要修正
-          vim.api.nvim_command("TroubleToggle quickfix")
+          vim.api.nvim_command("TroubleToggle loclist")
+        end
+
+        local function on_list_to_loclist(options)
+          vim.fn.setloclist(0, {}, " ", options)
+          vim.api.nvim_command("TroubleToggle loclist")
         end
 
         mason_lspconfig.setup_handlers {
@@ -47,35 +52,35 @@ return {
                   name = "+lsp",
                   d = {
                     function()
-                      vim.lsp.buf.definition { on_list = on_list }
+                      vim.lsp.buf.definition { on_list = on_list_to_qf }
                     end,
                     "definition",
                   },
                   i = {
                     function()
-                      vim.lsp.buf.implementation { on_list = on_list }
+                      vim.lsp.buf.implementation { on_list = on_list_to_qf }
                     end,
                     "implementation",
                   },
-                  h = { vim.lsp.buf.signature_help, "signature help" },
                   D = {
                     function()
-                      vim.lsp.buf.references(nil, { on_list = on_list })
+                      vim.lsp.buf.references(nil, { on_list = on_list_to_qf })
                     end,
                     "references",
                   },
                   t = {
                     function()
-                      vim.lsp.buf.type_definition { on_list = on_list }
+                      vim.lsp.buf.type_definition { on_list = on_list_to_qf }
                     end,
                     "type definition",
                   },
-                  e = { vim.lsp.diagnostic.show_line_diagnostics, "show line diagnostics" },
+                  -- h = { vim.lsp.buf.signature_help, "signature help" },
+                  -- e = { vim.lsp.diagnostic.show_line_diagnostics, "show line diagnostics" },
                   f = { vim.lsp.buf.format, "format" },
                   r = { vim.lsp.buf.rename, "rename" },
                   s = {
                     function()
-                      vim.lsp.buf.document_symbol { on_list = on_list }
+                      vim.lsp.buf.document_symbol { on_list = on_list_to_loclist }
                     end,
                     "document symbols",
                   },
