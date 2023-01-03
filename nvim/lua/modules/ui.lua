@@ -106,7 +106,7 @@ return {
         "kyazdani42/nvim-web-devicons",
         "folke/which-key.nvim",
       },
-      event = "BufReadPost",
+      event = "BufReadPre",
       config = function()
         require("trouble").setup {
           auto_close = true,

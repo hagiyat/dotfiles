@@ -12,6 +12,7 @@ return {
       wants = {
         "cmp-nvim-lsp",
         "plenary.nvim",
+        "trouble.nvim"
       },
       config = function()
         require("mason").setup {
@@ -29,18 +30,18 @@ return {
         local wk = require("which-key")
         local cmp_nvim_lsp = require("cmp_nvim_lsp")
         local null_ls = require("null-ls")
+        local trouble_nvim = require("trouble")
 
         -- quickfixに追加して開かずに、別のことをする
         -- ref: https://github.com/neovim/neovim/pull/19213
-        -- FIXME: trouble.nvimのありなし判定をしたい
         local function on_list_to_qf(options)
           vim.fn.setqflist({}, " ", options)
-          vim.api.nvim_command("TroubleToggle quickfix")
+          trouble_nvim.open("quickfix")
         end
 
         local function on_list_to_loclist(options)
           vim.fn.setloclist(0, {}, " ", options)
-          vim.api.nvim_command("TroubleToggle loclist")
+          trouble_nvim.open("loclist")
         end
 
         mason_lspconfig.setup_handlers {
