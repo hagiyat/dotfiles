@@ -1,6 +1,14 @@
 return {
   setup = function(use)
     use {
+      "lewis6991/impatient.nvim",
+      config = function()
+        require("impatient")
+        require("impatient").enable_profile()
+      end,
+    }
+
+    use {
       "nvim-lua/plenary.nvim",
       opt = true,
     }
