@@ -200,7 +200,8 @@ return {
             -- map("n", "<space>gd", "<cmd>Gitsigns diffthis<CR>")
             map("n", "<space>gD", '<cmd>lua require"gitsigns".diffthis("~")<CR>')
             map("n", "<space>gd", "<cmd>Gitsigns toggle_deleted<CR>")
-            map("n", "<space>gl", '<cmd>lua require"gitsigns".setloclist(0, "all")<CR>')
+            map("n", "<space>gl", '<cmd>lua require"gitsigns".setloclist(0, 0)<CR>')
+            map("n", "<space>gf", '<cmd>lua require"gitsigns".setqflist("all")<CR>')
 
             -- Text object
             map("o", "ih", ":<C-U>Gitsigns select_hunk<CR>")
