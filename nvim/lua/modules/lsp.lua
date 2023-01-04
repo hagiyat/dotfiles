@@ -7,7 +7,7 @@ return {
         { "williamboman/mason-lspconfig.nvim", opt = true },
         { "folke/which-key.nvim" },
         { "jose-elias-alvarez/null-ls.nvim", opt = true },
-        { "glepnir/lspsaga.nvim", branch = "main", opt = true }
+        { "glepnir/lspsaga.nvim", branch = "main", opt = true },
       },
       event = { "BufReadPre" },
       wants = {
@@ -43,12 +43,11 @@ return {
         local trouble_nvim = require("trouble")
 
         -- quickfixに追加して開かずに、別のことをする
-        -- ref: https://github.com/neovim/neovim/pull/19213
-        local function on_list_to_qf(options)
-          vim.fn.setqflist({}, " ", options)
-          trouble_nvim.open("quickfix")
-        end
-
+        -- ref: https://neovim.io/doc/user/lsp.html#lsp-on-list-handler
+        -- local function on_list_to_qf(options)
+        --   vim.fn.setqflist({}, " ", options)
+        --   trouble_nvim.open("quickfix")
+        -- end
         local function on_list_to_loclist(options)
           vim.fn.setloclist(0, {}, " ", options)
           trouble_nvim.open("loclist")
@@ -59,30 +58,42 @@ return {
             local opts = {}
             opts.on_attach = function(_, bufnr)
               wk.register({
-                c = {
+                l = {
                   name = "+lsp",
                   a = { "<cmd>Lspsaga code_action<CR>", "code action by saga" },
+                  -- d = {
+                  --   function()
+                  --     vim.lsp.buf.definition { on_list = on_list_to_qf }
+                  --   end,
+                  --   "definition",
+                  -- },
                   d = {
-                    function()
-                      vim.lsp.buf.definition { on_list = on_list_to_qf }
-                    end,
-                    "definition",
+                    "<cmd>TroubleToggle lsp_definitions<cr>",
+                    "definitions",
                   },
+                  -- D = {
+                  --   function()
+                  --     vim.lsp.buf.references(nil, { on_list = on_list_to_qf })
+                  --   end,
+                  --   "references",
+                  -- },
                   D = {
-                    function()
-                      vim.lsp.buf.references(nil, { on_list = on_list_to_qf })
-                    end,
+                    "<cmd>TroubleToggle lsp_references<cr>",
                     "references",
                   },
                   -- e = { vim.lsp.diagnostic.show_line_diagnostics, "show line diagnostics" },
                   f = { vim.lsp.buf.format, "format" },
                   F = { "<cmd>Lspsaga lsp_finder<CR>", "lsp finder by saga" },
                   -- h = { vim.lsp.buf.signature_help, "signature help" },
+                  -- i = {
+                  --   function()
+                  --     vim.lsp.buf.implementation { on_list = on_list_to_qf }
+                  --   end,
+                  --   "implementation",
+                  -- },
                   i = {
-                    function()
-                      vim.lsp.buf.implementation { on_list = on_list_to_qf }
-                    end,
-                    "implementation",
+                    "<cmd>TroubleToggle lsp_implementations<cr>",
+                    "implementations",
                   },
                   o = { "<cmd>Lspsaga outline<CR>", "outline by saga" },
                   p = { "<cmd>Lspsaga peek_definition<CR>", "peek definition by saga" },
@@ -94,11 +105,15 @@ return {
                     end,
                     "document symbols",
                   },
+                  -- t = {
+                  --   function()
+                  --     vim.lsp.buf.type_definition { on_list = on_list_to_qf }
+                  --   end,
+                  --   "type definition",
+                  -- },
                   t = {
-                    function()
-                      vim.lsp.buf.type_definition { on_list = on_list_to_qf }
-                    end,
-                    "type definition",
+                    "<cmd>TroubleToggle lsp_type_definitions<cr>",
+                    "type definitions",
                   },
                 },
               }, { buffer = bufnr, prefix = "<space>", noremap = true, mode = "n", silent = true })
