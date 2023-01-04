@@ -40,6 +40,16 @@ return {
     }
 
     use {
+      "phaazon/mind.nvim",
+      branch = "v2.2",
+      cmd = { "MindOpenMain", "MindOpenProject", "MindOpenSmartProject" },
+      wants = { "plenary.nvim" },
+      config = function()
+        require("mind").setup()
+      end,
+    }
+
+    use {
       "akinsho/toggleterm.nvim",
       event = { "VimEnter" },
       requires = { "folke/which-key.nvim" },
