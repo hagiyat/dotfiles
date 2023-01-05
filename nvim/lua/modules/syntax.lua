@@ -122,36 +122,8 @@ return {
     }
 
     use {
-      "numToStr/Comment.nvim",
-      event = { "BufEnter" },
-      config = function()
-        require("Comment").setup()
-      end,
-    }
-
-    use {
-      "kylechui/nvim-surround",
-      event = { "BufEnter" },
-      tag = "*", -- Use for stability; omit to use `main` branch for the latest features
-      config = function()
-        require("nvim-surround").setup()
-      end,
-    }
-
-    use {
-      "windwp/nvim-autopairs",
-      event = "InsertEnter",
-      wants = { "nvim-cmp" },
-      config = function()
-        require("nvim-autopairs").setup {
-          disable_filetype = { "ddu-ff", "ddu-ff-filter", "ddu-ff-filer" },
-        }
-
-        -- ref: https://github.com/windwp/nvim-autopairs#you-need-to-add-mapping-cr-on-nvim-cmp-setupcheck-readmemd-on-nvim-cmp-repo
-        local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-        local cmp = require("cmp")
-        cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
-      end,
+      "slim-template/vim-slim",
+      ft = "slim",
     }
   end,
 }

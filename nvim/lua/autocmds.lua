@@ -3,6 +3,13 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   command = ":%s/\\s\\+$//ge",
 })
 
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+  pattern = { "*.slim" },
+  callback = function()
+    vim.opt.filetype = "slim"
+  end,
+})
+
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "vim,ruby,eruby,slim,javascript,typescript,html,zsh,markdown,yaml,terraform" },
   command = "setlocal shiftwidth=2 tabstop=2 expandtab",
