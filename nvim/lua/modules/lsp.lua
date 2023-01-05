@@ -143,7 +143,7 @@ return {
               sources = {
                 null_ls.builtins.formatting.stylua.with {
                   condition = function(utils)
-                    return utils.root_has_file { ".stylua.toml" }
+                    return vim.fn.executable("stylua") > 0 and utils.root_has_file { ".stylua.toml", "stylua.toml" }
                   end,
                 },
                 null_ls.builtins.diagnostics.luacheck.with {
@@ -151,26 +151,26 @@ return {
                 },
 
                 null_ls.builtins.formatting.prettier.with {
-                  condition = function(utils)
-                    return utils.root_has_file { ".prettierrc.json" }
+                  condition = function(_)
+                    return vim.fn.executable("prettier") > 0
                   end,
                 },
                 null_ls.builtins.diagnostics.eslint.with {
-                  condition = function(utils)
-                    return utils.root_has_file { ".eslintrc.yml" }
+                  condition = function(_)
+                    return vim.fn.executable("eslint") > 0
                   end,
                 },
 
                 null_ls.builtins.formatting.rubocop.with {
                   prefer_local = "bundle_bin",
                   condition = function(utils)
-                    return utils.root_has_file { ".rubocop.yml" }
+                    return vim.fn.executable("rubocop") > 0 and utils.root_has_file { ".rubocop.yml" }
                   end,
                 },
                 null_ls.builtins.diagnostics.rubocop.with {
                   prefer_local = "bundle_bin",
                   condition = function(utils)
-                    return utils.root_has_file { ".rubocop.yml" }
+                    return vim.fn.executable("rubocop") > 0 and utils.root_has_file { ".rubocop.yml" }
                   end,
                 },
 
