@@ -14,11 +14,6 @@ return {
     }
 
     use {
-      "vim-denops/denops.vim",
-      module = { "denops" },
-    }
-
-    use {
       "kyazdani42/nvim-web-devicons",
       module = { "nvim-web-devicons" },
       opt = true,
