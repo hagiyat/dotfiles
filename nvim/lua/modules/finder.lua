@@ -9,10 +9,12 @@ return {
         "plenary.nvim",
         "nvim-web-devicons",
         "which-key.nvim",
+        "trouble.nvim",
       },
       config = function()
         local telescope = require("telescope")
         local actions = require("telescope.actions")
+        local trouble = require("trouble.providers.telescope")
         telescope.setup {
           defaults = {
             layout_strategy = "center",
@@ -22,6 +24,10 @@ return {
             mappings = {
               n = {
                 ["q"] = actions.close,
+                ["<C-q>"] = trouble.open_with_trouble,
+              },
+              i = {
+                ["<C-q>"] = trouble.open_with_trouble,
               },
             },
           },

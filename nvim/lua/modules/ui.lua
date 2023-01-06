@@ -139,7 +139,7 @@ return {
         "kyazdani42/nvim-web-devicons",
         "folke/which-key.nvim",
       },
-      event = "BufReadPre",
+      event = "VimEnter",
       config = function()
         require("trouble").setup {
           auto_close = true,
