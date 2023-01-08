@@ -61,7 +61,7 @@ fi
 
 # for git diff
 # export PATH=$PATH:/usr/local/share/git-core/contrib/diff-highlight
-export PATH=$PATH:/usr/share/git/diff-highlight
+path+=("/usr/share/git/diff-highlight")
 
 # git-remoteのURLをhttpsに変換してopenする
 function git-browse() {
@@ -244,8 +244,6 @@ zinit ice lucid wait"0" as"program" from"gh-r" \
 zinit light 'relastle/pmy'
 
 
-# awscli completions
-# [ -f /usr/local/share/zsh/site-functions/_aws ] && source /usr/local/share/zsh/site-functions/_aws
 [ -f /usr/local/bin/aws_zsh_completer.sh ] && source /usr/local/bin/aws_zsh_completer.sh
 [ -f /usr/bin/aws_zsh_completer.sh ] && source /usr/bin/aws_zsh_completer.sh
 
@@ -258,7 +256,7 @@ elif [ -d $HOME/.asdf ] ; then
 fi
 
 if [ -x "$(command -v yarn)" ]; then
-  export PATH="$PATH:`yarn global bin`"
+  path+=(`yarn global bin`)
 fi
 
 # zsh completions
