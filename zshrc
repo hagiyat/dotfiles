@@ -148,7 +148,7 @@ zinit ice wait'0' \
 zinit ice wait'0' lucid; zinit light "zsh-users/zsh-history-substring-search"
 zinit ice wait'0' lucid; zinit light "zsh-users/zsh-autosuggestions"
 
-zinit ice proto'git' pick'init.sh' atload'export ENHANCD_FILTER=fzf:fzy'
+zinit ice wait'1' lucid pick'init.sh' atload'export ENHANCD_FILTER=fzf'
 zinit light "b4b4r07/enhancd"
 
 # completions
