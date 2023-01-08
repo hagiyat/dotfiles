@@ -63,16 +63,6 @@ fi
 # export PATH=$PATH:/usr/local/share/git-core/contrib/diff-highlight
 path+=("/usr/share/git/diff-highlight")
 
-# git-remoteのURLをhttpsに変換してopenする
-function git-browse() {
-  git rev-parse --git-dir >/dev/null 2>&1
-  if [[ $? == 0 ]]; then
-    $BROWSER `git config --get remote.origin.url | sed -e 's|\:|/|' -e 's|^git@|https://|' -e 's|.git$||'`
-  else
-    echo ".git not found.\n"
-  fi
-}
-
 # direnv
 eval "$(direnv hook zsh)"
 
@@ -166,9 +156,8 @@ else
   # PURE_GIT_STASH_SYMBOL="🗊"
   # PURE_GIT_UP_ARROW="🛪"
   # PURE_GIT_DOWN_ARROW="🗱"
-  # PURE_PROMPT_SYMBOL="⋆🞟🢖"
-  # PURE_PROMPT_SYMBOL="📢🧰"
   PURE_PROMPT_SYMBOL="💭"
+  PURE_PROMPT_SYMBOL=" ﬌"
 fi
 zstyle :prompt:pure:git:stash show yes
 autoload -Uz promptinit; promptinit
