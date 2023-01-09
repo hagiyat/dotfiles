@@ -141,6 +141,7 @@ return {
             null_ls.setup {
               capabilities = opts.capabilities,
               sources = {
+                null_ls.builtins.completion.vsnip,
                 null_ls.builtins.formatting.stylua.with {
                   condition = function(utils)
                     return vim.fn.executable("stylua") > 0 and utils.root_has_file { ".stylua.toml", "stylua.toml" }
@@ -151,13 +152,46 @@ return {
                 },
 
                 null_ls.builtins.formatting.prettier.with {
-                  condition = function(_)
+                  condition = function(utils)
                     return vim.fn.executable("prettier") > 0
+                        and utils.root_has_file {
+                          "package.json",
+                          ".prettierrc",
+                          ".prettierrc.json",
+                          ".prettierrc.yml",
+                          ".prettierrc.yaml",
+                          ".prettierrc.js",
+                          ".prettierrc.cjs",
+                          "prettier.config.js",
+                          "prettier.config.cjs",
+                          ".prettierrc.toml",
+                        }
                   end,
                 },
                 null_ls.builtins.diagnostics.eslint.with {
-                  condition = function(_)
+                  condition = function(utils)
                     return vim.fn.executable("eslint") > 0
+                        and utils.root_has_file {
+                          ".eslintrc.js",
+                          ".eslintrc.cjs",
+                          ".eslintrc.yaml",
+                          ".eslintrc.yml",
+                          ".eslintrc.json",
+                          "package.json",
+                        }
+                  end,
+                },
+                null_ls.builtins.code_actions.eslint.with {
+                  condition = function(utils)
+                    return vim.fn.executable("eslint") > 0
+                        and utils.root_has_file {
+                          ".eslintrc.js",
+                          ".eslintrc.cjs",
+                          ".eslintrc.yaml",
+                          ".eslintrc.yml",
+                          ".eslintrc.json",
+                          "package.json",
+                        }
                   end,
                 },
 
@@ -175,6 +209,7 @@ return {
                 },
 
                 null_ls.builtins.diagnostics.yamllint,
+                null_ls.builtins.diagnostics.zsh,
               },
             }
 
