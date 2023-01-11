@@ -268,5 +268,112 @@ return {
         vim.api.nvim_set_hl(0, "IlluminatedWordWrite", { bold = true, underdotted = true })
       end,
     }
+
+    use {
+      "rgroli/other.nvim",
+      -- cmd = { "Other", "OtherSplit", "OtherVSplit", "OtherClear" },
+      event = { "BufEnter" },
+      wants = {
+        "which-key.nvim",
+      },
+      config = function()
+        local rails_controller_patterns = {
+          { target = "/spec/controllers/%1_spec.rb", context = "spec" },
+          { target = "/spec/requests/%1_spec.rb", context = "spec" },
+          { target = "/spec/factories/%1.rb", context = "factories", transformer = "singularize" },
+          { target = "/app/models/%1.rb", context = "models", transformer = "singularize" },
+          { target = "/app/views/%1/**/*.html.*", context = "view" },
+        }
+        require("other-nvim").setup {
+          mappings = {
+            {
+              pattern = "/app/models/(.*).rb",
+              target = {
+                { target = "/spec/models/%1_spec.rb", context = "spec" },
+                { target = "/spec/factories/%1.rb", context = "factories", transformer = "pluralize" },
+                { target = "/app/controllers/**/%1_controller.rb", context = "controller", transformer = "pluralize" },
+                { target = "/app/views/%1/**/*.html.*", context = "view", transformer = "pluralize" },
+              },
+            },
+            {
+              pattern = "/spec/models/(.*)_spec.rb",
+              target = {
+                { target = "/app/models/%1.rb", context = "models" },
+              },
+            },
+            {
+              pattern = "/spec/factories/(.*).rb",
+              target = {
+                { target = "/app/models/%1.rb", context = "models", transformer = "singularize" },
+                { target = "/spec/models/%1_spec.rb", context = "spec", transformer = "singularize" },
+              },
+            },
+            {
+              pattern = "/app/services/(.*).rb",
+              target = {
+                { target = "/spec/services/%1_spec.rb", context = "spec" },
+              },
+            },
+            {
+              pattern = "/spec/services/(.*)_spec.rb",
+              target = {
+                { target = "/app/services/%1.rb", context = "services" },
+              },
+            },
+            {
+              pattern = "/app/controllers/.*/(.*)_controller.rb",
+              target = rails_controller_patterns,
+            },
+            {
+              pattern = "/app/controllers/(.*)_controller.rb",
+              target = rails_controller_patterns,
+            },
+            {
+              pattern = "/app/views/(.*)/.*.html.*",
+              target = {
+                { target = "/spec/factories/%1.rb", context = "factories", transformer = "singularize" },
+                { target = "/app/models/%1.rb", context = "models", transformer = "singularize" },
+                { target = "/app/controllers/**/%1_controller.rb", context = "controller", transformer = "pluralize" },
+              },
+            },
+            {
+              pattern = "/lib/(.*).rb",
+              target = {
+                { target = "/spec/%1_spec.rb", context = "spec" },
+              },
+            },
+            {
+              pattern = "/spec/(.*)_spec.rb",
+              target = {
+                { target = "/lib/%1.rb", context = "lib" },
+              },
+            },
+          },
+        }
+
+        local wk = require("which-key")
+        wk.register({
+          o = {
+            name = "+other",
+            o = {
+              "<cmd>Other<cr>",
+              "other",
+            },
+            s = {
+              "<cmd>OtherSplit<cr>",
+              "split",
+            },
+            v = {
+              "<cmd>OtherVSplit<cr>",
+              "vsplit",
+            },
+            c = {
+              "<cmd>OtherClear<cr>",
+              "clear",
+            },
+          },
+        }, { prefix = "<space>", noremap = true, silent = true, mode = "n" })
+      end,
+    }
   end,
 }
