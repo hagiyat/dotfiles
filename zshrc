@@ -43,7 +43,7 @@ if [ ! -d $PROJECTS_HOME ]; then
   mkdir -p $PROJECTS_HOME
 fi
 
-if [ -x "`which exa`" ]; then
+if [ -x "$(command -v exa)" ]; then
   alias Ll='ls -l'
   alias La='ls -al'
   alias ll='exa -lh --git --time-style=long-iso --icons'
@@ -55,7 +55,7 @@ else
   alias la='ls -al'
 fi
 
-if [ -x "`which pacui`" ]; then
+if [ -x "$(command -v pacui)" ]; then
   export PACUI_AUR_HELPER=yay
 fi
 
