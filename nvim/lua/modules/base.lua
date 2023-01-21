@@ -20,6 +20,12 @@ return {
     }
 
     use {
+      -- wants from neotree and noice
+      "MunifTanjim/nui.nvim",
+      opt = true,
+    }
+
+    use {
       "ellisonleao/glow.nvim",
       cmd = { "Glow" },
       opt = true,

@@ -7,7 +7,6 @@ return {
       requires = {
         -- "nvim-lua/plenary.nvim",
         { "kyazdani42/nvim-web-devicons", opt = true },
-        { "MunifTanjim/nui.nvim", opt = true },
         {
           "s1n7ax/nvim-window-picker",
           tag = "v1.*",
