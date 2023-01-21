@@ -22,7 +22,15 @@ return {
       config = function()
         local telescope = require("telescope")
         local actions = require("telescope.actions")
-        local trouble = require("trouble.providers.telescope")
+        local trouble = require("trouble")
+
+        -- local trouble = require("trouble.providers.telescope")
+        -- ↑ではなく自前定義なのは、公式だと一度開いたら終わりなところを
+        -- quickfixに残しておきたいから
+        local function open_with_trouble(prompt_bufnr)
+          actions.send_to_qflist(prompt_bufnr)
+          trouble.open("quickfix")
+        end
 
         telescope.setup {
           defaults = {
@@ -33,10 +41,10 @@ return {
             mappings = {
               n = {
                 ["q"] = actions.close,
-                ["<C-q>"] = trouble.open_with_trouble,
+                ["<C-q>"] = open_with_trouble,
               },
               i = {
-                ["<C-q>"] = trouble.open_with_trouble,
+                ["<C-q>"] = open_with_trouble,
               },
             },
           },
