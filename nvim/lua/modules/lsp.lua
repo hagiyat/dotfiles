@@ -18,7 +18,6 @@ return {
         "cmp-nvim-lsp",
         "plenary.nvim",
         "trouble.nvim",
-        "lspsaga.nvim",
       },
       config = function()
         require("mason").setup {
@@ -31,8 +30,10 @@ return {
           },
         }
 
-        require("lspsaga").init_lsp_saga {
-          border_style = "single",
+        require("lspsaga").setup {
+          ui = {
+            border = "rounded",
+          },
         }
 
         local mason_lspconfig = require("mason-lspconfig")
