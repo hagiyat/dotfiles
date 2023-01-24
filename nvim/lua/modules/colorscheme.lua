@@ -85,32 +85,10 @@ return {
     }
 
     use {
-      "catppuccin/nvim",
-      as = "catppuccin",
+      "AlexvZyl/nordic.nvim",
       opt = true,
       config = function()
-        require("catppuccin").setup {
-          flavour = "macchiato",
-          color_overrides = {
-            macchiato = {
-              surface1 = "#414357", -- "#45475A" / visual select
-              surface0 = "#363A4F", -- "#363A4F" / cursor line
-              base = "#202337", -- "#24273A"
-              mantle = "#1A1D2D", -- "#1E2030"
-              crust = "#141522", -- "#181926"
-            },
-          },
-          integrations = {
-            cmp = true,
-            gitsigns = true,
-            hop = true,
-            mason = true,
-            neotree = true,
-            lsp_trouble = true,
-            illuminate = true,
-            which_key = true,
-          },
-        }
+        require("nordic").setup {}
       end,
     }
 
@@ -127,13 +105,15 @@ return {
         "kanagawa.nvim",
         -- "catppuccin",
         -- "blue-moon",
+        "nordic.nvim",
       },
       config = function()
         local styler = require("styler")
 
         -- ref: https://blog.atusy.net/2022/12/17/styler-nvim-active-win/
         local default_colorscheme = "nordfox"
-        local inactive_colorscheme = "carbonfox"
+        local inactive_colorscheme = "nordic"
+        -- local inactive_colorscheme = "carbonfox"
 
         vim.cmd("colorscheme " .. default_colorscheme)
 
