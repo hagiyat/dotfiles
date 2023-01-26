@@ -41,9 +41,11 @@ return {
             mappings = {
               n = {
                 ["q"] = actions.close,
+                ["<esc>"] = actions.close,
                 ["<C-q>"] = open_with_trouble,
               },
               i = {
+                ["<C-u>"] = false,
                 ["<C-q>"] = open_with_trouble,
               },
             },
