@@ -98,6 +98,20 @@ return {
     }
 
     use {
+      "sam4llis/nvim-tundra",
+      opt = true,
+      config = function()
+        require("nvim-tundra").setup {
+          transparent_background = false,
+          dim_inactive_windows = {
+            enabled = false,
+            color = nil,
+          },
+        }
+      end,
+    }
+
+    use {
       "folke/styler.nvim",
       event = { "VimEnter", "ColorSchemePre" },
       wants = {
@@ -106,12 +120,15 @@ return {
         -- "catppuccin",
         -- "blue-moon",
         "nordic.nvim",
+        "nvim-tundra",
       },
       config = function()
         local styler = require("styler")
 
         -- ref: https://blog.atusy.net/2022/12/17/styler-nvim-active-win/
         local default_colorscheme = "nordfox"
+        -- local default_colorscheme = "tundra"
+        -- local default_colorscheme = "kanagawa"
         local inactive_colorscheme = "nordic"
         -- local inactive_colorscheme = "carbonfox"
 
