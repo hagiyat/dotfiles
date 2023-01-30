@@ -23,12 +23,6 @@ vim.api.nvim_create_autocmd("FileType", {
   command = "setlocal shiftwidth=4 tabstop=4 noexpandtab",
 })
 
--- autosave
-vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI", "InsertLeave" }, {
-  pattern = { "*" },
-  command = "silent! wall",
-})
-
 -- auto compile
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {
   desc = "run PackerCompile",

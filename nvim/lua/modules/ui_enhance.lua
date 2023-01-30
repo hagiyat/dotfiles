@@ -151,5 +151,16 @@ return {
         vim.api.nvim_set_hl(0, "IlluminatedWordWrite", { bold = true, underdotted = true })
       end,
     }
+
+    use {
+      "Pocco81/auto-save.nvim",
+      config = function()
+        require("auto-save").setup {
+          enabled = true,
+          trigger_events = { "InsertLeave", "TextChanged" },
+          write_all_buffers = false,
+        }
+      end,
+    }
   end,
 }
