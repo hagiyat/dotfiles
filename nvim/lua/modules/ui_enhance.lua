@@ -2,9 +2,9 @@ return {
   setup = function(use)
     use {
       "phaazon/hop.nvim",
-      requires = "folke/which-key.nvim",
       event = "BufReadPost",
       branch = "v2",
+      wants = { "which-key.nvim" },
       config = function()
         local hop = require("hop")
         hop.setup {
@@ -113,8 +113,47 @@ return {
     }
 
     use {
+      "Wansmer/treesj",
+      event = "BufEnter",
+      wants = { "nvim-treesitter", "which-key.nvim" },
+      config = function()
+        require("treesj").setup {
+          use_default_keymaps = false,
+          check_syntax_error = true,
+          max_join_length = 160,
+          cursor_behavior = "hold",
+          notify = true,
+        }
+        local wk = require("which-key")
+        wk.register({
+          j = {
+            name = "+treesj",
+            j = {
+              function()
+                vim.cmd([[TSJToggle]])
+              end,
+              "toggle",
+            },
+            s = {
+              function()
+                vim.cmd([[TSJSplit]])
+              end,
+              "split",
+            },
+            J = {
+              function()
+                vim.cmd([[TSJJoin]])
+              end,
+              "join",
+            },
+          },
+        }, { prefix = "<space>", remap = true, mode = { "n", "v" } })
+      end,
+    }
+
+    use {
       "declancm/maximize.nvim",
-      requires = "folke/which-key.nvim",
+      wants = { "which-key.nvim" },
       event = "BufReadPost",
       config = function()
         require("maximize").setup {
@@ -154,6 +193,7 @@ return {
 
     use {
       "Pocco81/auto-save.nvim",
+      event = "InsertEnter",
       config = function()
         require("auto-save").setup {
           enabled = true,
