@@ -182,20 +182,45 @@ return {
     }
 
     use {
-      "declancm/maximize.nvim",
-      wants = { "which-key.nvim" },
+      "anuvyklack/windows.nvim",
       event = "BufReadPost",
+      requires = {
+        { "anuvyklack/middleclass", opt = true },
+        -- { "anuvyklack/animation.nvim", opt = true },
+      },
+      wants = { "which-key.nvim", "middleclass" },
       config = function()
-        require("maximize").setup {
-          default_keymaps = false,
-        }
+        -- splitのtoggletermと相性が悪いので、animation無効
+        -- vim.o.winwidth = 10
+        -- vim.o.winminwidth = 10
+        -- vim.o.equalalways = false
+        require("windows").setup()
+
         require("which-key").register({
           w = {
             z = {
               function()
-                require("maximize").toggle()
+                vim.cmd([[WindowsMaximize]])
               end,
-              "toggle maximize",
+              "maximize",
+            },
+            S = {
+              function()
+                vim.cmd([[WindowsMaximizeHorizontally]])
+              end,
+              "maximize horizontally",
+            },
+            V = {
+              function()
+                vim.cmd([[WindowsMaximizeVertically]])
+              end,
+              "maximize vertically",
+            },
+            ["="] = {
+              function()
+                vim.cmd([[WindowsEqualize]])
+              end,
+              "equalize",
             },
           },
         }, { prefix = "<space>", remap = true, mode = "n" })
