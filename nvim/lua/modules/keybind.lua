@@ -17,7 +17,6 @@ return {
             s = { ":<C-u>split<CR>", "split" },
             v = { ":<C-u>vsplit<CR>", "vsplit" },
             d = { ":<C-u>q<CR>", "delete" },
-            w = { ":MaximizerToggle<CR>", "toggle miximize" },
             [0] = { "<C-w>=", "size reset" },
           },
         }, { prefix = "<space>", noremap = true, mode = "n" })
