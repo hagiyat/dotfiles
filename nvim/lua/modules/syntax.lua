@@ -37,12 +37,15 @@ return {
             "lua",
             "make",
             "markdown",
+            "markdown_inline",
             "python",
+            "regex",
             "ruby",
             "toml",
             "tsx",
             "typescript",
             "yaml",
+            "vim",
           },
           -- nvim-treesitter-textobjects
           textobjects = {
