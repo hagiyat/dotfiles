@@ -76,10 +76,16 @@ return {
           globalStatus = false, -- adjust window separators highlight for laststatus=3
           terminalColors = true, -- define vim.g.terminal_color_{0,17}
           colors = {
-            bg = "#272727",
+            theme = {
+              dragon = {
+                bg = "#272727",
+              },
+            },
           },
-          overrides = {},
-          theme = "dark", -- Load "default" theme or the experimental "light" theme
+          -- overrides = function(colors)
+          --   return {}
+          -- end,
+          theme = "dragon",
         }
       end,
     }
