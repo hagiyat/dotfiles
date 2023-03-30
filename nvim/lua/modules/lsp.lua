@@ -3,11 +3,11 @@ return {
     use {
       "williamboman/mason.nvim",
       requires = {
-        { "neovim/nvim-lspconfig", opt = true },
+        { "neovim/nvim-lspconfig",             opt = true },
         { "williamboman/mason-lspconfig.nvim", opt = true },
         { "folke/which-key.nvim" },
-        { "jose-elias-alvarez/null-ls.nvim", opt = true },
-        { "glepnir/lspsaga.nvim", branch = "main", opt = true },
+        { "jose-elias-alvarez/null-ls.nvim",   opt = true },
+        { "glepnir/lspsaga.nvim",              branch = "main", opt = true },
       },
       event = { "BufReadPre" },
       wants = {
@@ -214,8 +214,8 @@ return {
               },
             }
 
-            if server_name == "sumneko_lua" then
-              local sumneko_opts = {
+            if server_name == "lua_ls" then
+              local luals_opts = {
                 settings = {
                   Lua = {
                     diagnostics = {
@@ -230,7 +230,7 @@ return {
                   },
                 },
               }
-              opts = vim.tbl_deep_extend("force", sumneko_opts, opts)
+              opts = vim.tbl_deep_extend("force", luals_opts, opts)
             end
 
             lspconfig[server_name].setup(opts)
