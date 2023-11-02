@@ -29,6 +29,7 @@ cli applications
 - delta
 - bat
 - direnv
+- lazygit
 - ...
 
 for neovim
