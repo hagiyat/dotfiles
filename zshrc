@@ -29,6 +29,9 @@ autoload -Uz zmv
 # compinit
 autoload -Uz compinit; compinit
 
+autoload -U +X bashcompinit && bashcompinit
+autoload -U +X compinit && compinit
+
 # export TERM=xterm-256color
 export NVIM_TUI_ENABLE_TRUE_COLOR=1
 
@@ -137,6 +140,7 @@ zinit ice wait'0' \
 
 zinit ice wait'0' lucid; zinit light "zsh-users/zsh-history-substring-search"
 zinit ice wait'0' lucid; zinit light "zsh-users/zsh-autosuggestions"
+zinit ice wait'0' lucid; zinit light "zsh-users/zsh-completions"
 
 zinit ice wait'1' lucid pick'init.sh' atload'export ENHANCD_FILTER=fzf'
 zinit light "b4b4r07/enhancd"
@@ -156,8 +160,8 @@ else
   # PURE_GIT_STASH_SYMBOL="🗊"
   # PURE_GIT_UP_ARROW="🛪"
   # PURE_GIT_DOWN_ARROW="🗱"
-  PURE_PROMPT_SYMBOL="💭"
-  PURE_PROMPT_SYMBOL=" ﬌"
+  # PURE_PROMPT_SYMBOL="💭"
+  PURE_PROMPT_SYMBOL="╰┈➤"
 fi
 zstyle :prompt:pure:git:stash show yes
 autoload -Uz promptinit; promptinit
@@ -172,7 +176,9 @@ function init_abbreviations() {
 
   abbrev-alias -g F="| fzf"
   abbrev-alias -g R="| rg"
-  abbrev-alias -g C="| xclip -selection c"
+  #abbrev-alias -g C="| xclip -selection c"
+  abbrev-alias -g C="| pbcopy"
+
 
   abbrev-alias -g g="git status"
   abbrev-alias -g gsh="git show"
@@ -213,7 +219,8 @@ function init_abbreviations() {
   abbrev-alias -g ec="$XDG_CONFIG_HOME/"
   abbrev-alias -g psa="ps auxwf"
   abbrev-alias -g md="mkdir -p"
-  abbrev-alias -ge CO="$(xclip -selection c -o)"
+  # abbrev-alias -ge CO="$(xclip -selection c -o)"
+  abbrev-alias -ge CO="$(pbpaste)"
   abbrev-alias -g ep="$HOME/repos" # project home
   abbrev-alias -g cdp="cd $HOME/repos"
   abbrev-alias -g qq="exit"
@@ -239,6 +246,9 @@ zinit light 'relastle/pmy'
 # asdf
 if [ -d /opt/asdf-vm ] ; then
   . /opt/asdf-vm/asdf.sh
+elif [ -d /opt/homebrew/opt/asdf ] ; then
+  . /opt/homebrew/opt/asdf/libexec/asdf.sh
+  . /opt/homebrew/opt/asdf/etc/bash_completion.d/asdf.bash
 elif [ -d $HOME/.asdf ] ; then
   . $HOME/.asdf/asdf.sh
   . $HOME/.asdf/completions/asdf.bash
