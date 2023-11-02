@@ -4,13 +4,27 @@ local application                 = require 'hs.application'
 
 -- Window Switcher
 -- https://mac-ra.com/window-kirikae-hammerspoon/
-local switcher                    = window.switcher.new()
-switcher.ui.showSelectedTitle     = false
-switcher.ui.showSelectedThumbnail = false
-switcher.ui.backgroundColor       = { 0.3, 0.3, 0.3, 0.5 }
+-- local switcher                    = window.switcher.new()
+-- switcher.ui.showSelectedTitle     = false
+-- switcher.ui.showSelectedThumbnail = false
+-- switcher.ui.backgroundColor       = { 0.3, 0.3, 0.3, 0.5 }
+--
+-- hotkey.bind('cmd', 'j', 'Next window', function() switcher:next() end)
+-- hotkey.bind('cmd', 'k', 'Prev window', function() switcher:previous() end)
 
-hotkey.bind('cmd', 'j', 'Next window', function() switcher:next() end)
-hotkey.bind('cmd', 'k', 'Prev window', function() switcher:previous() end)
+-- application Switcher
+-- https://dev.to/rstacruz/switching-apps-slow-down-my-productivity-and-how-i-fixed-it-2anb-
+hotkey.bind({"alt", "shift"}, "b", "Google Chrome", function()
+  application.launchOrFocus("Google Chrome")
+end)
+
+hotkey.bind({"alt", "shift"}, "t", "kitty", function()
+  application.launchOrFocus("kitty")
+end)
+
+hotkey.bind({"alt", "shift"}, "f", "Finder", function()
+  application.launchOrFocus("Finder")
+end)
 
 
 -- Window Management
