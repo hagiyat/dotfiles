@@ -53,16 +53,28 @@ config.keys = {
     action = action.PaneSelect { mode = "SwapWithActive" },
   },
   {
-    -- pane previous
+    -- pane left
     key = "h",
     mods = "LEADER",
-    action = action.ActivateTabRelative(-1),
+    action = action.ActivatePaneDirection "Left",
   },
   {
-    -- pane next
+    -- pane down
     key = "j",
     mods = "LEADER",
-    action = action.ActivateTabRelative(1),
+    action = action.ActivatePaneDirection "Down",
+  },
+  {
+    -- pane down
+    key = "k",
+    mods = "LEADER",
+    action = action.ActivatePaneDirection "Up",
+  },
+  {
+    -- pane right
+    key = "l",
+    mods = "LEADER",
+    action = action.ActivatePaneDirection "Right",
   },
   {
     -- rotate pane
