@@ -8,7 +8,7 @@ config.color_scheme = 'nightfox'
 -- config.color_scheme = 'Afterglow'
 -- config.color_scheme = "SpaceGray Eighties Dull"
 
-config.font_size = 13.0
+config.font_size = 13.5
 
 config.font = wezterm.font_with_fallback {
   { family = "JetBrainsMono Nerd Font Mono" },
