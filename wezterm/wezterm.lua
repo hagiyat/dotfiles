@@ -21,7 +21,7 @@ config.window_decorations = "RESIZE"
 config.use_fancy_tab_bar = false
 config.audible_bell = "Disabled"
 
-config.leader = { key = "t", mods = "CTRL", timeout_milliseconds = 1000 }
+config.leader = { key = "t", mods = "CTRL", timeout_milliseconds = 2000 }
 
 config.keys = {
   {
