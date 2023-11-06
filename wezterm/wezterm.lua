@@ -4,20 +4,22 @@ local config = {}
 
 -- config.color_scheme = "Tokyo Night"
 -- config.color_scheme = 'Tomorrow Night'
--- config.color_scheme = 'nightfox'
+config.color_scheme = 'nightfox'
 -- config.color_scheme = 'Afterglow'
-config.color_scheme = "SpaceGray Eighties Dull"
+-- config.color_scheme = "SpaceGray Eighties Dull"
 
-config.font_size = 12.0
+config.font_size = 13.0
 
 config.font = wezterm.font_with_fallback {
   { family = "JetBrainsMono Nerd Font Mono" },
-  { family = "源ノ角ゴシック JP" },
+  -- { family = "源ノ角ゴシック JP" },
+  { family = "ヒラギノ角ゴシック" },
   "Noto Color Emoji",
 }
 
 config.window_decorations = "RESIZE"
 config.use_fancy_tab_bar = false
+config.audible_bell = "Disabled"
 
 config.leader = { key = "t", mods = "CTRL", timeout_milliseconds = 1000 }
 

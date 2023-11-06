@@ -18,8 +18,8 @@ hotkey.bind({"alt", "shift"}, "b", "Google Chrome", function()
   application.launchOrFocus("Google Chrome")
 end)
 
-hotkey.bind({"alt", "shift"}, "t", "kitty", function()
-  application.launchOrFocus("kitty")
+hotkey.bind({"alt", "shift"}, "t", "WezTerm", function()
+  application.launchOrFocus("WezTerm")
 end)
 
 hotkey.bind({"alt", "shift"}, "f", "Finder", function()

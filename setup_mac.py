@@ -9,6 +9,7 @@ links = [
     (".vimrc", "vimrc"),
     (".zshrc", "zshrc"),
     (".config/kitty", "kitty"),
+    (".config/wezterm", "wezterm"),
     (".hammerspoon", "hammerspoon"),
     (".config/flake8", "flake8"),
 ]
