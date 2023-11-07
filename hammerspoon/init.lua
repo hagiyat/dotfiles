@@ -4,13 +4,13 @@ local application                 = require 'hs.application'
 
 -- Window Switcher
 -- https://mac-ra.com/window-kirikae-hammerspoon/
-window.animationDuration = 0
+window.animationDuration          = 0
 local switcher                    = window.switcher.new()
 switcher.ui.showSelectedTitle     = false
 switcher.ui.showSelectedThumbnail = false
 switcher.ui.backgroundColor       = { 0.3, 0.3, 0.3, 0.5 }
-hotkey.bind('cmd', 'j', 'Next window', function() switcher:next() end, nil, function() switcher:next() end)
-hotkey.bind('cmd', 'k', 'Prev window', function() switcher:previous() end, nil, function() switcher:previous() end)
+hotkey.bind({ 'cmd', 'shift' }, 'j', 'Next window', function() switcher:next() end, nil, function() switcher:next() end)
+hotkey.bind({ 'cmd', 'shift' }, 'k', 'Prev window', function() switcher:previous() end, nil, function() switcher:previous() end)
 
 -- application Switcher
 -- https://dev.to/rstacruz/switching-apps-slow-down-my-productivity-and-how-i-fixed-it-2anb-
@@ -32,8 +32,9 @@ end)
 local wm = function(position)
   return function() window.focusedWindow():moveToUnit(position) end
 end
-hotkey.bind({ 'cmd', 'shift' }, 'h', wm({ 0, 0, 0.5, 1 }))
-hotkey.bind({ 'cmd', 'shift' }, 'j', wm({ 0, 0.5, 1, 0.5 }))
-hotkey.bind({ 'cmd', 'shift' }, 'k', wm({ 0, 0, 1, 0.5 }))
-hotkey.bind({ 'cmd', 'shift' }, 'l', wm({ 0.5, 0, 0.5, 1 }))
+hotkey.bind({ 'cmd', 'shift' }, ',', wm({ 0, 0, 0.5, 1 }))
+-- hotkey.bind({ 'cmd', 'shift' }, 'j', wm({ 0, 0.5, 1, 0.5 }))
+-- hotkey.bind({ 'cmd', 'shift' }, 'k', wm({ 0, 0, 1, 0.5 }))
+hotkey.bind({ 'cmd', 'shift' }, '.', wm({ 0.5, 0, 0.5, 1 }))
 hotkey.bind({ 'cmd', 'shift' }, 'z', wm({ 0, 0, 1, 1 }))
+
