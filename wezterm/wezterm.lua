@@ -8,6 +8,11 @@ config.color_scheme = 'nightfox'
 -- config.color_scheme = 'Afterglow'
 -- config.color_scheme = "SpaceGray Eighties Dull"
 
+config.inactive_pane_hsb = {
+  saturation = 0.7,
+  brightness = 0.9,
+}
+
 config.font_size = 14.0
 
 config.font = wezterm.font_with_fallback {
