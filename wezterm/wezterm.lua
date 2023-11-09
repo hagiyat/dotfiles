@@ -10,7 +10,7 @@ config.color_scheme = 'nightfox'
 
 config.inactive_pane_hsb = {
   saturation = 0.7,
-  brightness = 0.9,
+  brightness = 0.7,
 }
 
 config.font_size = 14.0
