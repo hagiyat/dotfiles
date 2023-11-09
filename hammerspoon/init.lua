@@ -12,29 +12,33 @@ switcher.ui.backgroundColor       = { 0.3, 0.3, 0.3, 0.5 }
 hotkey.bind({ 'cmd', 'shift' }, 'j', 'Next window', function() switcher:next() end, nil, function() switcher:next() end)
 hotkey.bind({ 'cmd', 'shift' }, 'k', 'Prev window', function() switcher:previous() end, nil, function() switcher:previous() end)
 
+local RecursiveBinder = hs.loadSpoon("RecursiveBinder")  -- Load the spoon
+
+RecursiveBinder.escapeKey = {{}, 'escape'}  -- Press escape to abort
+
+-- singleKey is a convenience function provided in the Spoon
+local singleKey = spoon.RecursiveBinder.singleKey
+
 -- application Switcher
--- https://dev.to/rstacruz/switching-apps-slow-down-my-productivity-and-how-i-fixed-it-2anb-
-hotkey.bind({ "alt", "shift" }, "b", "Google Chrome", function()
-  application.launchOrFocus("Google Chrome")
-end)
-
-hotkey.bind({ "alt", "shift" }, "t", "WezTerm", function()
-  application.launchOrFocus("WezTerm")
-end)
-
-hotkey.bind({ "alt", "shift" }, "f", "Finder", function()
-  application.launchOrFocus("Finder")
-end)
-
+local applicationKeyMap = {
+  [singleKey('b', 'Google Chrome')] = function() application.launchOrFocus("Google Chrome") end,
+  [singleKey('t', 'WezTerm')] = function() application.launchOrFocus("WezTerm") end,
+  [singleKey('f', 'Finder')] = function() application.launchOrFocus("Finder") end,
+}
+hs.hotkey.bind({'option'}, 'a', RecursiveBinder.recursiveBind(applicationKeyMap))
 
 -- Window Management
 -- https://martinlwx.github.io/en/how-to-manage-windows-using-hammerspoon/
 local wm = function(position)
   return function() window.focusedWindow():moveToUnit(position) end
 end
-hotkey.bind({ 'cmd', 'shift' }, ',', wm({ 0, 0, 0.5, 1 }))
--- hotkey.bind({ 'cmd', 'shift' }, 'j', wm({ 0, 0.5, 1, 0.5 }))
--- hotkey.bind({ 'cmd', 'shift' }, 'k', wm({ 0, 0, 1, 0.5 }))
-hotkey.bind({ 'cmd', 'shift' }, '.', wm({ 0.5, 0, 0.5, 1 }))
-hotkey.bind({ 'cmd', 'shift' }, 'z', wm({ 0, 0, 1, 1 }))
 
+local windowKeyMap = {
+  [singleKey(',', 'left half')] = wm({ 0, 0, 0.5, 1 }),
+  [singleKey('.', 'right half')] = wm({ 0.5, 0, 0.5, 1 }),
+  [singleKey('z', 'maximize')] = wm({ 0, 0, 1, 1 }),
+
+  [singleKey('j', 'next window')] = function() switcher:next() end,
+  [singleKey('k', 'previous window')] = function() switcher:previous() end,
+}
+hs.hotkey.bind({'option'}, 'w', RecursiveBinder.recursiveBind(windowKeyMap))
