@@ -25,6 +25,7 @@ config.font = wezterm.font_with_fallback {
 config.window_decorations = "RESIZE"
 config.use_fancy_tab_bar = false
 config.audible_bell = "Disabled"
+config.scrollback_lines = 10000
 
 config.leader = { key = "t", mods = "CTRL", timeout_milliseconds = 2000 }
 
@@ -87,7 +88,7 @@ config.keys = {
     -- rotate pane
     key = "r",
     mods = "LEADER",
-    action = wezterm.action.RotatePanes("Clockwise"),
+    action = action.RotatePanes("Clockwise"),
   },
   {
     -- toggle pane zoom state
@@ -96,10 +97,15 @@ config.keys = {
     action = action.TogglePaneZoomState,
   },
   {
+    key = "t",
+    mods = "LEADER",
+    action = action.QuickSelect,
+  },
+  {
     -- open uri
     key = "u",
     mods = "LEADER",
-    action = wezterm.action.QuickSelectArgs {
+    action = action.QuickSelectArgs {
       label = "open url",
       patterns = {
         "https?://\\S+",
