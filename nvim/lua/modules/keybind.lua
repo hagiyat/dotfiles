@@ -57,6 +57,11 @@ return {
         }, { mode = "n" })
 
         wk.register({
+          ["gy"] = { ":<C-u>let @* = expand('%')<CR>", "copy relative path"},
+          ["gY"] = { ":<C-u>let @* = expand('%:p')<CR>", "copy fullpath"},
+        }, { mode = "n" })
+
+        wk.register({
           p = {
             name = "+packer",
             S = { ":<C-u>PackerSync<CR>", "sync" },
