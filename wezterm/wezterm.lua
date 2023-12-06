@@ -13,12 +13,12 @@ config.inactive_pane_hsb = {
   brightness = 0.7,
 }
 
-config.font_size = 14.0
+config.font_size = 14.5
 
 config.font = wezterm.font_with_fallback {
-  { family = "JetBrainsMono Nerd Font Mono" },
-  -- { family = "源ノ角ゴシック JP" },
-  { family = "ヒラギノ角ゴシック" },
+  -- { family = "JetBrainsMono Nerd Font Mono" },
+  { family = "GeistMono Nerd Font Mono" },
+  { family = "Noto Sans CJK JP" },
   "Noto Color Emoji",
 }
 

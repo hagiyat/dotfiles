@@ -176,9 +176,11 @@ function init_abbreviations() {
 
   abbrev-alias -g F="| fzf"
   abbrev-alias -g R="| rg"
-  #abbrev-alias -g C="| xclip -selection c"
-  abbrev-alias -g C="| pbcopy"
-
+  if [ "$(uname)" = "Darwin" ]; then
+    abbrev-alias -g C="| pbcopy"
+  else
+    abbrev-alias -g C="| xclip -selection c"
+  fi
 
   abbrev-alias -g g="git status"
   abbrev-alias -g gsh="git show"
@@ -219,8 +221,13 @@ function init_abbreviations() {
   abbrev-alias -g ec="$XDG_CONFIG_HOME/"
   abbrev-alias -g psa="ps auxwf"
   abbrev-alias -g md="mkdir -p"
-  # abbrev-alias -ge CO="$(xclip -selection c -o)"
-  abbrev-alias -ge CO="$(pbpaste)"
+
+  if [ "$(uname)" = "Darwin" ]; then
+    abbrev-alias -ge CO="$(pbpaste)"
+  else
+    abbrev-alias -ge CO="$(xclip -selection c -o)"
+  fi
+
   abbrev-alias -g ep="$HOME/repos" # project home
   abbrev-alias -g cdp="cd $HOME/repos"
   abbrev-alias -g qq="exit"
@@ -263,6 +270,12 @@ if [ -e /etc/arch-release ]; then
   if [ -d /usr/share/zsh/site-functions ]; then
     source /usr/share/zsh/site-functions
   fi
+fi
+if type brew &>/dev/null; then
+  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+
+  autoload -Uz compinit
+  compinit
 fi
 
 # The next line updates PATH for the Google Cloud SDK.
