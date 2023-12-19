@@ -3,27 +3,17 @@ import os
 
 links = [
     (".config/nvim", "nvim"),
-    # (".config/fish/config.fish", "fish/config.fish"),
-    # (".config/fish/conf.d", "fish/conf.d"),
     (".config/bat", "bat"),
     (".gitconfig", "gitconfig"),
     (".config/git/ignore", "gitignore_global"),
     (".myclirc", "myclirc"),
-    (".spacemacs", "spacemacs"),
-    (".config/doom", "doom"),
-    (".tmux.conf", "tmux.conf"),
     (".vimrc", "vimrc"),
     (".zshrc", "zshrc"),
-    (".config/termite", "termite"),
-    (".config/alacritty", "alacritty"),
     (".config/kitty", "kitty"),
-    (".config/goneovim", "goneovim"),
-    #  (".config/rofi", "rofi"),
+    (".config/wezterm", "wezterm"),
     (".config/fontconfig", "fontconfig"),
     (".config/pmy", "pmy"),
-    (".config/xkeysnail", "xkeysnail"),
     (".config/flake8", "flake8"),
-    (".config/xremap", "xremap"),
 ]
 
 home = os.environ["HOME"]
