@@ -111,12 +111,12 @@ return {
         dashboard.section.buttons.val = {
           dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
           dashboard.button("SPC f f", "  Find file", ":Telescope find_files<CR>"),
-          dashboard.button("SPC f m", "  Recently opened files", ":Telescope oldfiles only_cwd=true<CR>"),
-          dashboard.button("SPC f g", "  Find word", ":Telescope live_grep<CR>"),
-          dashboard.button("SPC e", "פּ  File explorer", ":Neotree reveal<CR>"),
-          dashboard.button("SPC p c", "  Packer compile", ":PackerCompile<CR>"),
-          dashboard.button("SPC p S", "  Update plugins", ":PackerSync<CR>"),
-          dashboard.button("q", "  Quit NVIM", ":qa<CR>"),
+          dashboard.button("SPC f m", "󰅐  Recently opened files", ":Telescope oldfiles only_cwd=true<CR>"),
+          dashboard.button("SPC f g", "󱙓  Find word", ":Telescope live_grep<CR>"),
+          dashboard.button("SPC e", "󰙅  File explorer", ":Neotree reveal<CR>"),
+          dashboard.button("SPC p c", "  Packer compile", ":PackerCompile<CR>"),
+          dashboard.button("SPC p S", "󱍸  Update plugins", ":PackerSync<CR>"),
+          dashboard.button("q", "󰩈  Quit NVIM", ":qa<CR>"),
         }
         alpha.setup(dashboard.config)
       end,
