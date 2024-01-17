@@ -9,20 +9,18 @@
 	log = delta
 	reflog = delta
 	show = delta
-  difftool = true
 [delta]
-    plus-style = "syntax #214430"
-    minus-style = "syntax #542001"
     syntax-theme = OneHalfDark
+    plus-style = "syntax #013020"
+    plus-emph-style = "syntax bold #086020"
+    minus-style = "syntax #342820"
+    minus-emph-style = "syntax bold #640801"
+    line-numbers-minus-style = "#d04056"
+    line-numbers-plus-style = "#40c490"
     navigate = true
+    side-by-side = true
 [diff]
 	compactionHeuristic = true
-  tool = difftastic
-  external = difft
-[difftool]
-  prompt = false
-[difftool "difftastic"]
-  cmd = difft "$LOCAL" "$REMOTE"
 [interactive]
 	diffFilter = delta --color-only
 [merge]
