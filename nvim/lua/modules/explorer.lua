@@ -44,7 +44,7 @@ return {
         vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError" })
         vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSignWarn" })
         vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSignInfo" })
-        vim.fn.sign_define("DiagnosticSignHint", { text = "", texthl = "DiagnosticSignHint" })
+        vim.fn.sign_define("DiagnosticSignHint", { text = "❢", texthl = "DiagnosticSignHint" })
 
         require("neo-tree").setup {
           close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab
@@ -74,7 +74,7 @@ return {
             icon = {
               folder_closed = "",
               folder_open = "",
-              folder_empty = "ﰊ",
+              folder_empty = "⛶",
               -- The next two settings are only a fallback, if you use nvim-web-devicons and configure default icons there
               -- then these will never be used.
               default = "*",
@@ -93,13 +93,13 @@ return {
               symbols = {
                 -- Change type
                 added = "✚", -- or "✚", but this is redundant info if you use git_status_colors on the name
-                modified = "", -- or "", but this is redundant info if you use git_status_colors on the name
+                modified = "✎", -- or "", but this is redundant info if you use git_status_colors on the name
                 deleted = "✖", -- this can only be used in the git_status source
-                renamed = "", -- this can only be used in the git_status source
+                renamed = "⇅", -- this can only be used in the git_status source
                 -- Status type
                 untracked = "",
                 ignored = "",
-                unstaged = "",
+                unstaged = "☒",
                 staged = "",
                 conflict = "",
               },
