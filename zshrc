@@ -197,6 +197,7 @@ function init_abbreviations() {
   abbrev-alias -g gl="git log"
   abbrev-alias -g glg="git log --stat --graph --oneline --decorate"
   abbrev-alias -g glm="git log --stat --author=hagiyat"
+  abbrev-alias -g gf="git fetch"
   abbrev-alias -g gps="git push"
   abbrev-alias -g gpf="git push --force-with-lease --force-if-includes"
   abbrev-alias -g gpl="git pull"
