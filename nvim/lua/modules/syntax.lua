@@ -45,6 +45,7 @@ return {
             "tsx",
             "typescript",
             "yaml",
+            "terraform",
             "vim",
           },
           -- nvim-treesitter-textobjects
