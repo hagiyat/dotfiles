@@ -69,7 +69,7 @@ return {
                   --   "definition",
                   -- },
                   d = {
-                    "<cmd>TroubleToggle lsp_definitions<cr>",
+                    "<cmd>Trouble lsp_definitions toggle<cr>",
                     "definitions",
                   },
                   -- D = {
@@ -79,7 +79,7 @@ return {
                   --   "references",
                   -- },
                   D = {
-                    "<cmd>TroubleToggle lsp_references<cr>",
+                    "<cmd>Trouble lsp_references toggle<cr>",
                     "references",
                   },
                   -- e = { vim.lsp.diagnostic.show_line_diagnostics, "show line diagnostics" },
@@ -93,7 +93,7 @@ return {
                   --   "implementation",
                   -- },
                   i = {
-                    "<cmd>TroubleToggle lsp_implementations<cr>",
+                    "<cmd>Trouble lsp_implementations toggle<cr>",
                     "implementations",
                   },
                   o = { "<cmd>Lspsaga outline<CR>", "outline by saga" },
@@ -113,7 +113,7 @@ return {
                   --   "type definition",
                   -- },
                   t = {
-                    "<cmd>TroubleToggle lsp_type_definitions<cr>",
+                    "<cmd>Trouble lsp_type_definitions toggle<cr>",
                     "type definitions",
                   },
                 },
