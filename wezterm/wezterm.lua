@@ -38,13 +38,13 @@ config.keys = {
   },
   {
     -- new pane/vertical
-    key = "-",
+    key = "s",
     mods = "LEADER",
     action = action.SplitVertical { domain = 'CurrentPaneDomain' },
   },
   {
     -- new pane/horizontal
-    key = "\\",
+    key = "v",
     mods = "LEADER",
     action = action.SplitHorizontal { domain = 'CurrentPaneDomain' },
   },
@@ -56,7 +56,7 @@ config.keys = {
   },
   {
     -- select pane
-    key = "s",
+    key = "f",
     mods = "LEADER",
     action = action.PaneSelect { mode = "SwapWithActive" },
   },
