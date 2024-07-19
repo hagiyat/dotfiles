@@ -15,26 +15,31 @@ return {
         local directions = require("hop.hint").HintDirection
         local wk = require("which-key")
         local setup_hop_line = function(mode)
-          wk.register({
-            ["f"] = {
+          wk.add({
+            {
+              "f",
               function()
                 hop.hint_char1 {
                   direction = directions.AFTER_CURSOR,
                   current_line_only = true,
                 }
               end,
-              "hop forward",
+              desc = "hop forward",
+              remap = true,
             },
-            ["F"] = {
+            {
+              "F",
               function()
                 hop.hint_char1 {
                   direction = directions.BEFORE_CURSOR,
                   current_line_only = true,
                 }
               end,
-              "hop backward",
+              desc = "hop backward",
+              remap = true,
             },
-            ["t"] = {
+            {
+              "t",
               function()
                 hop.hint_char1 {
                   direction = directions.AFTER_CURSOR,
@@ -42,9 +47,11 @@ return {
                   hint_offset = -1,
                 }
               end,
-              "hop forward -1",
+              desc = "hop forward -1",
+              remap = true,
             },
-            ["T"] = {
+            {
+              "T",
               function()
                 hop.hint_char1 {
                   direction = directions.BEFORE_CURSOR,
@@ -52,30 +59,33 @@ return {
                   hint_offset = 1,
                 }
               end,
-              "hop backward +1",
+              desc = "hop backward +1",
+              remap = true,
             },
-          }, { remap = true, mode = mode })
+          })
         end
         setup_hop_line("n")
         setup_hop_line("v")
 
-        wk.register({
-          s = {
-            name = "+hop",
-            f = {
-              function()
-                hop.hint_char2()
-              end,
-              "char2",
-            },
-            w = {
-              function()
-                hop.hint_words()
-              end,
-              "words",
-            },
+        wk.add({
+          { "s", group = "hop", remap = true },
+          {
+            "sf",
+            function()
+              hop.hint_char2()
+            end,
+            desc = "char2",
+            remap = true,
           },
-        }, { remap = true, mode = "n" })
+          {
+            "sw",
+            function()
+              hop.hint_words()
+            end,
+            desc = "words",
+            remap = true,
+          },
+        })
       end,
     }
 
@@ -125,29 +135,15 @@ return {
           notify = true,
         }
         local wk = require("which-key")
-        wk.register({
-          j = {
-            name = "+treesj",
-            j = {
-              function()
-                vim.cmd([[TSJToggle]])
-              end,
-              "toggle",
-            },
-            s = {
-              function()
-                vim.cmd([[TSJSplit]])
-              end,
-              "split",
-            },
-            J = {
-              function()
-                vim.cmd([[TSJJoin]])
-              end,
-              "join",
-            },
+        wk.add({
+          {
+            mode = { "n", "v" },
+            { "<space>j",  group = "treesj",                      remap = true },
+            { "<space>jJ", function() vim.cmd([[TSJJoin]]) end,   desc = "join",   remap = true },
+            { "<space>jj", function() vim.cmd([[TSJToggle]]) end, desc = "toggle", remap = true },
+            { "<space>js", function() vim.cmd([[TSJSplit]]) end,  desc = "split",  remap = true },
           },
-        }, { prefix = "<space>", remap = true, mode = { "n", "v" } })
+        })
       end,
     }
 

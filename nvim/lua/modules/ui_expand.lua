@@ -25,38 +25,15 @@ return {
         }
 
         local wk = require("which-key")
-        wk.register({
-          h = {
-            name = "+trouble",
-            h = {
-              "<cmd>TroubleToggle<cr>",
-              "all",
-            },
-            w = {
-              "<cmd>TroubleToggle workspace_diagnostics<cr>",
-              "workspace diagnostics",
-            },
-            d = {
-              "<cmd>TroubleToggle document_diagnostics<cr>",
-              "document diagnostics",
-            },
-            l = {
-              "<cmd>TroubleToggle loclist<cr>",
-              "loclist",
-            },
-            f = {
-              "<cmd>TroubleToggle quickfix<cr>",
-              "quickfix",
-            },
-          },
-        }, { prefix = "<space>", noremap = true, silent = true, mode = "n" })
-
-        wk.register({
-          R = {
-            "<cmd>TroubleToggle lsp_references<cr>",
-            "lsp references",
-          },
-        }, { prefix = "g", noremap = true, silent = true, mode = "n" })
+        wk.add({
+          { "<space>h",  group = "trouble",                              remap = false },
+          { "<space>hd", "<cmd>TroubleToggle document_diagnostics<cr>",  desc = "document diagnostics",  remap = false },
+          { "<space>hf", "<cmd>TroubleToggle quickfix<cr>",              desc = "quickfix",              remap = false },
+          { "<space>hh", "<cmd>TroubleToggle<cr>",                       desc = "all",                   remap = false },
+          { "<space>hl", "<cmd>TroubleToggle loclist<cr>",               desc = "loclist",               remap = false },
+          { "<space>hw", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "workspace diagnostics", remap = false },
+          { "gR",        "<cmd>TroubleToggle lsp_references<cr>",        desc = "lsp references",        remap = false },
+        })
       end,
     }
 
@@ -109,11 +86,9 @@ return {
           end,
         }
 
-        require("which-key").register {
-          ["<space>g"] = {
-            name = "+gitsigns",
-          },
-        }
+        require("which-key").add({
+          { "<space>g", group = "gitsigns" },
+        })
       end,
     }
 

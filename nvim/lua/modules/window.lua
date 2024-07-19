@@ -14,19 +14,19 @@ return {
           chars = { "W", "F", "J", "D", "K", "S", "L", "A" },
         }
 
-        require("which-key").register({
-          w = {
-            w = {
-              function()
-                local winid = winpick.select()
-                if winid then
-                  vim.api.nvim_set_current_win(winid)
-                end
-              end,
-              "pick a window",
-            },
+        require("which-key").add({
+          {
+            "<space>ww",
+            function()
+              local winid = winpick.select()
+              if winid then
+                vim.api.nvim_set_current_win(winid)
+              end
+            end,
+            desc = "pick a window",
+            remap = true
           },
-        }, { prefix = "<space>", remap = true, mode = "n" })
+        })
       end,
     }
 
@@ -45,34 +45,40 @@ return {
         -- vim.o.equalalways = false
         require("windows").setup()
 
-        require("which-key").register({
-          w = {
-            z = {
-              function()
-                vim.cmd([[WindowsMaximize]])
-              end,
-              "maximize",
-            },
-            S = {
-              function()
-                vim.cmd([[WindowsMaximizeHorizontally]])
-              end,
-              "maximize horizontally",
-            },
-            V = {
-              function()
-                vim.cmd([[WindowsMaximizeVertically]])
-              end,
-              "maximize vertically",
-            },
-            ["="] = {
-              function()
-                vim.cmd([[WindowsEqualize]])
-              end,
-              "equalize",
-            },
+        require("which-key").add({
+          {
+            "<space>wz",
+            function()
+              vim.cmd([[WindowsMaximize]])
+            end,
+            desc = "maximize",
+            remap = true,
           },
-        }, { prefix = "<space>", remap = true, mode = "n" })
+          {
+            "<space>wS",
+            function()
+              vim.cmd([[WindowsMaximizeHorizontally]])
+            end,
+            desc = "maximize horizontally",
+            remap = true,
+          },
+          {
+            "<space>wV",
+            function()
+              vim.cmd([[WindowsMaximizeVertically]])
+            end,
+            desc = "maximize vertically",
+            remap = true,
+          },
+          {
+            "<space>w=",
+            function()
+              vim.cmd([[WindowsEqualize]])
+            end,
+            desc = "equalize",
+            remap = true,
+          },
+        })
       end,
     }
 
@@ -117,26 +123,27 @@ return {
               picker_chars = "WFJDKSLA",
               filter_rules = {
                 cur_win = true, -- Filter out the current window
-                floats = true, -- Filter out floating windows
-                filetype = {}, -- List of ignored file types
-                buftype = {}, -- List of ignored buftypes
-                bufname = {}, -- List of vim regex patterns matching ignored buffer names
+                floats = true,  -- Filter out floating windows
+                filetype = {},  -- List of ignored file types
+                buftype = {},   -- List of ignored buftypes
+                bufname = {},   -- List of vim regex patterns matching ignored buffer names
               },
               filter_func = nil,
             }
           end,
         }
 
-        require("which-key").register({
-          w = {
-            m = {
-              function()
-                vim.cmd([[WinShift]])
-              end,
-              "shift",
-            },
+
+        require("which-key").add({
+          {
+            "<space>wm",
+            function()
+              vim.cmd([[WinShift]])
+            end,
+            desc = "shift",
+            remap = true
           },
-        }, { prefix = "<space>", remap = true, mode = "n" })
+        })
       end,
     }
   end,

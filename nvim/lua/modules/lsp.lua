@@ -8,6 +8,7 @@ return {
         { "folke/which-key.nvim" },
         { "jose-elias-alvarez/null-ls.nvim",   opt = true },
         { "glepnir/lspsaga.nvim",              branch = "main", opt = true },
+        -- { "hedyhli/outline.nvim",              opt = true },
       },
       event = { "BufReadPre" },
       wants = {
@@ -18,6 +19,7 @@ return {
         "cmp-nvim-lsp",
         "plenary.nvim",
         "trouble.nvim",
+        -- "outline.nvim",
       },
       config = function()
         require("mason").setup {
@@ -35,6 +37,8 @@ return {
             border = "rounded",
           },
         }
+
+        -- require("outline").setup({})
 
         local mason_lspconfig = require("mason-lspconfig")
         local lspconfig = require("lspconfig")
@@ -96,7 +100,8 @@ return {
                     "<cmd>Trouble lsp_implementations toggle<cr>",
                     "implementations",
                   },
-                  o = { "<cmd>Lspsaga outline<CR>", "outline by saga" },
+                  -- o = { "<cmd>Lspsaga outline<CR>", "outline by saga" },
+                  -- o = { "<cmd>Outline<CR>", "outline" },
                   p = { "<cmd>Lspsaga peek_definition<CR>", "peek definition by saga" },
                   -- r = { vim.lsp.buf.rename, "rename" },
                   r = { "<cmd>Lspsaga rename<CR>", "rename by saga" },

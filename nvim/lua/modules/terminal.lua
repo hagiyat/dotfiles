@@ -37,13 +37,11 @@ return {
           horizontal_term:toggle()
         end
 
-        require("which-key").register({
-          t = {
-            name = "+terminal",
-            t = { FloatTerminalToggle, "float" },
-            s = { HorizontalTerminalToggle, "split" },
-          },
-        }, { prefix = "<space>", noremap = true, mode = "n" })
+        require("which-key").add({
+          { "<space>t",  group = "terminal",       remap = false },
+          { "<space>ts", HorizontalTerminalToggle, desc = "split", remap = false },
+          { "<space>tt", FloatTerminalToggle,      desc = "float", remap = false },
+        })
       end,
     }
   end,

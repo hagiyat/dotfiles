@@ -5,73 +5,67 @@ return {
       module = { "which-key" },
       config = function()
         local wk = require("which-key")
-        wk.setup()
 
-        wk.register({
-          w = {
-            name = "+window",
-            h = { "<C-w>h", "move left" },
-            j = { "<C-w>j", "move down" },
-            k = { "<C-w>k", "move up" },
-            l = { "<C-w>l", "move right" },
-            s = { ":<C-u>split<CR>", "split" },
-            v = { ":<C-u>vsplit<CR>", "vsplit" },
-            d = { ":<C-u>q<CR>", "delete" },
-            [0] = { "<C-w>=", "size reset" },
-          },
-        }, { prefix = "<space>", noremap = true, mode = "n" })
+        wk.add({
+          { "<space>w",  "<C-w>=",           desc = "size reset", remap = false },
+          { "<space>w",  group = "window",   remap = false },
+          { "<space>wd", ":<C-u>q<CR>",      desc = "delete",     remap = false },
+          { "<space>wh", "<C-w>h",           desc = "move left",  remap = false },
+          { "<space>wj", "<C-w>j",           desc = "move down",  remap = false },
+          { "<space>wk", "<C-w>k",           desc = "move up",    remap = false },
+          { "<space>wl", "<C-w>l",           desc = "move right", remap = false },
+          { "<space>ws", ":<C-u>split<CR>",  desc = "split",      remap = false },
+          { "<space>wv", ":<C-u>vsplit<CR>", desc = "vsplit",     remap = false },
+        })
 
-        wk.register({
-          b = {
-            name = "+buffer",
-            n = { ":<C-u>bnext<CR>", "next" },
-            p = { ":<C-u>bprevious<CR>", "previous" },
-            d = { ":<C-u>bdelete<CR>", "delete" },
-            a = { ":<C-u>enew<CR>", "add" },
-          },
-        }, { prefix = "<space>", noremap = true, mode = "n" })
+        wk.add({
+          { "<space>b",  group = "buffer",      remap = false },
+          { "<space>ba", ":<C-u>enew<CR>",      desc = "add",      remap = false },
+          { "<space>bd", ":<C-u>bdelete<CR>",   desc = "delete",   remap = false },
+          { "<space>bn", ":<C-u>bnext<CR>",     desc = "next",     remap = false },
+          { "<space>bp", ":<C-u>bprevious<CR>", desc = "previous", remap = false },
+        })
 
-        wk.register({
-          q = {
-            name = "+quit",
-            q = { ":<C-u>q<CR>", "quit" },
-            w = { ":<C-u>wq<CR>", "with write" },
-            a = { ":<C-u>qa<CR>", "quit all" },
-            f = { ":<C-u>qa!<CR>", "force quit" },
-          },
-        }, { prefix = "<space>", noremap = true, mode = "n" })
+        wk.add({
+          { "<space>q",  group = "quit",  remap = false },
+          { "<space>qa", ":<C-u>qa<CR>",  desc = "quit all",   remap = false },
+          { "<space>qf", ":<C-u>qa!<CR>", desc = "force quit", remap = false },
+          { "<space>qq", ":<C-u>q<CR>",   desc = "quit",       remap = false },
+          { "<space>qw", ":<C-u>wq<CR>",  desc = "with write", remap = false },
+        })
 
         -- emacs keys
-        wk.register({
-          ["<c-b>"] = { "<Left>", "left" },
-          ["<c-f>"] = { "<Right>", "right" },
-          ["<c-a>"] = { "<C-O>^", "home" },
-          ["<c-e>"] = { "<End>", "end" },
-          ["<c-h>"] = { "<C-g>u<C-h>", "delete forward" },
-          ["<c-d>"] = { "<C-g>u<Del>", "delete" },
-        }, { mode = "i" })
-
-        wk.register({
-          ["<esc><esc>"] = { ":nohlsearch<CR>", "clear highlight" },
-          ["gw"] = { ":<C-u>w<CR>", "save file" },
-        }, { mode = "n" })
-
-        wk.register({
-          ["gy"] = { ":<C-u>let @* = expand('%')<CR>", "copy relative path"},
-          ["gY"] = { ":<C-u>let @* = expand('%:p')<CR>", "copy fullpath"},
-        }, { mode = "n" })
-
-        wk.register({
-          p = {
-            name = "+packer",
-            S = { ":<C-u>PackerSync<CR>", "sync" },
-            s = { ":<C-u>PackerStatus<CR>", "status" },
-            c = { ":<C-u>PackerCompile<CR>", "compile" },
-            I = { ":<C-u>PackerInstall<CR>", "install" },
-            p = { ":<C-u>PackerProfile<CR>", "profile" },
-            C = { ":<C-u>PackerCompile profile=true<CR>", "compile profile" },
+        wk.add({
+          {
+            mode = { "i" },
+            { "<c-a>", "<C-O>^",      desc = "home" },
+            { "<c-b>", "<Left>",      desc = "left" },
+            { "<c-d>", "<C-g>u<Del>", desc = "delete" },
+            { "<c-e>", "<End>",       desc = "end" },
+            { "<c-f>", "<Right>",     desc = "right" },
+            { "<c-h>", "<C-g>u<C-h>", desc = "delete forward" },
           },
-        }, { prefix = "<space>", noremap = true, mode = "n" })
+        })
+
+        wk.add({
+          { "<esc><esc>", ":nohlsearch<CR>", desc = "clear highlight" },
+          { "gw",         ":<C-u>w<CR>",     desc = "save file" },
+        })
+
+        wk.add({
+          { "gY", ":<C-u>let @* = expand('%:p')<CR>", desc = "copy fullpath" },
+          { "gy", ":<C-u>let @* = expand('%')<CR>",   desc = "copy relative path" },
+        })
+
+        wk.add({
+          { "<space>p",  group = "packer",                       remap = false },
+          { "<space>pC", ":<C-u>PackerCompile profile=true<CR>", desc = "compile profile", remap = false },
+          { "<space>pI", ":<C-u>PackerInstall<CR>",              desc = "install",         remap = false },
+          { "<space>pS", ":<C-u>PackerSync<CR>",                 desc = "sync",            remap = false },
+          { "<space>pc", ":<C-u>PackerCompile<CR>",              desc = "compile",         remap = false },
+          { "<space>pp", ":<C-u>PackerProfile<CR>",              desc = "profile",         remap = false },
+          { "<space>ps", ":<C-u>PackerStatus<CR>",               desc = "status",          remap = false },
+        })
       end,
     }
   end,
