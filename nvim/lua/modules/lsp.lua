@@ -7,7 +7,7 @@ return {
         { "williamboman/mason-lspconfig.nvim", opt = true },
         { "folke/which-key.nvim" },
         { "jose-elias-alvarez/null-ls.nvim",   opt = true },
-        { "glepnir/lspsaga.nvim",              branch = "main", opt = true },
+        { "glepnir/lspsaga.nvim",              opt = true },
         { "hedyhli/outline.nvim",              opt = true },
       },
       event = { "BufReadPre" },
@@ -33,6 +33,20 @@ return {
         }
 
         require("lspsaga").setup {
+          finder = {
+            max_height = 0.6,
+            default = 'tyd+ref+imp+def',
+            keys = {
+              toggle_or_open = '<CR>',
+              vsplit = 'v',
+              split = 's',
+              quit = 'q',
+              close = '<Esc>',
+            },
+            methods = {
+              tyd = 'textDocument/typeDefinition',
+            }
+          },
           ui = {
             border = "rounded",
           },
@@ -63,25 +77,17 @@ return {
             local opts = {}
             opts.on_attach = function(_, bufnr)
               wk.add({
-                { "<space>l",  group = "lsp",                                 remap = false },
-                { "<space>la", "<cmd>Lspsaga code_action<CR>",                desc = "code action by saga",     remap = false },
-                { "<space>ld", "<cmd>Trouble lsp_definitions toggle<cr>",     desc = "definitions",             remap = false },
-                { "<space>lD", "<cmd>Trouble lsp_references toggle<cr>",      desc = "references",              remap = false },
-                { "<space>lf", vim.lsp.buf.format,                            desc = "format",                  remap = false },
-                { "<space>lF", "<cmd>Lspsaga lsp_finder<CR>",                 desc = "lsp finder by saga",      remap = false },
-                { "<space>li", "<cmd>Trouble lsp_implementations toggle<cr>", desc = "implementations",         remap = false },
-                { "<space>lo", "<cmd>Outline<CR>",                            desc = "outline",                 remap = false },
-                { "<space>lp", "<cmd>Lspsaga peek_definition<CR>",            desc = "peek definition by saga", remap = false },
-                { "<space>lr", "<cmd>Lspsaga rename<CR>",                     desc = "rename by saga",          remap = false },
-                -- {
-                --   "<space>ls",
-                --   function()
-                --     vim.lsp.buf.document_symbol { on_list = on_list_to_loclist }
-                --   end,
-                --   desc = "document symbols",
-                --   remap = false
-                -- },
-                { "<space>lt", "<cmd>Trouble lsp_type_definitions toggle<cr>", desc = "type definitions", remap = false },
+                { "<space>l",  group = "lsp",                                  remap = false },
+                { "<space>la", "<cmd>Lspsaga code_action<CR>",                 desc = "code action by saga",     remap = false },
+                { "<space>ld", "<cmd>Trouble lsp_definitions toggle<cr>",      desc = "definitions",             remap = false },
+                { "<space>lD", "<cmd>Trouble lsp_references toggle<cr>",       desc = "references",              remap = false },
+                { "<space>lf", vim.lsp.buf.format,                             desc = "format",                  remap = false },
+                { "<space>li", "<cmd>Trouble lsp_implementations toggle<cr>",  desc = "implementations",         remap = false },
+                { "<space>lo", "<cmd>Outline<CR>",                             desc = "outline",                 remap = false },
+                { "<space>ls", "<cmd>Lspsaga finder<CR>",                      desc = "lsp finder by saga",      remap = false },
+                { "<space>lp", "<cmd>Lspsaga peek_definition<CR>",             desc = "peek definition by saga", remap = false },
+                { "<space>lr", "<cmd>Lspsaga rename<CR>",                      desc = "rename by saga",          remap = false },
+                { "<space>lt", "<cmd>Trouble lsp_type_definitions toggle<cr>", desc = "type definitions",        remap = false },
                 { "<space>lk", vim.diagnostic.goto_prev,                       desc = "diagnostic prev" },
                 { "<space>lj", vim.diagnostic.goto_next,                       desc = "diagnostic next" },
               })
