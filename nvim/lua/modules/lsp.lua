@@ -8,7 +8,7 @@ return {
         { "folke/which-key.nvim" },
         { "jose-elias-alvarez/null-ls.nvim",   opt = true },
         { "glepnir/lspsaga.nvim",              branch = "main", opt = true },
-        -- { "hedyhli/outline.nvim",              opt = true },
+        { "hedyhli/outline.nvim",              opt = true },
       },
       event = { "BufReadPre" },
       wants = {
@@ -19,7 +19,7 @@ return {
         "cmp-nvim-lsp",
         "plenary.nvim",
         "trouble.nvim",
-        -- "outline.nvim",
+        "outline.nvim",
       },
       config = function()
         require("mason").setup {
@@ -38,7 +38,7 @@ return {
           },
         }
 
-        -- require("outline").setup({})
+        require("outline").setup({})
 
         local mason_lspconfig = require("mason-lspconfig")
         local lspconfig = require("lspconfig")
@@ -62,84 +62,41 @@ return {
           function(server_name)
             local opts = {}
             opts.on_attach = function(_, bufnr)
-              wk.register({
-                l = {
-                  name = "+lsp",
-                  a = { "<cmd>Lspsaga code_action<CR>", "code action by saga" },
-                  -- d = {
-                  --   function()
-                  --     vim.lsp.buf.definition { on_list = on_list_to_qf }
-                  --   end,
-                  --   "definition",
-                  -- },
-                  d = {
-                    "<cmd>Trouble lsp_definitions toggle<cr>",
-                    "definitions",
-                  },
-                  -- D = {
-                  --   function()
-                  --     vim.lsp.buf.references(nil, { on_list = on_list_to_qf })
-                  --   end,
-                  --   "references",
-                  -- },
-                  D = {
-                    "<cmd>Trouble lsp_references toggle<cr>",
-                    "references",
-                  },
-                  -- e = { vim.lsp.diagnostic.show_line_diagnostics, "show line diagnostics" },
-                  f = { vim.lsp.buf.format, "format" },
-                  F = { "<cmd>Lspsaga lsp_finder<CR>", "lsp finder by saga" },
-                  -- h = { vim.lsp.buf.signature_help, "signature help" },
-                  -- i = {
-                  --   function()
-                  --     vim.lsp.buf.implementation { on_list = on_list_to_qf }
-                  --   end,
-                  --   "implementation",
-                  -- },
-                  i = {
-                    "<cmd>Trouble lsp_implementations toggle<cr>",
-                    "implementations",
-                  },
-                  -- o = { "<cmd>Lspsaga outline<CR>", "outline by saga" },
-                  -- o = { "<cmd>Outline<CR>", "outline" },
-                  p = { "<cmd>Lspsaga peek_definition<CR>", "peek definition by saga" },
-                  -- r = { vim.lsp.buf.rename, "rename" },
-                  r = { "<cmd>Lspsaga rename<CR>", "rename by saga" },
-                  s = {
-                    function()
-                      vim.lsp.buf.document_symbol { on_list = on_list_to_loclist }
-                    end,
-                    "document symbols",
-                  },
-                  -- t = {
-                  --   function()
-                  --     vim.lsp.buf.type_definition { on_list = on_list_to_qf }
-                  --   end,
-                  --   "type definition",
-                  -- },
-                  t = {
-                    "<cmd>Trouble lsp_type_definitions toggle<cr>",
-                    "type definitions",
-                  },
+              wk.add({
+                { "<space>l",  group = "lsp",                                 remap = false },
+                { "<space>la", "<cmd>Lspsaga code_action<CR>",                desc = "code action by saga",     remap = false },
+                { "<space>ld", "<cmd>Trouble lsp_definitions toggle<cr>",     desc = "definitions",             remap = false },
+                { "<space>lD", "<cmd>Trouble lsp_references toggle<cr>",      desc = "references",              remap = false },
+                { "<space>lf", vim.lsp.buf.format,                            desc = "format",                  remap = false },
+                { "<space>lF", "<cmd>Lspsaga lsp_finder<CR>",                 desc = "lsp finder by saga",      remap = false },
+                { "<space>li", "<cmd>Trouble lsp_implementations toggle<cr>", desc = "implementations",         remap = false },
+                { "<space>lo", "<cmd>Outline<CR>",                            desc = "outline",                 remap = false },
+                { "<space>lp", "<cmd>Lspsaga peek_definition<CR>",            desc = "peek definition by saga", remap = false },
+                { "<space>lr", "<cmd>Lspsaga rename<CR>",                     desc = "rename by saga",          remap = false },
+                {
+                  "<space>ls",
+                  function()
+                    vim.lsp.buf.document_symbol { on_list = on_list_to_loclist }
+                  end,
+                  desc = "document symbols",
+                  remap = false
                 },
-              }, { buffer = bufnr, prefix = "<space>", noremap = true, mode = "n", silent = true })
-              wk.register({
-                c = {
-                  name = "+lsp",
-                  a = { "<cmd>Lspsaga code_action<CR>", "code action by saga" },
-                },
-              }, { buffer = bufnr, prefix = "<space>", noremap = true, mode = "v", silent = true })
-              wk.register({
-                g = {
-                  name = "+lsp",
-                  [","] = { vim.diagnostic.goto_prev, "diagnostic prev" },
-                  ["."] = { vim.diagnostic.goto_next, "diagnostic next" },
-                },
-              }, { buffer = bufnr, noremap = true, mode = "n" })
-              wk.register({
-                ["K"] = { "<cmd>Lspsaga hover_doc<CR>", "lsp hover by saga" },
-                -- ["K"] = { vim.lsp.buf.hover, "lsp hover" },
-              }, { buffer = bufnr, noremap = true, mode = "n", silent = true })
+                { "<space>lt", "<cmd>Trouble lsp_type_definitions toggle<cr>", desc = "type definitions", remap = false },
+                { "<space>lk", vim.diagnostic.goto_prev,                       desc = "diagnostic prev" },
+                { "<space>lj", vim.diagnostic.goto_next,                       desc = "diagnostic next" },
+              })
+              wk.add({
+
+                { "<space>l",  group = "lsp",                  mode = "v",                   remap = false },
+                { "<space>la", "<cmd>Lspsaga code_action<CR>", desc = "code action by saga", mode = "v",   remap = false },
+              })
+              wk.add({
+                { "g,", vim.diagnostic.goto_prev, desc = "diagnostic prev", remap = false },
+                { "g.", vim.diagnostic.goto_next, desc = "diagnostic next", remap = false },
+              })
+              wk.add({
+                { "K", "<cmd>Lspsaga hover_doc<CR>", desc = "lsp hover by saga", remap = false },
+              })
             end
 
             opts.capabilities = cmp_nvim_lsp.default_capabilities()
