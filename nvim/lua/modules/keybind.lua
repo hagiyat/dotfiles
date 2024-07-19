@@ -3,6 +3,9 @@ return {
     use {
       "folke/which-key.nvim",
       module = { "which-key" },
+      wants = {
+        'mini.icons',
+      },
       config = function()
         local wk = require("which-key")
 

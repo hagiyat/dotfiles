@@ -20,6 +20,12 @@ return {
     }
 
     use {
+      "echasnovski/mini.icons",
+      module = { "mini.icons" },
+      opt = true,
+    }
+
+    use {
       -- wants from neotree and noice
       "MunifTanjim/nui.nvim",
       opt = true,
