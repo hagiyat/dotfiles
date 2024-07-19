@@ -73,14 +73,14 @@ return {
                 { "<space>lo", "<cmd>Outline<CR>",                            desc = "outline",                 remap = false },
                 { "<space>lp", "<cmd>Lspsaga peek_definition<CR>",            desc = "peek definition by saga", remap = false },
                 { "<space>lr", "<cmd>Lspsaga rename<CR>",                     desc = "rename by saga",          remap = false },
-                {
-                  "<space>ls",
-                  function()
-                    vim.lsp.buf.document_symbol { on_list = on_list_to_loclist }
-                  end,
-                  desc = "document symbols",
-                  remap = false
-                },
+                -- {
+                --   "<space>ls",
+                --   function()
+                --     vim.lsp.buf.document_symbol { on_list = on_list_to_loclist }
+                --   end,
+                --   desc = "document symbols",
+                --   remap = false
+                -- },
                 { "<space>lt", "<cmd>Trouble lsp_type_definitions toggle<cr>", desc = "type definitions", remap = false },
                 { "<space>lk", vim.diagnostic.goto_prev,                       desc = "diagnostic prev" },
                 { "<space>lj", vim.diagnostic.goto_next,                       desc = "diagnostic next" },
