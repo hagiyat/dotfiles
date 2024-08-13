@@ -3,10 +3,16 @@ return {
     "hrsh7th/nvim-cmp",
     event = "InsertEnter",
     dependencies = {
-      { "hrsh7th/cmp-nvim-lsp",         event = "InsertEnter" },
-      { "hrsh7th/vim-vsnip",            event = "InsertEnter" },
-      { "hrsh7th/vim-vsnip-integ",      event = "InsertEnter" },
-      { "onsails/lspkind.nvim",         event = "InsertEnter" },
+      { "hrsh7th/cmp-nvim-lsp",    event = "InsertEnter" },
+      { "hrsh7th/vim-vsnip",       event = "InsertEnter" },
+      { "hrsh7th/vim-vsnip-integ", event = "InsertEnter" },
+      { "onsails/lspkind.nvim",    event = "InsertEnter" },
+      {
+        "zbirenbaum/copilot-cmp",
+        event = { "InsertEnter", "LspAttach" },
+        fix_pairs = true,
+        dependencies = { "zbirenbaum/copilot.lua", },
+      },
       { "hrsh7th/cmp-path",             event = "CmdlineEnter" },
       { "hrsh7th/cmp-buffer",           event = "InsertEnter" },
       { "hrsh7th/cmp-cmdline",          event = "CmdlineEnter" },
@@ -24,6 +30,7 @@ return {
           end,
         },
         sources = {
+          { name = "copilot" },
           { name = "nvim_lsp" },
           { name = "buffer" },
           { name = "path" },
@@ -68,5 +75,5 @@ return {
         },
       })
     end,
-  }
+  },
 }
