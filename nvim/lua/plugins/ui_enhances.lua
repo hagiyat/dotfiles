@@ -15,7 +15,7 @@ return {
       local directions = require("hop.hint").HintDirection
       local wk = require("which-key")
       local setup_hop_line = function(_)
-        wk.add({
+        wk.add {
           {
             "f",
             function()
@@ -62,12 +62,12 @@ return {
             desc = "hop backward +1",
             remap = true,
           },
-        })
+        }
       end
       setup_hop_line("n")
       setup_hop_line("v")
 
-      wk.add({
+      wk.add {
         { "s", group = "hop", remap = true },
         {
           "sf",
@@ -85,7 +85,7 @@ return {
           desc = "words",
           remap = true,
         },
-      })
+      }
     end,
   },
   {
@@ -94,8 +94,11 @@ return {
   },
   {
     "kylechui/nvim-surround",
+    version = "*", -- Use for stability; omit to use `main` branch for the latest features
     event = "VeryLazy",
-    version = "*",   -- Use for stability; omit to use `main` branch for the latest features
+    config = function()
+      require("nvim-surround").setup {}
+    end,
   },
   {
     "windwp/nvim-autopairs",
@@ -127,15 +130,36 @@ return {
     },
     config = function()
       local wk = require("which-key")
-      wk.add({
+      wk.add {
         {
           mode = { "n", "v" },
-          { "<space>j",  group = "treesj",                      remap = true },
-          { "<space>jJ", function() vim.cmd([[TSJJoin]]) end,   desc = "join",   remap = true },
-          { "<space>jj", function() vim.cmd([[TSJToggle]]) end, desc = "toggle", remap = true },
-          { "<space>js", function() vim.cmd([[TSJSplit]]) end,  desc = "split",  remap = true },
+          { "<space>j", group = "treesj", remap = true },
+          {
+            "<space>jJ",
+            function()
+              vim.cmd([[TSJJoin]])
+            end,
+            desc = "join",
+            remap = true,
+          },
+          {
+            "<space>jj",
+            function()
+              vim.cmd([[TSJToggle]])
+            end,
+            desc = "toggle",
+            remap = true,
+          },
+          {
+            "<space>js",
+            function()
+              vim.cmd([[TSJSplit]])
+            end,
+            desc = "split",
+            remap = true,
+          },
         },
-      })
+      }
     end,
   },
   {
@@ -164,5 +188,5 @@ return {
         write_all_buffers = false,
       }
     end,
-  }
+  },
 }
