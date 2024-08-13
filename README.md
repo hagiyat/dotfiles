@@ -18,7 +18,7 @@ required cli apps
 - fzf
 - ripgrep
 - fd
-- exa
+- eza
 - delta
 - bat
 - direnv

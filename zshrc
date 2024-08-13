@@ -46,13 +46,13 @@ if [ ! -d $PROJECTS_HOME ]; then
   mkdir -p $PROJECTS_HOME
 fi
 
-if [ -x "$(command -v exa)" ]; then
+if [ -x "$(command -v eza)" ]; then
   alias Ll='ls -l'
   alias La='ls -al'
-  alias ll='exa -lh --git --time-style=long-iso --icons'
-  alias la='exa -alh --time-style=long-iso --icons'
-  alias lt='exa -lhT --git --time-style=long-iso --icons'
-  alias lta='exa -lahT --time-style=long-iso --icons'
+  alias ll='eza -lh --git --time-style=long-iso --icons'
+  alias la='eza -alh --git --time-style=relative --icons'
+  alias lt='eza -lhT --git --time-style=relative --icons'
+  alias lta='eza -lahT --git --time-style=long-iso --icons'
 else
   alias ll='ls -l'
   alias la='ls -al'
