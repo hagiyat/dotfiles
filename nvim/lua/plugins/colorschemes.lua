@@ -111,10 +111,10 @@ return {
     "folke/styler.nvim",
     event = { "VimEnter", "ColorSchemePre" },
     dependencies = {
-      "nightfox.nvim",
-      -- "kanagawa.nvim",
-      "nordic.nvim",
-      -- "nvim-tundra",
+      "EdenEast/nightfox.nvim",
+      -- "rebelot/kanagawa.nvim",
+      "AlexvZyl/nordic.nvim",
+      -- "sam4llis/nvim-tundra",
     },
     config = function()
       local styler = require("styler")
