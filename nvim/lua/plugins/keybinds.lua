@@ -8,7 +8,6 @@ return {
       local wk = require("which-key")
 
       wk.add {
-        { "<space>w",  "<C-w>=",           desc = "size reset", remap = false },
         { "<space>w",  group = "window",   remap = false },
         { "<space>wd", ":<C-u>q<CR>",      desc = "delete",     remap = false },
         { "<space>wh", "<C-w>h",           desc = "move left",  remap = false },
@@ -17,6 +16,7 @@ return {
         { "<space>wl", "<C-w>l",           desc = "move right", remap = false },
         { "<space>ws", ":<C-u>split<CR>",  desc = "split",      remap = false },
         { "<space>wv", ":<C-u>vsplit<CR>", desc = "vsplit",     remap = false },
+        -- { "<space>w=", "<C-w>=",           desc = "size reset", remap = false },
       }
 
       wk.add {
