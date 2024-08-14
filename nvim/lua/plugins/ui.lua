@@ -381,4 +381,31 @@ return {
       vim.api.nvim_set_keymap("n", "g#", [[g#<Cmd>lua require('hlslens').start()<CR>]], kopts)
     end,
   },
+  {
+    "shellRaining/hlchunk.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      require("hlchunk").setup {
+        chunk = {
+          enable = true,
+          style = "#445464",
+          duration = 50,
+          delay = 100,
+        },
+        indent = {
+          enable = false,
+          style = "#223333",
+          chars = {
+            "│",
+          },
+        },
+        line_num = {
+          enable = false,
+        },
+        blank = {
+          enable = false,
+        },
+      }
+    end,
+  },
 }
