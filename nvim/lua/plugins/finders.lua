@@ -66,7 +66,7 @@ return {
       local picker = require("telescope.builtin")
       -- local extensions = telescope.extensions
 
-      require("which-key").add({
+      require("which-key").add {
         { "<space>f", group = "telescope", remap = false },
         {
           "<space>ff",
@@ -156,7 +156,41 @@ return {
           desc = "resume",
           remap = false,
         },
-      })
+      }
     end,
-  }
+  },
+  {
+    "prochri/telescope-all-recent.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+      "kkharji/sqlite.lua",
+      -- optional, if using telescope for vim.ui.select
+      -- "stevearc/dressing.nvim"
+    },
+    opts = {
+      default = {
+        disable = true,     -- disable any unkown pickers (recommended)
+        use_cwd = true,     -- differentiate scoring for each picker based on cwd
+        sorting = "recent", -- sorting: options: 'recent' and 'frecency'
+      },
+      pickers = {
+        find_files = {
+          disable = false,
+          use_cwd = true,
+          sorting = "frecency",
+        },
+        oldfiles = {
+          disable = false,
+          use_cwd = false,
+          sorting = "frecency",
+        },
+        buffers = {
+          disable = false,
+          use_cwd = false,
+          sorting = "recent",
+        }
+      },
+    },
+  },
 }
