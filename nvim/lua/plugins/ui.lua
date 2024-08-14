@@ -245,4 +245,21 @@ return {
       }
     end,
   },
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    ft = { "markdown" },
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "echasnovski/mini.nvim",
+      "folke/which-key.nvim",
+    },
+    config = function()
+      require("which-key").add {
+        { "<space>m",  group = "markdown" },
+        { "<space>mm", "<cmd>RenderMarkdown toggle<CR>",   desc = "toggle" },
+        { "<space>me", "<cmd>RenderMarkdown expand<CR>",   desc = "expand" },
+        { "<space>mc", "<cmd>RenderMarkdown contract<CR>", desc = "contract" },
+      }
+    end,
+  },
 }
