@@ -142,9 +142,6 @@ zinit ice wait'0' lucid; zinit light "zsh-users/zsh-history-substring-search"
 zinit ice wait'0' lucid; zinit light "zsh-users/zsh-autosuggestions"
 zinit ice wait'0' lucid; zinit light "zsh-users/zsh-completions"
 
-zinit ice wait'1' lucid pick'init.sh' atload'export ENHANCD_FILTER=fzf'
-zinit light "b4b4r07/enhancd"
-
 # completions
 zinit ice wait'0' lucid; zinit light "zsh-users/zsh-completions"
 #
@@ -260,6 +257,13 @@ elif [ -d /opt/homebrew/opt/asdf ] ; then
 elif [ -d $HOME/.asdf ] ; then
   . $HOME/.asdf/asdf.sh
   . $HOME/.asdf/completions/asdf.bash
+fi
+
+if [ -x /opt/homebrew/bin/zoxide ]; then
+  eval "$(zoxide init zsh --cmd j)"
+  export _ZO_FZF_OPTS="$FZF_DEFAULT_OPTS \
+    --no-multi --no-sort --exit-0 --select-1  \
+    --preview 'eza --no-quotes --color=always --color-scale-mode=fixed --group-directories-first --oneline {2..}'"
 fi
 
 if [ -x "$(command -v yarn)" ]; then
