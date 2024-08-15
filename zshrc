@@ -259,7 +259,7 @@ elif [ -d $HOME/.asdf ] ; then
   . $HOME/.asdf/completions/asdf.bash
 fi
 
-if [ -x /opt/homebrew/bin/zoxide ]; then
+if type zoxide &>/dev/null; then
   eval "$(zoxide init zsh --cmd j)"
   export _ZO_FZF_OPTS="$FZF_DEFAULT_OPTS \
     --no-multi --no-sort --exit-0 --select-1  \
