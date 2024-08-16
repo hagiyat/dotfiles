@@ -3,7 +3,7 @@ return {
     "nvim-lualine/lualine.nvim",
     event = "UIEnter",
     dependencies = {
-      "kyazdani42/nvim-web-devicons",
+      "nvim-tree/nvim-web-devicons",
       "AndreM222/copilot-lualine",
     },
     config = function()

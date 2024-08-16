@@ -5,7 +5,7 @@ return {
     event = "VimEnter",
     dependencies = {
       "nvim-lua/plenary.nvim",
-      "kyazdani42/nvim-web-devicons",
+      "nvim-tree/nvim-web-devicons",
       "MunifTanjim/nui.nvim",
       {
         's1n7ax/nvim-window-picker',

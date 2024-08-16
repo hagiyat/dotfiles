@@ -13,11 +13,11 @@ return {
         fix_pairs = true,
         dependencies = { "zbirenbaum/copilot.lua", },
       },
-      { "hrsh7th/cmp-path",             event = "CmdlineEnter" },
-      { "hrsh7th/cmp-buffer",           event = "InsertEnter" },
-      { "hrsh7th/cmp-cmdline",          event = "CmdlineEnter" },
-      { "hrsh7th/cmp-cmdline",          event = "CmdlineEnter" },
-      { "kyazdani42/nvim-web-devicons", opt = true },
+      { "hrsh7th/cmp-path",    event = "CmdlineEnter" },
+      { "hrsh7th/cmp-buffer",  event = "InsertEnter" },
+      { "hrsh7th/cmp-cmdline", event = "CmdlineEnter" },
+      { "hrsh7th/cmp-cmdline", event = "CmdlineEnter" },
+      "nvim-tree/nvim-web-devicons",
     },
     config = function()
       local cmp = require("cmp")
