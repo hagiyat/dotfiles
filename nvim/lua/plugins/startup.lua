@@ -1,12 +1,12 @@
 return {
   {
     "goolord/alpha-nvim",
-    dependencies = {
-      "nvim-tree/nvim-web-devicons",
-    },
+    -- dependencies = {
+    --   "nvim-tree/nvim-web-devicons",
+    -- },
     config = function()
-      local startify = require("alpha.themes.startify")
-      startify.file_icons.provider = "devicons"
+      -- local startify = require("alpha.themes.startify")
+      -- startify.file_icons.provider = "devicons"
 
       local alpha = require("alpha")
       local dashboard = require("alpha.themes.dashboard")
