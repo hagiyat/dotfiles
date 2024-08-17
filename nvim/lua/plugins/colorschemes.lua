@@ -9,8 +9,8 @@ return {
         duskfox = {},
         nordfox = {
           bg0 = "#131821",
-          bg1 = "#1e2430",   -- Default bg
-          bg3 = "#343c4e",   -- Lighter bg (cursor line)
+          bg1 = "#1e2430", -- Default bg
+          bg3 = "#343c4e", -- Lighter bg (cursor line)
         },
         terafox = {},
         carbonfox = {
@@ -55,25 +55,24 @@ return {
       }
     end,
   },
-
   {
     "rebelot/kanagawa.nvim",
     lazy = true,
     config = function()
       require("kanagawa").setup {
-        undercurl = true,   -- enable undercurls
+        undercurl = true, -- enable undercurls
         commentStyle = { italic = true },
         functionStyle = {},
         keywordStyle = { italic = true },
         statementStyle = { bold = true },
         typeStyle = {},
         variablebuiltinStyle = { italic = true },
-        specialReturn = true,      -- special highlight for the return keyword
-        specialException = true,   -- special highlight for exception handling keywords
-        transparent = false,       -- do not set background color
-        dimInactive = false,       -- dim inactive window `:h hl-NormalNC`
-        globalStatus = false,      -- adjust window separators highlight for laststatus=3
-        terminalColors = true,     -- define vim.g.terminal_color_{0,17}
+        specialReturn = true,    -- special highlight for the return keyword
+        specialException = true, -- special highlight for exception handling keywords
+        transparent = false,     -- do not set background color
+        dimInactive = false,     -- dim inactive window `:h hl-NormalNC`
+        globalStatus = false,    -- adjust window separators highlight for laststatus=3
+        terminalColors = true,   -- define vim.g.terminal_color_{0,17}
         colors = {
           theme = {
             dragon = {
@@ -93,38 +92,30 @@ return {
     lazy = true,
   },
   {
-    "kyazdani42/blue-moon",
+    "catppuccin/nvim",
+    name = "catppuccin",
     lazy = true,
   },
   {
-    "sam4llis/nvim-tundra",
+    "folke/tokyonight.nvim",
     lazy = true,
-    opt = {
-      transparent_background = false,
-      dim_inactive_windows = {
-        enabled = false,
-        color = nil,
-      },
-    }
   },
   {
     "folke/styler.nvim",
     event = { "VimEnter", "ColorSchemePre" },
     dependencies = {
       "EdenEast/nightfox.nvim",
-      -- "rebelot/kanagawa.nvim",
-      "AlexvZyl/nordic.nvim",
-      -- "sam4llis/nvim-tundra",
+      -- "AlexvZyl/nordic.nvim",
+      "catppuccin/nvim",
+      -- "folke/tokyonight.nvim",
     },
     config = function()
       local styler = require("styler")
 
       -- ref: https://blog.atusy.net/2022/12/17/styler-nvim-active-win/
+      -- local inactive_colorscheme = "nordic"
       local default_colorscheme = "nordfox"
-      -- local default_colorscheme = "tundra"
-      -- local default_colorscheme = "kanagawa"
-      local inactive_colorscheme = "nordic"
-      -- local inactive_colorscheme = "carbonfox"
+      local inactive_colorscheme = "catppuccin-macchiato"
 
       vim.cmd("colorscheme " .. default_colorscheme)
 
@@ -171,5 +162,5 @@ return {
         },
       }
     end,
-  }
+  },
 }
