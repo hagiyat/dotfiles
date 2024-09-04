@@ -92,11 +92,6 @@ return {
     lazy = true,
   },
   {
-    "catppuccin/nvim",
-    name = "catppuccin",
-    lazy = true,
-  },
-  {
     "folke/tokyonight.nvim",
     lazy = true,
   },
@@ -105,17 +100,16 @@ return {
     event = { "VimEnter", "ColorSchemePre" },
     dependencies = {
       "EdenEast/nightfox.nvim",
-      -- "AlexvZyl/nordic.nvim",
-      "catppuccin/nvim",
-      -- "folke/tokyonight.nvim",
+      "AlexvZyl/nordic.nvim",
+      "folke/tokyonight.nvim",
+      "rebelot/kanagawa.nvim",
     },
     config = function()
       local styler = require("styler")
 
       -- ref: https://blog.atusy.net/2022/12/17/styler-nvim-active-win/
-      -- local inactive_colorscheme = "nordic"
       local default_colorscheme = "nordfox"
-      local inactive_colorscheme = "catppuccin-macchiato"
+      local inactive_colorscheme = "nordic"
 
       vim.cmd("colorscheme " .. default_colorscheme)
 
@@ -157,8 +151,8 @@ return {
 
       styler.setup {
         themes = {
-          markdown = { colorscheme = "kanagawa" },
-          help = { colorscheme = "kanagawa" },
+          markdown = { colorscheme = "tokyonight-night" },
+          help = { colorscheme = "kanagawa-wave" },
         },
       }
     end,
