@@ -4,6 +4,7 @@
 [core]
 	editor = nvim
 	excludesfile = ~/.config/git/ignore
+	quotepath = false
 [pager]
 	diff = delta
 	log = delta
