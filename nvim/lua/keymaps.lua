@@ -21,3 +21,10 @@ keymap("n", "<C-g>", "<ESC>", { noremap = true })
 keymap("n", "q", "<Nop>", { noremap = true })
 keymap("n", "<Space>", "<Nop>", { noremap = true })
 keymap("t", "<C-g>", "<C-\\><C-n>", { noremap = true })
+
+keymap("n", "Y", "y$", { noremap = true })
+keymap("n", "U", "<c-r>", { noremap = true })
+
+-- ペースト結果を自動インデント
+keymap("n", "p", "]p`]", { noremap = true })
+keymap("n", "P", "]P`]", { noremap = true })
