@@ -47,8 +47,10 @@ if [ ! -d $PROJECTS_HOME ]; then
 fi
 
 if [ -x "$(command -v eza)" ]; then
+  alias Ls='ls'
   alias Ll='ls -l'
   alias La='ls -al'
+  alias ls='eza -a'
   alias ll='eza -lh --git --time-style=long-iso --icons'
   alias la='eza -alh --git --time-style=relative --icons'
   alias lt='eza -lhT --git --time-style=relative --icons'
@@ -99,18 +101,6 @@ fi
 
 # color test
 alias colorchart='(x=`tput op` y=`printf %40s`;for i in {0..256};do o=00$i;echo -e ${o:${#o}-3:3} `tput setaf $i;tput setab $i`${y// /=}$x;done)'
-
-# uses colortheme for iTerm2 `hybrid`
-# ls color
-# export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
-if [ -x "$(command -v dircolors)" ]; then
-  # brew install coreutils
-  # zplug "joel-porquet/zsh-dircolors-solarized", hook-load:"setupsolarized dircolors.ansi-universal"
-  alias ls="ls --color=auto"
-else
-  alias ls="ls -G"
-fi
-alias grep="grep --color=auto"
 
 
 if [ -x "$(command -v bat)" ]; then
