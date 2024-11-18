@@ -61,28 +61,44 @@ config.keys = {
     action = action.PaneSelect { mode = "SwapWithActive" },
   },
   {
-    -- pane left
     key = "h",
     mods = "LEADER",
     action = action.ActivatePaneDirection "Left",
   },
   {
-    -- pane down
     key = "j",
     mods = "LEADER",
     action = action.ActivatePaneDirection "Down",
   },
   {
-    -- pane down
     key = "k",
     mods = "LEADER",
     action = action.ActivatePaneDirection "Up",
   },
   {
-    -- pane right
     key = "l",
     mods = "LEADER",
     action = action.ActivatePaneDirection "Right",
+  },
+  {
+    key = 'H',
+    mods = 'LEADER',
+    action = action.AdjustPaneSize { 'Left', 5 },
+  },
+  {
+    key = 'J',
+    mods = 'LEADER',
+    action = action.AdjustPaneSize { 'Down', 5 },
+  },
+  {
+    key = 'K',
+    mods = 'LEADER',
+    action = action.AdjustPaneSize { 'Up', 5 }
+  },
+  {
+    key = 'L',
+    mods = 'LEADER',
+    action = action.AdjustPaneSize { 'Right', 5 },
   },
   {
     -- rotate pane
