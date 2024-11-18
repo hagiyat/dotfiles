@@ -15,30 +15,31 @@ return {
     },
     config = function()
       local wk = require("which-key")
+      local treesj = require("treesj")
       wk.add {
         {
           mode = { "n", "v" },
           { "<space>j", group = "treesj", remap = true },
           {
             "<space>jJ",
-            function()
-              vim.cmd([[TSJJoin]])
+            function ()
+              treesj.join()
             end,
             desc = "join",
             remap = true,
           },
           {
             "<space>jj",
-            function()
-              vim.cmd([[TSJToggle]])
+            function ()
+              treesj.toggle()
             end,
             desc = "toggle",
             remap = true,
           },
           {
-            "<space>js",
-            function()
-              vim.cmd([[TSJSplit]])
+            "<space>jS",
+            function ()
+              treesj.split()
             end,
             desc = "split",
             remap = true,
