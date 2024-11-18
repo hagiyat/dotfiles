@@ -25,13 +25,13 @@ return {
 
       local wk = require("which-key")
       wk.add {
-        { "<space>h",  group = "trouble",                              remap = false },
-        { "<space>hd", "<cmd>TroubleToggle document_diagnostics<cr>",  desc = "document diagnostics",  remap = false },
-        { "<space>hf", "<cmd>TroubleToggle quickfix<cr>",              desc = "quickfix",              remap = false },
-        { "<space>hh", "<cmd>TroubleToggle<cr>",                       desc = "all",                   remap = false },
-        { "<space>hl", "<cmd>TroubleToggle loclist<cr>",               desc = "loclist",               remap = false },
-        { "<space>hw", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "workspace diagnostics", remap = false },
-        { "gR",        "<cmd>TroubleToggle lsp_references<cr>",        desc = "lsp references",        remap = false },
+        { "<space>h",  group = "trouble",                                            remap = false },
+        { "<space>hd", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",           desc = "buffer diagnostics",    remap = false },
+        { "<space>hw", "<cmd>Trouble diagnostics toggle<cr>",                        desc = "workspace diagnostics", remap = false },
+        { "<space>hs", "<cmd>Trouble symbols toggle win.position=bottom<cr>",        desc = "symbols",               remap = false },
+        { "<space>hl", "<cmd>Trouble loclist toggle<cr>",                            desc = "loclist",               remap = false },
+        { "<space>hf", "<cmd>Trouble qflist toggle<cr>",                             desc = "quickfix",              remap = false },
+        { "gR",        "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", desc = "lsp references",        remap = false },
       }
     end,
   },
