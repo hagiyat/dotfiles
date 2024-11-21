@@ -3,45 +3,23 @@ return {
     "EdenEast/nightfox.nvim",
     lazy = true,
     config = function()
-      local Shade = require("nightfox.lib.shade")
       local palettes = {
-        nightfox = {},
+        nightfox = {
+          -- bg1 = "#192330",     -- Default bg
+          bg1 = "#24282b", -- Default bg
+        },
         duskfox = {},
         nordfox = {
-          bg0 = "#131821",
-          bg1 = "#1e2430", -- Default bg
-          bg3 = "#343c4e", -- Lighter bg (cursor line)
+          -- bg0 = "#232831", -- Dark bg (status line and float)
+          -- bg1 = "#2e3440", -- Default bg
+          -- bg2 = "#39404f", -- Lighter bg (colorcolm folds)
+          -- bg3 = "#444c5e", -- Lighter bg (cursor line)
+          -- bg0 = "#131821",
+          bg1 = "#2a2d31", -- Default bg
+          bg3 = "#2d3136", -- Lighter bg (cursor line)
         },
         terafox = {},
-        carbonfox = {
-          -- nordfox customize
-          black = Shade.new("#2b3242", "#364770", "#252a35"),
-          red = Shade.new("#af515a", "#c05f69", "#b53e46"),
-          green = Shade.new("#93ae7c", "#a1c186", "#7a9862"),
-          yellow = Shade.new("#dbbb7b", "#e0c389", "#c9a253"),
-          blue = Shade.new("#7191b1", "#7c9fc2", "#567a9b"),
-          magenta = Shade.new("#a47e9d", "#b885af", "#8d6485"),
-          cyan = Shade.new("#78b0c0", "#83bccc", "#5997aa"),
-          white = Shade.new("#d5d9e0", "#d7dce4", "#abb3c4"),
-          orange = Shade.new("#b9725b", "#c88069", "#a45940"),
-          pink = Shade.new("#af78ac", "#c082be", "#995c95"),
-
-          comment = "#50627a",
-
-          bg0 = "#1b2029",
-          bg1 = "#262c38",
-          bg2 = "#39404f",
-          bg3 = "#313847",
-          bg4 = "#525d75",
-
-          fg0 = "#b7bdc9",
-          fg1 = "#bdbebf",
-          fg2 = "#9ba1ab",
-          fg3 = "#6e7178",
-
-          sel0 = "#2e3a4b",
-          sel1 = "#3f5064",
-        },
+        carbonfox = {},
       }
       require("nightfox").setup {
         options = {
@@ -83,7 +61,7 @@ return {
         -- overrides = function(colors)
         --   return {}
         -- end,
-        theme = "dragon",
+        theme = "wave",
       }
     end,
   },
@@ -96,20 +74,40 @@ return {
     lazy = true,
   },
   {
+    "navarasu/onedark.nvim",
+    lazy = true,
+    config = function()
+      require("onedark").setup({
+        style = 'cool'
+      })
+    end
+  },
+  {
+    "ribru17/bamboo.nvim",
+    lazy = true,
+  },
+  {
+    "sho-87/kanagawa-paper.nvim",
+    lazy = true,
+  },
+  {
     "folke/styler.nvim",
     event = { "VimEnter", "ColorSchemePre" },
     dependencies = {
       "EdenEast/nightfox.nvim",
-      "AlexvZyl/nordic.nvim",
+      -- "AlexvZyl/nordic.nvim",
       "folke/tokyonight.nvim",
       "rebelot/kanagawa.nvim",
+      -- "navarasu/onedark.nvim",
+      -- "ribru17/bamboo.nvim",
+      -- "sho-87/kanagawa-paper.nvim",
     },
     config = function()
       local styler = require("styler")
 
       -- ref: https://blog.atusy.net/2022/12/17/styler-nvim-active-win/
-      local default_colorscheme = "nordfox"
-      local inactive_colorscheme = "nordic"
+      local default_colorscheme = "nightfox"
+      local inactive_colorscheme = "nordfox"
 
       vim.cmd("colorscheme " .. default_colorscheme)
 
