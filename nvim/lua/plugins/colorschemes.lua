@@ -6,7 +6,7 @@ return {
       local palettes = {
         nightfox = {
           -- bg1 = "#192330",     -- Default bg
-          bg1 = "#24282b", -- Default bg
+          bg1 = "#242830", -- Default bg
         },
         duskfox = {},
         nordfox = {
@@ -91,66 +91,57 @@ return {
     lazy = true,
   },
   {
+    "olimorris/onedarkpro.nvim",
+    lazy = true,
+  },
+  {
+    "catppuccin/nvim",
+    lazy = true,
+    config = function()
+      require("catppuccin").setup({
+        color_overrides = {
+          all = {},
+          latte = {},
+          frappe = {},
+          macchiato = {},
+          mocha = {
+            base = "#202430",
+          },
+        }
+      })
+    end
+  },
+  {
+    "miversen33/sunglasses.nvim",
+    event = "UIEnter",
+    config = function()
+      require("sunglasses").setup({
+        filter_type = "SHADE",
+        filter_percent = 0.30,
+      })
+    end,
+  },
+  {
     "folke/styler.nvim",
     event = { "VimEnter", "ColorSchemePre" },
     dependencies = {
-      "EdenEast/nightfox.nvim",
-      -- "AlexvZyl/nordic.nvim",
+      -- "EdenEast/nightfox.nvim",
       "folke/tokyonight.nvim",
-      "rebelot/kanagawa.nvim",
-      -- "navarasu/onedark.nvim",
-      -- "ribru17/bamboo.nvim",
-      -- "sho-87/kanagawa-paper.nvim",
+      -- "rebelot/kanagawa.nvim",
+      "ribru17/bamboo.nvim",
+      "sho-87/kanagawa-paper.nvim",
+      "AlexvZyl/nordic.nvim",
+      "catppuccin/nvim",
+      "olimorris/onedarkpro.nvim",
     },
     config = function()
       local styler = require("styler")
-
-      -- ref: https://blog.atusy.net/2022/12/17/styler-nvim-active-win/
-      local default_colorscheme = "nightfox"
-      local inactive_colorscheme = "nordfox"
-
-      vim.cmd("colorscheme " .. default_colorscheme)
-
-      local function inactivate(win)
-        if not vim.api.nvim_win_is_valid(win) then
-          return
-        end
-        if vim.api.nvim_win_get_config(win).relative ~= "" then
-          return
-        end
-
-        if (vim.w[win].theme or {}).colorscheme ~= inactive_colorscheme then
-          styler.set_theme(win, { colorscheme = inactive_colorscheme })
-        end
-      end
-
-      vim.api.nvim_create_autocmd({ "WinLeave", "WinNew" }, {
-        group = vim.api.nvim_create_augroup("styler-nvim-custom", {}),
-        callback = function(_)
-          local win_event = vim.api.nvim_get_current_win()
-          vim.schedule(function()
-            local win_pre = vim.fn.win_getid(vim.fn.winnr("#"))
-            local win_cursor = vim.api.nvim_get_current_win()
-
-            if (vim.w[win_cursor].theme or {}).colorscheme then
-              styler.clear(win_cursor)
-            end
-
-            if win_pre ~= 0 and win_pre ~= win_cursor then
-              inactivate(win_pre)
-            end
-
-            if win_event ~= win_cursor then
-              inactivate(win_event)
-            end
-          end)
-        end,
-      })
-
+      vim.cmd.colorscheme("catppuccin-mocha")
       styler.setup {
         themes = {
-          markdown = { colorscheme = "tokyonight-night" },
-          help = { colorscheme = "kanagawa-wave" },
+          yaml = { colorscheme = "tokyonight-moon" },
+          markdown = { colorscheme = "nordic" },
+          help = { colorscheme = "kanagawa-paper" },
         },
       }
     end,
