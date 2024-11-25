@@ -234,6 +234,7 @@ zinit ice lucid wait"0" as"program" from"gh-r" \
     atload'init_pmy'
 zinit light 'relastle/pmy'
 
+zinit ice wait'0' lucid; zinit light z-shell/zsh-eza
 
 [ -f /usr/local/bin/aws_zsh_completer.sh ] && source /usr/local/bin/aws_zsh_completer.sh
 [ -f /usr/bin/aws_zsh_completer.sh ] && source /usr/bin/aws_zsh_completer.sh
