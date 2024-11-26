@@ -154,6 +154,12 @@ return {
                 end,
               },
 
+              null_ls.builtins.formatting.black.with {
+                condition = function()
+                  return vim.fn.executable("black") > 0
+                end,
+              },
+
               null_ls.builtins.formatting.rubocop.with {
                 prefer_local = "bundle_bin",
                 condition = function(utils)

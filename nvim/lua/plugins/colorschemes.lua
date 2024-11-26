@@ -105,7 +105,8 @@ return {
           frappe = {},
           macchiato = {},
           mocha = {
-            base = "#202430",
+            -- base = "#202430",
+            base = "#1d2432",
           },
         }
       })
