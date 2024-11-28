@@ -5,7 +5,7 @@ return {
       "neovim/nvim-lspconfig",
       "williamboman/mason-lspconfig.nvim",
       "folke/which-key.nvim",
-      "jose-elias-alvarez/null-ls.nvim",
+      "nvimtools/none-ls.nvim",
       "glepnir/lspsaga.nvim",
       "hedyhli/outline.nvim",
     },
@@ -106,7 +106,7 @@ return {
                   return vim.fn.executable("stylua") > 0 and utils.root_has_file { ".stylua.toml", "stylua.toml" }
                 end,
               },
-              null_ls.builtins.diagnostics.luacheck.with {
+              null_ls.builtins.diagnostics.selene.with {
                 extra_args = { "--global vim" },
               },
 
@@ -124,32 +124,6 @@ return {
                         "prettier.config.js",
                         "prettier.config.cjs",
                         ".prettierrc.toml",
-                      }
-                end,
-              },
-              null_ls.builtins.diagnostics.eslint.with {
-                condition = function(utils)
-                  return vim.fn.executable("eslint") > 0
-                      and utils.root_has_file {
-                        ".eslintrc.js",
-                        ".eslintrc.cjs",
-                        ".eslintrc.yaml",
-                        ".eslintrc.yml",
-                        ".eslintrc.json",
-                        "package.json",
-                      }
-                end,
-              },
-              null_ls.builtins.code_actions.eslint.with {
-                condition = function(utils)
-                  return vim.fn.executable("eslint") > 0
-                      and utils.root_has_file {
-                        ".eslintrc.js",
-                        ".eslintrc.cjs",
-                        ".eslintrc.yaml",
-                        ".eslintrc.yml",
-                        ".eslintrc.json",
-                        "package.json",
                       }
                 end,
               },
