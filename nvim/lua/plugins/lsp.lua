@@ -66,18 +66,22 @@ return {
           local opts = {}
           opts.on_attach = function(_, bufnr)
             wk.add({
-              { "<space>l",  group = "lsp",                                  remap = false },
-              { "<space>la", "<cmd>Lspsaga code_action<CR>",                 desc = "code action by saga",     remap = false },
-              { "<space>ld", "<cmd>Trouble lsp_definitions toggle<cr>",      desc = "definitions",             remap = false },
-              { "<space>lD", "<cmd>Trouble lsp_references toggle<cr>",       desc = "references",              remap = false },
-              { "<space>lf", vim.lsp.buf.format,                             desc = "format",                  remap = false },
-              { "<space>li", "<cmd>Trouble lsp_implementations toggle<cr>",  desc = "implementations",         remap = false },
-              { "<space>lo", "<cmd>Outline<CR>",                             desc = "outline",                 remap = false },
-              { "<space>ls", "<cmd>Lspsaga finder<CR>",                      desc = "lsp finder by saga",      remap = false },
-              { "<space>lp", "<cmd>Lspsaga peek_definition<CR>",             desc = "peek definition by saga",
-                                                                                                                 remap = false },
-              { "<space>lr", "<cmd>Lspsaga rename<CR>",                      desc = "rename by saga",          remap = false },
-              { "<space>lt", "<cmd>Trouble lsp_type_definitions toggle<cr>", desc = "type definitions",        remap = false },
+              { "<space>l",  group = "lsp",                                 remap = false },
+              { "<space>la", "<cmd>Lspsaga code_action<CR>",                desc = "code action by saga", remap = false },
+              { "<space>ld", "<cmd>Trouble lsp_definitions toggle<cr>",     desc = "definitions",         remap = false },
+              { "<space>lD", "<cmd>Trouble lsp_references toggle<cr>",      desc = "references",          remap = false },
+              { "<space>lf", vim.lsp.buf.format,                            desc = "format",              remap = false },
+              { "<space>li", "<cmd>Trouble lsp_implementations toggle<cr>", desc = "implementations",     remap = false },
+              { "<space>lo", "<cmd>Outline<CR>",                            desc = "outline",             remap = false },
+              { "<space>ls", "<cmd>Lspsaga finder<CR>",                     desc = "lsp finder by saga",  remap = false },
+              {
+                "<space>lp",
+                "<cmd>Lspsaga peek_definition<CR>",
+                desc = "peek definition by saga",
+                remap = false
+              },
+              { "<space>lr", "<cmd>Lspsaga rename<CR>",                      desc = "rename by saga",   remap = false },
+              { "<space>lt", "<cmd>Trouble lsp_type_definitions toggle<cr>", desc = "type definitions", remap = false },
               { "<space>lk", vim.diagnostic.goto_prev,                       desc = "diagnostic prev" },
               { "<space>lj", vim.diagnostic.goto_next,                       desc = "diagnostic next" },
             })

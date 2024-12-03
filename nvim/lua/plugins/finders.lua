@@ -18,9 +18,8 @@ return {
       local actions = require("telescope.actions")
       local trouble = require("trouble")
 
-      -- local trouble = require("trouble.providers.telescope")
-      -- ↑ではなく自前定義なのは、公式だと一度開いたら終わりなところを
-      -- quickfixに残しておきたいから
+      -- https://github.com/folke/trouble.nvim?tab=readme-ov-file#telescope
+      -- ↑だと一度開いたら終わりだけど、quickfixに残しておいた方が便利な気がするから自前定義している
       local function open_with_trouble(prompt_bufnr)
         actions.send_to_qflist(prompt_bufnr)
         trouble.open("quickfix")

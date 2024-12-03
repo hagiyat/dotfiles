@@ -7,7 +7,7 @@ return {
       local winpick = require("winpick")
       winpick.setup {
         border = "double",
-        filter = nil,   -- doesn't ignore any window by default
+        filter = nil, -- doesn't ignore any window by default
         prompt = "Pick a window: ",
         format_label = winpick.defaults.format_label,
         chars = { "W", "F", "J", "D", "K", "S", "L", "A" },
@@ -118,11 +118,11 @@ return {
           return require("winshift.lib").pick_window {
             picker_chars = "WFJDKSLA",
             filter_rules = {
-              cur_win = true,   -- Filter out the current window
-              floats = true,    -- Filter out floating windows
-              filetype = {},    -- List of ignored file types
-              buftype = {},     -- List of ignored buftypes
-              bufname = {},     -- List of vim regex patterns matching ignored buffer names
+              cur_win = true, -- Filter out the current window
+              floats = true,  -- Filter out floating windows
+              filetype = {},  -- List of ignored file types
+              buftype = {},   -- List of ignored buftypes
+              bufname = {},   -- List of vim regex patterns matching ignored buffer names
             },
             filter_func = nil,
           }

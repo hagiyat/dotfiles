@@ -22,7 +22,7 @@ return {
           { "<space>j", group = "treesj", remap = true },
           {
             "<space>jJ",
-            function ()
+            function()
               treesj.join()
             end,
             desc = "join",
@@ -30,7 +30,7 @@ return {
           },
           {
             "<space>jj",
-            function ()
+            function()
               treesj.toggle()
             end,
             desc = "toggle",
@@ -38,7 +38,7 @@ return {
           },
           {
             "<space>jS",
-            function ()
+            function()
               treesj.split()
             end,
             desc = "split",

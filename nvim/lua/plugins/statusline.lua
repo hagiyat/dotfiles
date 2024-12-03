@@ -72,9 +72,9 @@ return {
               colored = true, -- Displays a colored diff status if set to true
               diff_color = {
                 -- Same color values as the general color option can be used here.
-                added = "DiffAdd",                                      -- Changes the diff's added color
-                modified = "DiffChange",                                -- Changes the diff's modified color
-                removed = "DiffDelete",                                 -- Changes the diff's removed color you
+                added = "DiffAdd", -- Changes the diff's added color
+                modified = "DiffChange", -- Changes the diff's modified color
+                removed = "DiffDelete", -- Changes the diff's removed color you
               },
               symbols = { added = "", modified = "", removed = "" }, -- Changes the symbols used by the diff.
             },
