@@ -48,18 +48,18 @@ return {
       local wk = require("which-key")
       local cmp_nvim_lsp = require("cmp_nvim_lsp")
       local null_ls = require("null-ls")
-      local trouble_nvim = require("trouble")
 
       -- quickfixに追加して開かずに、別のことをする
+      -- local trouble_nvim = require("trouble")
       -- ref: https://neovim.io/doc/user/lsp.html#lsp-on-list-handler
       -- local function on_list_to_qf(options)
       --   vim.fn.setqflist({}, " ", options)
       --   trouble_nvim.open("quickfix")
       -- end
-      local function on_list_to_loclist(options)
-        vim.fn.setloclist(0, {}, " ", options)
-        trouble_nvim.open("loclist")
-      end
+      -- local function on_list_to_loclist(options)
+      --   vim.fn.setloclist(0, {}, " ", options)
+      --   trouble_nvim.open("loclist")
+      -- end
 
       mason_lspconfig.setup_handlers {
         function(server_name)
@@ -111,9 +111,10 @@ return {
                 end,
               },
               null_ls.builtins.diagnostics.selene.with {
-                extra_args = { "--global vim" },
+                condition = function(utils)
+                  return vim.fn.executable("selene") > 0 and utils.root_has_file { ".selene.toml" }
+                end,
               },
-
               null_ls.builtins.formatting.prettier.with {
                 condition = function(utils)
                   return vim.fn.executable("prettier") > 0
