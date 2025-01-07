@@ -57,9 +57,8 @@ return {
       require("lualine").setup {
         options = {
           -- theme = "OceanicNext",
-          theme = "jellybeans",
-          -- theme = "onedark",
-          -- theme = "wombat",
+          -- theme = "jellybeans",
+          theme = "palenight",
           component_separators = "",
           section_separators = { left = "", right = "" },
         },
