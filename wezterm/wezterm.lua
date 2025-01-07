@@ -2,11 +2,9 @@ local wezterm = require("wezterm")
 local action = wezterm.action
 local config = {}
 
--- config.color_scheme = "Tokyo Night"
--- config.color_scheme = 'Tomorrow Night'
-config.color_scheme = 'nightfox'
--- config.color_scheme = 'Afterglow'
--- config.color_scheme = "SpaceGray Eighties Dull"
+-- config.color_scheme = 'nightfox'
+-- config.color_scheme = "Ayu Mirage"
+config.color_scheme = "Tokyo Night Storm"
 
 config.inactive_pane_hsb = {
   saturation = 0.7,
