@@ -47,14 +47,17 @@ if [ ! -d $PROJECTS_HOME ]; then
 fi
 
 if [ -x "$(command -v eza)" ]; then
+  eza_params=(
+    '--git' '--icons' '--group' '--group-directories-first'
+  )
   alias Ls='ls'
   alias Ll='ls -l'
   alias La='ls -al'
-  alias ls='eza -a'
-  alias ll='eza -lh --git --time-style=long-iso --icons'
-  alias la='eza -alh --git --time-style=relative --icons'
-  alias lt='eza -lhT --git --time-style=relative --icons'
-  alias lta='eza -lahT --git --time-style=long-iso --icons'
+  alias ls='eza -a --group-directories-first'
+  alias ll='eza -lh --time-style=long-iso $eza_params'
+  alias la='eza -alh --time-style=relative $eza_params'
+  alias lt='eza -lhT --time-style=relative $eza_params'
+  alias lta='eza -lahT --time-style=long-iso $eza_params'
 else
   alias ll='ls -l'
   alias la='ls -al'
@@ -234,7 +237,7 @@ zinit ice lucid wait"0" as"program" from"gh-r" \
     atload'init_pmy'
 zinit light 'relastle/pmy'
 
-zinit ice wait'0' lucid; zinit light z-shell/zsh-eza
+# zinit ice wait'0' lucid; zinit light z-shell/zsh-eza
 
 [ -f /usr/local/bin/aws_zsh_completer.sh ] && source /usr/local/bin/aws_zsh_completer.sh
 [ -f /usr/bin/aws_zsh_completer.sh ] && source /usr/bin/aws_zsh_completer.sh
