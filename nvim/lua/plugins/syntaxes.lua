@@ -40,6 +40,9 @@ return {
           "typescript",
           "yaml",
           "terraform",
+          "gitcommit",
+          "git_rebase",
+          "diff",
           "vim",
         },
         -- nvim-treesitter-endwise
