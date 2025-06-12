@@ -89,7 +89,7 @@ return {
       local lspconfig = require("lspconfig")
       local wk = require("which-key")
       local cmp_nvim_lsp = require("cmp_nvim_lsp")
-      local none_ls = require("none-ls")
+      local null_ls = require("null-ls")
 
       -- LSPの診断表示設定
       vim.diagnostic.config({
@@ -110,7 +110,7 @@ return {
           opts.on_attach = function(client, bufnr)
             -- LSPキーマッピングの設定
             local keymap_opts = { buffer = bufnr, silent = true, noremap = true }
-            
+
             -- LSP関連のキーマッピング
             wk.register({
               ["<space>l"] = { name = "+lsp" },
@@ -127,19 +127,19 @@ return {
               ["<space>lk"] = { vim.diagnostic.goto_prev, "Diagnostic prev" },
               ["<space>lj"] = { vim.diagnostic.goto_next, "Diagnostic next" },
             }, keymap_opts)
-            
+
             -- ビジュアルモード用のキーマッピング
             wk.register({
               ["<space>l"] = { name = "+lsp" },
               ["<space>la"] = { "<cmd>Lspsaga code_action<CR>", "Code action" },
             }, { mode = "v", buffer = bufnr, silent = true, noremap = true })
-            
+
             -- 診断移動用のキーマッピング
             wk.register({
               ["g,"] = { vim.diagnostic.goto_prev, "Diagnostic prev" },
               ["g."] = { vim.diagnostic.goto_next, "Diagnostic next" },
             }, keymap_opts)
-            
+
             -- ホバードキュメント用のキーマッピング
             wk.register({
               ["K"] = { "<cmd>Lspsaga hover_doc<CR>", "LSP hover" },
@@ -148,23 +148,23 @@ return {
 
           opts.capabilities = cmp_nvim_lsp.default_capabilities()
 
-          none_ls.setup {
+          null_ls.setup {
             capabilities = opts.capabilities,
             sources = {
               -- Lua
-              none_ls.builtins.formatting.stylua.with {
+              null_ls.builtins.formatting.stylua.with {
                 condition = function(utils)
                   return vim.fn.executable("stylua") > 0 and utils.root_has_file { ".stylua.toml", "stylua.toml" }
                 end,
               },
-              none_ls.builtins.diagnostics.selene.with {
+              null_ls.builtins.diagnostics.selene.with {
                 condition = function(utils)
                   return vim.fn.executable("selene") > 0 and utils.root_has_file { ".selene.toml" }
                 end,
               },
-              
+
               -- JavaScript/TypeScript
-              none_ls.builtins.formatting.prettier.with {
+              null_ls.builtins.formatting.prettier.with {
                 condition = function(utils)
                   return vim.fn.executable("prettier") > 0
                       and utils.root_has_file {
@@ -181,7 +181,7 @@ return {
                       }
                 end,
               },
-              none_ls.builtins.diagnostics.eslint_d.with {
+              null_ls.builtins.diagnostics.eslint_d.with {
                 condition = function(utils)
                   return vim.fn.executable("eslint_d") > 0
                       and utils.root_has_file {
@@ -194,36 +194,36 @@ return {
                       }
                 end,
               },
-              
+
               -- Python
-              none_ls.builtins.formatting.black.with {
+              null_ls.builtins.formatting.black.with {
                 condition = function()
                   return vim.fn.executable("black") > 0
                 end,
               },
-              none_ls.builtins.diagnostics.ruff.with {
+              null_ls.builtins.diagnostics.ruff.with {
                 condition = function()
                   return vim.fn.executable("ruff") > 0
                 end,
               },
-              
+
               -- Ruby
-              none_ls.builtins.formatting.rubocop.with {
+              null_ls.builtins.formatting.rubocop.with {
                 prefer_local = "bundle_bin",
                 condition = function(utils)
                   return vim.fn.executable("rubocop") > 0 and utils.root_has_file { ".rubocop.yml" }
                 end,
               },
-              none_ls.builtins.diagnostics.rubocop.with {
+              null_ls.builtins.diagnostics.rubocop.with {
                 prefer_local = "bundle_bin",
                 condition = function(utils)
                   return vim.fn.executable("rubocop") > 0 and utils.root_has_file { ".rubocop.yml" }
                 end,
               },
-              
+
               -- YAML/Shell
-              none_ls.builtins.diagnostics.yamllint,
-              none_ls.builtins.diagnostics.zsh,
+              null_ls.builtins.diagnostics.yamllint,
+              null_ls.builtins.diagnostics.zsh,
             },
           }
 
