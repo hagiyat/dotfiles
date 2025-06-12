@@ -104,8 +104,31 @@ return {
         },
       })
 
-      mason_lspconfig.setup_handlers {
-        function(server_name)
+      vim.lsp.config('lua_ls', {
+        settings = {
+          Lua = {
+            runtime = {
+              version = 'LuaJIT',
+            },
+            diagnostics = {
+              globals = {
+                'vim',
+                'require',
+              },
+            },
+          },
+        },
+      })
+
+      mason_lspconfig.setup({
+        ensure_installed = {
+          "lua_ls",
+          "ts_ls",
+          "pyright",
+        },
+        automatic_enable = true,
+        handlers = {
+          function(server_name)
           local opts = {}
           opts.on_attach = function(client, bufnr)
             -- LSPキーマッピングの設定
@@ -283,8 +306,9 @@ return {
           end
 
           lspconfig[server_name].setup(opts)
-        end,
-      }
+          end,
+        },
+      })
     end,
   }
 }
