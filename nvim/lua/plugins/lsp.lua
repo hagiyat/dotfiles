@@ -1,9 +1,9 @@
 return {
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     dependencies = {
       "neovim/nvim-lspconfig",
-      "williamboman/mason-lspconfig.nvim",
+      "mason-org/mason-lspconfig.nvim",
       "folke/which-key.nvim",
       "nvimtools/none-ls.nvim",
       "nvimdev/lspsaga.nvim",
@@ -104,210 +104,225 @@ return {
         },
       })
 
-      vim.lsp.config('lua_ls', {
+      -- null-lsの設定（handler外で一度だけ実行）
+      -- none-ls.nvimでは多くのbuiltinsが削除されているため、利用可能なもののみ設定
+      null_ls.setup {
+        sources = {
+          -- Lua
+          null_ls.builtins.formatting.stylua.with {
+            condition = function(utils)
+              return vim.fn.executable("stylua") > 0 and utils.root_has_file { ".stylua.toml", "stylua.toml" }
+            end,
+          },
+
+          -- JavaScript/TypeScript
+          null_ls.builtins.formatting.prettier.with {
+            condition = function(utils)
+              return vim.fn.executable("prettier") > 0
+                  and utils.root_has_file {
+                    "package.json",
+                    ".prettierrc",
+                    ".prettierrc.json",
+                    ".prettierrc.yml",
+                    ".prettierrc.yaml",
+                    ".prettierrc.js",
+                    ".prettierrc.cjs",
+                    "prettier.config.js",
+                    "prettier.config.cjs",
+                    ".prettierrc.toml",
+                  }
+            end,
+          },
+
+          -- Python
+          null_ls.builtins.formatting.black.with {
+            condition = function()
+              return vim.fn.executable("black") > 0
+            end,
+          },
+
+          -- Ruby
+          null_ls.builtins.formatting.rubocop.with {
+            prefer_local = "bundle_bin",
+            condition = function(utils)
+              return vim.fn.executable("rubocop") > 0 and utils.root_has_file { ".rubocop.yml" }
+            end,
+          },
+          null_ls.builtins.diagnostics.rubocop.with {
+            prefer_local = "bundle_bin",
+            condition = function(utils)
+              return vim.fn.executable("rubocop") > 0 and utils.root_has_file { ".rubocop.yml" }
+            end,
+          },
+        },
+      }
+
+      -- デフォルトのon_attach関数を定義
+      local on_attach = function(client, bufnr)
+        -- LSP関連のキーマッピング（which-key v3形式）
+        wk.add({
+          { "<space>l", group = "lsp", buffer = bufnr },
+          { "<space>la", "<cmd>Lspsaga code_action<CR>", desc = "Code action", buffer = bufnr },
+          { "<space>ld", "<cmd>Trouble lsp_definitions toggle<cr>", desc = "Definitions", buffer = bufnr },
+          { "<space>lD", "<cmd>Trouble lsp_references toggle<cr>", desc = "References", buffer = bufnr },
+          { "<space>lf", function() vim.lsp.buf.format({ async = true }) end, desc = "Format", buffer = bufnr },
+          { "<space>li", "<cmd>Trouble lsp_implementations toggle<cr>", desc = "Implementations", buffer = bufnr },
+          { "<space>lo", "<cmd>Outline<CR>", desc = "Outline", buffer = bufnr },
+          { "<space>ls", "<cmd>Lspsaga finder<CR>", desc = "LSP finder", buffer = bufnr },
+          { "<space>lp", "<cmd>Lspsaga peek_definition<CR>", desc = "Peek definition", buffer = bufnr },
+          { "<space>lr", "<cmd>Lspsaga rename<CR>", desc = "Rename", buffer = bufnr },
+          { "<space>lt", "<cmd>Trouble lsp_type_definitions toggle<cr>", desc = "Type definitions", buffer = bufnr },
+          { "<space>lk", vim.diagnostic.goto_prev, desc = "Diagnostic prev", buffer = bufnr },
+          { "<space>lj", vim.diagnostic.goto_next, desc = "Diagnostic next", buffer = bufnr },
+        })
+
+        -- ビジュアルモード用のキーマッピング
+        wk.add({
+          { "<space>l", group = "lsp", mode = "v", buffer = bufnr },
+          { "<space>la", "<cmd>Lspsaga code_action<CR>", desc = "Code action", mode = "v", buffer = bufnr },
+        })
+
+        -- 診断移動用のキーマッピング
+        wk.add({
+          { "g,", vim.diagnostic.goto_prev, desc = "Diagnostic prev", buffer = bufnr },
+          { "g.", vim.diagnostic.goto_next, desc = "Diagnostic next", buffer = bufnr },
+        })
+
+        -- ホバードキュメント用のキーマッピング
+        wk.add({
+          { "K", "<cmd>Lspsaga hover_doc<CR>", desc = "LSP hover", buffer = bufnr },
+        })
+      end
+
+      -- デフォルトのcapabilitiesを定義
+      local capabilities = cmp_nvim_lsp.default_capabilities()
+
+      -- mason-lspconfigのセットアップ
+      mason_lspconfig.setup({
+        ensure_installed = {
+          "lua_ls",      -- Lua
+          "ts_ls",       -- TypeScript/JavaScript
+          "eslint",      -- ESLint (JavaScript/TypeScript linter)
+          "pyright",     -- Python
+          "ruff",        -- Python linter/formatter
+          "yamlls",      -- YAML
+          "bashls",      -- Bash/Shell
+        },
+      })
+
+      -- 各LSPサーバーを個別にセットアップ
+      -- lua_ls
+      lspconfig.lua_ls.setup({
+        on_attach = on_attach,
+        capabilities = capabilities,
         settings = {
           Lua = {
             runtime = {
               version = 'LuaJIT',
             },
             diagnostics = {
-              globals = {
-                'vim',
-                'require',
+              globals = { "vim" },
+            },
+            workspace = {
+              library = {
+                [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+                [vim.fn.stdpath("config") .. "/lua"] = true,
               },
+              checkThirdParty = false,
+            },
+            telemetry = {
+              enable = false,
+            },
+            completion = {
+              callSnippet = "Replace",
             },
           },
         },
       })
 
-      mason_lspconfig.setup({
-        ensure_installed = {
-          "lua_ls",
-          "ts_ls",
-          "pyright",
-        },
-        automatic_enable = true,
-        handlers = {
-          function(server_name)
-          local opts = {}
-          opts.on_attach = function(client, bufnr)
-            -- LSPキーマッピングの設定
-            local keymap_opts = { buffer = bufnr, silent = true, noremap = true }
-
-            -- LSP関連のキーマッピング
-            wk.register({
-              ["<space>l"] = { name = "+lsp" },
-              ["<space>la"] = { "<cmd>Lspsaga code_action<CR>", "Code action" },
-              ["<space>ld"] = { "<cmd>Trouble lsp_definitions toggle<cr>", "Definitions" },
-              ["<space>lD"] = { "<cmd>Trouble lsp_references toggle<cr>", "References" },
-              ["<space>lf"] = { function() vim.lsp.buf.format({ async = true }) end, "Format" },
-              ["<space>li"] = { "<cmd>Trouble lsp_implementations toggle<cr>", "Implementations" },
-              ["<space>lo"] = { "<cmd>Outline<CR>", "Outline" },
-              ["<space>ls"] = { "<cmd>Lspsaga finder<CR>", "LSP finder" },
-              ["<space>lp"] = { "<cmd>Lspsaga peek_definition<CR>", "Peek definition" },
-              ["<space>lr"] = { "<cmd>Lspsaga rename<CR>", "Rename" },
-              ["<space>lt"] = { "<cmd>Trouble lsp_type_definitions toggle<cr>", "Type definitions" },
-              ["<space>lk"] = { vim.diagnostic.goto_prev, "Diagnostic prev" },
-              ["<space>lj"] = { vim.diagnostic.goto_next, "Diagnostic next" },
-            }, keymap_opts)
-
-            -- ビジュアルモード用のキーマッピング
-            wk.register({
-              ["<space>l"] = { name = "+lsp" },
-              ["<space>la"] = { "<cmd>Lspsaga code_action<CR>", "Code action" },
-            }, { mode = "v", buffer = bufnr, silent = true, noremap = true })
-
-            -- 診断移動用のキーマッピング
-            wk.register({
-              ["g,"] = { vim.diagnostic.goto_prev, "Diagnostic prev" },
-              ["g."] = { vim.diagnostic.goto_next, "Diagnostic next" },
-            }, keymap_opts)
-
-            -- ホバードキュメント用のキーマッピング
-            wk.register({
-              ["K"] = { "<cmd>Lspsaga hover_doc<CR>", "LSP hover" },
-            }, keymap_opts)
-          end
-
-          opts.capabilities = cmp_nvim_lsp.default_capabilities()
-
-          null_ls.setup {
-            capabilities = opts.capabilities,
-            sources = {
-              -- Lua
-              null_ls.builtins.formatting.stylua.with {
-                condition = function(utils)
-                  return vim.fn.executable("stylua") > 0 and utils.root_has_file { ".stylua.toml", "stylua.toml" }
-                end,
-              },
-              null_ls.builtins.diagnostics.selene.with {
-                condition = function(utils)
-                  return vim.fn.executable("selene") > 0 and utils.root_has_file { ".selene.toml" }
-                end,
-              },
-
-              -- JavaScript/TypeScript
-              null_ls.builtins.formatting.prettier.with {
-                condition = function(utils)
-                  return vim.fn.executable("prettier") > 0
-                      and utils.root_has_file {
-                        "package.json",
-                        ".prettierrc",
-                        ".prettierrc.json",
-                        ".prettierrc.yml",
-                        ".prettierrc.yaml",
-                        ".prettierrc.js",
-                        ".prettierrc.cjs",
-                        "prettier.config.js",
-                        "prettier.config.cjs",
-                        ".prettierrc.toml",
-                      }
-                end,
-              },
-              null_ls.builtins.diagnostics.eslint_d.with {
-                condition = function(utils)
-                  return vim.fn.executable("eslint_d") > 0
-                      and utils.root_has_file {
-                        ".eslintrc",
-                        ".eslintrc.js",
-                        ".eslintrc.cjs",
-                        ".eslintrc.yaml",
-                        ".eslintrc.yml",
-                        ".eslintrc.json",
-                      }
-                end,
-              },
-
-              -- Python
-              null_ls.builtins.formatting.black.with {
-                condition = function()
-                  return vim.fn.executable("black") > 0
-                end,
-              },
-              null_ls.builtins.diagnostics.ruff.with {
-                condition = function()
-                  return vim.fn.executable("ruff") > 0
-                end,
-              },
-
-              -- Ruby
-              null_ls.builtins.formatting.rubocop.with {
-                prefer_local = "bundle_bin",
-                condition = function(utils)
-                  return vim.fn.executable("rubocop") > 0 and utils.root_has_file { ".rubocop.yml" }
-                end,
-              },
-              null_ls.builtins.diagnostics.rubocop.with {
-                prefer_local = "bundle_bin",
-                condition = function(utils)
-                  return vim.fn.executable("rubocop") > 0 and utils.root_has_file { ".rubocop.yml" }
-                end,
-              },
-
-              -- YAML/Shell
-              null_ls.builtins.diagnostics.yamllint,
-              null_ls.builtins.diagnostics.zsh,
+      -- ts_ls
+      lspconfig.ts_ls.setup({
+        on_attach = on_attach,
+        capabilities = capabilities,
+        settings = {
+          typescript = {
+            inlayHints = {
+              includeInlayParameterNameHints = "all",
+              includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+              includeInlayFunctionParameterTypeHints = true,
+              includeInlayVariableTypeHints = true,
+              includeInlayPropertyDeclarationTypeHints = true,
+              includeInlayFunctionLikeReturnTypeHints = true,
+              includeInlayEnumMemberValueHints = true,
             },
-          }
-
-          -- サーバー固有の設定
-          if server_name == "lua_ls" then
-            local luals_opts = {
-              settings = {
-                Lua = {
-                  diagnostics = {
-                    globals = { "vim" },
-                  },
-                  workspace = {
-                    library = {
-                      [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-                      [vim.fn.stdpath("config") .. "/lua"] = true,
-                    },
-                    checkThirdParty = false,
-                  },
-                  telemetry = {
-                    enable = false,
-                  },
-                  completion = {
-                    callSnippet = "Replace",
-                  },
-                },
-              },
-            }
-            opts = vim.tbl_deep_extend("force", luals_opts, opts)
-          elseif server_name == "tsserver" then
-            local ts_opts = {
-              settings = {
-                typescript = {
-                  inlayHints = {
-                    includeInlayParameterNameHints = "all",
-                    includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                    includeInlayFunctionParameterTypeHints = true,
-                    includeInlayVariableTypeHints = true,
-                    includeInlayPropertyDeclarationTypeHints = true,
-                    includeInlayFunctionLikeReturnTypeHints = true,
-                    includeInlayEnumMemberValueHints = true,
-                  },
-                },
-                javascript = {
-                  inlayHints = {
-                    includeInlayParameterNameHints = "all",
-                    includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                    includeInlayFunctionParameterTypeHints = true,
-                    includeInlayVariableTypeHints = true,
-                    includeInlayPropertyDeclarationTypeHints = true,
-                    includeInlayFunctionLikeReturnTypeHints = true,
-                    includeInlayEnumMemberValueHints = true,
-                  },
-                },
-              },
-            }
-            opts = vim.tbl_deep_extend("force", ts_opts, opts)
-          end
-
-          lspconfig[server_name].setup(opts)
-          end,
+          },
+          javascript = {
+            inlayHints = {
+              includeInlayParameterNameHints = "all",
+              includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+              includeInlayFunctionParameterTypeHints = true,
+              includeInlayVariableTypeHints = true,
+              includeInlayPropertyDeclarationTypeHints = true,
+              includeInlayFunctionLikeReturnTypeHints = true,
+              includeInlayEnumMemberValueHints = true,
+            },
+          },
         },
+      })
+
+      -- eslint
+      lspconfig.eslint.setup({
+        capabilities = capabilities,
+        settings = {
+          workingDirectories = { mode = "auto" },
+        },
+        on_attach = function(client, bufnr)
+          on_attach(client, bufnr)
+          -- 保存時に自動でESLintの修正を適用
+          vim.api.nvim_create_autocmd("BufWritePre", {
+            buffer = bufnr,
+            command = "EslintFixAll",
+          })
+        end,
+      })
+
+      -- pyright
+      lspconfig.pyright.setup({
+        on_attach = on_attach,
+        capabilities = capabilities,
+      })
+
+      -- ruff
+      lspconfig.ruff.setup({
+        capabilities = capabilities,
+        on_attach = function(client, bufnr)
+          on_attach(client, bufnr)
+          -- Ruffはフォーマットとlintのみ、hover機能は無効化（pyrightに任せる）
+          client.server_capabilities.hoverProvider = false
+        end,
+      })
+
+      -- yamlls
+      lspconfig.yamlls.setup({
+        on_attach = on_attach,
+        capabilities = capabilities,
+        settings = {
+          yaml = {
+            schemas = {
+              ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+              ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "docker-compose*.yml",
+            },
+            format = {
+              enable = true,
+            },
+          },
+        },
+      })
+
+      -- bashls
+      lspconfig.bashls.setup({
+        on_attach = on_attach,
+        capabilities = capabilities,
       })
     end,
   }
