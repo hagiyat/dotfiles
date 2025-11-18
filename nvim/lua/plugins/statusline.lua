@@ -4,7 +4,6 @@ return {
     event = "UIEnter",
     dependencies = {
       "nvim-tree/nvim-web-devicons",
-      "AndreM222/copilot-lualine",
     },
     config = function()
       local empty = require("lualine.component"):extend()
@@ -111,7 +110,7 @@ return {
             },
           },
           lualine_c = {},
-          lualine_x = { "copilot", "encoding", "fileformat", "filetype" },
+          lualine_x = { },
           lualine_y = { search_result, "filetype" },
           lualine_z = { "%l:%c", "%p%%/%L" },
         },
