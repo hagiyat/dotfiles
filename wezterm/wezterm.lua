@@ -131,6 +131,12 @@ config.keys = {
       end),
     },
   },
+  {
+    -- Claude Codeのプロンプト内改行用 (by /terminal-setup)
+    key = "Enter",
+    mods = "SHIFT",
+    action = action.SendString("\x1b\r"),
+  },
 }
 
 return config
