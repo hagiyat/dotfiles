@@ -98,6 +98,19 @@ return {
     },
     config = function()
       require("noice").setup {
+        routes = {
+          {
+            filter = {
+              event = "notify",
+              any = {
+                { find = "lspconfig.*deprecated" },
+                { find = "require.*lspconfig" },
+                { find = "nvim%-lspconfig" },
+              },
+            },
+            opts = { skip = true },
+          },
+        },
         lsp = {
           progress = {
             enabled = true,
