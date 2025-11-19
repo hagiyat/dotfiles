@@ -100,7 +100,7 @@ return {
         severity_sort = true,
         float = {
           border = "rounded",
-          source = "always",
+          source = true, -- Neovim 0.11+: true/false/'if_many'
         },
       })
 
@@ -157,63 +157,92 @@ return {
         },
       }
 
-      -- デフォルトのon_attach関数を定義
-      local on_attach = function(client, bufnr)
-        -- LSP関連のキーマッピング（which-key v3形式）
-        wk.add({
-          { "<space>l", group = "lsp", buffer = bufnr },
-          { "<space>la", "<cmd>Lspsaga code_action<CR>", desc = "Code action", buffer = bufnr },
-          { "<space>ld", "<cmd>Trouble lsp_definitions toggle<cr>", desc = "Definitions", buffer = bufnr },
-          { "<space>lD", "<cmd>Trouble lsp_references toggle<cr>", desc = "References", buffer = bufnr },
-          { "<space>lf", function() vim.lsp.buf.format({ async = true }) end, desc = "Format", buffer = bufnr },
-          { "<space>li", "<cmd>Trouble lsp_implementations toggle<cr>", desc = "Implementations", buffer = bufnr },
-          { "<space>lo", "<cmd>Outline<CR>", desc = "Outline", buffer = bufnr },
-          { "<space>ls", "<cmd>Lspsaga finder<CR>", desc = "LSP finder", buffer = bufnr },
-          { "<space>lp", "<cmd>Lspsaga peek_definition<CR>", desc = "Peek definition", buffer = bufnr },
-          { "<space>lr", "<cmd>Lspsaga rename<CR>", desc = "Rename", buffer = bufnr },
-          { "<space>lt", "<cmd>Trouble lsp_type_definitions toggle<cr>", desc = "Type definitions", buffer = bufnr },
-          { "<space>lk", vim.diagnostic.goto_prev, desc = "Diagnostic prev", buffer = bufnr },
-          { "<space>lj", vim.diagnostic.goto_next, desc = "Diagnostic next", buffer = bufnr },
-        })
+      -- LspAttach autocmdでキーマッピングを設定（より確実な方法）
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup("UserLspConfig", { clear = true }),
+        callback = function(args)
+          local bufnr = args.buf
+          local client = vim.lsp.get_client_by_id(args.data.client_id)
 
-        -- ビジュアルモード用のキーマッピング
-        wk.add({
-          { "<space>l", group = "lsp", mode = "v", buffer = bufnr },
-          { "<space>la", "<cmd>Lspsaga code_action<CR>", desc = "Code action", mode = "v", buffer = bufnr },
-        })
+          -- LSP関連のキーマッピング（which-key v3形式）
+          wk.add({
+            { "<space>l",  group = "lsp",                                                    buffer = bufnr },
+            { "<space>la", "<cmd>Lspsaga code_action<CR>",                                   desc = "Code action",      buffer = bufnr },
+            { "<space>ld", "<cmd>Trouble lsp_definitions toggle<cr>",                        desc = "Definitions",      buffer = bufnr },
+            { "<space>lD", "<cmd>Trouble lsp_references toggle<cr>",                         desc = "References",       buffer = bufnr },
+            { "<space>lf", function() vim.lsp.buf.format({ async = true }) end,              desc = "Format",           buffer = bufnr },
+            { "<space>li", "<cmd>Trouble lsp_implementations toggle<cr>",                    desc = "Implementations",  buffer = bufnr },
+            { "<space>lo", "<cmd>Outline<CR>",                                               desc = "Outline",          buffer = bufnr },
+            { "<space>ls", "<cmd>Lspsaga finder<CR>",                                        desc = "LSP finder",       buffer = bufnr },
+            { "<space>lp", "<cmd>Lspsaga peek_definition<CR>",                               desc = "Peek definition",  buffer = bufnr },
+            { "<space>lr", "<cmd>Lspsaga rename<CR>",                                        desc = "Rename",           buffer = bufnr },
+            { "<space>lt", "<cmd>Trouble lsp_type_definitions toggle<cr>",                   desc = "Type definitions", buffer = bufnr },
+            { "<space>lk", function() vim.diagnostic.jump({ count = -1, float = true }) end, desc = "Diagnostic prev",  buffer = bufnr },
+            { "<space>lj", function() vim.diagnostic.jump({ count = 1, float = true }) end,  desc = "Diagnostic next",  buffer = bufnr },
+          })
 
-        -- 診断移動用のキーマッピング
-        wk.add({
-          { "g,", vim.diagnostic.goto_prev, desc = "Diagnostic prev", buffer = bufnr },
-          { "g.", vim.diagnostic.goto_next, desc = "Diagnostic next", buffer = bufnr },
-        })
+          -- ビジュアルモード用のキーマッピング
+          wk.add({
+            { "<space>l",  group = "lsp",                  mode = "v",           buffer = bufnr },
+            { "<space>la", "<cmd>Lspsaga code_action<CR>", desc = "Code action", mode = "v",    buffer = bufnr },
+          })
 
-        -- ホバードキュメント用のキーマッピング
-        wk.add({
-          { "K", "<cmd>Lspsaga hover_doc<CR>", desc = "LSP hover", buffer = bufnr },
-        })
-      end
+          -- 診断移動用のキーマッピング
+          wk.add({
+            { "g,", function() vim.diagnostic.jump({ count = -1, float = true }) end, desc = "Diagnostic prev", buffer = bufnr },
+            { "g.", function() vim.diagnostic.jump({ count = 1, float = true }) end,  desc = "Diagnostic next", buffer = bufnr },
+          })
+
+          -- ホバードキュメント用のキーマッピング
+          wk.add({
+            { "K", "<cmd>Lspsaga hover_doc<CR>", desc = "LSP hover", buffer = bufnr },
+          })
+
+          -- クライアント固有の設定
+          if client.name == "eslint" then
+            -- 保存時に自動でESLintの修正を適用
+            vim.api.nvim_create_autocmd("BufWritePre", {
+              buffer = bufnr,
+              command = "EslintFixAll",
+            })
+          elseif client.name == "ruff" then
+            -- Ruffはフォーマットとlintのみ、hover機能は無効化（pyrightに任せる）
+            client.server_capabilities.hoverProvider = false
+          end
+        end,
+      })
 
       -- デフォルトのcapabilitiesを定義
       local capabilities = cmp_nvim_lsp.default_capabilities()
+      -- Position Encodingsの警告を解消（UTF-16とUTF-8の両方をサポート）
+      capabilities.general = capabilities.general or {}
+      capabilities.general.positionEncodings = { "utf-16", "utf-8" }
 
-      -- mason-lspconfigのセットアップ
+      -- mason-lspconfigのセットアップ（インストールのみ、セットアップはしない）
+      -- NOTE: 既知の問題 - LSPサーバーが多重起動する
+      -- 現象: Neovim起動時に、Settings: {}の設定なしLSPサーバーと、
+      --       下記で個別設定したLSPサーバーの両方が起動する
+      -- 調査結果:
+      --   - Settings: {}のLSPは起動時に一度だけ起動し、その後は再起動しない
+      --   - 手動で停止（:lua vim.lsp.stop_client(id)）すれば、設定済みLSPのみ残る
+      --   - 機能的には問題なし（キーバインド等は正常に動作）
+      -- 原因: 不明（mason-lspconfig、lspconfig、または他のプラグインによる自動起動？）
+      -- 対処: 現状許容（機能的に問題ないため）
       mason_lspconfig.setup({
         ensure_installed = {
-          "lua_ls",      -- Lua
-          "ts_ls",       -- TypeScript/JavaScript
-          "eslint",      -- ESLint (JavaScript/TypeScript linter)
-          "pyright",     -- Python
-          "ruff",        -- Python linter/formatter
-          "yamlls",      -- YAML
-          "bashls",      -- Bash/Shell
+          "lua_ls",  -- Lua
+          "ts_ls",   -- TypeScript/JavaScript
+          "eslint",  -- ESLint (JavaScript/TypeScript linter)
+          "pyright", -- Python
+          "ruff",    -- Python linter/formatter
+          "yamlls",  -- YAML
+          "bashls",  -- Bash/Shell
         },
       })
 
       -- 各LSPサーバーを個別にセットアップ
       -- lua_ls
       lspconfig.lua_ls.setup({
-        on_attach = on_attach,
         capabilities = capabilities,
         settings = {
           Lua = {
@@ -242,7 +271,6 @@ return {
 
       -- ts_ls
       lspconfig.ts_ls.setup({
-        on_attach = on_attach,
         capabilities = capabilities,
         settings = {
           typescript = {
@@ -276,41 +304,27 @@ return {
         settings = {
           workingDirectories = { mode = "auto" },
         },
-        on_attach = function(client, bufnr)
-          on_attach(client, bufnr)
-          -- 保存時に自動でESLintの修正を適用
-          vim.api.nvim_create_autocmd("BufWritePre", {
-            buffer = bufnr,
-            command = "EslintFixAll",
-          })
-        end,
       })
 
       -- pyright
       lspconfig.pyright.setup({
-        on_attach = on_attach,
         capabilities = capabilities,
       })
 
       -- ruff
       lspconfig.ruff.setup({
         capabilities = capabilities,
-        on_attach = function(client, bufnr)
-          on_attach(client, bufnr)
-          -- Ruffはフォーマットとlintのみ、hover機能は無効化（pyrightに任せる）
-          client.server_capabilities.hoverProvider = false
-        end,
       })
 
       -- yamlls
       lspconfig.yamlls.setup({
-        on_attach = on_attach,
         capabilities = capabilities,
         settings = {
           yaml = {
             schemas = {
               ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
-              ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "docker-compose*.yml",
+              ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] =
+              "docker-compose*.yml",
             },
             format = {
               enable = true,
@@ -321,7 +335,6 @@ return {
 
       -- bashls
       lspconfig.bashls.setup({
-        on_attach = on_attach,
         capabilities = capabilities,
       })
     end,
