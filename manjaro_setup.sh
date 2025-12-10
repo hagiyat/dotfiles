@@ -3,11 +3,11 @@ set -euo pipefail
 
 # =============================================================================
 # Manjaro/Arch Linux Setup Script
+# Run directly: bash <(curl -sL https://raw.githubusercontent.com/hagiyat/dotfiles/main/manjaro_setup.sh)
 # =============================================================================
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PACKAGES_FILE="$SCRIPT_DIR/packages.conf"
-AUR_PACKAGES_FILE="$SCRIPT_DIR/packages-aur.conf"
+DOTFILES_REPO="https://github.com/hagiyat/dotfiles.git"
+DOTFILES_DIR="$HOME/dotfiles"
 
 # Colors for output
 RED='\033[0;31m'
@@ -20,6 +20,94 @@ log_info() { echo -e "${BLUE}[INFO]${NC} $1"; }
 log_success() { echo -e "${GREEN}[OK]${NC} $1"; }
 log_warning() { echo -e "${YELLOW}[WARN]${NC} $1"; }
 log_error() { echo -e "${RED}[ERROR]${NC} $1"; }
+
+# =============================================================================
+# Package Lists (embedded)
+# =============================================================================
+OFFICIAL_PACKAGES=(
+  # CLI Tools
+  bat
+  btop
+  eza
+  fd
+  fzf
+  ripgrep
+  htop
+  lazygit
+  direnv
+
+  # Git Tools
+  git-delta
+  difftastic
+
+  # Language Runtimes & Version Managers
+  deno
+  pyenv
+  ruby
+
+  # Lua Development
+  stylua
+  luacheck
+  luarocks
+
+  # Python Packages
+  python-pipx
+  python-pynvim
+  python-dotenv
+  python-prompt_toolkit
+  python-tiktoken
+
+  # Japanese Input (fcitx5)
+  fcitx5
+  fcitx5-mozc
+  fcitx5-configtool
+  fcitx5-gtk
+  fcitx5-material-color
+  fcitx5-nord
+
+  # Fonts (Nerd Fonts)
+  ttf-jetbrains-mono-nerd
+  ttf-hack
+  ttf-meslo-nerd-font-powerlevel10k
+  ttf-cascadia-code-nerd
+  ttf-0xproto-nerd
+  ttf-mononoki-nerd
+  otf-geist-mono-nerd
+  otf-commit-mono-nerd
+
+  # Japanese Fonts
+  adobe-source-han-sans-jp-fonts
+  adobe-source-han-serif-jp-fonts
+
+  # Applications
+  bitwarden
+  brave-browser
+  chromium
+  gimp
+  steam
+  onlyoffice-desktopeditors
+)
+
+AUR_PACKAGES=(
+  # Terminal
+  wezterm-nightly-bin
+
+  # Version Managers
+  fnm-bin
+
+  # Fonts
+  adobe-source-han-mono-jp-fonts
+
+  # Browsers
+  zen-browser-bin
+
+  # Applications
+  spotify
+
+  # GNOME Extensions
+  gnome-shell-extension-material-shell
+  gnome-shell-extension-x11gestures
+)
 
 # =============================================================================
 # Symlink Configuration
@@ -40,15 +128,6 @@ declare -A SYMLINKS=(
 # =============================================================================
 # Helper Functions
 # =============================================================================
-parse_packages() {
-  local file="$1"
-  if [[ ! -f "$file" ]]; then
-    log_error "Package file not found: $file"
-    return 1
-  fi
-  grep -v '^\s*#' "$file" | grep -v '^\s*$' | awk '{print $1}'
-}
-
 check_command() {
   command -v "$1" &> /dev/null
 }
@@ -70,7 +149,7 @@ install_yay() {
   git clone https://aur.archlinux.org/yay.git "$tmp_dir/yay"
   cd "$tmp_dir/yay"
   makepkg -si --noconfirm
-  cd "$SCRIPT_DIR"
+  cd -
   rm -rf "$tmp_dir"
 
   log_success "yay installed successfully"
@@ -79,39 +158,30 @@ install_yay() {
 install_official_packages() {
   log_info "Installing official repository packages..."
 
-  local packages
-  packages=$(parse_packages "$PACKAGES_FILE")
-
-  if [[ -z "$packages" ]]; then
-    log_warning "No packages found in $PACKAGES_FILE"
+  if [[ ${#OFFICIAL_PACKAGES[@]} -eq 0 ]]; then
+    log_warning "No official packages defined"
     return 0
   fi
 
-  # Filter out yay (installed separately)
-  packages=$(echo "$packages" | grep -v '^yay$')
-
-  echo "$packages" | xargs sudo pacman -S --needed --noconfirm
+  sudo pacman -S --needed --noconfirm "${OFFICIAL_PACKAGES[@]}"
 
   log_success "Official packages installed"
 }
 
 install_aur_packages() {
-  if [[ ! -f "$AUR_PACKAGES_FILE" ]]; then
-    log_warning "AUR package file not found: $AUR_PACKAGES_FILE"
-    return 0
+  if ! check_command yay; then
+    log_error "yay is not installed, cannot install AUR packages"
+    return 1
   fi
 
   log_info "Installing AUR packages..."
 
-  local packages
-  packages=$(parse_packages "$AUR_PACKAGES_FILE")
-
-  if [[ -z "$packages" ]]; then
-    log_warning "No AUR packages found"
+  if [[ ${#AUR_PACKAGES[@]} -eq 0 ]]; then
+    log_warning "No AUR packages defined"
     return 0
   fi
 
-  echo "$packages" | xargs yay -S --needed --noconfirm
+  yay -S --needed --noconfirm "${AUR_PACKAGES[@]}"
 
   log_success "AUR packages installed"
 }
@@ -119,14 +189,38 @@ install_aur_packages() {
 # =============================================================================
 # Dotfiles Setup
 # =============================================================================
+clone_dotfiles() {
+  if [[ -d "$DOTFILES_DIR" ]]; then
+    log_success "Dotfiles directory already exists: $DOTFILES_DIR"
+    cd "$DOTFILES_DIR"
+    git pull --ff-only || log_warning "Could not update dotfiles"
+    return 0
+  fi
+
+  log_info "Cloning dotfiles repository..."
+  git clone "$DOTFILES_REPO" "$DOTFILES_DIR"
+  log_success "Dotfiles cloned to $DOTFILES_DIR"
+}
+
 setup_symlinks() {
   log_info "Setting up symlinks..."
 
+  if [[ ! -d "$DOTFILES_DIR" ]]; then
+    log_error "Dotfiles directory not found: $DOTFILES_DIR"
+    return 1
+  fi
+
   for dest in "${!SYMLINKS[@]}"; do
     local source="${SYMLINKS[$dest]}"
-    local source_path="$SCRIPT_DIR/$source"
+    local source_path="$DOTFILES_DIR/$source"
     local dest_dir
     dest_dir=$(dirname "$dest")
+
+    # Check if source exists
+    if [[ ! -e "$source_path" ]]; then
+      log_warning "[skip] Source not found: $source_path"
+      continue
+    fi
 
     # Create parent directory if needed
     if [[ ! -d "$dest_dir" ]]; then
@@ -160,7 +254,7 @@ setup_fnm() {
   log_info "Setting up fnm (Node.js version manager)..."
 
   # Install latest LTS Node.js if not already installed
-  if ! fnm list | grep -q "lts"; then
+  if ! fnm list 2>/dev/null | grep -q "lts"; then
     fnm install --lts
     fnm default lts-latest
     log_success "Node.js LTS installed via fnm"
@@ -179,9 +273,12 @@ Usage: $(basename "$0") [COMMAND]
 Commands:
   all         Run full setup (default)
   packages    Install packages only
-  dotfiles    Setup dotfiles symlinks only
+  dotfiles    Clone dotfiles and setup symlinks only
   fnm         Setup fnm and install Node.js
   help        Show this help message
+
+Run directly from the web:
+  bash <(curl -sL https://raw.githubusercontent.com/hagiyat/dotfiles/main/manjaro_setup.sh)
 
 Examples:
   $(basename "$0")           # Run full setup
@@ -199,9 +296,11 @@ main() {
       install_yay
       install_official_packages
       install_aur_packages
+      clone_dotfiles
       setup_symlinks
       setup_fnm
       log_success "Setup completed!"
+      log_info "Please edit ~/.zshenv to set GITHUB_API_TOKEN and other personal settings"
       ;;
     packages)
       install_yay
@@ -209,6 +308,7 @@ main() {
       install_aur_packages
       ;;
     dotfiles)
+      clone_dotfiles
       setup_symlinks
       ;;
     fnm)
