@@ -11,7 +11,17 @@ config.inactive_pane_hsb = {
   brightness = 0.7,
 }
 
-config.font_size = 14.5
+local is_darwin = wezterm.target_triple:find("darwin") ~= nil
+
+if is_darwin then
+  config.initial_cols = 120
+  config.initial_rows = 40
+  config.font_size = 14.5
+else
+  config.initial_cols = 120
+  config.initial_rows = 40
+  config.font_size = 12.0
+end
 
 config.font = wezterm.font_with_fallback {
   -- { family = "JetBrainsMono Nerd Font Mono" },
@@ -38,13 +48,13 @@ config.keys = {
     -- new pane/vertical
     key = "s",
     mods = "LEADER",
-    action = action.SplitVertical { domain = 'CurrentPaneDomain' },
+    action = action.SplitVertical { domain = "CurrentPaneDomain" },
   },
   {
     -- new pane/horizontal
     key = "v",
     mods = "LEADER",
-    action = action.SplitHorizontal { domain = 'CurrentPaneDomain' },
+    action = action.SplitHorizontal { domain = "CurrentPaneDomain" },
   },
   {
     -- close pane
@@ -61,42 +71,42 @@ config.keys = {
   {
     key = "h",
     mods = "LEADER",
-    action = action.ActivatePaneDirection "Left",
+    action = action.ActivatePaneDirection("Left"),
   },
   {
     key = "j",
     mods = "LEADER",
-    action = action.ActivatePaneDirection "Down",
+    action = action.ActivatePaneDirection("Down"),
   },
   {
     key = "k",
     mods = "LEADER",
-    action = action.ActivatePaneDirection "Up",
+    action = action.ActivatePaneDirection("Up"),
   },
   {
     key = "l",
     mods = "LEADER",
-    action = action.ActivatePaneDirection "Right",
+    action = action.ActivatePaneDirection("Right"),
   },
   {
-    key = 'H',
-    mods = 'LEADER',
-    action = action.AdjustPaneSize { 'Left', 5 },
+    key = "H",
+    mods = "LEADER",
+    action = action.AdjustPaneSize { "Left", 5 },
   },
   {
-    key = 'J',
-    mods = 'LEADER',
-    action = action.AdjustPaneSize { 'Down', 5 },
+    key = "J",
+    mods = "LEADER",
+    action = action.AdjustPaneSize { "Down", 5 },
   },
   {
-    key = 'K',
-    mods = 'LEADER',
-    action = action.AdjustPaneSize { 'Up', 5 }
+    key = "K",
+    mods = "LEADER",
+    action = action.AdjustPaneSize { "Up", 5 },
   },
   {
-    key = 'L',
-    mods = 'LEADER',
-    action = action.AdjustPaneSize { 'Right', 5 },
+    key = "L",
+    mods = "LEADER",
+    action = action.AdjustPaneSize { "Right", 5 },
   },
   {
     -- rotate pane
